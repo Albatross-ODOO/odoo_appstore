@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Report Action -->
+    <record id="action_report_field_sales_session" model="ir.actions.report">
+        <field name="name">Daily Activity Report</field>
+        <field name="model">field.sales.session</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">field_sales.report_session_template</field>
+        <field name="report_file">field_sales.report_session_template</field>
+        <field name="print_report_name">'Daily_Activity_Report_%s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_field_sales_session"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Report Template -->
+    <template id="report_session_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: 'Helvetica', 'Arial', sans-serif; color: #333333; padding-top: 10px;">
+                        <!-- Report Header -->
+                        <div class="row mb-4" style="border-bottom: 2px solid #1e3a8a; padding-bottom: 15px;">
+                            <div class="col-8">
+                                <h2 style="color: #1e3a8a; margin: 0; font-weight: bold; font-size: 26px;">DAILY FIELD ACTIVITY REPORT</h2>
+                                <p class="text-muted" style="margin: 5px 0 0 0; font-size: 14px;">
+                                    Salesperson: <strong><t t-esc="doc.user_id.name"/></strong> | Date: <strong><t t-esc="doc.date" t-options='{"widget": "date"}'/></strong>
+                                </p>
+                            </div>
+                            <div class="col-4 text-right align-self-end">
+                                <span class="badge badge-success" style="font-size: 14px; background-color: #10b981; padding: 6px 12px; border-radius: 20px; color: #ffffff;">Completed</span>
+                            </div>
+                        </div>
+
+                        <!-- Info & Selfie Grid -->
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h4 style="color: #1e3a8a; font-weight: bold; border-left: 3px solid #1e3a8a; padding-left: 8px; margin-bottom: 15px; font-size: 16px;">Session Overview</h4>
+                                <table class="table table-sm table-borderless" style="font-size: 13px;">
+                                    <tr>
+                                        <td style="width: 40%; padding: 4px 0;"><strong>Check-In Time:</strong></td>
+                                        <td style="padding: 4px 0;"><t t-esc="doc.check_in_time" t-options='{"widget": "datetime"}'/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 4px 0;"><strong>Check-Out Time:</strong></td>
+                                        <td style="padding: 4px 0;"><t t-esc="doc.check_out_time" t-options='{"widget": "datetime"}'/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 4px 0;"><strong>Check-In GPS:</strong></td>
+                                        <td style="padding: 4px 0;">
+                                            <a t-att-href="'https://www.google.com/maps/search/?api=1&amp;query=%s,%s' % (doc.check_in_latitude, doc.check_in_longitude)" target="_blank" style="color: #3b82f6; text-decoration: none;">
+                                                <t t-esc="doc.check_in_latitude"/>, <t t-esc="doc.check_in_longitude"/>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 4px 0;"><strong>Check-Out GPS:</strong></td>
+                                        <td style="padding: 4px 0;">
+                                            <a t-att-href="'https://www.google.com/maps/search/?api=1&amp;query=%s,%s' % (doc.check_out_latitude, doc.check_out_longitude)" target="_blank" style="color: #3b82f6; text-decoration: none;">
+                                                <t t-esc="doc.check_out_latitude"/>, <t t-esc="doc.check_out_longitude"/>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6 text-center">
+                                <h4 style="color: #1e3a8a; font-weight: bold; margin-bottom: 10px; font-size: 16px;">Selfie Verifications</h4>
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <div style="font-size: 11px; font-weight: bold; color: #64748b; margin-bottom: 4px;">CHECK-IN</div>
+                                        <t t-if="doc.selfie_image">
+                                            <img t-att-src="image_data_uri(doc.selfie_image)" style="max-height: 90px; max-width: 100%; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="height: 90px; background-color: #f3f4f6; border-radius: 6px; border: 1px dashed #cbd5e1; line-height: 90px; color: #9ca3af; font-size: 11px;">No photo</div>
+                                        </t>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <div style="font-size: 11px; font-weight: bold; color: #64748b; margin-bottom: 4px;">CHECK-OUT</div>
+                                        <t t-if="doc.checkout_selfie_image">
+                                            <img t-att-src="image_data_uri(doc.checkout_selfie_image)" style="max-height: 90px; max-width: 100%; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="height: 90px; background-color: #f3f4f6; border-radius: 6px; border: 1px dashed #cbd5e1; line-height: 90px; color: #9ca3af; font-size: 11px;">No photo</div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KPI Summary Cards -->
+                        <div class="row mb-4 text-center">
+                            <div class="col-6">
+                                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
+                                    <h3 style="margin: 0; color: #3b82f6; font-weight: bold; font-size: 24px;"><t t-esc="doc.total_visits"/></h3>
+                                    <span style="font-size: 12px; color: #64748b; font-weight: bold;">TOTAL VISITS LOGGED</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
+                                    <h3 style="margin: 0; color: #10b981; font-weight: bold; font-size: 24px;"><t t-esc="doc.productive_visits"/></h3>
+                                    <span style="font-size: 12px; color: #64748b; font-weight: bold;">PRODUCTIVE LEADS GENERATED</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visits Timeline -->
+                        <h4 style="color: #1e3a8a; font-weight: bold; border-left: 3px solid #1e3a8a; padding-left: 8px; margin-bottom: 15px; font-size: 16px;">Client Visits &amp; Outcomes</h4>
+                        <t t-if="doc.visit_ids">
+                            <table class="table table-bordered table-sm" style="font-size: 12px;">
+                                <thead style="background-color: #f8fafc; color: #1e3a8a; font-weight: bold;">
+                                    <tr>
+                                        <th style="width: 15%;">Time Range</th>
+                                        <th style="width: 25%;">Company / Contact</th>
+                                        <th style="width: 15%;">Phone</th>
+                                        <th style="width: 15%;">Location (GPS)</th>
+                                        <th style="width: 15%;">Visit Photo</th>
+                                        <th style="width: 15%;">Notes / Outcomes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.visit_ids" t-as="visit">
+                                        <tr>
+                                            <td>
+                                                <t t-esc="visit.check_in_time" t-options='{"widget": "datetime", "time_only": true}'/> - 
+                                                <t t-esc="visit.check_out_time" t-options='{"widget": "datetime", "time_only": true}'/>
+                                                <br/>
+                                                <small class="text-muted">(<t t-esc="'%.1f' % visit.duration"/> min)</small>
+                                            </td>
+                                            <td>
+                                                <strong><t t-esc="visit.company_name"/></strong>
+                                                <t t-if="visit.contact_name"><br/><span class="text-muted"><t t-esc="visit.contact_name"/></span></t>
+                                            </td>
+                                            <td><t t-esc="visit.phone"/></td>
+                                            <td>
+                                                <t t-if="visit.latitude">
+                                                    <a t-att-href="'https://www.google.com/maps/search/?api=1&amp;query=%s,%s' % (visit.latitude, visit.longitude)" target="_blank" style="color: #3b82f6; text-decoration: none;">
+                                                        View Map
+                                                    </a>
+                                                    <br/>
+                                                    <small class="text-muted">Acc: ±<t t-esc="'%.0f' % visit.accuracy"/>m</small>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="text-muted">No GPS</span>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="visit.visit_image">
+                                                    <img t-att-src="image_data_uri(visit.visit_image)" style="max-height: 50px; border-radius: 4px; border: 1px solid #cbd5e1;"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="text-muted" style="font-size: 10px;">No photo</span>
+                                                </t>
+                                            </td>
+                                            <td><t t-esc="visit.notes or '-'"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <div class="alert alert-info text-center" style="font-size: 13px;">No client visits were logged during this session.</div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

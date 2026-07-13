@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_field_sales_session_list" model="ir.ui.view">
+        <field name="name">field.sales.session.list</field>
+        <field name="model">field.sales.session</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state == 'draft'" decoration-success="state == 'checked_in'" decoration-muted="state == 'completed'">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="date"/>
+                <field name="check_in_time"/>
+                <field name="check_out_time"/>
+                <field name="total_visits"/>
+                <field name="productive_visits"/>
+                <field name="location_verification" widget="badge" decoration-success="location_verification == 'same'" decoration-danger="location_verification == 'changed'" decoration-warning="location_verification == 'pending'"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'checked_in'" decoration-muted="state == 'completed'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_field_sales_session_form" model="ir.ui.view">
+        <field name="name">field.sales.session.form</field>
+        <field name="model">field.sales.session</field>
+        <field name="arch" type="xml">
+            <form string="Work Session">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,checked_in,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Basic Information">
+                            <field name="user_id" readonly="state != 'draft'"/>
+                            <field name="date" readonly="state != 'draft'"/>
+                        </group>
+                        <group string="Verification &amp; Selfies">
+                            <field name="selfie_image" widget="image" class="oe_avatar" readonly="1" string="Check-In Selfie"/>
+                            <field name="checkout_selfie_image" widget="image" class="oe_avatar" readonly="1" string="Check-Out Selfie"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Check-In Details">
+                            <field name="check_in_time"/>
+                            <field name="check_in_latitude"/>
+                            <field name="check_in_longitude"/>
+                            <field name="check_in_map_link" widget="url" text="View Check-In on Google Maps" options="{'icon': 'fa fa-map-marker'}" readonly="1"/>
+                        </group>
+                        <group string="Check-Out Details">
+                            <field name="check_out_time"/>
+                            <field name="check_out_latitude"/>
+                            <field name="check_out_longitude"/>
+                            <field name="check_out_map_link" widget="url" text="View Check-Out on Google Maps" options="{'icon': 'fa fa-map-marker'}" readonly="1"/>
+                            <field name="location_verification" widget="badge" decoration-success="location_verification == 'same'" decoration-danger="location_verification == 'changed'" decoration-warning="location_verification == 'pending'" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Client Visits" name="visits">
+                            <field name="visit_ids" readonly="1">
+                                <list>
+                                    <field name="company_name"/>
+                                    <field name="contact_name"/>
+                                    <field name="phone"/>
+                                    <field name="check_in_time"/>
+                                    <field name="check_out_time"/>
+                                    <field name="duration" widget="float_time"/>
+                                    <field name="partner_id"/>
+                                    <field name="latitude" column_invisible="True"/>
+                                    <field name="longitude" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Route Logs" name="route_logs">
+                            <field name="location_log_ids" readonly="1">
+                                <list>
+                                    <field name="timestamp"/>
+                                    <field name="latitude"/>
+                                    <field name="longitude"/>
+                                    <field name="log_type"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Route Map">
+                            <div class="w-100 d-block" style="min-height: 600px;">
+                                <field name="location_log_ids" widget="session_route_map" nolabel="1"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_field_sales_session" model="ir.actions.act_window">
+        <field name="name">Work Sessions</field>
+        <field name="res_model">field.sales.session</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No work sessions recorded yet.
+            </p>
+            <p>
+                Sales representatives can check in from the Kiosk Dashboard.
+            </p>
+        </field>
+    </record>
+</odoo>

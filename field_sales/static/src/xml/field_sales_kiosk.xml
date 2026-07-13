@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="field_sales.FieldSalesKiosk">
+        <div class="field-sales-kiosk-container">
+            <!-- Loading Screen -->
+            <t t-if="state.loading">
+                <div class="kiosk-loading-overlay">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-muted fw-bold">Initializing Field Sales Workspace...</p>
+                </div>
+            </t>
+
+            <!-- Main Work Loop -->
+            <t t-else="">
+                <!-- NOT CHECKED IN STATE -->
+                <t t-if="!state.session">
+                    <div class="kiosk-welcome-card shadow-lg border rounded-3 p-4 text-center">
+                        <div class="kiosk-header mb-4">
+                            <div class="kiosk-logo-wrap mb-3">
+                                <i class="fa fa-map-marker fs-1 text-primary animate-bounce"></i>
+                            </div>
+                            <h2 class="fw-extrabold text-dark-blue">Field Sales Workday</h2>
+                            <p class="text-muted">Start your day by checking in with your location and photo verification.</p>
+                        </div>
+
+                        <div class="kiosk-actions">
+                            <button class="btn btn-primary btn-lg w-100 py-3 shadow d-flex align-items-center justify-content-center gap-2 checkin-btn"
+                                    t-att-disabled="state.submitting"
+                                    t-on-click="onStartCheckIn">
+                                <t t-if="state.submitting">
+                                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                                    <span>Locking GPS Coordinate...</span>
+                                </t>
+                                <t t-else="">
+                                    <i class="fa fa-sign-in fs-4"></i>
+                                    <span class="fw-bold">CHECK IN </span>
+                                </t>
+                            </button>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- CHECKED IN STATE (ACTIVE DAY) -->
+                <t t-else="">
+                    <div class="kiosk-active-card shadow-lg border rounded-3 p-4">
+                        <!-- Active Header -->
+                        <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+                            <div>
+                                <span class="badge bg-success-light text-success fw-bold px-3 py-2 rounded-pill mb-1 d-inline-block">
+                                    <i class="fa fa-dot-circle-o me-1"></i> ACTIVE WORK SESSION
+                                </span>
+                                <h3 class="fw-extrabold text-dark-blue m-0 mt-1"><t t-esc="state.session.name"/></h3>
+                            </div>
+                            <div class="text-end">
+                                <small class="text-muted d-block">Checked in at</small>
+                                <span class="fw-bold text-dark"><t t-esc="formatCheckInTime(state.session.check_in_time)"/></span>
+                            </div>
+                        </div>
+
+                        <!-- KPI Dashboard -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <div class="kpi-box text-center p-3 border rounded">
+                                    <h2 class="fw-bold text-primary m-0"><t t-esc="state.session.total_visits"/></h2>
+                                    <span class="text-muted small fw-bold">Total Visits Logged</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="kpi-box text-center p-3 border rounded">
+                                    <h2 class="fw-bold text-success m-0"><t t-esc="state.session.productive_visits"/></h2>
+                                    <span class="text-muted small fw-bold">Productive Visits</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex flex-column gap-3">
+                            <button class="btn btn-primary btn-lg w-100 py-3 shadow d-flex align-items-center justify-content-center gap-2 visit-btn"
+                                    t-att-disabled="state.submitting"
+                                    t-on-click="openVisitModal">
+                                <i class="fa fa-plus-circle fs-4"></i>
+                                <span class="fw-bold">LOG CLIENT VISIT</span>
+                            </button>
+
+                            <button class="btn btn-outline-danger btn-lg w-100 py-3 d-flex align-items-center justify-content-center gap-2 checkout-btn"
+                                    t-att-disabled="state.submitting"
+                                    t-on-click="onCheckOut">
+                                <t t-if="state.submitting">
+                                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                                    <span>Locking GPS Checkout...</span>
+                                </t>
+                                <t t-else="">
+                                    <i class="fa fa-sign-out fs-4"></i>
+                                    <span class="fw-bold">CHECK OUT &amp; END DAY</span>
+                                </t>
+                            </button>
+                        </div>
+                    </div>
+                </t>
+            </t>
+
+            <!-- CAMERA SELFIE MODAL -->
+            <t t-if="state.showCamera">
+                <div class="kiosk-modal-overlay">
+                    <div class="kiosk-modal-card p-4 border shadow rounded-3">
+                        <div class="kiosk-modal-header d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="m-0 fw-bold">Camera Verification</h4>
+                            <button type="button" class="btn-close" t-on-click="closeCamera"></button>
+                        </div>
+                        <div class="kiosk-modal-body text-center mb-4">
+                            <p class="text-muted">Take a selfie to complete your workday <t t-esc="state.cameraMode === 'check_in' ? 'check-in' : 'check-out'"/>.</p>
+                            <div class="video-container border rounded bg-dark position-relative overflow-hidden mb-3">
+                                <video t-ref="video" autoplay="true" playsinline="true" style="width: 100%; display: block; transform: scaleX(-1);"></video>
+                                <canvas t-ref="canvas" style="display: none;"></canvas>
+                            </div>
+                            <t t-if="state.errorMsg">
+                                <div class="alert alert-danger mb-0"><t t-esc="state.errorMsg"/></div>
+                            </t>
+                        </div>
+                        <div class="kiosk-modal-footer d-flex gap-3">
+                            <button class="btn btn-secondary w-50" t-on-click="closeCamera">Cancel</button>
+                            <button class="btn btn-primary w-50 fw-bold" t-on-click="capturePhoto" t-att-disabled="state.errorMsg !== ''">Capture &amp; Verify</button>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <!-- LOG VISIT MODAL -->
+            <t t-if="state.showVisitModal">
+                <div class="kiosk-modal-overlay">
+                    <div class="kiosk-modal-card p-4 border shadow rounded-3">
+                        <div class="kiosk-modal-header d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="m-0 fw-bold text-dark-blue">Log Client Visit</h4>
+                            <button type="button" class="btn-close" t-on-click="closeVisitModal"></button>
+                        </div>
+                        <div class="kiosk-modal-body mb-4">
+                            <p class="text-muted small mb-3">Entering details will create/update a Prospect category contact in Odoo.</p>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Company Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="e.g. Acme Corporation" t-att-value="state.companyName" t-on-input="onCompanyNameInput"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Contact Person Name</label>
+                                <input type="text" class="form-control" placeholder="e.g. John Doe" t-att-value="state.contactName" t-on-input="onContactNameInput"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" placeholder="e.g. +1234567890" t-att-value="state.phone" t-on-input="onPhoneInput"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Visit Notes</label>
+                                <textarea class="form-control" rows="3" placeholder="Enter feedback, client requirements, or context..." t-att-value="state.notes" t-on-input="onNotesInput"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Visit Photo <span class="text-danger">*</span></label>
+                                <div class="visit-photo-container border rounded bg-light p-3 text-center position-relative">
+                                    <t t-if="state.visitPhoto">
+                                        <img t-att-src="'data:image/jpeg;base64,' + state.visitPhoto" class="img-fluid rounded mb-2" style="max-height: 150px;"/>
+                                        <div>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" t-on-click="startVisitCamera">
+                                                <i class="fa fa-refresh me-1"></i> Retake Photo
+                                            </button>
+                                        </div>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-if="state.showVisitCamera">
+                                            <div class="video-container border rounded bg-dark position-relative overflow-hidden mb-2" style="max-height: 200px;">
+                                                <video t-ref="visitVideo" autoplay="true" playsinline="true" style="width: 100%; display: block; transform: scaleX(-1);"></video>
+                                                <canvas t-ref="visitCanvas" style="display: none;"></canvas>
+                                            </div>
+                                            <div class="d-flex gap-2 justify-content-center">
+                                                <button type="button" class="btn btn-primary btn-sm" t-on-click="captureVisitPhoto">
+                                                    <i class="fa fa-camera me-1"></i> Capture Photo
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm" t-on-click="stopVisitCamera">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="py-4 text-muted">
+                                                <i class="fa fa-camera fs-2 mb-2 d-block text-secondary"></i>
+                                                <button type="button" class="btn btn-primary btn-sm" t-on-click="startVisitCamera">
+                                                    <i class="fa fa-camera me-1"></i> Take Visit Photo
+                                                </button>
+                                            </div>
+                                        </t>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kiosk-modal-footer d-flex gap-3">
+                            <button class="btn btn-secondary w-50" t-on-click="closeVisitModal">Cancel</button>
+                            <button class="btn btn-primary w-50 fw-bold" t-on-click="submitVisit" t-att-disabled="state.submitting">
+                                <t t-if="state.submitting">
+                                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                                </t>
+                                <t t-else="">
+                                    Complete Visit
+                                </t>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

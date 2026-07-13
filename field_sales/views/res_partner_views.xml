@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherited Partner Form View -->
+    <record id="view_partner_form_inherit_field_sales" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.field.sales</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page string="Field Sales Visits" name="field_sales_visits" groups="field_sales.group_salesperson">
+                    <group>
+                        <field name="is_field_lead" string="Is Field Lead" readonly="1"/>
+                    </group>
+                    <field name="field_sales_visit_ids" readonly="1">
+                        <list>
+                            <field name="session_id"/>
+                            <field name="check_in_time"/>
+                            <field name="check_out_time"/>
+                            <field name="duration" widget="float_time"/>
+                            <field name="notes"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Window Action for Prospects -->
+    <record id="action_field_sales_leads" model="ir.actions.act_window">
+        <field name="name">Field Prospects</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_field_lead', '=', True)]</field>
+        <field name="context">{'default_is_field_lead': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No prospects captured on the field yet.
+            </p>
+            <p>
+                When representatives log field visits, prospects will automatically appear here.
+            </p>
+        </field>
+    </record>
+</odoo>

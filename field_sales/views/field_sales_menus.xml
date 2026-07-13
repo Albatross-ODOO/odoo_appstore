@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Client Action for Kiosk Dashboard -->
+    <record id="action_field_sales_kiosk_client_action" model="ir.actions.client">
+        <field name="name">Field Kiosk Dashboard</field>
+        <field name="tag">field_sales_kiosk_action</field>
+        <field name="target">main</field>
+    </record>
+
+    <!-- Root Menu -->
+    <menuitem id="menu_field_sales_root"
+              name="Field Sales"
+              sequence="25"/>
+
+    <!-- Submenus -->
+    <menuitem id="menu_field_sales_dashboard"
+              name="Kiosk Dashboard"
+              parent="menu_field_sales_root"
+              action="action_field_sales_kiosk_client_action"
+              sequence="10"/>
+
+    <menuitem id="menu_field_sales_activities"
+              name="Activities"
+              parent="menu_field_sales_root"
+              sequence="20"/>
+
+    <!-- Menus for Session & Visit (window actions are defined in their respective view files) -->
+    <menuitem id="menu_field_sales_session"
+              name="Work Sessions"
+              parent="menu_field_sales_activities"
+              action="action_field_sales_session"
+              sequence="10"/>
+
+    <menuitem id="menu_field_sales_visit"
+              name="Client Visits"
+              parent="menu_field_sales_activities"
+              action="action_field_sales_visit"
+              sequence="20"/>
+
+    <menuitem id="menu_field_sales_leads"
+              name="Prospects"
+              parent="menu_field_sales_root"
+              action="action_field_sales_leads"
+              sequence="30"/>
+</odoo>

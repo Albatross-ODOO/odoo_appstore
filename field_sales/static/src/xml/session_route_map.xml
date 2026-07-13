@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="field_sales.SessionRouteMap">
+        <div class="o_field_widget o_session_route_map d-block w-100">
+            <div t-ref="mapContainer" class="route-map-container" style="height: 600px; width: 100%;"/>
+        </div>
+    </t>
+
+</templates>
