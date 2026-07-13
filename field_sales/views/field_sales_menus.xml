@@ -10,6 +10,7 @@
     <!-- Root Menu -->
     <menuitem id="menu_field_sales_root"
               name="Field Sales"
+              web_icon="field_sales,static/description/icon.png"
               sequence="25"/>
 
     <!-- Submenus -->

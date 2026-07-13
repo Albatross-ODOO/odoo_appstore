@@ -13,12 +13,10 @@
         - Manager dashboards and End-of-Day PDF reporting
     """,
     'author': 'Albatross',
-    'website': 'https://github.com/antigravity',
     'license': 'OPL-1',
-    'price': 49.00,
+    'price': 19.99,
     'currency': 'EUR',
 
-    # ✅ IMPORTANT
     'depends': ['base', 'web'],
 
     'data': [
