@@ -144,26 +144,6 @@ export class RouteMap extends Component {
             }, 500);
 
             console.log("✅ Map loaded successfully with dynamic trajectory points.");
-
-            // Recursive diagnostic loop to trace parent dimensions and styles
-            setInterval(() => {
-                const rect = mapContainer.getBoundingClientRect();
-                console.log("🔍 DIAGNOSTIC - Map Container Rect:", rect.width, "x", rect.height, 
-                            "Offset:", mapContainer.offsetWidth, "x", mapContainer.offsetHeight, 
-                            "Computed Style display/position/visibility:", 
-                            window.getComputedStyle(mapContainer).display,
-                            window.getComputedStyle(mapContainer).position,
-                            window.getComputedStyle(mapContainer).visibility);
-                
-                let parent = mapContainer.parentElement;
-                let depth = 0;
-                while (parent && parent !== document.body && depth < 10) {
-                    const pRect = parent.getBoundingClientRect();
-                    console.log(`  [Depth ${depth}] Parent: <${parent.tagName.toLowerCase()}> class="${parent.className}" Rect: ${pRect.width}x${pRect.height} Display: ${window.getComputedStyle(parent).display}`);
-                    parent = parent.parentElement;
-                    depth++;
-                }
-            }, 2000);
         });
 
         onWillUnmount(() => {
