@@ -68,7 +68,7 @@ class FieldSalesVisit(models.Model):
 
         # Search existing partner by phone or contact details
         existing_partner = Partner.search([
-            '|', ('phone', '=', self.phone), ('mobile', '=', self.phone)
+            ('phone', '=', self.phone)
         ], limit=1)
 
         if existing_partner:
