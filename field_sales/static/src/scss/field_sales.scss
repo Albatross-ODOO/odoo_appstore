@@ -110,17 +110,37 @@
     backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    overflow-y: auto;
     z-index: 1050;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
 }
 
 .kiosk-modal-card {
-    background: #ffffff;
+    background: #ffffff !important;
     width: 100%;
     max-width: 440px;
+    max-height: 85vh;
     border-radius: 16px !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.kiosk-modal-header {
+    flex: 0 0 auto;
+}
+
+.kiosk-modal-body {
+    flex: 1 1 auto;
+    overflow-y: auto !important;
+    padding-right: 6px;
+}
+
+.kiosk-modal-footer {
+    flex: 0 0 auto;
 }
 
 .video-container {
@@ -131,15 +151,30 @@
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
 }
 
-.form-control {
+.field-sales-kiosk-container input,
+.field-sales-kiosk-container textarea,
+.field-sales-kiosk-container .form-control {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    opacity: 1 !important;
     border-radius: 10px;
     padding: 0.6rem 0.8rem;
     border: 1px solid #cbd5e1;
 }
 
-.form-control:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+.field-sales-kiosk-container input:focus,
+.field-sales-kiosk-container textarea:focus,
+.field-sales-kiosk-container .form-control:focus {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    opacity: 1 !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+}
+
+.form-label {
+    color: #334155 !important;
+    font-weight: 600 !important;
 }
 
 /* Route Map layout rules */
