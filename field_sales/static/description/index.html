@@ -1,1302 +1,587 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Field Sales Activity & Geolocation Tracking</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #0F52BA;
-            --primary-gradient: linear-gradient(135deg, #0f52ba 0%, #1e88e5 100%);
-            --secondary: #00A86B;
-            --secondary-gradient: linear-gradient(135deg, #00A86B 0%, #00d284 100%);
-            --dark: #0F172A;
-            --light: #F8FAFC;
-            --muted: #64748B;
-            --border: #E2E8F0;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --card-shadow: 0 10px 30px -5px rgba(15, 82, 186, 0.08), 0 4px 12px -5px rgba(0, 0, 0, 0.03);
-            --hover-shadow: 0 20px 40px -5px rgba(15, 82, 186, 0.15), 0 8px 20px -5px rgba(0, 0, 0, 0.05);
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
-            background-color: #FAFAFC;
-            color: #1E293B;
-            line-height: 1.6;
-        }
-
-        .fs-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
-
-        /* Hero Section */
-        .fs-hero {
-            background: var(--dark);
-            border-radius: 24px;
-            padding: 4rem 3rem;
-            color: #ffffff;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3);
-            margin-bottom: 3.5rem;
-        }
-
-        .fs-hero::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(15, 82, 186, 0.25) 0%, rgba(0, 168, 107, 0.05) 50%, rgba(0,0,0,0) 70%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .fs-hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 650px;
-        }
-
-        .fs-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #60A5FA;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1.5rem;
-        }
-
-        .fs-badge-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--secondary);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--secondary);
-        }
-
-        .fs-hero-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.2rem;
-            background: linear-gradient(135deg, #FFFFFF 40%, #93C5FD 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .fs-hero-subtitle {
-            font-size: 1.15rem;
-            color: #94A3B8;
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-
-        .fs-btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .fs-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 28px;
-            font-weight: 600;
-            border-radius: 12px;
-            transition: all 0.25s ease;
-            text-decoration: none !important;
-            font-size: 0.95rem;
-            cursor: pointer;
-        }
-
-        .fs-btn-primary {
-            background: var(--primary-gradient);
-            color: #ffffff !important;
-            box-shadow: 0 4px 15px rgba(15, 82, 186, 0.35);
-        }
-
-        .fs-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(15, 82, 186, 0.45);
-        }
-
-        .fs-btn-secondary {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff !important;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .fs-btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        /* Banner section */
-        .fs-banner-wrapper {
-            margin-top: -50px;
-            padding: 0 1.5rem;
-            position: relative;
-            z-index: 10;
-            margin-bottom: 4rem;
-        }
-
-        .fs-banner-card {
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            background: #ffffff;
-        }
-
-        .fs-banner-img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Section styling */
-        .fs-section-title {
-            font-family: 'Outfit', sans-serif;
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.01em;
-        }
-
-        .fs-section-subtitle {
-            text-align: center;
-            color: var(--muted);
-            font-size: 1.05rem;
-            max-width: 600px;
-            margin: 0 auto 3.5rem auto;
-        }
-
-        /* Feature Grid */
-        .fs-feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-bottom: 5rem;
-        }
-
-        .fs-feature-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 2.2rem;
-            border: 1px solid var(--border);
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .fs-feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: transparent;
-            transition: background 0.3s ease;
-        }
-
-        .fs-feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-shadow);
-            border-color: rgba(15, 82, 186, 0.15);
-        }
-
-        .fs-feature-card:hover::before {
-            background: var(--primary-gradient);
-        }
-
-        .fs-icon-container {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .fs-icon-primary {
-            background: rgba(15, 82, 186, 0.08);
-            color: var(--primary);
-        }
-
-        .fs-icon-secondary {
-            background: rgba(0, 168, 107, 0.08);
-            color: var(--secondary);
-        }
-
-        .fs-feature-card:hover .fs-icon-container {
-            transform: scale(1.05);
-        }
-
-        .fs-feature-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 0.8rem;
-        }
-
-        .fs-feature-desc {
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        /* Info Showcase Section */
-        .fs-showcase {
-            background: #ffffff;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            padding: 3.5rem;
-            margin-bottom: 5rem;
-            box-shadow: var(--card-shadow);
-        }
-
-        .fs-grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        @media (max-width: 991px) {
-            .fs-grid-2 {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-            .fs-hero {
-                padding: 3rem 2rem;
-            }
-            .fs-hero-title {
-                font-size: 2.3rem;
-            }
-            .fs-showcase {
-                padding: 2rem;
-            }
-        }
-
-        .fs-showcase-content h3 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 1.2rem;
-        }
-
-        .fs-showcase-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 2rem 0;
-        }
-
-        .fs-showcase-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 1rem;
-            font-size: 0.98rem;
-            color: #334155;
-        }
-
-        .fs-showcase-item svg {
-            flex-shrink: 0;
-            margin-top: 3px;
-        }
-
-        /* Steps workflow */
-        .fs-workflow {
-            background: linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%);
-            border-radius: 24px;
-            padding: 4rem 2rem;
-            margin-bottom: 5rem;
-            border: 1px solid rgba(15, 82, 186, 0.05);
-        }
-
-        .fs-steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-            position: relative;
-        }
-
-        .fs-step {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .fs-step-num {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary-gradient);
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin: 0 auto 1.2rem auto;
-            box-shadow: 0 0 0 6px rgba(15, 82, 186, 0.1);
-        }
-
-        .fs-step-title {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--dark);
-            margin-bottom: 0.6rem;
-        }
-
-        .fs-step-desc {
-            font-size: 0.9rem;
-            color: var(--muted);
-        }
-
-        /* Tech specs and pricing */
-        .fs-specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 5rem;
-        }
-
-        .fs-spec-box {
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.8rem;
-            box-shadow: var(--card-shadow);
-        }
-
-        .fs-spec-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 1.2rem;
-            border-bottom: 2px solid #F1F5F9;
-            padding-bottom: 0.6rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .fs-spec-table {
-            width: 100%;
-            font-size: 0.92rem;
-        }
-
-        .fs-spec-table td {
-            padding: 8px 0;
-            border-bottom: 1px dashed #F1F5F9;
-        }
-
-        .fs-spec-table td:first-child {
-            color: var(--muted);
-            font-weight: 500;
-        }
-
-        .fs-spec-table td:last-child {
-            text-align: right;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .fs-spec-table tr:last-child td {
-            border: none;
-        }
-
-        /* Footer banner */
-        .fs-footer {
-            background: var(--primary-gradient);
-            border-radius: 24px;
-            padding: 3.5rem;
-            color: #ffffff;
-            text-align: center;
-            box-shadow: 0 15px 40px rgba(15, 82, 186, 0.25);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .fs-footer::before {
-            content: '';
-            position: absolute;
-            bottom: -50%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .fs-footer-content {
-            position: relative;
-            z-index: 2;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .fs-footer-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .fs-footer-desc {
-            font-size: 1.05rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        /* CSS-Only Interactive Screenshot Tabs */
-        .fs-walkthrough-section {
-            margin-bottom: 5rem;
-        }
-
-        .fs-tab-system {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            box-shadow: var(--card-shadow);
-        }
-
-        /* Hide radio inputs */
-        .fs-tab-input {
-            display: none;
-        }
-
-        /* Tab Navigation */
-        .fs-tab-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            border-bottom: 2px solid #F1F5F9;
-            padding-bottom: 1.2rem;
-        }
-
-        .fs-tab-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: #F8FAFC;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--muted);
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-
-        .fs-tab-label:hover {
-            background: #F1F5F9;
-            color: var(--dark);
-        }
-
-        /* Check state styling */
-        #fs-tab-1:checked ~ .fs-tab-nav label[for="fs-tab-1"],
-        #fs-tab-2:checked ~ .fs-tab-nav label[for="fs-tab-2"],
-        #fs-tab-3:checked ~ .fs-tab-nav label[for="fs-tab-3"],
-        #fs-tab-4:checked ~ .fs-tab-nav label[for="fs-tab-4"] {
-            background: var(--primary-gradient);
-            color: #ffffff;
-            border-color: transparent;
-            box-shadow: 0 4px 12px rgba(15, 82, 186, 0.2);
-        }
-
-        /* Tab Panels */
-        .fs-tab-panels {
-            position: relative;
-        }
-
-        .fs-tab-panel {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Show checked panel */
-        #fs-tab-1:checked ~ .fs-tab-panels #fs-panel-1,
-        #fs-tab-2:checked ~ .fs-tab-panels #fs-panel-2,
-        #fs-tab-3:checked ~ .fs-tab-panels #fs-panel-3,
-        #fs-tab-4:checked ~ .fs-tab-panels #fs-panel-4 {
-            display: block;
-        }
-
-        /* Browser Mockup Frame */
-        .fs-browser-mockup {
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.1);
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-
-        .fs-browser-header {
-            background: #F8FAFC;
-            border-bottom: 1px solid var(--border);
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .fs-browser-dots {
-            display: flex;
-            gap: 6px;
-        }
-
-        .fs-browser-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .fs-browser-dot-red { background: #EF4444; }
-        .fs-browser-dot-yellow { background: #F59E0B; }
-        .fs-browser-dot-green { background: #10B981; }
-
-        .fs-browser-address {
-            flex-grow: 1;
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 4px 12px;
-            font-size: 0.78rem;
-            color: var(--muted);
-            text-align: center;
-            max-width: 500px;
-            margin: 0 auto;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .fs-browser-content {
-            background: #F1F5F9;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .fs-browser-image-wrapper {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            background: #ffffff;
-        }
-
-        .fs-browser-image-wrapper img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .fs-browser-image-wrapper:hover img {
-            transform: scale(1.015);
-        }
-
-        /* Panel Grid Layout */
-        .fs-panel-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 2.5rem;
-            align-items: flex-start;
-        }
-
-        .fs-panel-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .fs-panel-details h3 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin: 0 0 0.5rem 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .fs-panel-details p {
-            color: var(--muted);
-            font-size: 0.98rem;
-            margin: 0;
-        }
-
-        .fs-step-indicator-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .fs-step-indicator-item {
-            background: #F8FAFC;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1rem;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-
-        .fs-step-indicator-num {
-            background: rgba(15, 82, 186, 0.1);
-            color: var(--primary);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            flex-shrink: 0;
-        }
-
-        .fs-step-indicator-text h4 {
-            margin: 0 0 4px 0;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-
-        .fs-step-indicator-text p {
-            margin: 0;
-            font-size: 0.88rem;
-            color: var(--muted);
-            line-height: 1.4;
-        }
-
-        @media (max-width: 991px) {
-            .fs-panel-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
-<div class="fs-container">
-
-    <!-- Hero Area -->
-    <div class="fs-hero">
-        <div class="fs-hero-content">
-            <div class="fs-badge">
-                <span class="fs-badge-dot"></span>
-                Odoo 18 Ready
-            </div>
-            <h1 class="fs-hero-title">Field Sales Activity & Geolocation Tracking</h1>
-            <p class="fs-hero-subtitle">Empower your field agents with kiosk-style GPS check-ins, route trajectories, photo verifications, and automated lead capture, all managed natively inside Odoo.</p>
-            <div class="fs-btn-group">
-                <a href="#features" class="fs-btn fs-btn-primary">Explore Features</a>
-                <a href="#setup" class="fs-btn fs-btn-secondary">Configuration</a>
-            </div>
+<!--
+  Field Sales Activity & Geolocation Tracking — Odoo App Store Presentation Page
+  Designed to match Odoo App Store standards & reference layout (ktx_satgt_reports).
+-->
+<style>
+  .fs-app { font-family: 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; color: #1e293b; background: #ffffff; }
+  .fs-app .fs-stat { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .fs-app .fs-stat:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15, 82, 186, 0.18) !important; }
+  .fs-app .fs-card { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+  .fs-app .fs-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(15, 82, 186, 0.15) !important; border-color: #93c5fd !important; }
+  .fs-app .fs-card:hover .fs-ico { transform: scale(1.12) rotate(-4deg); }
+  .fs-app .fs-ico { transition: transform 0.25s ease; }
+  .fs-app .fs-img-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .fs-app .fs-img-card:hover { transform: translateY(-4px); box-shadow: 0 20px 45px rgba(15, 23, 42, 0.14) !important; }
+  .fs-app .fs-img-zoom { transition: transform 0.4s ease; }
+  .fs-app .fs-img-card:hover .fs-img-zoom { transform: scale(1.015); }
+  @keyframes fsRise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .fs-app .fs-card, .fs-app .fs-step { animation: fsRise 0.55s ease both; }
+</style>
+
+<div class="fs-app" style="background:#ffffff;">
+<div class="container" style="max-width:1080px;">
+
+  <!-- HERO BANNER -->
+  <div class="text-center pt-4 pb-2">
+    <img src="banner.png" alt="Field Sales Activity & Geolocation Tracking" class="img-fluid rounded"
+         style="max-width:100%; height:auto; border-radius:16px; box-shadow:0 18px 50px rgba(15,82,186,0.22);"
+         onerror="this.src='../../static/description/banner.png'"/>
+  </div>
+
+  <!-- SPECIAL PRICE / LAUNCH PROMO CARD -->
+  <div class="rounded my-4 p-4 text-center" style="background:#f0f7ff; border:2px solid #2563eb;">
+    <div style="color:#1d4ed8; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase;">
+      &#9733; Special Launch Offer — Odoo 18 Ready &#9733;
+    </div>
+    <div style="margin-top:8px; display:flex; align-items:baseline; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <span style="font-size:48px; font-weight:900; color:#0f52ba; line-height:1;">€19.99</span>
+      <span style="font-size:16px; color:#6b7280; font-weight:500; text-decoration:line-through;">Regular Price: €49.99</span>
+    </div>
+    <div style="margin-top:8px;">
+      <span style="background:#dbeafe; color:#1e40af; font-size:13px; font-weight:700; padding:4px 14px; border-radius:999px; margin-right:8px;">
+        Odoo 18.0 Community &amp; Enterprise
+      </span>
+      <span style="background:#d1fae5; color:#065f46; font-size:13px; font-weight:700; padding:4px 14px; border-radius:999px;">
+        60% OFF Launch Discount
+      </span>
+    </div>
+    <p style="color:#475569; font-size:13px; margin-top:10px; margin-bottom:0;">
+      Includes complete source code, lifetime updates, and dedicated technical support.<br/>
+      <strong>One-time purchase — permanent use on your Odoo instance.</strong>
+    </p>
+  </div>
+
+  <!-- HIGHLIGHT ALERTS / BADGES -->
+  <div class="rounded p-3 my-3" style="background:#eff6ff; border-left:4px solid #2563eb; display:flex; gap:14px; align-items:flex-start;">
+    <span style="font-size:24px; line-height:1.2;">&#128241;</span>
+    <div>
+      <div style="font-weight:700; color:#1e40af; font-size:14px;">Touch-Friendly Mobile Kiosk &amp; GPS Tracking</div>
+      <div style="color:#374151; font-size:13px; margin-top:4px;">
+        Empower sales agents with a clean mobile web portal for <strong>instant selfie check-ins</strong>, <strong>high-precision GPS coordinate capture</strong>, and <strong>mandatory storefront visit verification</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="rounded p-3 my-3" style="background:#f0fdf4; border-left:4px solid #10b981; display:flex; gap:14px; align-items:flex-start;">
+    <span style="font-size:24px; line-height:1.2;">&#128506;</span>
+    <div>
+      <div style="font-weight:700; color:#065f46; font-size:14px;">Interactive Leaflet Route Trajectories &amp; Auto-Leads</div>
+      <div style="color:#374151; font-size:13px; margin-top:4px;">
+        Visualize exact travel routes of field reps on an <strong>interactive map</strong>, automatically generate <strong>Res.Partner leads</strong> with custom tags, and export elegant <strong>End-of-Day PDF reports</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS COUNTER GRID (4 CARDS) -->
+  <div class="row g-3 text-center py-4">
+    <div class="col-6 col-md-3">
+      <div class="fs-stat rounded p-4 h-100" style="background:#0f52ba; color:#fff;">
+        <div style="font-size:28px; font-weight:800; line-height:1;">GPS</div>
+        <div style="font-size:13px; margin-top:6px;">High-Precision Tracking</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="fs-stat rounded p-4 h-100" style="background:#10b981; color:#fff;">
+        <div style="font-size:28px; font-weight:800; line-height:1;">100%</div>
+        <div style="font-size:13px; margin-top:6px;">Selfie &amp; Photo Proof</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="fs-stat rounded p-4 h-100" style="background:#f59e0b; color:#fff;">
+        <div style="font-size:28px; font-weight:800; line-height:1;">MAP</div>
+        <div style="font-size:13px; margin-top:6px;">Interactive Leaflet Route</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="fs-stat rounded p-4 h-100" style="background:#7c3aed; color:#fff;">
+        <div style="font-size:28px; font-weight:800; line-height:1;">PDF</div>
+        <div style="font-size:13px; margin-top:6px;">Automated EOD Reports</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO SECTION -->
+  <div class="text-center py-4">
+    <div style="color:#0f52ba; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase;">FIELD SALES &amp; GEOLOCATION ACTIVITY TRACKING</div>
+    <h2 style="color:#1e3a8a; font-weight:800; font-size:30px; margin-top:6px;">Complete Control &amp; Real-Time Visibility Over Field Sales</h2>
+    <p class="mx-auto" style="color:#374151; font-size:17px; max-width:840px; margin-top:12px;">
+      Transform how your remote sales team operates. <strong>Field Sales Activity &amp; Tracking</strong> equips reps with a touch-friendly kiosk portal to log check-ins, record client visits with photo proofs, auto-tag new sales leads, and provide managers with interactive route trajectories and PDF session audits.
+    </p>
+  </div>
+
+  <!-- WORKFLOW STEPS -->
+  <div class="text-center pt-3 pb-2">
+    <div style="color:#0f52ba; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase;">WORKFLOW</div>
+    <h2 style="color:#1e3a8a; font-weight:800; font-size:26px; margin-top:6px;">From Check-In to End-of-Day PDF Report in 3 Steps</h2>
+  </div>
+  <div class="row g-3 pb-4">
+    <div class="col-12 col-md-4">
+      <div class="fs-card rounded p-4 h-100 text-center" style="background:#fff; border:1px solid #bfdbfe;">
+        <div class="rounded-circle d-inline-block text-center" style="background:#eff6ff; color:#0f52ba; width:50px; height:50px; line-height:50px; font-size:22px;"><strong>1</strong></div>
+        <h4 style="color:#1e3a8a; font-size:16px; margin-top:12px; font-weight:700;">Start Shift &amp; Geolocation</h4>
+        <p style="font-size:13px; color:#4b5563; margin:0;">Agent opens mobile kiosk, captures a selfie verification photo, and locks precise GPS start coordinates with signal accuracy.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="fs-card rounded p-4 h-100 text-center" style="background:#fff; border:1px solid #bfdbfe;">
+        <div class="rounded-circle d-inline-block text-center" style="background:#d1fae5; color:#10b981; width:50px; height:50px; line-height:50px; font-size:22px;"><strong>2</strong></div>
+        <h4 style="color:#1e3a8a; font-size:16px; margin-top:12px; font-weight:700;">Log Visits &amp; Storefront Photos</h4>
+        <p style="font-size:13px; color:#4b5563; margin:0;">Record client details, attach mandatory storefront/meeting photos, auto-tag leads in Odoo Contacts, and update session counters.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="fs-card rounded p-4 h-100 text-center" style="background:#0f52ba;">
+        <div class="rounded-circle d-inline-block text-center" style="background:#fff; color:#0f52ba; width:50px; height:50px; line-height:50px; font-size:22px;"><strong>3</strong></div>
+        <h4 style="color:#fff; font-size:16px; margin-top:12px; font-weight:700;">Check-Out &amp; Review Trajectory</h4>
+        <p style="font-size:13px; color:#dbeafe; margin:0;">Finalize shift with checkout selfie. Haversine distance engine checks shift deviation while managers audit Leaflet route maps &amp; export PDFs.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CORE FEATURES GRID -->
+  <div class="text-center pt-4 pb-2">
+    <div style="color:#0f52ba; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase;">KEY FEATURES</div>
+    <h2 style="color:#1e3a8a; font-weight:800; font-size:30px; margin-top:6px;">Everything You Need for Field Sales Management</h2>
+  </div>
+  <div class="row g-4 pb-4">
+
+    <div class="col-12 col-md-4">
+      <div class="fs-card rounded p-4 h-100 shadow-sm" style="background:#fff; border:1px solid #e2e8f0;">
+        <div class="fs-ico rounded d-inline-block text-center" style="background:#dbeafe; width:50px; height:50px; line-height:50px; font-size:20px; color:#0f52ba;"><i class="fa fa-map-marker"></i></div>
+        <h3 style="font-size:16px; font-weight:700; margin-top:14px; color:#1f2937;">GPS Geolocation Capture</h3>
+        <p style="font-size:13px; color:#4b5563;">Locks precise latitude, longitude, and accuracy radius during shift start, end, and individual client visits to ensure 100% location authenticity.</p>
+        <div style="margin-top:8px;">
+          <span style="background:#dbeafe; color:#1e40af; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;">HTML5 Geolocation</span>
+          <span style="background:#d1fae5; color:#065f46; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px; margin-left:4px;">Signal Radius</span>
         </div>
+      </div>
     </div>
 
-    <!-- Main Banner Image Showcase -->
-    <div class="fs-banner-wrapper">
-        <div class="fs-banner-card">
-            <img class="fs-banner-img" src="banner.png" alt="Field Sales and Geolocation Tracking Dashboard Mockup">
+    <div class="col-12 col-md-4">
+      <div class="fs-card rounded p-4 h-100 shadow-sm" style="background:#fff; border:1px solid #e2e8f0;">
+        <div class="fs-ico rounded d-inline-block text-center" style="background:#d1fae5; width:50px; height:50px; line-height:50px; font-size:20px; color:#10b981;"><i class="fa fa-camera"></i></div>
+        <h3 style="font-size:16px; font-weight:700; margin-top:14px; color:#1f2937;">Mandatory Photo Verification</h3>
+        <p style="font-size:13px; color:#4b5563;">Eliminates buddy check-ins and fake visits by requiring selfie capture on check-in/out and storefront/client photo proof during meetings.</p>
+        <div style="margin-top:8px;">
+          <span style="background:#d1fae5; color:#065f46; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;">Selfie Proof</span>
+          <span style="background:#ede9fe; color:#5b21b6; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px; margin-left:4px;">Storefront Photo</span>
         </div>
+      </div>
     </div>
 
-    <!-- Section: Features Header -->
-    <h2 class="fs-section-title" id="features">Uncompromised Field Visibility</h2>
-    <p class="fs-section-subtitle">A feature-complete mobile dashboard and manager tracking system designed for modern remote sales forces.</p>
-
-    <!-- Features Grid -->
-    <div class="fs-feature-grid">
-        <!-- Feature 1 -->
-        <div class="fs-feature-card">
-            <div class="fs-icon-container fs-icon-primary">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            </div>
-            <h3 class="fs-feature-title">GPS Geolocation Tracking</h3>
-            <p class="fs-feature-desc">Captures high-accuracy GPS coordinates during check-ins, check-outs, and client visits, storing signal accuracy in meters.</p>
+    <div class="col-12 col-md-4">
+      <div class="fs-card rounded p-4 h-100 shadow-sm" style="background:#fff; border:1px solid #e2e8f0;">
+        <div class="fs-ico rounded d-inline-block text-center" style="background:#fef3c7; width:50px; height:50px; line-height:50px; font-size:20px; color:#f59e0b;"><i class="fa fa-globe"></i></div>
+        <h3 style="font-size:16px; font-weight:700; margin-top:14px; color:#1f2937;">Leaflet Route Trajectory Map</h3>
+        <p style="font-size:13px; color:#4b5563;">Interactive map view plotting rep movements chronologically. Visual pins display check-in start, client visit locations, and check-out endpoints.</p>
+        <div style="margin-top:8px;">
+          <span style="background:#fef3c7; color:#92400e; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;">Leaflet.js</span>
+          <span style="background:#dbeafe; color:#1e40af; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px; margin-left:4px;">Route Trajectory</span>
         </div>
-
-        <!-- Feature 2 -->
-        <div class="fs-feature-card">
-            <div class="fs-icon-container fs-icon-secondary">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-            </div>
-            <h3 class="fs-feature-title">Mandatory Photo Verifications</h3>
-            <p class="fs-feature-desc">Requires reps to take a selfie check-in, check-out, and store-front client photos to guarantee presence and eliminate fraud.</p>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="fs-feature-card">
-            <div class="fs-icon-container fs-icon-primary">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-            </div>
-            <h3 class="fs-feature-title">Interactive Route Trajectory</h3>
-            <p class="fs-feature-desc">Visualizes sales rep paths on an interactive Leaflet map interface, showing chronological checkpoints and route navigation.</p>
-        </div>
-
-        <!-- Feature 4 -->
-        <div class="fs-feature-card">
-            <div class="fs-icon-container fs-icon-secondary">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </div>
-            <h3 class="fs-feature-title">Auto-Lead Generation</h3>
-            <p class="fs-feature-desc">Automatically creates or updates Res.Partner contacts with a customizable "Field Lead" category tag for seamless sales pipelines.</p>
-        </div>
-
-        <!-- Feature 5 -->
-        <div class="fs-feature-card">
-            <div class="fs-icon-container fs-icon-primary">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            </div>
-            <h3 class="fs-feature-title">Verification Compliance Engine</h3>
-            <p class="fs-feature-desc">Integrates a background Haversine algorithm checking if check-out occurred within 200m of check-in, highlighting location integrity.</p>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="fs-feature-card">
-            <div class="fs-icon-container fs-icon-secondary">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            </div>
-            <h3 class="fs-feature-title">End-of-Day PDF Reports</h3>
-            <p class="fs-feature-desc">Generates robust, presentation-ready PDF visit logs and session summaries with photo proofs and direct Google Maps location links.</p>
-        </div>
+      </div>
     </div>
 
-    <!-- Interactive Tour Section -->
-    <h2 class="fs-section-title">Interactive Module Walkthrough</h2>
-    <p class="fs-section-subtitle">Take a visual tour of the Field Sales agent workflow and the manager's auditing dashboard.</p>
-
-    <div class="fs-walkthrough-section">
-        <div class="fs-tab-system">
-            <!-- Radio Inputs for Tab Control -->
-            <input type="radio" id="fs-tab-1" name="fs-tab-group" class="fs-tab-input" checked>
-            <input type="radio" id="fs-tab-2" name="fs-tab-group" class="fs-tab-input">
-            <input type="radio" id="fs-tab-3" name="fs-tab-group" class="fs-tab-input">
-            <input type="radio" id="fs-tab-4" name="fs-tab-group" class="fs-tab-input">
-
-            <!-- Tab Buttons -->
-            <div class="fs-tab-nav">
-                <label for="fs-tab-1" class="fs-tab-label">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
-                    1. Kiosk Check-In
-                </label>
-                <label for="fs-tab-2" class="fs-tab-label">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg>
-                    2. Logging Visits
-                </label>
-                <label for="fs-tab-3" class="fs-tab-label">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    3. Checkout & KPIs
-                </label>
-                <label for="fs-tab-4" class="fs-tab-label">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-                    4. Manager Audit & Map
-                </label>
-            </div>
-
-            <!-- Tab Content Panels -->
-            <div class="fs-tab-panels">
-                
-                <!-- Panel 1: Kiosk Check-In -->
-                <div class="fs-tab-panel" id="fs-panel-1">
-                    <div class="fs-panel-grid">
-                        <div>
-                            <!-- Mockup 1 -->
-                            <div class="fs-browser-mockup">
-                                <div class="fs-browser-header">
-                                    <div class="fs-browser-dots">
-                                        <div class="fs-browser-dot fs-browser-dot-red"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-yellow"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-green"></div>
-                                    </div>
-                                    <div class="fs-browser-address">http://yourdomain.odoo.com/field-sales/kiosk</div>
-                                </div>
-                                <div class="fs-browser-content">
-                                    <div class="fs-browser-image-wrapper">
-                                        <img src="img/img1.png" alt="Field Sales Kiosk Landing Page">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Mockup 2 -->
-                            <div class="fs-browser-mockup">
-                                <div class="fs-browser-header">
-                                    <div class="fs-browser-dots">
-                                        <div class="fs-browser-dot fs-browser-dot-red"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-yellow"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-green"></div>
-                                    </div>
-                                    <div class="fs-browser-address">http://yourdomain.odoo.com/field-sales/kiosk/check-in</div>
-                                </div>
-                                <div class="fs-browser-content">
-                                    <div class="fs-browser-image-wrapper">
-                                        <img src="img/img2.png" alt="Camera Selfie Check-In Verification">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="fs-panel-details">
-                            <h3>
-                                <span style="background: rgba(15, 82, 186, 0.1); color: var(--primary); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem;">PHASE 1</span>
-                                Start the Workday
-                            </h3>
-                            <p>Representatives start their day on any mobile or desktop web browser by accessing the clean, responsive kiosk portal. The application ensures accountability from the first minute.</p>
-                            
-                            <div class="fs-step-indicator-list">
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">1</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Lock GPS Check-In Location</h4>
-                                        <p>Clicking "CHECK IN" triggers high-accuracy HTML5 geolocation acquisition, binding the representative's precise start location and GPS signal accuracy directly to their work session.</p>
-                                    </div>
-                                </div>
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">2</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Biometric Selfie Verification</h4>
-                                        <p>An integrated camera viewport automatically initializes, prompting the agent to snap a check-in verification photo. This eliminates buddy check-ins and guarantees physical presence.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel 2: Logging Visits -->
-                <div class="fs-tab-panel" id="fs-panel-2">
-                    <div class="fs-panel-grid">
-                        <div>
-                            <!-- Mockup 3 -->
-                            <div class="fs-browser-mockup">
-                                <div class="fs-browser-header">
-                                    <div class="fs-browser-dots">
-                                        <div class="fs-browser-dot fs-browser-dot-red"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-yellow"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-green"></div>
-                                    </div>
-                                    <div class="fs-browser-address">http://yourdomain.odoo.com/field-sales/kiosk/active</div>
-                                </div>
-                                <div class="fs-browser-content">
-                                    <div class="fs-browser-image-wrapper">
-                                        <img src="img/img3.png" alt="Active Session Dashboard">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Mockup 4 -->
-                            <div class="fs-browser-mockup">
-                                <div class="fs-browser-header">
-                                    <div class="fs-browser-dots">
-                                        <div class="fs-browser-dot fs-browser-dot-red"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-yellow"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-green"></div>
-                                    </div>
-                                    <div class="fs-browser-address">http://yourdomain.odoo.com/field-sales/kiosk/log-visit</div>
-                                </div>
-                                <div class="fs-browser-content">
-                                    <div class="fs-browser-image-wrapper">
-                                        <img src="img/img4.png" alt="Log Client Visit Form Modal">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Mockup 5 -->
-                            <div class="fs-browser-mockup">
-                                <div class="fs-browser-header">
-                                    <div class="fs-browser-dots">
-                                        <div class="fs-browser-dot fs-browser-dot-red"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-yellow"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-green"></div>
-                                    </div>
-                                    <div class="fs-browser-address">http://yourdomain.odoo.com/field-sales/kiosk/visit-photo</div>
-                                </div>
-                                <div class="fs-browser-content">
-                                    <div class="fs-browser-image-wrapper">
-                                        <img src="img/img5.png" alt="Client Visit Photo Capture">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="fs-panel-details">
-                            <h3>
-                                <span style="background: rgba(15, 82, 186, 0.1); color: var(--primary); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem;">PHASE 2</span>
-                                Log Client Visits
-                            </h3>
-                            <p>During the work day, the agent's browser stays on the Active Work Session card. From this central control center, reps can quickly log customer meetings with full contextual details.</p>
-                            
-                            <div class="fs-step-indicator-list">
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">3</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Log Client Visit Details</h4>
-                                        <p>Click "LOG CLIENT VISIT" to open a streamlined modal. Enter company details, contact person, phone number, and meeting notes. The system validates fields in real-time.</p>
-                                    </div>
-                                </div>
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">4</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Capture Storefront Proof</h4>
-                                        <p>To prevent spoofed meetings, agents must snap a live photo of the client storefront, business card, or customer handshake. This binary image is logged directly into Odoo.</p>
-                                    </div>
-                                </div>
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">5</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Automatic Lead Generation</h4>
-                                        <p>Saving a visit automatically creates or links a Prospect in the standard Odoo Contact Directory, attaching a special "Field Lead" category tag for marketing follow-ups.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel 3: Checkout & KPIs -->
-                <div class="fs-tab-panel" id="fs-panel-3">
-                    <div class="fs-panel-grid">
-                        <div>
-                            <!-- Mockup 6 -->
-                            <div class="fs-browser-mockup">
-                                <div class="fs-browser-header">
-                                    <div class="fs-browser-dots">
-                                        <div class="fs-browser-dot fs-browser-dot-red"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-yellow"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-green"></div>
-                                    </div>
-                                    <div class="fs-browser-address">http://yourdomain.odoo.com/field-sales/kiosk/updated-kpis</div>
-                                </div>
-                                <div class="fs-browser-content">
-                                    <div class="fs-browser-image-wrapper">
-                                        <img src="img/img6.png" alt="Updated Kiosk Session KPIs">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Mockup 7 -->
-                            <div class="fs-browser-mockup">
-                                <div class="fs-browser-header">
-                                    <div class="fs-browser-dots">
-                                        <div class="fs-browser-dot fs-browser-dot-red"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-yellow"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-green"></div>
-                                    </div>
-                                    <div class="fs-browser-address">http://yourdomain.odoo.com/field-sales/kiosk/check-out</div>
-                                </div>
-                                <div class="fs-browser-content">
-                                    <div class="fs-browser-image-wrapper">
-                                        <img src="img/img7.png" alt="Checkout Selfie Camera Verification">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="fs-panel-details">
-                            <h3>
-                                <span style="background: rgba(15, 82, 186, 0.1); color: var(--primary); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem;">PHASE 3</span>
-                                Check-Out & End Day
-                            </h3>
-                            <p>At the end of their route, the representative closes their workday. The system updates their key performance metrics and locks down the session parameters.</p>
-                            
-                            <div class="fs-step-indicator-list">
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">6</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Live KPI Metric Feed</h4>
-                                        <p>The dashboard displays real-time statistics including total logged visits and productive check-ins, allowing agents to track their productivity at a glance.</p>
-                                    </div>
-                                </div>
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">7</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Final Check-Out Selfie</h4>
-                                        <p>Clicking "CHECK OUT" triggers the checkout camera modal. A second face verification is captured, alongside end-of-day GPS coordinates to finalize the session data.</p>
-                                    </div>
-                                </div>
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">8</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Deviation Verification Engine</h4>
-                                        <p>Upon check-out, a background Haversine algorithm immediately calculates the geographical distance between check-in and check-out to detect irregular session shifts.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel 4: Manager Audit & Map -->
-                <div class="fs-tab-panel" id="fs-panel-4">
-                    <div class="fs-panel-grid">
-                        <div>
-                            <!-- Mockup 8 -->
-                            <div class="fs-browser-mockup">
-                                <div class="fs-browser-header">
-                                    <div class="fs-browser-dots">
-                                        <div class="fs-browser-dot fs-browser-dot-red"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-yellow"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-green"></div>
-                                    </div>
-                                    <div class="fs-browser-address">http://yourdomain.odoo.com/web#model=field.sales.session&view_type=form</div>
-                                </div>
-                                <div class="fs-browser-content">
-                                    <div class="fs-browser-image-wrapper">
-                                        <img src="img/img8.png" alt="Odoo Backend Manager Audit Form View">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Mockup 9 -->
-                            <div class="fs-browser-mockup">
-                                <div class="fs-browser-header">
-                                    <div class="fs-browser-dots">
-                                        <div class="fs-browser-dot fs-browser-dot-red"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-yellow"></div>
-                                        <div class="fs-browser-dot fs-browser-dot-green"></div>
-                                    </div>
-                                    <div class="fs-browser-address">http://yourdomain.odoo.com/web#action=field_sales.session_route_map</div>
-                                </div>
-                                <div class="fs-browser-content">
-                                    <div class="fs-browser-image-wrapper">
-                                        <img src="img/img9.png" alt="Interactive Leaflet Route Trajectory Map">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="fs-panel-details">
-                            <h3>
-                                <span style="background: rgba(15, 82, 186, 0.1); color: var(--primary); padding: 6px 12px; border-radius: 8px; font-size: 0.9rem;">PHASE 4</span>
-                                Manager Auditing & Maps
-                            </h3>
-                            <p>Managers get full backend auditing capabilities. They can review entire representative session history, verification statuses, and geographic travel logs directly inside Odoo.</p>
-                            
-                            <div class="fs-step-indicator-list">
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">9</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Comprehensive Audit Panel</h4>
-                                        <p>Review check-in/out times, view selfie verification media, access direct Google Maps coordinates links, and view list views of client visits and route telemetry logs.</p>
-                                    </div>
-                                </div>
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">10</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>Leaflet Route Trajectory Path</h4>
-                                        <p>The system traces agent locations throughout the day and plots the chronological path on an interactive Leaflet map tab. Visual pins mark check-in, check-out, and individual client visits.</p>
-                                    </div>
-                                </div>
-                                <div class="fs-step-indicator-item">
-                                    <div class="fs-step-indicator-num">11</div>
-                                    <div class="fs-step-indicator-text">
-                                        <h4>PDF Visit Logs Export</h4>
-                                        <p>Export elegant, print-ready End-of-Day PDF reports with check-in/out summary data, photo proofs, and direct Google Maps hyper-links for physical record-keeping.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <div class="col-12 col-md-4">
+      <div class="fs-card rounded p-4 h-100 shadow-sm" style="background:#fff; border:1px solid #e2e8f0;">
+        <div class="fs-ico rounded d-inline-block text-center" style="background:#ede9fe; width:50px; height:50px; line-height:50px; font-size:20px; color:#7c3aed;"><i class="fa fa-user-plus"></i></div>
+        <h3 style="font-size:16px; font-weight:700; margin-top:14px; color:#1f2937;">Automated CRM Lead Creation</h3>
+        <p style="font-size:13px; color:#4b5563;">Logging a visit instantly creates or updates Res.Partner records in Odoo Contacts, auto-attaching a custom 'Field Lead' tag for follow-up marketing.</p>
+        <div style="margin-top:8px;">
+          <span style="background:#ede9fe; color:#5b21b6; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;">res.partner Sync</span>
+          <span style="background:#d1fae5; color:#065f46; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px; margin-left:4px;">Field Lead Tag</span>
         </div>
+      </div>
     </div>
 
-    <!-- Section: Showcase (Grid of 2) -->
-    <div class="fs-showcase">
-        <div class="fs-grid-2">
-            <div class="fs-showcase-content">
-                <h3>Built Natively on Odoo 18</h3>
-                <p style="color: var(--muted); margin-bottom: 1.5rem;">Unlike bloated third-party integrations, Field Sales operates directly within your database, complying with Odoo standard layouts, security groups, and web assets pipelines.</p>
-                <ul class="fs-showcase-list">
-                    <li class="fs-showcase-item">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        No subscription, api key, or external data sync required.
-                    </li>
-                    <li class="fs-showcase-item">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Optimized for mobile viewports using Odoo OWL structure.
-                    </li>
-                    <li class="fs-showcase-item">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Pre-defined Odoo user roles (Field Salesperson vs Managers).
-                    </li>
-                </ul>
-                <a href="#setup" class="fs-btn fs-btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">View Security Setup</a>
-            </div>
-            <div style="text-align: center;">
-                <svg viewBox="0 0 200 200" width="180" height="180" style="margin: 0 auto; filter: drop-shadow(0 15px 30px rgba(15, 82, 186, 0.15));">
-                    <defs>
-                        <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#0f52ba" />
-                            <stop offset="100%" stop-color="#1e88e5" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M100 20 C140 20, 170 30, 170 30 C170 30, 180 100, 150 145 C125 180, 100 190, 100 190 C100 190, 75 180, 50 145 C20 100, 30 30, 30 30 C30 30, 60 20, 100 20 Z" fill="url(#shieldGrad)" />
-                    <polyline points="70 100 90 120 135 75" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <div style="font-weight: 700; font-size: 1.2rem; color: var(--dark); margin-top: 1.5rem;">Fully Validated & Secure</div>
-                <div style="color: var(--muted); font-size: 0.9rem; margin-top: 5px;">Adheres to strict Odoo Security Rules</div>
-            </div>
+    <div class="col-12 col-md-4">
+      <div class="fs-card rounded p-4 h-100 shadow-sm" style="background:#fff; border:1px solid #e2e8f0;">
+        <div class="fs-ico rounded d-inline-block text-center" style="background:#fee2e2; width:50px; height:50px; line-height:50px; font-size:20px; color:#ef4444;"><i class="fa fa-calculator"></i></div>
+        <h3 style="font-size:16px; font-weight:700; margin-top:14px; color:#1f2937;">Distance Deviation Engine</h3>
+        <p style="font-size:13px; color:#4b5563;">Automated Haversine mathematical algorithm computes the spatial distance between check-in and check-out coordinates to flag shift anomalies.</p>
+        <div style="margin-top:8px;">
+          <span style="background:#fee2e2; color:#991b1b; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;">Haversine Metric</span>
         </div>
+      </div>
     </div>
 
-    <!-- Section: Workflow / How It Works -->
-    <h2 class="fs-section-title">The Field Agent Workflow</h2>
-    <p class="fs-section-subtitle">Simplified steps that field representatives follow daily, keeping location auditing automated.</p>
-    
-    <div class="fs-workflow">
-        <div class="fs-steps-container">
-            <div class="fs-step">
-                <div class="fs-step-num">1</div>
-                <h4 class="fs-step-title">Selfie Check-In</h4>
-                <p class="fs-step-desc">Open Kiosk, take a selfie verification, and log initial GPS coordinates to start the workday.</p>
-            </div>
-            <div class="fs-step">
-                <div class="fs-step-num">2</div>
-                <h4 class="fs-step-title">Visit Clients</h4>
-                <p class="fs-step-desc">Record client meetings, fill in details, snap client/store photos, and log exact visit locations.</p>
-            </div>
-            <div class="fs-step">
-                <div class="fs-step-num">3</div>
-                <h4 class="fs-step-title">Check-Out & Review</h4>
-                <p class="fs-step-desc">End day by snapping a checkout photo. System auto-verifies deviation via Haversine distance.</p>
-            </div>
-            <div class="fs-step">
-                <div class="fs-step-num">4</div>
-                <h4 class="fs-step-title">Generate Report</h4>
-                <p class="fs-step-desc">Managers review trajectories, lead logs, and download high-quality End-of-Day PDF summaries.</p>
-            </div>
+    <div class="col-12 col-md-4">
+      <div class="fs-card rounded p-4 h-100 shadow-sm" style="background:#fff; border:1px solid #e2e8f0;">
+        <div class="fs-ico rounded d-inline-block text-center" style="background:#e0f2fe; width:50px; height:50px; line-height:50px; font-size:20px; color:#0284c7;"><i class="fa fa-file-pdf-o"></i></div>
+        <h3 style="font-size:16px; font-weight:700; margin-top:14px; color:#1f2937;">End-of-Day PDF Reports</h3>
+        <p style="font-size:13px; color:#4b5563;">Generate print-ready End-of-Day PDF session reports complete with duration metrics, photo proofs, visit details, and Google Maps location links.</p>
+        <div style="margin-top:8px;">
+          <span style="background:#e0f2fe; color:#0369a1; font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;">QWeb PDF Report</span>
         </div>
+      </div>
     </div>
 
-    <!-- Technical Specs & Pricing -->
-    <h2 class="fs-section-title" id="setup">Odoo Store Compliance & Specifications</h2>
-    <p class="fs-section-subtitle">Technical requirements, metadata list, and easy setup instructions.</p>
+  </div>
 
-    <div class="fs-specs-grid">
-        <!-- Box 1: Compliance -->
-        <div class="fs-spec-box">
-            <h4 class="fs-spec-title">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                Compatibility
-            </h4>
-            <table class="fs-spec-table">
-                <tr>
-                    <td>Odoo Version</td>
-                    <td>v18.0 Community & Enterprise</td>
-                </tr>
-                <tr>
-                    <td>Key Dependency</td>
-                    <td>base, web</td>
-                </tr>
-                <tr>
-                    <td>Deployment</td>
-                    <td>On-Premise & Odoo.sh</td>
-                </tr>
-                <tr>
-                    <td>Multi-Branch/Company</td>
-                    <td>Supported</td>
-                </tr>
-            </table>
+  <!-- SCREENSHOTS SHOWCASE / THE MODULE IN ACTION -->
+  <div class="text-center pt-4 pb-2">
+    <div style="color:#0f52ba; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase;">THE MODULE IN ACTION</div>
+    <h2 style="color:#1e3a8a; font-weight:800; font-size:30px; margin-top:6px;">See Field Sales Inside Odoo 18</h2>
+    <p class="mx-auto" style="color:#374151; font-size:15px; max-width:760px; margin-top:8px;">
+      Real screenshots of the Field Sales kiosk portal, client visit logging, route trajectory map, and manager auditing workflow.
+    </p>
+  </div>
+
+  <div class="row g-4 pb-4">
+
+    <!-- Card 1 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#0f52ba; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>1. Mobile Kiosk Portal — Start Shift / End Shift / Log Visit</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">KIOSK LANDING</span>
         </div>
-
-        <!-- Box 2: License info -->
-        <div class="fs-spec-box">
-            <h4 class="fs-spec-title">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                License & Rights
-            </h4>
-            <table class="fs-spec-table">
-                <tr>
-                    <td>License</td>
-                    <td>OPL-1 (Odoo Proprietary)</td>
-                </tr>
-                <tr>
-                    <td>Price Model</td>
-                    <td>One-Time Purchase</td>
-                </tr>
-                <tr>
-                    <td>Support included</td>
-                    <td>Free updates & bug fixes</td>
-                </tr>
-                <tr>
-                    <td>Code quality</td>
-                    <td>Linter and PEP8 compliant</td>
-                </tr>
-            </table>
+        <img src="img/interface.jpeg" alt="Field Sales Kiosk Landing Interface" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/interface.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Touch-optimized mobile kiosk portal accessible from smartphone, tablet, or desktop browser. Sales agents can start their shift, record client meetings, or check out with a single click.
         </div>
+      </div>
+    </div>
 
-        <!-- Box 3: Setup instructions -->
-        <div class="fs-spec-box">
-            <h4 class="fs-spec-title">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                Quick Installation
-            </h4>
-            <div style="font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
-                <ol style="padding-left: 1.2rem; margin: 0;">
-                    <li style="margin-bottom: 6px;">Download and unzip the field_sales folder into your Odoo custom addons directory.</li>
-                    <li style="margin-bottom: 6px;">Activate <b>Developer Mode</b> in Odoo settings.</li>
-                    <li style="margin-bottom: 6px;">Go to Apps and click <b>Update Apps List</b>.</li>
-                    <li>Search for "Field Sales" and click <b>Activate</b>.</li>
-                </ol>
+    <!-- Card 2 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#10b981; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>2. Selfie Camera Verification &amp; High-Accuracy GPS Check-In</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">GPS &amp; BIOMETRIC PROOF</span>
+        </div>
+        <img src="img/check%20in.jpeg" alt="Selfie Photo &amp; Geolocation Check In Modal" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/check%20in.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Clicking "Check In" launches an integrated camera modal that captures an agent selfie and locks real-time HTML5 GPS latitude, longitude, and accuracy radius before opening shift.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#7c3aed; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>3. Active Session Portal &amp; Live Shift Status</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">ACTIVE SESSION</span>
+        </div>
+        <img src="img/after%20check%20in%20interface.jpeg" alt="Active Session Interface After Check-In" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/after%20check%20in%20interface.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Once checked in, the portal displays active session parameters including shift start timestamp, agent name, and a prominent "Log Client Visit" button for on-the-field activity.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#f59e0b; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>4. Streamlined Client Visit Logger</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">LOG VISIT FORM</span>
+        </div>
+        <img src="img/log%20interface.jpeg" alt="Log Client Visit Interface" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/log%20interface.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Intuitive modal dialog designed for fast entry in the field. Reps fill in customer business name, contact person, phone number, and meeting outcome notes.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#0284c7; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>5. Mandatory Storefront / Client Meeting Photo Verification</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">STOREFRONT PROOF</span>
+        </div>
+        <img src="img/client%20visit%20photo.jpeg" alt="Client Visit Storefront Photo Capture" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/client%20visit%20photo.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          To prevent remote or fake logging, reps must capture a photo of the client storefront, business card, or meeting space. The image is stored as binary data in Odoo.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#059669; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>6. Structured Client Visit Logging &amp; Geo-Tagging</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">GEO-TAGGED VISIT</span>
+        </div>
+        <img src="img/log%20client%20visit.jpeg" alt="Log Client Visit Details Form" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/log%20client%20visit.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Every saved visit automatically locks current GPS coordinates, links Google Maps navigation, and creates/updates Res.Partner contact records tagged as 'Field Lead'.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#4338ca; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>7. Session Client Visit Feed &amp; History Audit</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">VISIT HISTORY</span>
+        </div>
+        <img src="img/client%20visit%20logs.jpeg" alt="Client Visit Logs and Records List" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/client%20visit%20logs.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          View a list of all visits recorded during the current shift, complete with client company name, contact details, timestamp, photo preview, and GPS coordinates.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#0f52ba; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>8. Real-Time Work Session KPI Dashboard</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">LIVE SESSION KPIS</span>
+        </div>
+        <img src="img/work%20session%20interface.jpeg" alt="Work Session Interface and Counters" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/work%20session%20interface.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Live productivity feed updating total visit counts, active duration, and representative status in real-time on the kiosk interface.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 9 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#d97706; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>9. Shift Check-Out Initiation Modal</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">CHECKOUT CONFIRM</span>
+        </div>
+        <img src="img/checkout%20config.jpeg" alt="Checkout Confirmation Modal" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/checkout%20config.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          When finishing work, clicking "Check Out" opens a final shift wrap-up modal to confirm shift end and initialize check-out photo verification.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 10 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#dc2626; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>10. Final Check-Out Selfie &amp; Distance Audit</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">FINAL CHECKOUT PROOF</span>
+        </div>
+        <img src="img/check%20out.jpeg" alt="Check Out Selfie Verification Camera" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/check%20out.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Captures second selfie verification photo and end-of-day GPS coordinates. The Haversine distance engine calculates distance deviation from check-in point.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 11 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#1e293b; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>11. Backend Manager Work Session Audit Record</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">ODOO BACKEND FORM</span>
+        </div>
+        <img src="img/work%20session.jpeg" alt="Work Session Form View in Odoo Backend" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/work%20session.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Complete Odoo backend form view showing shift duration, verification photos, geolocation logs, distance deviation metrics, and direct Google Maps hyper-links.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 12 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#6d28d9; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>12. Interactive Leaflet Route Trajectory Map</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">LEAFLET ROUTE MAP</span>
+        </div>
+        <img src="img/route%20map.jpeg" alt="Interactive Leaflet Route Trajectory Map" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/route%20map.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Interactive map view tracing sales representative travel path throughout the day with distinct visual markers for Check-In (Green), Client Visits (Blue), and Check-Out (Red).
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 13 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#0891b2; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>13. Automated End-of-Day PDF Session Report</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">QWEB PDF EXPORT</span>
+        </div>
+        <img src="img/work%20session%20report.jpeg" alt="End-of-Day PDF Session Report" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/work%20session%20report.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          Export presentation-ready PDF reports with shift summary tables, selfie proofs, client visit notes, storefront photos, and manager audit signatures.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 14 -->
+    <div class="col-12">
+      <div class="fs-img-card rounded shadow-sm" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:#0369a1; color:#fff; padding:10px 16px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:space-between;">
+          <span>14. Central Manager Overview &amp; Field Analytics</span>
+          <span style="background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:4px; font-size:11px;">MANAGER DASHBOARD</span>
+        </div>
+        <img src="img/WhatsApp%20Image%202026-07-21%20at%204.10.45%20PM.jpeg" alt="Field Sales Analytical Overview" class="img-fluid fs-img-zoom" style="width:100%; display:block;" onerror="this.src='../../img/WhatsApp%20Image%202026-07-21%20at%204.10.45%20PM.jpeg'"/>
+        <div style="padding:12px 16px; font-size:13px; color:#4b5563;">
+          High-level management view allowing supervisors to monitor field reps across different regions, track compliance metrics, and review total logged visits.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TARGET ROLES & USE CASES -->
+  <div class="rounded p-4 my-4" style="background:#f0f7ff; border:1px solid #bfdbfe;">
+    <div class="text-center pb-3">
+      <div style="color:#0f52ba; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase;">USE CASES &amp; INDUSTRIES</div>
+      <h2 style="color:#1e3a8a; font-weight:800; font-size:26px; margin-top:6px;">Designed for Any Mobile &amp; Field Operations Team</h2>
+    </div>
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <div class="rounded p-3 h-100" style="background:#fff; border:1px solid #bfdbfe;">
+          <div class="d-flex align-items-center" style="gap:12px;">
+            <div class="rounded-circle text-center flex-shrink-0" style="background:#dbeafe; color:#0f52ba; width:42px; height:42px; line-height:42px; font-size:16px;"><i class="fa fa-briefcase"></i></div>
+            <div>
+              <div style="font-weight:700; color:#1e3a8a; font-size:15px;">Field Sales Representatives</div>
+              <div style="font-size:13px; color:#4b5563;">Log door-to-door customer visits, capture prospect details, and maintain instant shift verification.</div>
             </div>
+          </div>
         </div>
-    </div>
-
-    <!-- Footer Banner Call To Action -->
-    <div class="fs-footer">
-        <div class="fs-footer-content">
-            <h3 class="fs-footer-title">Need custom modifications or support?</h3>
-            <p class="fs-footer-desc">We offer customization, integration, and setup support to fit your team's specific requirements. Contact us on the Odoo App Store or drop us a support message.</p>
-            <a href="mailto:support@antigravity.com" class="fs-btn fs-btn-secondary" style="background: #ffffff; color: var(--primary) !important; font-weight: 700; border: none; box-shadow: 0 4px 15px rgba(255,255,255,0.2);">Get Support</a>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="rounded p-3 h-100" style="background:#fff; border:1px solid #bfdbfe;">
+          <div class="d-flex align-items-center" style="gap:12px;">
+            <div class="rounded-circle text-center flex-shrink-0" style="background:#d1fae5; color:#10b981; width:42px; height:42px; line-height:42px; font-size:16px;"><i class="fa fa-truck"></i></div>
+            <div>
+              <div style="font-weight:700; color:#1e3a8a; font-size:15px;">Delivery &amp; Distribution Teams</div>
+              <div style="font-size:13px; color:#4b5563;">Verify product drop-offs, record client signatures/photos, and track delivery routes in real-time.</div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="rounded p-3 h-100" style="background:#fff; border:1px solid #bfdbfe;">
+          <div class="d-flex align-items-center" style="gap:12px;">
+            <div class="rounded-circle text-center flex-shrink-0" style="background:#fef3c7; color:#f59e0b; width:42px; height:42px; line-height:42px; font-size:16px;"><i class="fa fa-wrench"></i></div>
+            <div>
+              <div style="font-weight:700; color:#1e3a8a; font-size:15px;">Field Service Technicians</div>
+              <div style="font-size:13px; color:#4b5563;">Record on-site maintenance visits, upload equipment photos, and document job duration.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="rounded p-3 h-100" style="background:#fff; border:1px solid #bfdbfe;">
+          <div class="d-flex align-items-center" style="gap:12px;">
+            <div class="rounded-circle text-center flex-shrink-0" style="background:#ede9fe; color:#7c3aed; width:42px; height:42px; line-height:42px; font-size:16px;"><i class="fa fa-user-secret"></i></div>
+            <div>
+              <div style="font-weight:700; color:#1e3a8a; font-size:15px;">Sales Managers &amp; Regional Auditors</div>
+              <div style="font-size:13px; color:#4b5563;">Audit representative routes, review photo proofs, check shift distances, and print PDF logs.</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
+  <!-- UPCOMING ROADMAP -->
+  <div class="rounded p-4 my-4" style="background:#f8fafc; border:1px solid #e2e8f0;">
+    <div class="text-center pb-2">
+      <div style="color:#64748b; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase;">PRODUCT ROADMAP</div>
+      <h2 style="color:#1e293b; font-weight:800; font-size:22px; margin-top:4px;">Upcoming Module Enhancements</h2>
+    </div>
+    <div class="row g-3 text-center">
+      <div class="col-6 col-md-4">
+        <div class="rounded p-3 h-100" style="background:#fff; border:1px solid #e2e8f0;">
+          <div style="font-size:22px; color:#64748b;">&#128246;</div>
+          <div style="font-weight:700; font-size:13px; color:#374151; margin-top:6px;">Offline Mode Sync</div>
+          <div style="font-size:12px; color:#64748b; margin-top:4px;">IndexedDB local caching to log visits without active internet connection</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="rounded p-3 h-100" style="background:#fff; border:1px solid #e2e8f0;">
+          <div style="font-size:22px; color:#64748b;">&#128722;</div>
+          <div style="font-weight:700; font-size:13px; color:#374151; margin-top:6px;">Direct Quotation Creation</div>
+          <div style="font-size:12px; color:#64748b; margin-top:4px;">Create draft Sales Orders directly inside the visit logger modal</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="rounded p-3 h-100" style="background:#fff; border:1px solid #e2e8f0;">
+          <div style="font-size:22px; color:#64748b;">&#9981;</div>
+          <div style="font-weight:700; font-size:13px; color:#374151; margin-top:6px;">Fuel &amp; Expense Tracking</div>
+          <div style="font-size:12px; color:#64748b; margin-top:4px;">Automatic distance-based travel expense calculation for reps</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPATIBILITY & TECHNICAL SPECS -->
+  <div class="row g-3 text-center py-4">
+    <div class="col-6 col-md-4">
+      <div class="rounded p-4 h-100" style="background:#fff; border:1px solid #bfdbfe;">
+        <div style="font-size:26px; color:#0f52ba;"><i class="fa fa-bolt"></i></div>
+        <h4 style="color:#1e3a8a; font-size:15px; margin-top:8px; font-weight:700;">Odoo 18 Ready</h4>
+        <p style="font-size:12px; color:#4b5563; margin:0;">Community &amp; Enterprise Editions</p>
+      </div>
+    </div>
+    <div class="col-6 col-md-4">
+      <div class="rounded p-4 h-100" style="background:#fff; border:1px solid #bfdbfe;">
+        <div style="font-size:26px; color:#10b981;"><i class="fa fa-link"></i></div>
+        <h4 style="color:#1e3a8a; font-size:15px; margin-top:8px; font-weight:700;">No External API Needed</h4>
+        <p style="font-size:12px; color:#4b5563; margin:0;">Bundled Leaflet JS &amp; HTML5 Geolocation</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="rounded p-4 h-100" style="background:#fff; border:1px solid #bfdbfe;">
+        <div style="font-size:26px; color:#f59e0b;"><i class="fa fa-shield"></i></div>
+        <h4 style="color:#1e3a8a; font-size:15px; margin-top:8px; font-weight:700;">Role-Based Security</h4>
+        <p style="font-size:12px; color:#4b5563; margin:0;">Field Salesperson &amp; Manager Security Groups</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAUNCH PRICING SUMMARY CARD -->
+  <div class="rounded text-center p-4 my-4" style="background:#f0f7ff; border:2px solid #0f52ba;">
+    <div style="color:#0f52ba; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase;">SPECIAL LAUNCH OFFER</div>
+    <div style="font-size:42px; font-weight:900; color:#0f52ba; line-height:1.1; margin-top:8px;">€19.99</div>
+    <div style="margin-top:8px; color:#64748b; font-size:14px;">
+      Regular Price: <s>€49.99</s> &nbsp;|&nbsp;
+      Launch Offer: <strong style="color:#1e3a8a;">€19.99 (60% OFF)</strong>
+    </div>
+    <p style="color:#475569; font-size:13px; margin-top:10px; margin-bottom:0;">
+      Full module source code — includes all features, updates, and lifetime license.<br/>
+      <strong>One-time purchase for your Odoo server instance.</strong>
+    </p>
+  </div>
+
+  <!-- CALL TO ACTION BANNER -->
+  <div class="rounded text-center p-5 my-4" style="background:#0f52ba; color:#fff;">
+    <h2 style="color:#fff; font-weight:800; font-size:26px;">Empower Your Field Sales Team Today</h2>
+    <p class="mx-auto" style="color:#dbeafe; max-width:640px; margin-top:10px; font-size:15px;">
+      Kiosk check-in &bull; Mandatory photo verification &bull; Leaflet route maps &bull; EOD PDF reports.<br/>
+      All natively built for Odoo 18.
+    </p>
+    <div style="margin-top:16px;">
+      <a href="mailto:support@albatross.com" target="_blank" rel="noopener"
+         style="display:inline-block; background:#fff; color:#0f52ba; font-weight:800; font-size:15px; text-decoration:none; padding:12px 30px; border-radius:999px; box-shadow: 0 4px 14px rgba(0,0,0,0.15);">
+        Contact Support &amp; Enquiries &rarr;
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="text-center pb-4" style="color:#6b7280; font-size:13px; border-top:1px solid #e5e7eb; padding-top:24px; margin-top:16px;">
+    <p style="margin-bottom:6px; font-weight:600; color:#374151;">Field Sales Activity &amp; Geolocation Tracking — by Albatross</p>
+    <p style="margin:0;">
+      Odoo 18 &bull; Community &amp; Enterprise &bull;
+      <a href="mailto:support@albatross.com" style="color:#0f52ba; font-weight:600;">support@albatross.com</a>
+    </p>
+  </div>
+
+</div><!-- /.container -->
+</div><!-- /.fs-app -->
+
+<!-- WHATSAPP & DIRECT SUPPORT CONTACT WIDGET -->
+<div style="text-align:center; margin:30px auto 10px; padding:20px 16px; max-width:680px; border-top:1px solid #e5e7eb; font-family:'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif;">
+  <div style="font-size:13px; color:#6b7280; margin-bottom:10px; font-weight:600;">Questions, Live Demo or Technical Support? Reach out to us directly</div>
+  <a href="https://wa.me/50235174713" target="_blank" rel="noopener" style="display:inline-block; background:#25D366; color:#ffffff; font-weight:700; text-decoration:none; padding:11px 24px; border-radius:999px; font-size:15px; box-shadow: 0 4px 12px rgba(37,211,102,0.3);">
+    &#128172; Chat on WhatsApp &rarr;
+  </a>
 </div>
 
-</body>
-</html>
