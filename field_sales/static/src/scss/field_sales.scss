@@ -124,23 +124,14 @@
     border-radius: 16px !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
     margin: auto 0;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
 }
 
-.kiosk-modal-header {
-    flex: 0 0 auto;
-}
-
 .kiosk-modal-body {
-    flex: 1 1 auto;
+    max-height: 55vh !important;
     overflow-y: auto !important;
     padding-right: 6px;
-}
-
-.kiosk-modal-footer {
-    flex: 0 0 auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .video-container {
@@ -155,7 +146,7 @@
 .field-sales-kiosk-container textarea,
 .field-sales-kiosk-container .form-control {
     background-color: #ffffff !important;
-    color: #0f172a !important;
+    color: #000000 !important;
     opacity: 1 !important;
     border-radius: 10px;
     padding: 0.6rem 0.8rem;
@@ -166,15 +157,27 @@
 .field-sales-kiosk-container textarea:focus,
 .field-sales-kiosk-container .form-control:focus {
     background-color: #ffffff !important;
-    color: #0f172a !important;
+    color: #000000 !important;
     opacity: 1 !important;
     border-color: #3b82f6 !important;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
 }
 
+/* Override browser autofill to keep text black and background white */
+.field-sales-kiosk-container input:-webkit-autofill,
+.field-sales-kiosk-container input:-webkit-autofill:hover, 
+.field-sales-kiosk-container input:-webkit-autofill:focus, 
+.field-sales-kiosk-container textarea:-webkit-autofill,
+.field-sales-kiosk-container textarea:-webkit-autofill:hover,
+.field-sales-kiosk-container textarea:-webkit-autofill:focus {
+    -webkit-text-fill-color: #000000 !important;
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 .form-label {
-    color: #334155 !important;
-    font-weight: 600 !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
 }
 
 /* Route Map layout rules */
