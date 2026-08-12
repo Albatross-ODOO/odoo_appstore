@@ -1,0 +1,100 @@
+<odoo>
+
+    <template id="inherit_login_layout" name="Login Layout" inherit_id="web.login_layout">
+        <xpath position="replace" expr="//div[@class='container py-5']">
+            <div class="container py-5">
+                <div t-attf-class="card border-0 mx-auto bg-100 {{login_card_classes}} o_database_list"
+                     style="max-width: 300px;">
+                    <div class="card-body">
+                        <div t-attf-class="text-center pb-3 border-bottom {{'mb-3' if form_small else 'mb-4'}}">
+                            <img t-attf-src="/web/binary/company_logo{{ '?dbname='+db if db else '' }}" alt="Logo"
+                                 style="max-height:120px; max-width: 100%; width:auto" />
+                        </div>
+                        <t t-out="0" />
+                        <div class="text-center small mt-4 pt-3 border-top" t-if="not disable_footer">
+                            <t t-if="not disable_database_manager">
+                                <a class="border-end pe-2 me-1" href="/web/database/manager">Manage
+                                    Databases
+                                </a>
+                            </t>
+                            <a t-attf-href="request.env.user.company_id.brand_url" target="_blank">Powered by
+                                <span t-esc="request.env.user.company_id.brand_name" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <!--Favicons-->
+    <template id="layout_extend" name="Web layout" inherit_id="web.layout" priority="1">
+        <link type="image/x-icon" position="replace">
+            <link type="image/x-icon" rel="shortcut icon" t-att-href="x_icon" />
+        </link>
+    </template>
+    <!--Favicons-->
+    <template id="webclient_bootstrap_branding_extend" inherit_id="web.webclient_bootstrap">
+<!--        <xpath expr="//link[@href='/web/static/img/mobile-icons/android-192x192.png']" position="replace">-->
+<!--            <link rel="icon" sizes="192x192"-->
+<!--                  t-attf-href="/web/image/res.company/#{request.env.user.company_id.id}/favicon/192x192" />-->
+<!--        </xpath>-->
+        <xpath expr="//link[@href='/web/static/img/odoo-icon-ios.png']" position="replace">
+            <link rel="apple-touch-icon" t-attf-href="/web/image/res.company/#{request.env.user.company_id.id}/favicon/152x152"/>
+<!--            <link rel="apple-touch-icon" sizes="152x152"-->
+<!--                  t-attf-href="/web/image/res.company/#{request.env.user.company_id.id}/favicon/152x152" />-->
+        </xpath>
+<!--        <xpath expr="//meta[@content='/web/static/img/mobile-icons/windows-144x144.png']" position="replace">-->
+<!--            <meta name="msapplication-TileImage"-->
+<!--                  t-attf-content="/web/image/res.company/#{request.env.user.company_id.id}/favicon/144x144" />-->
+<!--        </xpath>-->
+    </template>
+
+    <!--Website-->
+    <template id="website_template_inherit" inherit_id="web.frontend_layout">
+        <xpath expr="///span[hasclass('o_footer_copyright_name')]" position="replace">
+            <span t-esc="request.env.user.company_id.brand_name" />
+        </xpath>
+    </template>
+
+    <template id="web.brand_promotion_message" name="Brand Promotion Message">
+        <t t-set="odoo_logo">
+            <a target="_blank"
+               t-attf-href="request.env.user.company_id.brand_url"
+               class="badge text-bg-light">
+                <img t-att-alt="request.env.user.company_id.brand_name"
+                     t-attf-src="request.env.user.company_id.brand_logo"
+                     width="62" height="20"
+                     style="width: auto; height: 1em; vertical-align: baseline;" />
+            </a>
+        </t>
+        <t t-set="final_message">Powered by %s%s</t>
+        <t t-out="final_message % (request.env.user.company_id.brand_name, '')" />
+    </template>
+
+    <template inherit_id="web.brand_promotion" name="Brand Promotion" id="brand_promotion_extend">
+        <div class="o_brand_promotion" position="replace">
+            <div class="o_brand_promotion">
+                <t t-call="web.brand_promotion_message">
+                    <t t-set="_message"></t>
+                    <t t-set="_utm_medium" />
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <!--Portal-->
+    <template id="portal_record_sidebar_extend" inherit_id="portal.portal_record_sidebar">
+        <xpath expr="//div[@id='sidebar_content']//div[hasclass('d-none')]"
+               position="replace">
+            <div class="d-none d-lg-block mt-5 small text-center text-muted">
+                Powered by
+                <a target="_blank" t-att-href="request.env.user.company_id.brand_url"
+                   t-att-title="request.env.user.company_id.brand_name">
+                    <img t-attf-src="/web/image/res.company/#{request.env.user.company_id.id}/brand_logo"
+                         alt="Company Logo" height="15" />
+                </a>
+            </div>
+        </xpath>
+    </template>
+    <!--Modify brand promotion details-->
+</odoo>
