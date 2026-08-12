@@ -17,8 +17,8 @@
                                     Databases
                                 </a>
                             </t>
-                            <a t-attf-href="request.env.user.company_id.brand_url" target="_blank">Powered by
-                                <span t-esc="request.env.user.company_id.brand_name" />
+                            <a t-att-href="request.env.company.brand_url or '#'" target="_blank">Powered by
+                                <span t-esc="request.env.company.brand_name or request.env.company.name" />
                             </a>
                         </div>
                     </div>
@@ -34,41 +34,33 @@
     </template>
     <!--Favicons-->
     <template id="webclient_bootstrap_branding_extend" inherit_id="web.webclient_bootstrap">
-<!--        <xpath expr="//link[@href='/web/static/img/mobile-icons/android-192x192.png']" position="replace">-->
-<!--            <link rel="icon" sizes="192x192"-->
-<!--                  t-attf-href="/web/image/res.company/#{request.env.user.company_id.id}/favicon/192x192" />-->
-<!--        </xpath>-->
         <xpath expr="//link[@href='/web/static/img/odoo-icon-ios.png']" position="replace">
-            <link rel="apple-touch-icon" t-attf-href="/web/image/res.company/#{request.env.user.company_id.id}/favicon/152x152"/>
-<!--            <link rel="apple-touch-icon" sizes="152x152"-->
-<!--                  t-attf-href="/web/image/res.company/#{request.env.user.company_id.id}/favicon/152x152" />-->
+            <link rel="apple-touch-icon" t-attf-href="/web/image/res.company/{{ request.env.company.id }}/favicon/152x152"/>
         </xpath>
-<!--        <xpath expr="//meta[@content='/web/static/img/mobile-icons/windows-144x144.png']" position="replace">-->
-<!--            <meta name="msapplication-TileImage"-->
-<!--                  t-attf-content="/web/image/res.company/#{request.env.user.company_id.id}/favicon/144x144" />-->
-<!--        </xpath>-->
     </template>
 
     <!--Website-->
     <template id="website_template_inherit" inherit_id="web.frontend_layout">
-        <xpath expr="///span[hasclass('o_footer_copyright_name')]" position="replace">
-            <span t-esc="request.env.user.company_id.brand_name" />
+        <xpath expr="//span[hasclass('o_footer_copyright_name')]" position="replace">
+            <span t-esc="request.env.company.brand_name or request.env.company.name" />
         </xpath>
     </template>
 
     <template id="web.brand_promotion_message" name="Brand Promotion Message">
+        <t t-set="brand_name" t-value="request.env.company.brand_name or request.env.company.name"/>
+        <t t-set="brand_url" t-value="request.env.company.brand_url or '#'"/>
         <t t-set="odoo_logo">
             <a target="_blank"
-               t-attf-href="request.env.user.company_id.brand_url"
+               t-att-href="brand_url"
                class="badge text-bg-light">
-                <img t-att-alt="request.env.user.company_id.brand_name"
-                     t-attf-src="request.env.user.company_id.brand_logo"
+                <img t-att-alt="brand_name"
+                     t-attf-src="/web/image/res.company/{{ request.env.company.id }}/brand_logo"
                      width="62" height="20"
                      style="width: auto; height: 1em; vertical-align: baseline;" />
             </a>
         </t>
-        <t t-set="final_message">Powered by %s%s</t>
-        <t t-out="final_message % (request.env.user.company_id.brand_name, '')" />
+        <t t-set="final_message">Powered by %s</t>
+        <t t-out="final_message % brand_name" />
     </template>
 
     <template inherit_id="web.brand_promotion" name="Brand Promotion" id="brand_promotion_extend">
@@ -88,9 +80,9 @@
                position="replace">
             <div class="d-none d-lg-block mt-5 small text-center text-muted">
                 Powered by
-                <a target="_blank" t-att-href="request.env.user.company_id.brand_url"
-                   t-att-title="request.env.user.company_id.brand_name">
-                    <img t-attf-src="/web/image/res.company/#{request.env.user.company_id.id}/brand_logo"
+                <a target="_blank" t-att-href="request.env.company.brand_url or '#'"
+                   t-att-title="request.env.company.brand_name or request.env.company.name">
+                    <img t-attf-src="/web/image/res.company/{{ request.env.company.id }}/brand_logo"
                          alt="Company Logo" height="15" />
                 </a>
             </div>
