@@ -7,14 +7,6 @@
     'summary': 'Monitor Discuss chat sessions in a dual-pane sidebar/chat interface',
     'description': """
 Discuss Chat Monitor for Odoo 18
-================================
-This module allows authorized Chat Managers to monitor and view chat conversations held in Odoo Discuss.
-
-Key Features:
--------------
-* **Discuss Dual-Pane View**: Left sidebar displaying active Discuss chat sessions (Direct chats, Group chats, Channels) and right pane showing full conversation history.
-* **Real-time Live Sync**: Instantly read channels created in Odoo Discuss.
-* **Admin Access Security**: Dedicated security group restricting access strictly to Chat Managers.
     """,
     'author': 'Custom Odoo Team',
     'license': 'LGPL-3',

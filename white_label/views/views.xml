@@ -1,0 +1,102 @@
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">Debranding Configuration</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+
+
+                <app class="app_settings_block"
+                     data-string="Debrand"
+                     string="Debrand"
+                     name="Debrand"
+                     data-key="odoo-debrand-11"
+                >
+                    <block title="Debranding Configurations" name="debrand_container">
+                        <setting id="debrand_settings" name="debrand_settings" string="Debranding Settings" help="Set Debranding Labels to be appreared in the title and other places">
+                            <div class="content-group" id="brand_logo">
+                                <div class="row mt16">
+                                    <label for="brand_logo" string="Brand Logo" />
+                                    <div id="brand_logo" >
+                                        <field name="brand_logo"
+                                               widget="image"
+                                               class="w-25 mt-2" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-group" id="favicon">
+                                <div class="row mt16">
+                                    <label for="favicon" string="Brand Favicon" />
+                                    <div id="favicon">
+                                        <field name="favicon"
+                                               widget="image"
+                                               class="w-25 mt-2" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-group" id="brand_name">
+                                <div class="row mt16">
+                                    <label for="brand_name" string="Brand Name" />
+                                    <div id="brand_name" class="oe_inline">
+                                        <field name="brand_name" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-group" id="brand_url">
+                                <div class="row mt16">
+                                    <label for="brand_url" string="Brand URL" />
+                                    <div id="brand_url" class="mt8">
+                                        <field name="brand_url" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-group" id="button_error">
+                                <div class="row mt16">
+                                    <div id="check_error" class="mt8">
+                                        <button name="error"
+                                                id="error"
+                                                type="object"
+                                                string="error"
+                                                class="btn-danger" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-group" id="button_warning">
+                                <div class="row mt16">
+                                    <div id="check_warning" class="mt8">
+                                        <button name="warning"
+                                                id="warning"
+                                                type="object"
+                                                string="warning"
+                                                class="btn-warning" />
+                                    </div>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_config_settings_view_form_extend" model="ir.ui.view">
+        <field name="name">res.settings.about</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='iap_portal']" position="replace">
+                <div id="iap_portal">
+                    <block class='iap_portal' name="iap_purchases_setting_container">
+                        <setting id="iap_credits_setting" string="IAP"
+                                 help="View your IAP Services and recharge your credits"
+                                 documentation="/applications/general/in_app_purchase.html">
+                            <button name="iap.iap_account_action" icon="oi-arrow-right" type="action"
+                                    string="View My Services" class="btn-link" />
+                        </setting>
+                    </block>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
