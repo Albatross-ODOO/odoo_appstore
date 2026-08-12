@@ -5,7 +5,7 @@
         <!-- Module Category -->
         <record id="module_category_discuss_chat_monitor" model="ir.module.category">
             <field name="name">Discuss Chat Monitor</field>
-            <field name="description">Security group to access chat monitoring, employee discussion logs, and compliance audit trail.</field>
+            <field name="description">Security group to access chat monitoring and employee discussion logs.</field>
             <field name="sequence">25</field>
         </record>
 
@@ -47,14 +47,6 @@
         <record id="rule_discuss_chat_session_admin" model="ir.rule">
             <field name="name">Discuss Chat Session: Admin Access</field>
             <field name="model_id" ref="model_discuss_chat_session"/>
-            <field name="groups" eval="[(4, ref('group_chat_monitor_admin'))]"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-        </record>
-
-        <!-- Rule 4: Audit Log Access Rule -->
-        <record id="rule_discuss_chat_audit_log_admin" model="ir.rule">
-            <field name="name">Discuss Chat Audit Log: Admin Access</field>
-            <field name="model_id" ref="model_discuss_chat_audit_log"/>
             <field name="groups" eval="[(4, ref('group_chat_monitor_admin'))]"/>
             <field name="domain_force">[(1, '=', 1)]</field>
         </record>

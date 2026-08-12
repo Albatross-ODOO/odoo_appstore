@@ -2,225 +2,26 @@
 <odoo>
     <data>
 
-        <!-- Kanban View: Daily Chat Sessions -->
-        <record id="view_discuss_chat_session_kanban" model="ir.ui.view">
-            <field name="name">discuss.chat.session.kanban</field>
-            <field name="model">discuss.chat.session</field>
-            <field name="arch" type="xml">
-                <kanban class="o_kanban_dashboard" default_group_by="session_date" sample="1">
-                    <field name="id"/>
-                    <field name="name"/>
-                    <field name="session_date"/>
-                    <field name="channel_type"/>
-                    <field name="participant_ids"/>
-                    <field name="participant_summary"/>
-                    <field name="message_count"/>
-                    <field name="last_message_time"/>
-                    <field name="state"/>
-                    <field name="is_flagged"/>
-                    <field name="flag_reason"/>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click o_kanban_record cm_session_kanban_card p-0 mb-3">
-                                <div class="cm-card-header d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <i class="fa fa-comments text-primary fs-5"/>
-                                        <span class="fw-bold text-dark text-truncate" style="max-width: 180px;">
-                                            <t t-esc="record.participant_summary.value or 'Direct Chat'"/>
-                                        </span>
-                                    </div>
-                                    <t t-if="record.is_flagged.raw_value">
-                                        <span class="badge rounded-pill cm-badge-flagged px-2 py-1">
-                                            <i class="fa fa-exclamation-triangle me-1"/> Flagged
-                                        </span>
-                                    </t>
-                                    <t t-else="">
-                                        <span t-att-class="record.channel_type.raw_value == 'chat' ? 'badge rounded-pill cm-badge-direct px-2 py-1' : 'badge rounded-pill cm-badge-group px-2 py-1'">
-                                            <t t-esc="record.channel_type.value"/>
-                                        </span>
-                                    </t>
-                                </div>
-
-                                <div class="p-3">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="text-muted small">
-                                            <i class="fa fa-calendar me-1 text-primary"/> <t t-esc="record.session_date.value"/>
-                                        </span>
-                                        <span class="badge bg-primary-subtle text-primary fw-bold rounded-pill px-3 py-1">
-                                            <i class="fa fa-envelope-o me-1"/> <t t-esc="record.message_count.value"/> msgs
-                                        </span>
-                                    </div>
-
-                                    <div class="d-flex align-items-center justify-content-between pt-2 border-top">
-                                        <div class="o_kanban_image_full d-flex gap-1">
-                                            <field name="participant_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                                        </div>
-                                        <small class="text-muted">
-                                            <i class="fa fa-clock-o me-1"/> <t t-esc="record.last_message_time.value and record.last_message_time.value.split(' ')[1] or ''"/>
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-
-        <!-- List/Tree View: Daily Chat Sessions -->
+        <!-- List View: Chat Sessions -->
         <record id="view_discuss_chat_session_tree" model="ir.ui.view">
             <field name="name">discuss.chat.session.list</field>
             <field name="model">discuss.chat.session</field>
             <field name="arch" type="xml">
-                <list string="Daily Chat Sessions" decoration-danger="is_flagged == True" decoration-muted="state == 'archived'" sample="1">
-                    <field name="session_date" widget="date"/>
+                <list string="Chat Sessions">
                     <field name="name"/>
-                    <field name="channel_type" widget="badge" decoration-info="channel_type == 'chat'" decoration-primary="channel_type == 'group'"/>
+                    <field name="channel_id"/>
+                    <field name="channel_type" widget="badge"/>
                     <field name="participant_ids" widget="many2many_tags"/>
-                    <field name="message_count" widget="statinfo" string="Messages"/>
-                    <field name="first_message_time" widget="datetime"/>
-                    <field name="last_message_time" widget="datetime"/>
-                    <field name="is_flagged" widget="boolean_toggle"/>
-                    <field name="state" widget="badge" decoration-success="state == 'active'" decoration-danger="state == 'flagged'"/>
-                    <button name="action_refresh_session" type="object" string="Refresh Stream" icon="fa-refresh" class="btn-sm btn-outline-primary"/>
+                    <field name="message_count"/>
                 </list>
             </field>
         </record>
 
-        <!-- Form View: Chat Session & Interactive Viewer -->
-        <record id="view_discuss_chat_session_form" model="ir.ui.view">
-            <field name="name">discuss.chat.session.form</field>
-            <field name="model">discuss.chat.session</field>
-            <field name="arch" type="xml">
-                <form string="Chat Session Details">
-                    <header>
-                        <button name="action_refresh_session" type="object" string="Refresh Chat Stream" class="btn-primary" icon="fa-refresh"/>
-                        <button name="action_flag_toggle" type="object" string="Flag / Unflag Session" class="btn-outline-warning" icon="fa-flag"/>
-                        <field name="state" widget="statusbar" statusbar_visible="active,flagged,archived"/>
-                    </header>
-
-                    <sheet>
-                        <!-- Banner Alert for Flagged Session -->
-                        <div class="alert alert-danger d-flex align-items-center mb-3" role="alert" invisible="not is_flagged">
-                            <i class="fa fa-exclamation-triangle fa-2x me-3"/>
-                            <div>
-                                <strong>Compliance Warning:</strong> This chat session has been flagged for review.
-                                <div class="small" invisible="not flag_reason">Reason: <field name="flag_reason" class="fw-bold"/></div>
-                            </div>
-                        </div>
-
-                        <!-- Title and Stat Buttons -->
-                        <div class="oe_button_box" name="button_box">
-                            <button class="oe_stat_button" icon="fa-comments" type="action" name="%(action_discuss_chat_audit_log_all)d" context="{'search_default_session_id': id}">
-                                <field name="audit_count" widget="statinfo" string="Views Log"/>
-                            </button>
-                        </div>
-
-                        <div class="oe_title mb-3">
-                            <label for="name" class="oe_edit_only" string="Session Name"/>
-                            <h1 class="d-flex align-items-center gap-2">
-                                <i class="fa fa-comments text-primary"/>
-                                <field name="name" readonly="1" class="fw-bold"/>
-                            </h1>
-                        </div>
-
-                        <group>
-                            <group string="Session Overview">
-                                <field name="session_date" readonly="1"/>
-                                <field name="channel_id" readonly="1" options="{'no_open': False}"/>
-                                <field name="channel_type" widget="badge"/>
-                                <field name="participant_ids" widget="many2many_tags" readonly="1"/>
-                            </group>
-                            <group string="Activity Metrics">
-                                <field name="message_count" readonly="1"/>
-                                <field name="first_message_time" readonly="1"/>
-                                <field name="last_message_time" readonly="1"/>
-                                <field name="is_flagged" readonly="1"/>
-                            </group>
-                        </group>
-
-                        <notebook>
-                            <page string="Live Chat Stream" name="chat_transcript">
-                                <div class="mb-2 d-flex justify-content-between align-items-center">
-                                    <span class="text-muted small">
-                                        <i class="fa fa-info-circle me-1"/> Displaying full historical and live messages for this channel session.
-                                    </span>
-                                    <button name="action_refresh_session" type="object" string="Sync Latest Messages" class="btn btn-sm btn-link" icon="fa-sync"/>
-                                </div>
-                                <field name="chat_transcript_html" widget="html" readonly="1"/>
-                            </page>
-
-                            <page string="Raw Message Log" name="message_log">
-                                <field name="message_ids" readonly="1">
-                                    <list string="Messages" default_order="date asc">
-                                        <field name="date"/>
-                                        <field name="author_id"/>
-                                        <field name="body" widget="html"/>
-                                        <field name="attachment_ids" widget="many2many_tags"/>
-                                    </list>
-                                </field>
-                            </page>
-
-                            <page string="Audit Trail" name="audit_trail">
-                                <field name="audit_log_ids" readonly="1">
-                                    <list string="Audit Logs" default_order="access_datetime desc">
-                                        <field name="access_datetime"/>
-                                        <field name="user_id"/>
-                                        <field name="action_type" widget="badge"/>
-                                        <field name="notes"/>
-                                    </list>
-                                </field>
-                            </page>
-                        </notebook>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
-        <!-- Search View: Chat Sessions -->
-        <record id="view_discuss_chat_session_search" model="ir.ui.view">
-            <field name="name">discuss.chat.session.search</field>
-            <field name="model">discuss.chat.session</field>
-            <field name="arch" type="xml">
-                <search string="Search Chat Sessions">
-                    <field name="name" string="Session or Participant" filter_domain="['|', ('name', 'ilike', self), ('participant_summary', 'ilike', self)]"/>
-                    <field name="participant_ids" string="Employee / Partner"/>
-                    <field name="session_date"/>
-                    <field name="channel_id"/>
-
-                    <filter string="Today's Chats" name="today" domain="[('session_date', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                    <filter string="Yesterday's Chats" name="yesterday" domain="[('session_date', '=', (context_today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d'))]"/>
-                    <filter string="This Week" name="this_week" domain="[('session_date', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
-                    <separator/>
-                    <filter string="Direct 1-on-1 Chats" name="direct_chats" domain="[('channel_type', '=', 'chat')]"/>
-                    <filter string="Group Chats" name="group_chats" domain="[('channel_type', '=', 'group')]"/>
-                    <separator/>
-                    <filter string="Flagged Sessions" name="flagged" domain="[('is_flagged', '=', True)]"/>
-
-                    <group expand="0" string="Group By">
-                        <filter string="Date" name="group_by_date" context="{'group_by': 'session_date:day'}"/>
-                        <filter string="Channel Type" name="group_by_type" context="{'group_by': 'channel_type'}"/>
-                        <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
-
-        <!-- Action: Daily Chat Sessions -->
+        <!-- Action: Chat Sessions Fallback -->
         <record id="action_discuss_chat_session_all" model="ir.actions.act_window">
-            <field name="name">Daily Chat Sessions</field>
+            <field name="name">Chat Sessions</field>
             <field name="res_model">discuss.chat.session</field>
-            <field name="view_mode">kanban,list,form</field>
-            <field name="search_view_id" ref="view_discuss_chat_session_search"/>
-            <field name="context">{'search_default_today': 1}</field>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    No chat sessions monitored yet for today!
-                </p>
-                <p>
-                    When employees start chatting in Odoo Discuss, daily chat session logs will automatically be aggregated here.
-                </p>
-            </field>
+            <field name="view_mode">list,form</field>
         </record>
 
     </data>
