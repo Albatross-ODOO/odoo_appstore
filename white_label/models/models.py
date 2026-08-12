@@ -68,20 +68,14 @@ class WebsiteConfig(models.TransientModel):
 
     @api.constrains('brand_url')
     def validate_url(self):
-        """
-        print(is_valid_url('http://www.example.com'))  # True
-        print(is_valid_url('ftp://ftp.example.com'))  # True
-        print(is_valid_url('example.com'))  # False
-        print(is_valid_url('http://'))  # False
-        """
-        try:
-            result = urlparse(self.brand_url)
-            if not all([result.scheme, result.netloc]):
-                raise exceptions.UserError("URL Validation Failed, URL Must be in a format of http://www.example.com")
-            else:
-                return True
-        except ValueError:
-            return False
+        for config in self:
+            if config.brand_url:
+                try:
+                    result = urlparse(config.brand_url)
+                    if not all([result.scheme, result.netloc]):
+                        raise exceptions.UserError("URL Validation Failed, URL Must be in a format of http://www.example.com")
+                except ValueError:
+                    raise exceptions.UserError("Invalid URL format.")
 
     # Sample Error Dialogue
     def error(self):
@@ -97,7 +91,7 @@ class ViewExtend(models.Model):
     _inherit = 'ir.ui.view'
 
     def _render_template(self, template, values=None):
-        if not values:
-            values = {}
-        values["title"] = self.env.company.brand_name
-        return super(ViewExtend, self)._render_template(template, values=values)
+        render_values = dict(values) if values else {}
+        if self.env.company and self.env.company.brand_name:
+            render_values["title"] = self.env.company.brand_name
+        return super(ViewExtend, self)._render_template(template, values=render_values)

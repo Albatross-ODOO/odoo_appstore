@@ -4,10 +4,10 @@ import odoo
 import base64
 from odoo import http, models
 from odoo.addons.web.controllers.binary import Binary
-from odoo.modules import get_resource_path
+from odoo.addons.web.controllers.home import Home
+from odoo.tools import file_path
 from odoo.tools.mimetypes import guess_mimetype
-from odoo.http import request
-from odoo.addons.web.controllers.main import Home
+from odoo.http import request, Response
 
 try:
     from werkzeug.utils import send_file
@@ -15,17 +15,31 @@ except ImportError:
     from odoo.tools._vendor.send_file import send_file
 
 
+from odoo.addons.web.controllers.database import Database
+
+
+class CustomDatabase(Database):
+
+    def _render_template(self, **d):
+        res = super(CustomDatabase, self)._render_template(**d)
+        if isinstance(res, str):
+            res = res.replace('/web/static/img/logo2.png', '/web/binary/company_logo')
+            res = res.replace('/web/static/img/logo.png', '/web/binary/company_logo')
+            res = res.replace('<title>Odoo</title>', '<title>Database Selector</title>')
+        return res
+
+
 class CustomHome(Home):
 
     @http.route('/web/login', type='http', auth='public', website=True, sitemap=False)
     def web_login(self, *args, **kw):
         response = super(CustomHome, self).web_login(*args, **kw)
-        # Ensure the response is a rendering of a template
-        if response.qcontext:
-            response.qcontext.update({
-                'title': 'thikedar',  # Overriding the title key
-                'favicon': '/custom_module/static/src/img/favicon.ico',  # Adding the favicon key
-            })
+        if getattr(response, 'qcontext', None) is not None:
+            brand_name = request.env.company.brand_name if request.env and request.env.company else ''
+            if brand_name:
+                response.qcontext.update({
+                    'title': brand_name,
+                })
         return response
 
 class ResCompanyLogo(Binary):
@@ -33,19 +47,20 @@ class ResCompanyLogo(Binary):
         '/web/binary/company_logo',
         '/logo',
         '/logo.png',
+        '/logo2.png',
+        '/web/static/img/logo.png',
+        '/web/static/img/logo2.png',
     ], type='http', auth="none", cors="*")
     def company_logo(self, dbname=None, **kw):
         imgname = 'logo'
         imgext = '.png'
-        placeholder = functools.partial(get_resource_path, 'web', 'static', 'img')
-        dbname = request.db
+        dbname = dbname or kw.get('db') or kw.get('dbname') or request.db
         uid = (request.session.uid if dbname else None) or odoo.SUPERUSER_ID
 
         if not dbname:
-            response = http.Stream.from_path(placeholder(imgname + imgext)).get_response()
+            response = http.Stream.from_path(file_path('web/static/img/' + imgname + imgext)).get_response()
         else:
             try:
-                # create an empty registry
                 registry = odoo.modules.registry.Registry(dbname)
                 with registry.cursor() as cr:
                     company = int(kw['company']) if kw and kw.get('company') else False
@@ -68,9 +83,14 @@ class ResCompanyLogo(Binary):
                         imgext = '.' + mimetype.split('/')[1]
                         if imgext == '.svg+xml':
                             imgext = '.svg'
-                        response = send_file(image_data, request.httprequest.environ,
-                                             download_name=imgname + imgext, mimetype=mimetype,
-                                             last_modified=branding[1])
+                        response = send_file(
+                            image_data,
+                            request.httprequest.environ,
+                            download_name=imgname + imgext,
+                            mimetype=mimetype,
+                            last_modified=branding[1],
+                            response_class=Response,
+                        )
                     else:
                         if company:
                             cr.execute("""SELECT logo_web, write_date
@@ -92,13 +112,18 @@ class ResCompanyLogo(Binary):
                             imgext = '.' + mimetype.split('/')[1]
                             if imgext == '.svg+xml':
                                 imgext = '.svg'
-                            response = send_file(image_data, request.httprequest.environ,
-                                                 download_name=imgname + imgext, mimetype=mimetype,
-                                                 last_modified=row[1])
+                            response = send_file(
+                                image_data,
+                                request.httprequest.environ,
+                                download_name=imgname + imgext,
+                                mimetype=mimetype,
+                                last_modified=row[1],
+                                response_class=Response,
+                            )
                         else:
-                            response = http.Stream.from_path(placeholder('nologo.png')).get_response()
+                            response = http.Stream.from_path(file_path('web/static/img/nologo.png')).get_response()
             except Exception:
-                response = http.Stream.from_path(placeholder(imgname + imgext)).get_response()
+                response = http.Stream.from_path(file_path('web/static/img/' + imgname + imgext)).get_response()
         return response
 
 class IrHttp(models.AbstractModel):

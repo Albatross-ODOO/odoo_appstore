@@ -1,28 +1,17 @@
 /** @odoo-module **/
 
-import { UserMenu } from "@web/webclient/user_menu/user_menu";
-import { session } from "@web/session";
-import { patch } from "@web/core/utils/patch";
-import { routeToUrl } from "@web/core/browser/router_service";
 import { browser } from "@web/core/browser/browser";
 import { registry } from "@web/core/registry";
-const userMenuRegistry = registry.category("user_menuitems");
-
 import { reactive } from "@odoo/owl";
 import { isAndroidApp, isIosApp } from "@web/core/browser/feature_detection";
 import { _t } from "@web/core/l10n/translation";
 
-patch(UserMenu.prototype, {
-    setup() {
-        "use strict";
-        super.setup();
-        userMenuRegistry.remove("documentation");
-        userMenuRegistry.remove("support");
-        userMenuRegistry.remove("odoo_account");
-    },
-});
+const userMenuRegistry = registry.category("user_menuitems");
+userMenuRegistry.remove("documentation");
+userMenuRegistry.remove("support");
+userMenuRegistry.remove("odoo_account");
 
-// Herer we remove odoo from push notification to enable browser / device requests
+// Remove Odoo branding from push notifications
 export const notificationPermissionService = {
     dependencies: ["notification"],
 
@@ -37,10 +26,6 @@ export const notificationPermissionService = {
         }
     },
 
-    /**
-     * @param {import("@web/env").OdooEnv} env
-     * @param {Partial<import("services").Services>} services
-     */
     async start(env, services) {
         const notification = services.notification;
         let permission;
@@ -52,7 +37,6 @@ export const notificationPermissionService = {
             // noop
         }
         const state = reactive({
-            /** @type {"prompt" | "granted" | "denied"} */
             permission:
                 isIosApp() || isAndroidApp()
                     ? "denied"
@@ -84,6 +68,7 @@ export const notificationPermissionService = {
         return state;
     },
 };
+
 registry.category("services").remove("mail.notification.permission");
 registry.category("services").add("mail.notification.permission", notificationPermissionService);
 

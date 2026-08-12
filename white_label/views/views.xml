@@ -11,7 +11,7 @@
                      data-string="Debrand"
                      string="Debrand"
                      name="Debrand"
-                     data-key="odoo-debrand-11"
+                     data-key="white_label"
                 >
                     <block title="Debranding Configurations" name="debrand_container">
                         <setting id="debrand_settings" name="debrand_settings" string="Debranding Settings" help="Set Debranding Labels to be appreared in the title and other places">
@@ -82,7 +82,7 @@
     <record id="res_config_settings_view_form_extend" model="ir.ui.view">
         <field name="name">res.settings.about</field>
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="inherit_id" ref="iap.res_config_settings_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//div[@id='iap_portal']" position="replace">
                 <div id="iap_portal">

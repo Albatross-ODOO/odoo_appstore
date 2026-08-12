@@ -52,13 +52,15 @@
     # Check https://github.com/odoo/odoo/blob/master/openerp/addons/base/module/module_data.xml
     # for the full list
     'category': 'tools',
-    'version': '1.0',
+    'version': '18.0.1.0.0',
     'license': 'LGPL-3',
     'price': 79.99,
     'currency': 'USD',
     'depends': [
         'base_setup',
         'mail',
+        'iap',
+        'portal',
     ],
     'data': [
         'data/mailbot_data.xml',
@@ -67,8 +69,8 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'odoo-debrand-11/static/src/js/usermenuextend.js',
-            'odoo-debrand-11/static/src/js/title.js',
+            'white_label/static/src/js/usermenuextend.js',
+            'white_label/static/src/js/title.js',
         ],
     },
     'images': ["static/description/banner.gif"],
