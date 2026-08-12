@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Module Category -->
+        <record id="module_category_discuss_chat_monitor" model="ir.module.category">
+            <field name="name">Discuss Chat Monitor</field>
+            <field name="description">Security group to access chat monitoring, employee discussion logs, and compliance audit trail.</field>
+            <field name="sequence">25</field>
+        </record>
+
+        <!-- Security Group: Chat Monitor Manager / Admin -->
+        <record id="group_chat_monitor_admin" model="res.groups">
+            <field name="name">Chat Monitor Manager</field>
+            <field name="category_id" ref="module_category_discuss_chat_monitor"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+            <field name="comment">Authorized users with permission to monitor, view, search, and audit all employee chat sessions in Discuss.</field>
+        </record>
+
+        <!-- Record Rules -->
+
+        <!-- Rule 1: Discuss Channel Full Read Access for Chat Monitor Admin -->
+        <record id="rule_discuss_channel_chat_monitor_admin" model="ir.rule">
+            <field name="name">Discuss Channel: Chat Monitor Admin Full Access</field>
+            <field name="model_id" ref="mail.model_discuss_channel"/>
+            <field name="groups" eval="[(4, ref('group_chat_monitor_admin'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Rule 2: Discuss Channel Member Full Read Access for Chat Monitor Admin -->
+        <record id="rule_discuss_channel_member_chat_monitor_admin" model="ir.rule">
+            <field name="name">Discuss Channel Member: Chat Monitor Admin Full Access</field>
+            <field name="model_id" ref="mail.model_discuss_channel_member"/>
+            <field name="groups" eval="[(4, ref('group_chat_monitor_admin'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Rule 3: Discuss Chat Session Rules -->
+        <record id="rule_discuss_chat_session_admin" model="ir.rule">
+            <field name="name">Discuss Chat Session: Admin Access</field>
+            <field name="model_id" ref="model_discuss_chat_session"/>
+            <field name="groups" eval="[(4, ref('group_chat_monitor_admin'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <!-- Rule 4: Audit Log Access Rule -->
+        <record id="rule_discuss_chat_audit_log_admin" model="ir.rule">
+            <field name="name">Discuss Chat Audit Log: Admin Access</field>
+            <field name="model_id" ref="model_discuss_chat_audit_log"/>
+            <field name="groups" eval="[(4, ref('group_chat_monitor_admin'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

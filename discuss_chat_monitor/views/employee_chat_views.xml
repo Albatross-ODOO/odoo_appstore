@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Kanban View: Employee Chat Directory -->
+        <record id="view_employee_chat_directory_kanban" model="ir.ui.view">
+            <field name="name">res.partner.employee.chat.kanban</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban" sample="1">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="avatar_128"/>
+                    <field name="function"/>
+                    <field name="chat_session_count"/>
+                    <field name="chatted_partner_count"/>
+                    <field name="last_chat_date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record cm_session_kanban_card p-0 mb-3">
+                                <div class="cm-card-header d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <img t-att-src="kanban_image('res.partner', 'avatar_128', record.id.raw_value)" class="rounded-circle shadow-sm" style="width: 38px; height: 38px; object-fit: cover;" alt="Avatar"/>
+                                        <div>
+                                            <span class="fw-bold text-dark text-truncate d-block" style="max-width: 160px;">
+                                                <field name="name"/>
+                                            </span>
+                                            <small class="text-muted"><t t-esc="record.function.value or 'Employee'"/></small>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-1">
+                                        <i class="fa fa-comments-o me-1"/> <t t-esc="record.chat_session_count.value"/> sessions
+                                    </span>
+                                </div>
+
+                                <div class="p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted small">
+                                            <i class="fa fa-users me-1 text-primary"/> Chat Partners: <strong><t t-esc="record.chatted_partner_count.value"/></strong>
+                                        </span>
+                                    </div>
+                                    <div class="text-muted small mb-3" t-if="record.last_chat_date.value">
+                                        <i class="fa fa-clock-o me-1 text-muted"/> Last active: <t t-esc="record.last_chat_date.value"/>
+                                    </div>
+                                    <button name="action_open_partner_chat_sessions" type="object" class="btn btn-sm btn-outline-primary w-100 rounded-pill">
+                                        <i class="fa fa-search me-1"/> View Chat History
+                                    </button>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- List View: Employee Chat Directory -->
+        <record id="view_employee_chat_directory_tree" model="ir.ui.view">
+            <field name="name">res.partner.employee.chat.list</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <list string="Employee Chat Directory" sample="1">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="function"/>
+                    <field name="chat_session_count" string="Total Sessions"/>
+                    <field name="chatted_partner_count" string="Chat Connections"/>
+                    <field name="last_chat_date" widget="datetime"/>
+                    <button name="action_open_partner_chat_sessions" type="object" string="View Sessions" icon="fa-comments" class="btn-sm btn-outline-primary"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Action: Employee Chat Directory -->
+        <record id="action_employee_chat_directory" model="ir.actions.act_window">
+            <field name="name">Employee Directory &amp; Chat History</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[('user_ids', '!=', False)]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_employee_chat_directory_kanban')}),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('view_employee_chat_directory_tree')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Employee Chat Directory
+                </p>
+                <p>
+                    Select an employee to inspect their active chat partners and full historical discussion logs.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
