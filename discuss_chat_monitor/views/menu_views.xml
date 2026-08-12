@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Top Level App Menu: Chat Monitor -->
+        <menuitem id="menu_discuss_chat_monitor_root"
+                  name="Chat Monitor"
+                  web_icon="discuss_chat_monitor,static/description/icon.png"
+                  groups="group_chat_monitor_admin"
+                  sequence="85"/>
+
+        <!-- Submenu 1: Daily Chat Sessions -->
+        <menuitem id="menu_discuss_chat_session_all"
+                  name="Daily Chat Sessions"
+                  parent="menu_discuss_chat_monitor_root"
+                  action="action_discuss_chat_session_all"
+                  groups="group_chat_monitor_admin"
+                  sequence="10"/>
+
+        <!-- Submenu 2: Employee Directory & Chat History -->
+        <menuitem id="menu_employee_chat_directory"
+                  name="Employee Directory"
+                  parent="menu_discuss_chat_monitor_root"
+                  action="action_employee_chat_directory"
+                  groups="group_chat_monitor_admin"
+                  sequence="20"/>
+
+        <!-- Submenu 3: Security & Compliance -->
+        <menuitem id="menu_audit_logs_root"
+                  name="Audit &amp; Compliance"
+                  parent="menu_discuss_chat_monitor_root"
+                  groups="group_chat_monitor_admin"
+                  sequence="30"/>
+
+        <menuitem id="menu_discuss_chat_audit_log_all"
+                  name="Security Audit Logs"
+                  parent="menu_audit_logs_root"
+                  action="action_discuss_chat_audit_log_all"
+                  groups="group_chat_monitor_admin"
+                  sequence="10"/>
+
+    </data>
+</odoo>
