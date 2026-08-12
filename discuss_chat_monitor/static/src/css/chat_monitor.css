@@ -1,0 +1,303 @@
+/* Discuss Chat Monitor Modern Light & Clean Design System */
+
+:root {
+    --cm-bg-main: #f8fafc;
+    --cm-bg-sidebar: #f1f5f9;
+    --cm-bg-card: #ffffff;
+    --cm-bg-card-hover: #f8fafc;
+    --cm-bg-card-active: #eff6ff;
+    --cm-border-color: #e2e8f0;
+    --cm-border-active: #3b82f6;
+    
+    --cm-text-primary: #0f172a;
+    --cm-text-secondary: #475569;
+    --cm-text-muted: #64748b;
+    
+    --cm-brand-blue: #2563eb;
+    --cm-brand-blue-bg: #dbeafe;
+    --cm-purple: #7c3aed;
+    --cm-purple-bg: #f3e8ff;
+}
+
+/* Base Container */
+.o_chat_monitor_container {
+    height: calc(100vh - 48px) !important;
+    background-color: var(--cm-bg-main) !important;
+    color: var(--cm-text-primary) !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+/* Left Sidebar */
+.o_chat_monitor_sidebar {
+    width: 350px !important;
+    min-width: 320px !important;
+    background-color: var(--cm-bg-sidebar) !important;
+    border-right: 1px solid var(--cm-border-color) !important;
+}
+
+.cm-sidebar-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid var(--cm-border-color) !important;
+}
+
+.cm-title-text {
+    color: #0f172a !important;
+}
+
+.cm-icon-primary {
+    color: var(--cm-brand-blue) !important;
+}
+
+.cm-btn-icon {
+    background-color: #f1f5f9 !important;
+    color: #475569 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 50% !important;
+}
+
+.cm-btn-icon:hover {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+/* Search Box */
+.cm-search-icon {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-right: none !important;
+    color: #64748b !important;
+}
+
+.cm-search-input {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-left: none !important;
+    color: #0f172a !important;
+}
+
+.cm-search-input::placeholder {
+    color: #94a3b8 !important;
+}
+
+.cm-search-input:focus {
+    box-shadow: none !important;
+    border-color: #3b82f6 !important;
+}
+
+/* Pill & Date Buttons */
+.cm-pill-btn, .cm-date-btn {
+    background-color: #ffffff !important;
+    color: #475569 !important;
+    border: 1px solid #cbd5e1 !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    border-radius: 20px !important;
+    padding: 3px 10px !important;
+}
+
+.cm-pill-btn:hover, .cm-date-btn:hover {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+.cm-pill-btn.active, .cm-date-btn.active {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border-color: #2563eb !important;
+    font-weight: 600 !important;
+}
+
+.cm-label-text {
+    color: #475569 !important;
+}
+
+.cm-muted-text {
+    color: #64748b !important;
+}
+
+/* Sidebar Session Cards */
+.cm-session-card {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+.cm-session-card:hover {
+    background-color: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    transform: translateY(-1px);
+}
+
+.cm-session-card.active {
+    background-color: #eff6ff !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.12) !important;
+}
+
+.cm-card-title {
+    color: #0f172a !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+
+.cm-card-time {
+    color: #64748b !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+}
+
+.cm-card-preview {
+    color: #475569 !important;
+    font-size: 12px !important;
+}
+
+.cm-type-badge {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    padding: 2px 8px !important;
+    border-radius: 12px !important;
+}
+
+.badge-direct {
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+}
+
+.badge-group {
+    background-color: #f3e8ff !important;
+    color: #6b21a8 !important;
+}
+
+.cm-avatar-placeholder {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+}
+
+/* Right Main Chat Pane */
+.o_chat_monitor_main {
+    background-color: #ffffff !important;
+}
+
+.cm-main-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+.cm-header-icon {
+    width: 42px !important;
+    height: 42px !important;
+    background-color: #dbeafe !important;
+    color: #2563eb !important;
+    font-size: 18px !important;
+}
+
+.cm-header-title {
+    color: #0f172a !important;
+    font-size: 16px !important;
+}
+
+.cm-header-meta {
+    color: #64748b !important;
+    font-size: 12px !important;
+}
+
+.cm-partner-tag {
+    background-color: #f1f5f9 !important;
+    color: #334155 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 4px !important;
+    padding: 1px 6px !important;
+    font-size: 11px !important;
+}
+
+.cm-refresh-btn {
+    background-color: #ffffff !important;
+    color: #2563eb !important;
+    border: 1px solid #2563eb !important;
+    font-weight: 500 !important;
+}
+
+.cm-refresh-btn:hover {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+}
+
+/* Thread Area */
+.o_chat_monitor_thread {
+    background-color: #f8fafc !important;
+}
+
+/* Message Bubble */
+.cm-message-bubble {
+    transition: background-color 0.15s ease;
+}
+
+.cm-message-bubble:hover {
+    background-color: rgba(37, 99, 235, 0.02) !important;
+}
+
+.cm-bubble-body {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    color: #0f172a !important;
+}
+
+.cm-author-name {
+    color: #0f172a !important;
+    font-size: 14px !important;
+}
+
+.cm-msg-date {
+    color: #64748b !important;
+    font-size: 11px !important;
+}
+
+.cm-message-content {
+    color: #1e293b !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
+
+.cm-message-content p {
+    color: #1e293b !important;
+    margin-bottom: 0.4rem !important;
+}
+
+.cm-message-content p:last-child {
+    margin-bottom: 0 !important;
+}
+
+.cm-attachment-pill {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #334155 !important;
+    padding: 3px 10px !important;
+    border-radius: 16px !important;
+    font-size: 12px !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.cm-attachment-pill:hover {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+/* Empty State */
+.cm-empty-state {
+    background-color: #ffffff !important;
+    color: #64748b !important;
+}
+
+.cm-empty-icon {
+    background-color: #dbeafe !important;
+    color: #2563eb !important;
+}
+
+.cm-empty-state h4 {
+    color: #0f172a !important;
+}

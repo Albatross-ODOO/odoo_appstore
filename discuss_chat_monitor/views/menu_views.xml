@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Client Action: Chat Monitor Discuss Dual-Pane Dashboard -->
+        <record id="action_discuss_chat_monitor" model="ir.actions.client">
+            <field name="name">Chat Monitor</field>
+            <field name="tag">discuss_chat_monitor.chat_monitor_dashboard</field>
+            <field name="target">main</field>
+        </record>
+
+        <!-- Top Level App Menu: Chat Monitor -->
+        <menuitem id="menu_discuss_chat_monitor_root"
+                  name="Chat Monitor"
+                  web_icon="discuss_chat_monitor,static/description/icon.png"
+                  action="action_discuss_chat_monitor"
+                  groups="group_chat_monitor_admin"
+                  sequence="85"/>
+
+    </data>
+</odoo>
