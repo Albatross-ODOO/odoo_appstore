@@ -1,183 +1,718 @@
-/* Premium Styling for Field Sales Kiosk Mode Dashboard */
+/* ============================================================
+   Field Sales Kiosk — Neumorphic ("soft UI") design system
+   Everything is scoped under .field-sales-kiosk-container so it
+   never leaks into the rest of the Odoo backend.
+   ============================================================ */
+
+/* Pantone shade card (closest sRGB values) */
+$nm-bg:      #e2eaeb;   // 11-4601 Bit of Blue      — ground
+$nm-light:   #ffffff;   // 11-0601 Bright White     — highlight
+$nm-dark:    #b9cacf;   // 14-4506 Sterling Blue    — shade (lightened)
+$nm-ink:     #282d3c;   // 19-3923 Navy Blazer      — text
+$nm-head:    #0f4c81;   // 19-4052 Classic Blue     — headings
+$nm-muted:   #58646d;   // 18-4214 Stormy Weather   — secondary text
+$nm-accent:  #ff6f61;   // 16-1546 Living Coral     — primary action
+$nm-accent-deep: #dd4124; // 17-1463 Tangerine Tango — primary action (deep)
+$nm-accent-text: #c9381d; // Tangerine, darkened for text on the ground
+$nm-violet:  #5f4b8b;   // 18-3838 Ultra Violet     — contact avatars
+$nm-peach:   #ffbe98;   // 13-1023 Peach Fuzz       — active-visit tint
+$nm-success: #009b77;   // 17-5641 Emerald          — confirm
+$nm-success-deep: #00795d;
+$nm-danger:  #9b1b30;   // 19-1557 Chili Pepper     — destructive
+$nm-warn:    #f5df4d;   // 13-0647 Illuminating
+$nm-radius:  18px;
+
+@mixin nm-raised($d: 7px) {
+    box-shadow: $d $d ($d * 2) $nm-dark, (-$d) (-$d) ($d * 2) $nm-light;
+}
+@mixin nm-inset($d: 4px) {
+    box-shadow: inset $d $d ($d * 2) $nm-dark, inset (-$d) (-$d) ($d * 2) $nm-light;
+}
+@mixin nm-flat {
+    box-shadow: 3px 3px 6px $nm-dark, -3px -3px 6px $nm-light;
+}
 
 .field-sales-kiosk-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 46px);
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Inter', sans-serif;
-    padding: 1.5rem;
-}
-
-/* Loading Overlay */
-.kiosk-loading-overlay {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Card Structures */
-.kiosk-welcome-card, .kiosk-active-card {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    max-width: 480px;
-    width: 100%;
-    border-radius: 16px !important;
-    transition: all 0.3s ease;
-}
-
-.kiosk-welcome-card:hover, .kiosk-active-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
-}
-
-.text-dark-blue {
-    color: #1e3a8a;
-}
-
-.kiosk-logo-wrap {
-    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    box-shadow: 0 8px 16px rgba(99, 102, 241, 0.15);
-}
-
-.animate-bounce {
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(-4px);
-    }
-    50% {
-        transform: translateY(4px);
-    }
-}
-
-/* KPI Box Styles */
-.kpi-box {
-    background: rgba(255, 255, 255, 0.6);
-    border-color: rgba(226, 232, 240, 0.8) !important;
-    border-radius: 12px;
-    transition: transform 0.2s ease;
-}
-
-.kpi-box:hover {
-    transform: scale(1.05);
-}
-
-.bg-success-light {
-    background-color: #d1fae5;
-}
-
-/* Button Customizations */
-.checkin-btn, .visit-btn {
-    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
-    border: none !important;
-    border-radius: 12px !important;
-    font-size: 1.05rem;
-    transition: all 0.2s ease;
-}
-
-.checkin-btn:hover, .visit-btn:hover {
-    background: linear-gradient(135deg, #4338ca 0%, #2563eb 100%);
-    transform: scale(1.01);
-}
-
-.checkout-btn {
-    border-radius: 12px !important;
-    font-size: 1.05rem;
-}
-
-/* Modal and Overlay System */
-.kiosk-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(4px);
-    display: flex;
-    justify-content: center;
     align-items: flex-start;
+    min-height: calc(100vh - 46px);
+    min-height: calc(100dvh - 46px);
+    background: $nm-bg;
+    color: $nm-ink;
+    padding: 1.5rem 1rem 2.5rem;
+    padding-left: #{"max(1rem, env(safe-area-inset-left))"};
+    padding-right: #{"max(1rem, env(safe-area-inset-right))"};
+    padding-bottom: #{"max(2.5rem, env(safe-area-inset-bottom))"};
     overflow-y: auto;
-    z-index: 1050;
-    padding: 1.5rem 1rem;
-}
-
-.kiosk-modal-card {
-    background: #ffffff !important;
-    width: 100%;
-    max-width: 440px;
-    max-height: 85vh;
-    border-radius: 16px !important;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
-    margin: auto 0;
-    overflow: hidden;
-}
-
-.kiosk-modal-body {
-    max-height: 55vh !important;
-    overflow-y: auto !important;
-    padding-right: 6px;
     -webkit-overflow-scrolling: touch;
-}
+    font-variant-numeric: tabular-nums;
+    -webkit-tap-highlight-color: transparent;
 
-.video-container {
-    width: 100%;
-    max-width: 320px;
-    aspect-ratio: 4/3;
-    margin: 0 auto;
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
-}
+    * { box-sizing: border-box; }
+    button, label { touch-action: manipulation; }
 
-.field-sales-kiosk-container input,
-.field-sales-kiosk-container textarea,
-.field-sales-kiosk-container .form-control {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    opacity: 1 !important;
-    border-radius: 10px;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid #cbd5e1;
-}
+    /* ---------- Loading ---------- */
+    .kiosk-loading-overlay {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 60vh;
+        color: $nm-muted;
+        gap: 1rem;
+    }
 
-.field-sales-kiosk-container input:focus,
-.field-sales-kiosk-container textarea:focus,
-.field-sales-kiosk-container .form-control:focus {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    opacity: 1 !important;
-    border-color: #3b82f6 !important;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
-}
+    /* ---------- Surfaces ---------- */
+    .nm-card {
+        background: $nm-bg;
+        border-radius: 26px;
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 480px;
+        @include nm-raised(10px);
+    }
 
-/* Override browser autofill to keep text black and background white */
-.field-sales-kiosk-container input:-webkit-autofill,
-.field-sales-kiosk-container input:-webkit-autofill:hover, 
-.field-sales-kiosk-container input:-webkit-autofill:focus, 
-.field-sales-kiosk-container textarea:-webkit-autofill,
-.field-sales-kiosk-container textarea:-webkit-autofill:hover,
-.field-sales-kiosk-container textarea:-webkit-autofill:focus {
-    -webkit-text-fill-color: #000000 !important;
-    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
+    .nm-well {
+        background: $nm-bg;
+        border-radius: $nm-radius;
+        padding: 1rem 1.15rem;
+        @include nm-inset(4px);
+    }
 
-.form-label {
-    color: #000000 !important;
-    font-weight: 700 !important;
+    .nm-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .35rem .8rem;
+        border-radius: 999px;
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        color: $nm-muted;
+        background: $nm-bg;
+        @include nm-flat;
+
+        &.nm-chip--live   { color: $nm-success; }
+        &.nm-chip--visit  { color: $nm-accent-text; }
+        &.nm-chip--danger { color: $nm-danger; }
+
+        .nm-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 0 3px rgba($nm-success, .18);
+        }
+    }
+
+    .nm-icon-orb {
+        width: 84px; height: 84px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: $nm-accent-text;
+        font-size: 2.2rem;
+        background: $nm-bg;
+        @include nm-raised(8px);
+        margin: 0 auto 1.25rem;
+    }
+
+    /* ---------- Typography ---------- */
+    .nm-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -.01em;
+        color: $nm-head;
+        margin: 0;
+        text-wrap: balance;
+    }
+    .nm-subtitle {
+        color: $nm-muted;
+        font-size: .95rem;
+        margin: .35rem 0 0;
+        line-height: 1.45;
+    }
+    .nm-label {
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: $nm-muted;
+        margin-bottom: .45rem;
+        display: block;
+    }
+    .nm-kpi {
+        text-align: center;
+        padding: 1.1rem 1rem;
+        border-radius: $nm-radius;
+        @include nm-inset(4px);
+
+        .nm-kpi-value {
+            font-size: 2.4rem;
+            font-weight: 800;
+            line-height: 1;
+            color: $nm-accent-text;
+        }
+        .nm-kpi-label {
+            display: block;
+            margin-top: .4rem;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: $nm-muted;
+        }
+    }
+
+    /* ---------- Buttons ---------- */
+    .nm-btn {
+        appearance: none;
+        border: 0;
+        width: 100%;
+        min-height: 58px;
+        padding: .9rem 1.2rem;
+        border-radius: $nm-radius;
+        background: $nm-bg;
+        color: $nm-ink;
+        font-weight: 700;
+        font-size: .95rem;
+        letter-spacing: .02em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .6rem;
+        cursor: pointer;
+        transition: box-shadow .15s ease, transform .15s ease, color .15s ease;
+        @include nm-raised(6px);
+
+        &:hover { transform: translateY(-1px); }
+        &:active, &.is-pressed {
+            transform: translateY(0);
+            @include nm-inset(4px);
+        }
+        &:focus-visible {
+            outline: 3px solid rgba($nm-accent, .45);
+            outline-offset: 3px;
+        }
+        &:disabled {
+            cursor: not-allowed;
+            color: lighten($nm-muted, 15%);
+            transform: none;
+            @include nm-flat;
+        }
+
+        &.nm-btn--primary {
+            color: #fff;
+            background: linear-gradient(145deg, lighten($nm-accent, 6%), $nm-accent-deep);
+            box-shadow: 6px 6px 14px $nm-dark, -6px -6px 14px $nm-light, inset 0 1px 0 rgba(255,255,255,.25);
+            &:active { box-shadow: inset 4px 4px 10px rgba(0,0,0,.25), inset -2px -2px 6px rgba(255,255,255,.15); }
+            &:disabled { background: $nm-bg; color: lighten($nm-muted, 15%); }
+        }
+        &.nm-btn--success {
+            color: #fff;
+            background: linear-gradient(145deg, lighten($nm-success, 6%), $nm-success-deep);
+            box-shadow: 6px 6px 14px $nm-dark, -6px -6px 14px $nm-light, inset 0 1px 0 rgba(255,255,255,.25);
+            &:active { box-shadow: inset 4px 4px 10px rgba(0,0,0,.25), inset -2px -2px 6px rgba(255,255,255,.15); }
+            &:disabled { background: $nm-bg; color: lighten($nm-muted, 15%); }
+        }
+        &.nm-btn--danger { color: $nm-danger; }
+        &.nm-btn--ghost  { color: $nm-muted; font-weight: 600; }
+        &.nm-btn--sm {
+            min-height: 44px;
+            padding: .55rem 1rem;
+            font-size: .85rem;
+            border-radius: 14px;
+            @include nm-raised(4px);
+            &:active { @include nm-inset(3px); }
+        }
+        &.nm-btn--auto { width: auto; }
+        &.nm-btn--icon {
+            width: 44px; min-height: 44px; padding: 0;
+            border-radius: 50%;
+            @include nm-raised(4px);
+            &:active { @include nm-inset(3px); }
+        }
+    }
+
+    /* ---------- Inputs ---------- */
+    .nm-input,
+    .nm-textarea {
+        width: 100%;
+        border: 0;
+        border-radius: $nm-radius;
+        background: $nm-bg;
+        color: $nm-ink;
+        font-size: 1.05rem;
+        font-weight: 600;
+        padding: .95rem 1.1rem;
+        line-height: 1.35;
+        @include nm-inset(4px);
+        transition: box-shadow .15s ease;
+
+        &::placeholder { color: lighten($nm-muted, 12%); font-weight: 500; }
+        &:focus {
+            outline: none;
+            box-shadow: inset 4px 4px 8px $nm-dark, inset -4px -4px 8px $nm-light, 0 0 0 3px rgba($nm-accent, .28);
+        }
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus {
+            -webkit-text-fill-color: $nm-ink;
+            -webkit-box-shadow: 0 0 0px 1000px $nm-bg inset, inset 4px 4px 8px $nm-dark;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    }
+    .nm-textarea { resize: vertical; min-height: 110px; }
+
+    .nm-input-row {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        .nm-input { flex: 1 1 auto; }
+    }
+
+    /* Toggle switch */
+    .nm-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: .85rem 1rem;
+        border-radius: $nm-radius;
+        cursor: pointer;
+        @include nm-flat;
+        user-select: none;
+
+        .nm-toggle-text {
+            display: flex; flex-direction: column; gap: .15rem;
+            strong { font-size: .95rem; color: $nm-ink; }
+            small  { font-size: .78rem; color: $nm-muted; }
+        }
+        input { position: absolute; opacity: 0; width: 0; height: 0; }
+        .nm-toggle-track {
+            flex: 0 0 auto;
+            width: 54px; height: 30px;
+            border-radius: 999px;
+            position: relative;
+            background: $nm-bg;
+            transition: background .2s ease;
+            @include nm-inset(3px);
+            &::after {
+                content: "";
+                position: absolute;
+                top: 4px; left: 4px;
+                width: 22px; height: 22px;
+                border-radius: 50%;
+                background: $nm-bg;
+                @include nm-raised(3px);
+                transition: transform .2s ease, background .2s ease;
+            }
+        }
+        input:checked + .nm-toggle-track {
+            background: rgba($nm-accent, .22);
+            &::after {
+                transform: translateX(24px);
+                background: $nm-accent-deep;
+                box-shadow: 2px 2px 6px rgba($nm-accent-deep, .45), -2px -2px 6px $nm-light;
+            }
+        }
+        input:focus-visible + .nm-toggle-track { outline: 3px solid rgba($nm-accent, .45); outline-offset: 2px; }
+        &.is-disabled { opacity: .55; cursor: not-allowed; }
+    }
+
+    /* ---------- Session header ---------- */
+    .nm-session-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.25rem;
+        .nm-session-name { font-size: 1.35rem; font-weight: 800; margin: .55rem 0 0; color: $nm-head; }
+        .nm-session-time {
+            text-align: right;
+            small { display: block; color: $nm-muted; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
+            span  { font-weight: 700; }
+        }
+    }
+    .nm-active-visit {
+        display: flex;
+        align-items: center;
+        gap: .85rem;
+        padding: .9rem 1rem;
+        border-radius: $nm-radius;
+        margin-bottom: 1.1rem;
+        background: mix($nm-peach, $nm-bg, 35%);
+        @include nm-inset(3px);
+        .nm-active-visit-icon {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: $nm-accent-text; background: $nm-bg; @include nm-raised(3px);
+        }
+        strong { display: block; font-size: .92rem; }
+        small  { color: $nm-muted; font-size: .8rem; }
+    }
+    .nm-actions { display: flex; flex-direction: column; gap: 1rem; }
+
+    /* ---------- Modal ---------- */
+    .kiosk-modal-overlay {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        top: var(--kiosk-vt, 0px);
+        height: 100dvh;
+        height: var(--kiosk-vh, 100dvh);
+        background: rgba(40, 45, 60, .45);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1050;
+        padding: 1rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+    }
+    .kiosk-modal-card {
+        background: $nm-bg;
+        width: 100%;
+        max-width: 480px;
+        max-height: calc(100vh - 2rem);
+        max-height: calc(100dvh - 2rem);
+        max-height: calc(var(--kiosk-vh, 100dvh) - 2rem);
+        display: flex;
+        flex-direction: column;
+        border-radius: 26px;
+        padding: 1.4rem 1.4rem 1.2rem;
+        margin: auto;
+        overflow: hidden;
+        @include nm-raised(12px);
+    }
+    .kiosk-modal-header {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        h4 { margin: 0; font-size: 1.2rem; font-weight: 800; color: $nm-head; }
+    }
+    .kiosk-modal-body {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        padding: 4px 6px 4px 4px; /* room for shadows */
+        margin: -4px -6px -4px -4px;
+    }
+    .kiosk-modal-footer {
+        flex-shrink: 0;
+        display: flex;
+        gap: .85rem;
+        padding-top: 1rem;
+        &.nm-step-nav { border-top: 1px solid rgba($nm-dark, .55); }
+    }
+    /* <label> styled as a button wrapping a hidden file input (native camera / gallery) */
+    .nm-file-btn {
+        position: relative;
+        margin: 0;
+        input[type="file"] { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; }
+        &:focus-within { outline: 3px solid rgba($nm-accent, .45); outline-offset: 3px; }
+    }
+    .nm-suggest-status {
+        display: flex; align-items: center; gap: .5rem;
+        padding: .4rem .6rem; color: $nm-muted; font-size: .82rem; font-weight: 600;
+    }
+
+    /* ---------- Progressive step form ---------- */
+    .nm-progress {
+        display: flex;
+        align-items: center;
+        gap: .85rem;
+        margin-bottom: 1.1rem;
+        .nm-progress-track {
+            flex: 1 1 auto;
+            height: 12px;
+            border-radius: 999px;
+            background: $nm-bg;
+            overflow: hidden;
+            @include nm-inset(3px);
+        }
+        .nm-progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, lighten($nm-accent, 8%), $nm-accent-deep);
+            transition: width .3s ease;
+        }
+        .nm-progress-text {
+            flex: 0 0 auto;
+            font-size: .78rem;
+            font-weight: 800;
+            color: $nm-muted;
+            letter-spacing: .04em;
+        }
+    }
+    .nm-steps { display: flex; flex-direction: column; gap: .75rem; }
+
+    /* completed step → compact row */
+    .nm-step-done {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
+        width: 100%;
+        text-align: left;
+        border: 0;
+        background: $nm-bg;
+        border-radius: 16px;
+        padding: .7rem .9rem;
+        cursor: pointer;
+        color: $nm-ink;
+        @include nm-flat;
+        transition: box-shadow .15s ease;
+        &:hover { @include nm-raised(4px); }
+        &:focus-visible { outline: 3px solid rgba($nm-accent, .45); outline-offset: 2px; }
+
+        .nm-step-check {
+            flex: 0 0 auto;
+            width: 28px; height: 28px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: #fff; font-size: .8rem;
+            background: linear-gradient(145deg, lighten($nm-success, 6%), $nm-success-deep);
+            box-shadow: 2px 2px 5px $nm-dark, -2px -2px 5px $nm-light;
+            &.is-skipped { background: $nm-bg; color: $nm-muted; @include nm-inset(2px); }
+        }
+        .nm-step-text {
+            flex: 1 1 auto; min-width: 0;
+            small { display: block; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: $nm-muted; }
+            span  { display: block; font-weight: 700; font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            span.is-empty { color: $nm-muted; font-weight: 500; font-style: italic; }
+        }
+        .nm-step-edit { color: $nm-muted; font-size: .85rem; flex: 0 0 auto; }
+    }
+
+    /* active step → expanded panel */
+    .nm-step-active {
+        border-radius: 22px;
+        padding: 1.15rem 1.1rem 1.1rem;
+        @include nm-raised(6px);
+        animation: nm-step-in .28s ease;
+
+        .nm-step-kicker {
+            display: flex; align-items: center; gap: .55rem;
+            font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: $nm-accent-text;
+            margin-bottom: .35rem;
+        }
+        .nm-step-question {
+            font-size: 1.15rem; font-weight: 800; margin: 0 0 .25rem; text-wrap: balance; color: $nm-head;
+        }
+        .nm-step-hint { color: $nm-muted; font-size: .85rem; margin: 0 0 .9rem; }
+        .nm-step-body { display: flex; flex-direction: column; gap: .8rem; }
+    }
+    @keyframes nm-step-in {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: none; }
+    }
+
+    /* Partner autocomplete (inline, inside the step) */
+    .nm-suggest {
+        display: flex; flex-direction: column; gap: .5rem;
+        max-height: 230px; overflow-y: auto;
+        padding: 4px;
+        margin: 0 -4px;
+    }
+    .nm-suggest-item {
+        display: flex; align-items: center; gap: .7rem;
+        width: 100%; text-align: left; border: 0;
+        background: $nm-bg; color: $nm-ink;
+        border-radius: 14px; padding: .65rem .8rem; cursor: pointer;
+        @include nm-flat;
+        &:hover { @include nm-raised(4px); }
+        &:focus-visible { outline: 3px solid rgba($nm-accent, .45); outline-offset: 2px; }
+        .nm-suggest-avatar {
+            flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: .85rem; color: $nm-violet; background: $nm-bg;
+            @include nm-inset(2px);
+        }
+        .nm-suggest-text {
+            min-width: 0; flex: 1 1 auto;
+            strong { display: block; font-size: .92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            small  { display: block; color: $nm-muted; font-size: .76rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        }
+        &.nm-suggest-item--create { color: $nm-accent-text; .nm-suggest-avatar { color: #fff; background: $nm-accent-deep; box-shadow: none; } }
+    }
+    .nm-linked {
+        display: flex; align-items: center; gap: .6rem;
+        padding: .6rem .8rem; border-radius: 14px;
+        color: $nm-success; font-weight: 700; font-size: .85rem;
+        @include nm-inset(2px);
+        span { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: $nm-ink; }
+    }
+
+    /* Photo step */
+    .nm-photo-frame {
+        border-radius: $nm-radius;
+        padding: 1rem;
+        text-align: center;
+        @include nm-inset(4px);
+        img { max-width: 100%; max-height: 220px; border-radius: 14px; @include nm-raised(4px); }
+        .nm-photo-empty { padding: 1.2rem 0; color: $nm-muted; i { font-size: 2.2rem; display: block; margin-bottom: .6rem; } }
+        .nm-photo-tools { display: flex; gap: .6rem; justify-content: center; margin-top: .8rem; flex-wrap: wrap; }
+    }
+
+    /* Review step */
+    .nm-review { display: flex; flex-direction: column; gap: .55rem; }
+    .nm-review-row {
+        display: flex; justify-content: space-between; gap: 1rem; align-items: baseline;
+        padding: .55rem .2rem; border-bottom: 1px solid rgba($nm-dark, .55);
+        small { flex: 0 0 auto; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: $nm-muted; }
+        span  { text-align: right; font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+        span.is-empty { color: $nm-muted; font-weight: 500; font-style: italic; }
+        &:last-child { border-bottom: 0; }
+    }
+    .nm-review-photo { text-align: center; margin-top: .5rem; img { max-height: 140px; border-radius: 14px; @include nm-raised(4px); } }
+
+    .nm-alert {
+        padding: .8rem 1rem; border-radius: 14px; color: $nm-danger; font-weight: 600; font-size: .9rem;
+        @include nm-inset(3px);
+    }
+
+    /* ---------- Keyboard open (phones): give the field room ---------- */
+    &.nm-kb-open {
+        .kiosk-modal-card::before { display: none; }
+        .kiosk-modal-header { margin-bottom: .4rem; h4 { font-size: 1rem; } }
+        .nm-progress { display: none; }
+        .nm-step-active { padding-top: .8rem; .nm-step-hint { display: none; } .nm-step-question { font-size: 1rem; } }
+        .kiosk-modal-footer { padding-top: .6rem; .nm-btn { min-height: 48px; } }
+    }
+
+    /* ---------- Full-screen camera viewfinder ---------- */
+    .nm-camera {
+        position: fixed;
+        inset: 0;
+        z-index: 1100;
+        background: #0b0f16;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    .nm-camera-top,
+    .nm-camera-bottom {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: .75rem 1rem;
+        background: rgba(11, 15, 22, .85);
+    }
+    .nm-camera-title { font-weight: 800; font-size: .95rem; letter-spacing: .02em; }
+    .nm-camera-btn {
+        appearance: none; border: 0; margin: 0;
+        width: 48px; height: 48px; border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: rgba(255, 255, 255, .12); color: #fff; font-size: 1.15rem; cursor: pointer;
+        &:active { background: rgba(255, 255, 255, .28); }
+        &:disabled { opacity: .4; cursor: default; }
+        &:focus-visible { outline: 3px solid rgba($nm-accent, .7); outline-offset: 2px; }
+    }
+    .nm-camera-stage {
+        flex: 1 1 auto;
+        position: relative;
+        min-height: 0;
+        overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+        video { width: 100%; height: 100%; object-fit: cover; display: block; background: #0b0f16; }
+        &.is-mirror video { transform: scaleX(-1); }
+    }
+    .nm-camera-guide {
+        position: absolute; left: 50%; top: 50%;
+        width: #{"min(62vw, 300px)"}; aspect-ratio: 3 / 4;
+        transform: translate(-50%, -50%);
+        border: 2px dashed rgba(255, 255, 255, .55);
+        border-radius: 50% 50% 48% 48% / 42% 42% 58% 58%;
+        pointer-events: none;
+    }
+    .nm-camera-status {
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        display: flex; align-items: center; gap: .5rem;
+        padding: .5rem .9rem; border-radius: 999px;
+        background: rgba(0, 0, 0, .55); font-size: .85rem; font-weight: 600;
+    }
+    .nm-camera-error {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .8rem;
+        padding: 1.5rem; text-align: center;
+        background: #0b0f16;
+        i { font-size: 2rem; color: $nm-accent; }
+        p { margin: 0; max-width: 34ch; color: rgba(255, 255, 255, .85); }
+    }
+    .nm-camera-bottom { flex-direction: column; gap: .6rem; }
+    .nm-camera-hint { margin: 0; font-size: .85rem; color: rgba(255, 255, 255, .75); text-align: center; }
+    .nm-camera-controls {
+        width: 100%;
+        display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; justify-items: center;
+        .nm-file-btn { justify-self: start; }
+    }
+    .nm-shutter {
+        appearance: none; border: 0; margin: 0; padding: 0; cursor: pointer;
+        width: 78px; height: 78px; border-radius: 50%;
+        background: transparent;
+        border: 4px solid #fff;
+        display: inline-flex; align-items: center; justify-content: center;
+        span { width: 60px; height: 60px; border-radius: 50%; background: #fff; transition: transform .1s ease; }
+        &:active span { transform: scale(.88); }
+        &:disabled { opacity: .35; cursor: default; }
+        &:focus-visible { outline: 3px solid rgba($nm-accent, .8); outline-offset: 4px; }
+    }
+    .nm-camera-spacer { width: 48px; }
+
+    /* ---------- Small screens ---------- */
+    @media (max-width: 576px) {
+        padding: .9rem .75rem 2rem;
+        padding-left: #{"max(.75rem, env(safe-area-inset-left))"};
+        padding-right: #{"max(.75rem, env(safe-area-inset-right))"};
+        padding-bottom: #{"max(2rem, env(safe-area-inset-bottom))"};
+        align-items: stretch;
+        .nm-card { max-width: none; padding: 1.2rem; border-radius: 22px; }
+        .nm-btn { min-height: 56px; }
+        /* modal becomes a bottom sheet */
+        .kiosk-modal-overlay { padding: 0; align-items: flex-end; }
+        .kiosk-modal-card {
+            max-width: 100%;
+            max-height: 100dvh;
+            max-height: var(--kiosk-vh, 100dvh);
+            border-radius: 24px 24px 0 0;
+            margin: 0;
+            padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom));
+            box-shadow: 0 -12px 30px rgba($nm-ink, .22);
+            &::before {
+                content: ""; display: block; width: 44px; height: 5px; border-radius: 999px;
+                background: $nm-dark; margin: 0 auto .8rem;
+            }
+        }
+        .kiosk-modal-header h4 { font-size: 1.05rem; }
+        .nm-kpi .nm-kpi-value { font-size: 2rem; }
+        .nm-session-head .nm-session-time { text-align: left; }
+        .nm-step-active { padding: 1rem .9rem .9rem; }
+        .nm-review-row { flex-direction: column; gap: .15rem; align-items: flex-start; span { text-align: left; } }
+    }
+
+    /* Wide desktop: give the workspace a little more room */
+    @media (min-width: 1200px) {
+        .nm-card { max-width: 540px; }
+        .kiosk-modal-card { max-width: 540px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .nm-step-active { animation: none; }
+        .nm-btn, .nm-progress-fill, .nm-toggle-track::after { transition: none; }
+    }
 }
 
 /* Route Map layout rules */

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-# pyrefly: ignore [missing-import]
+import math
+
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
@@ -41,12 +42,11 @@ class FieldSalesSession(models.Model):
     check_in_map_link = fields.Char(string='Check-In Location Link', compute='_compute_map_links')
     check_out_map_link = fields.Char(string='Check-Out Location Link', compute='_compute_map_links')
 
-    total_visits = fields.Integer(string='Total Visits', compute='_compute_metrics', store=True)
-    productive_visits = fields.Integer(string='Productive Visits', compute='_compute_metrics', store=True)
+    total_visits = fields.Integer(string='Total Visits', compute='_compute_metrics', store=True,
+                                  help="Number of completed client visits in this session.")
 
     @api.depends('check_in_latitude', 'check_in_longitude', 'check_out_latitude', 'check_out_longitude', 'state')
     def _compute_location_verification(self):
-        import math
         for record in self:
             if record.state != 'completed':
                 record.location_verification = 'pending'
@@ -94,11 +94,10 @@ class FieldSalesSession(models.Model):
         for record in self:
             record.name = f"{record.user_id.name} - {record.date}"
 
-    @api.depends('visit_ids')
+    @api.depends('visit_ids', 'visit_ids.state')
     def _compute_metrics(self):
         for record in self:
-            record.total_visits = len(record.visit_ids)
-            record.productive_visits = len(record.visit_ids.filtered(lambda v: v.partner_id))
+            record.total_visits = len(record.visit_ids.filtered(lambda v: v.state == 'completed'))
 
     @api.constrains('user_id', 'state')
     def _check_active_session(self):
@@ -137,7 +136,9 @@ class FieldSalesSession(models.Model):
         self.ensure_one()
         if self.state != 'checked_in':
             raise ValidationError(_("Session is not checked in."))
-        if not self.visit_ids:
+        if self.visit_ids.filtered(lambda v: v.state == 'in_progress'):
+            raise ValidationError(_("Please complete your current client visit before checking out."))
+        if not self.visit_ids.filtered(lambda v: v.state == 'completed'):
             raise ValidationError(_("You must log at least one client visit before checking out."))
         
         self.write({
@@ -174,23 +175,75 @@ class FieldSalesSession(models.Model):
         self.action_check_out(latitude, longitude, checkout_selfie_image)
         return True
 
-    def action_log_visit(self, company_name, contact_name, phone, notes, latitude, longitude, accuracy, visit_image=False, check_in_time=False):
+    def action_kiosk_start_visit(self, latitude, longitude, accuracy):
         self.ensure_one()
-        visit_vals = {
+        if self.state != 'checked_in':
+            raise ValidationError(_("You must be checked in to start a client visit."))
+        # Idempotent: a session can only have one client visit in progress
+        visit = self.visit_ids.filtered(lambda v: v.state == 'in_progress')[:1]
+        if visit:
+            return {
+                'visit_id': visit.id,
+                'check_in_time': fields.Datetime.to_string(visit.check_in_time) if visit.check_in_time else False,
+            }
+        visit = self.env['field.sales.visit'].create({
             'session_id': self.id,
+            'company_name': 'Pending Client Visit',
+            'phone': 'Pending',
+            'state': 'in_progress',
+            'check_in_time': fields.Datetime.now(),
+            'latitude': latitude or 0.0,
+            'longitude': longitude or 0.0,
+            'accuracy': accuracy or 0.0,
+        })
+        if latitude and longitude:
+            self.env['field.sales.location.log'].create({
+                'session_id': self.id,
+                'latitude': latitude,
+                'longitude': longitude,
+                'log_type': 'visit',
+            })
+        return {
+            'visit_id': visit.id,
+            'check_in_time': fields.Datetime.to_string(visit.check_in_time) if visit.check_in_time else False,
+        }
+
+    def action_log_visit(self, company_name, contact_name, phone, notes, latitude, longitude, accuracy, visit_image=False, check_in_time=False, email=False, create_contact_bool=False, create_lead_bool=False, partner_id=False, visit_id=False):
+        self.ensure_one()
+        vals = {
             'company_name': company_name,
             'contact_name': contact_name,
             'phone': phone,
+            'email': email or False,
             'notes': notes,
+            'create_contact_bool': bool(create_contact_bool),
+            'create_lead_bool': bool(create_lead_bool),
         }
-        if check_in_time:
-            # clean up ISO string: '2026-07-10T12:00:00.000Z' -> '2026-07-10 12:00:00'
-            formatted_time = check_in_time.replace('T', ' ').replace('Z', '')
-            if '.' in formatted_time:
-                formatted_time = formatted_time.split('.')[0]
-            visit_vals['check_in_time'] = fields.Datetime.to_datetime(formatted_time)
+        if partner_id:
+            vals['partner_id'] = partner_id
 
-        visit = self.env['field.sales.visit'].create(visit_vals)
+        if visit_id:
+            # search() applies record rules: only this session's own in-progress visit can be completed
+            visit = self.env['field.sales.visit'].search([
+                ('id', '=', visit_id), ('session_id', '=', self.id), ('state', '=', 'in_progress'),
+            ], limit=1)
+            if visit:
+                visit.action_complete_visit(latitude, longitude, accuracy, visit_image, vals=vals)
+                return visit.id
+
+        vals['session_id'] = self.id
+        if check_in_time:
+            # Browser sends an ISO string: '2026-07-10T12:00:00.000Z' -> '2026-07-10 12:00:00'
+            try:
+                formatted_time = str(check_in_time).replace('T', ' ').replace('Z', '')
+                if '+' in formatted_time:
+                    formatted_time = formatted_time.split('+')[0]
+                if '.' in formatted_time:
+                    formatted_time = formatted_time.split('.')[0]
+                vals['check_in_time'] = fields.Datetime.to_datetime(formatted_time.strip())
+            except ValueError:
+                pass  # fall back to the default check-in time (now)
+
+        visit = self.env['field.sales.visit'].create(vals)
         visit.action_complete_visit(latitude, longitude, accuracy, visit_image)
         return visit.id
-
