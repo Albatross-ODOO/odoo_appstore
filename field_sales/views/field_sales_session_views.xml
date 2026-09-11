@@ -12,7 +12,6 @@
                 <field name="check_in_time"/>
                 <field name="check_out_time"/>
                 <field name="total_visits"/>
-                <field name="productive_visits"/>
                 <field name="location_verification" widget="badge" decoration-success="location_verification == 'same'" decoration-danger="location_verification == 'changed'" decoration-warning="location_verification == 'pending'"/>
                 <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'checked_in'" decoration-muted="state == 'completed'"/>
             </list>

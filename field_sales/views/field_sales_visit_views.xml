@@ -5,15 +5,19 @@
         <field name="name">field.sales.visit.list</field>
         <field name="model">field.sales.visit</field>
         <field name="arch" type="xml">
-            <list>
+            <list decoration-info="state == 'draft'" decoration-warning="state == 'in_progress'" decoration-success="state == 'completed'">
+                <field name="partner_id"/>
                 <field name="company_name"/>
                 <field name="contact_name"/>
                 <field name="phone"/>
-                <field name="session_id"/>
+                <field name="email"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="lead_id" optional="show"/>
+                <field name="session_id" optional="hide"/>
                 <field name="check_in_time"/>
                 <field name="check_out_time"/>
                 <field name="duration" widget="float_time"/>
-                <field name="partner_id"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'in_progress'" decoration-success="state == 'completed'"/>
             </list>
         </field>
     </record>
@@ -24,16 +28,24 @@
         <field name="model">field.sales.visit</field>
         <field name="arch" type="xml">
             <form string="Client Visit">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,completed"/>
+                </header>
                 <sheet>
                     <group>
                         <group string="Client details">
+                            <field name="partner_id"/>
                             <field name="company_name"/>
                             <field name="contact_name"/>
                             <field name="phone"/>
-                            <field name="partner_id" readonly="1"/>
+                            <field name="email"/>
+                            <field name="create_contact_bool"/>
+                            <field name="create_lead_bool"/>
+                            <field name="lead_id" readonly="1"/>
                         </group>
                         <group string="Visit Timings &amp; Location">
                             <field name="session_id" readonly="1"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
                             <field name="check_in_time"/>
                             <field name="check_out_time"/>
                             <field name="duration" widget="float_time"/>
@@ -55,11 +67,42 @@
         </field>
     </record>
 
+    <!-- Search View -->
+    <record id="view_field_sales_visit_search" model="ir.ui.view">
+        <field name="name">field.sales.visit.search</field>
+        <field name="model">field.sales.visit</field>
+        <field name="arch" type="xml">
+            <search string="Client Visits">
+                <field name="company_name"/>
+                <field name="contact_name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="user_id"/>
+                <field name="partner_id"/>
+                <field name="lead_id"/>
+                <filter string="My Visits" name="my_visits" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter string="Lead Generated" name="lead_generated" domain="[('lead_id', '!=', False)]"/>
+                <filter string="Contact Created" name="contact_created" domain="[('partner_id', '!=', False)]"/>
+                <separator/>
+                <filter string="Checked In" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Salesperson" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Session" name="group_session" context="{'group_by': 'session_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Check-In Date" name="group_date" context="{'group_by': 'check_in_time:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <!-- Window Action -->
     <record id="action_field_sales_visit" model="ir.actions.act_window">
         <field name="name">Client Visits</field>
         <field name="res_model">field.sales.visit</field>
         <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_field_sales_visit_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 No client visits logged yet.

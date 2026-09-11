@@ -89,16 +89,10 @@
 
                         <!-- KPI Summary Cards -->
                         <div class="row mb-4 text-center">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
                                     <h3 style="margin: 0; color: #3b82f6; font-weight: bold; font-size: 24px;"><t t-esc="doc.total_visits"/></h3>
                                     <span style="font-size: 12px; color: #64748b; font-weight: bold;">TOTAL VISITS LOGGED</span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
-                                    <h3 style="margin: 0; color: #10b981; font-weight: bold; font-size: 24px;"><t t-esc="doc.productive_visits"/></h3>
-                                    <span style="font-size: 12px; color: #64748b; font-weight: bold;">PRODUCTIVE LEADS GENERATED</span>
                                 </div>
                             </div>
                         </div>

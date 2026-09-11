@@ -7,9 +7,10 @@ Field Sales Activity & Tracking is a comprehensive Odoo 18 module designed speci
 *   **Kiosk Mode:** Mobile-friendly kiosk for sales representatives to start and end their sessions.
 *   **Geolocation & Tracking:** Tracks Check-In and Check-Out coordinates with interactive route visualization using Leaflet Maps.
 *   **Selfie Verification:** Ensures the physical presence of representatives during check-in and check-out.
-*   **Client Visit Logging:** Seamlessly capture company and contact details, and automatically create leads within the Odoo Contacts base.
+*   **Client Visit Logging:** A step-by-step form (one field at a time, mobile friendly) captures company, contact, phone, email, notes and a site photo.
+*   **Salesperson Attribution:** Every contact and CRM lead generated from the field is assigned to the salesperson who logged the visit.
 *   **Automated Lead Generation:** Logs all new prospects under a unique 'Field Lead' category for straightforward filtering and marketing follow-ups.
-*   **Performance Metrics & Dashboard:** Track the number of productive visits and durations effortlessly.
+*   **Performance Metrics & Dashboard:** Track the number of visits and durations effortlessly.
 *   **End-of-Day PDF Reports:** Automatically generate comprehensive session reports.
 
 ## Installation
