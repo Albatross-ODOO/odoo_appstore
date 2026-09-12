@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="gate_management.GateChips">
+        <div t-if="props.segment" class="gd-seg" role="group">
+            <button t-foreach="choices" t-as="c" t-key="c.value" type="button"
+                    t-att-aria-pressed="c.value === value ? 'true' : 'false'" t-att-disabled="props.readonly"
+                    t-on-click.prevent="() => this.select(c.value)">
+                <i t-if="c.icon" t-attf-class="fa #{c.icon}"/> <t t-esc="c.label"/>
+            </button>
+        </div>
+        <div t-else="" class="gd-chips" role="group" t-attf-style="grid-template-columns: repeat(#{choices.length}, 1fr)">
+            <button t-foreach="choices" t-as="c" t-key="c.value" type="button" class="gd-chip"
+                    t-att-aria-pressed="c.value === value ? 'true' : 'false'" t-att-disabled="props.readonly"
+                    t-on-click.prevent="() => this.select(c.value)">
+                <i t-attf-class="fa #{c.icon || 'fa-circle-o'}"/>
+                <t t-esc="c.label"/>
+            </button>
+        </div>
+    </t>
+</templates>

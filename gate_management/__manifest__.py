@@ -1,46 +1,60 @@
 {
     'name': 'Gate Management',
-    'version': '1.0.2',
-    'summary': 'Warehouse Gate Management System',
+    'version': '18.0.2.0.0',
+    'summary': 'Gate Desk: visitor, vehicle, material and workforce gate control built for the security guard',
     'description': """
-        Manage incoming and outgoing gate entries for the warehouse.
-        Features:
-        - Security Guard and Admin roles
-        - Incoming/Outgoing Flow
-        - Barcode/QR Scanning support
-        - Vendor OTP Verification
-        - Photo Uploads
-    """,
-    'category': 'Warehouse',
+Gate Desk: gate management for warehouses, plants and offices
+=============================================================
+
+A security-guard app and a manager back office in one module.
+
+**Guard app (phone, tablet or laptop)**
+
+- Gate Desk home with live inside / expected / exited counters
+- Walk-in entry for visitors, commercial vehicles and material, with photo capture
+- Verify invitation by 6-digit code or QR scan (works offline at the gate)
+- Worker attendance with check-in, check-out, individual and common breaks
+- Schedule visits and share digital gate passes by e-mail, PDF, link and WhatsApp (Enterprise)
+
+**Back office (Gate Manager)**
+
+- Entries kanban / list / form with full chatter and audit times
+- Workforce profiles (CSV / XLSX import), shift logs and break logs
+- Auto-exit of expired entries, duplicate-vehicle protection, multi-company rules
+
+Works on Odoo Community and Enterprise. On Enterprise with the WhatsApp app installed,
+the WhatsApp option appears automatically and sends passes through an approved Meta template.
+""",
+    'category': 'Services/Gate Management',
     'author': 'Albatross',
-    'depends': ['base', 'mail', 'web', 'whatsapp'],
+    'website': 'https://www.odoo.com/apps',
+    'license': 'LGPL-3',
+    'depends': ['base', 'mail', 'web'],
     'data': [
         'security/security_groups.xml',
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
         'data/cron.xml',
-        'data/whatsapp_template_data.xml',
         'wizard/verify_otp_view.xml',
         'wizard/share_wizard_view.xml',
-        'wizard/worker_kiosk_search_view.xml',
         'views/gate_entry_views.xml',
         'views/gate_worker_views.xml',
-        'views/menus.xml',
         'views/report_gate_pass.xml',
         'views/invitation_landing_page.xml',
+        'views/menus.xml',
     ],
-    'demo': [],
+    'assets': {
+        'web.assets_backend': [
+            'gate_management/static/lib/jsqr/jsQR.js',
+            'gate_management/static/src/css/gate_desk.css',
+            'gate_management/static/src/components/**/*',
+        ],
+        'web.assets_tests': [
+            'gate_management/static/tests/tours/**/*',
+        ],
+    },
+    'images': ['static/description/banner.png'],
     'installable': True,
     'application': True,
     'auto_install': False,
-    'license': 'LGPL-3',
-    'assets': {
-        'web.assets_backend': [
-            'gate_management/static/src/css/kiosk.css',
-            'gate_management/static/src/components/camera_widget/camera_widget.xml',
-            'gate_management/static/src/components/camera_widget/camera_widget.js',
-            'gate_management/static/src/components/qr_scanner/qr_scanner.xml',
-            'gate_management/static/src/components/qr_scanner/qr_scanner.js',
-        ],
-    },
 }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="gate_management.GateDeskHome">
+        <div class="gd-app o_action">
+            <div class="gd-main">
+                <div class="gd-appbar">
+                    <span class="gd-ico gd-static"><i class="fa fa-home"/></span>
+                    <div class="gd-titlebox">
+                        <div class="gd-eyebrow">Security &amp; Access</div>
+                        <h2 class="gd-title">Gate Desk</h2>
+                        <div class="gd-sub" t-if="state.data"><t t-esc="state.data.gate"/> · Guard: <t t-esc="state.data.guard"/></div>
+                    </div>
+                    <div class="gd-acts">
+                        <span class="gd-online"><i/>Online</span>
+                        <button type="button" class="gd-ico" title="Refresh" aria-label="Refresh" t-on-click="load"><i class="fa fa-refresh"/></button>
+                    </div>
+                </div>
+                <div class="gd-rule"/>
+
+                <t t-if="state.data">
+                    <div class="gd-stats">
+                        <button type="button" class="gd-stat gd-stat-in gd-dark" t-on-click="() => this.openStat('inside')"><div class="gd-n"><t t-esc="state.data.counts.inside"/></div><div class="gd-l">Inside now</div></button>
+                        <button type="button" class="gd-stat gd-stat-warn" t-on-click="() => this.openStat('expected')"><div class="gd-n"><t t-esc="state.data.counts.expected"/></div><div class="gd-l">Expected today</div></button>
+                        <button type="button" class="gd-stat gd-stat-muted" t-on-click="() => this.openStat('exited')"><div class="gd-n"><t t-esc="state.data.counts.exited"/></div><div class="gd-l">Exited today</div></button>
+                    </div>
+
+                    <div class="gd-tiles">
+                        <button type="button" class="gd-tile" t-on-click="() => this.open('walkin')"><span class="gd-well gd-c-warn"><i class="fa fa-user"/></span><div><b>Walk-In Entry</b><span>Visitor · Vehicle · Material</span></div></button>
+                        <button type="button" class="gd-tile gd-dark" t-on-click="() => this.open('verify')"><span class="gd-well"><i class="fa fa-qrcode"/></span><div><b>Verify Invitation</b><span>Scan QR or type code</span></div></button>
+                        <button type="button" class="gd-tile" t-on-click="() => this.open('worker')"><span class="gd-well gd-c-in"><i class="fa fa-id-badge"/></span><div><b>Worker Attendance</b><span>Check-in · Break · Check-out</span></div></button>
+                        <button type="button" class="gd-tile" t-on-click="() => this.open('schedule')"><span class="gd-well gd-c-bad"><i class="fa fa-calendar"/></span><div><b>Schedule Visit</b><span>Send a digital gate pass</span></div></button>
+                    </div>
+
+                    <div class="gd-sect"><h4>Inside now <t t-if="state.data.workforce">· workers <t t-esc="state.data.workforce.inside"/> in, <t t-esc="state.data.workforce.break"/> on break</t></h4><button type="button" class="gd-link" t-on-click="() => this.openEntries('inside')">See all</button></div>
+                    <div class="gd-rows">
+                        <div t-if="!state.data.inside.length" class="gd-empty">Nobody inside right now</div>
+                        <div t-foreach="state.data.inside" t-as="row" t-key="row.id" t-attf-class="gd-row #{row.overdue ? 'gd-row-break' : 'gd-row-in'} #{state.gone[row.id] ? 'gd-gone' : ''}">
+                            <div t-attf-class="gd-av #{avClass(row)}" t-on-click="() => this.openEntry(row)" role="button">
+                                <img t-if="row.has_photo" t-attf-src="/web/image?model=gate.entry&amp;id=#{row.id}&amp;field=entry_photo" alt=""/>
+                                <i t-elif="row.type === 'vehicle'" class="fa fa-truck"/>
+                                <i t-elif="row.type === 'material'" class="fa fa-cube"/>
+                                <t t-else="" t-esc="initials(row)"/>
+                            </div>
+                            <div class="gd-who" t-on-click="() => this.openEntry(row)" role="button">
+                                <b t-att-class="row.type === 'vehicle' ? 'gd-mono' : ''"><t t-esc="row.title"/></b>
+                                <small><t t-esc="row.subtitle"/> · in <em><t t-esc="row.time"/></em><t t-if="row.overdue"> · overdue</t></small>
+                            </div>
+                            <div class="gd-acts">
+                                <button type="button" class="gd-btn gd-bad gd-sm" t-on-click="() => this.checkOut(row)">Check-Out</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <t t-if="state.data.expected.length">
+                        <div class="gd-sect" style="margin-top:18px"><h4>Expected today</h4></div>
+                        <div class="gd-rows">
+                            <div t-foreach="state.data.expected" t-as="row" t-key="row.id" class="gd-row" t-on-click="() => this.openEntry(row)" role="button">
+                                <div class="gd-av gd-av-warn"><t t-esc="initials(row)"/></div>
+                                <div class="gd-who"><b><t t-esc="row.title"/></b><small><t t-esc="row.subtitle"/> · <em><t t-esc="row.time"/></em></small></div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                <div t-else="" class="gd-empty">Loading…</div>
+                <div class="gd-foot">Safer · Smarter · Together</div>
+            </div>
+        </div>
+    </t>
+</templates>

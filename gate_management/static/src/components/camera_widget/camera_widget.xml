@@ -1,50 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="gate_management.GateCamera">
-        <div class="o_gate_camera_widget d-flex flex-column align-items-center gap-2 w-100">
-            
-            <!-- View Mode: Show Captured Image -->
-            <t t-if="imageUrl &amp;&amp; !state.isCameraOpen">
-                <img t-att-src="imageUrl" 
-                      class="img img-fluid rounded shadow border" 
-                      style="max-height: 250px; max-width: 100%; object-fit: contain;"/>
-                <button class="btn btn-secondary btn-lg mt-2 w-100 py-3" t-on-click="retake">
-                    <i class="fa fa-camera"/> Retake Photo
-                </button>
+        <div class="gd-cam-wrap o_gate_camera_widget">
+            <!-- captured -->
+            <t t-if="imageUrl and !state.isCameraOpen">
+                <div class="gd-shot"><img t-att-src="imageUrl" alt="Captured photo"/></div>
+                <button t-if="!props.readonly" type="button" class="gd-btn" t-on-click.prevent="retake"><i class="fa fa-camera"/> Retake photo</button>
             </t>
-
-            <!-- Camera Mode: Video Stream & Controls -->
+            <!-- live -->
             <t t-if="state.isCameraOpen">
-                <div class="position-relative bg-dark rounded overflow-hidden shadow w-100" style="max-width: 450px;">
-                    <video t-ref="video" autoplay="autoplay" playsinline="playsinline" muted="muted" 
-                           style="width: 100%; height: auto; display: block;"/>
+                <div class="gd-view" t-att-class="{ 'gd-mirror': state.facingMode === 'user' }">
+                    <video t-ref="video" autoplay="autoplay" playsinline="playsinline" muted="muted"/>
+                    <div class="gd-corner"/>
+                    <span class="gd-cam-tag"><i class="fa fa-video-camera"/> <t t-esc="facingLabel"/></span>
                 </div>
-                
-                <div class="d-flex flex-column gap-2 mt-2 w-100" style="max-width: 450px;">
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-primary btn-lg flex-grow-1 py-3" t-on-click="capture">
-                            <i class="fa fa-camera"/> Capture
-                        </button>
-                        <!-- Switch camera button -->
-                        <button class="btn btn-info btn-lg py-3 px-4" t-on-click="switchCamera" title="Switch Camera">
-                            <i class="fa fa-refresh"/> Flip
-                        </button>
-                    </div>
-                    <button class="btn btn-danger btn-lg w-100 py-3" t-on-click="stopCamera">
-                        <i class="fa fa-times"/> Cancel
+                <div class="gd-spread">
+                    <button type="button" class="gd-btn gd-primary" style="flex:2" t-on-click.prevent="capture" t-att-disabled="state.busy"><i class="fa fa-camera"/> Capture</button>
+                    <button type="button" class="gd-btn" t-on-click.prevent="switchCamera" title="Switch between back and front camera"><i class="fa fa-refresh"/> Flip · <t t-esc="otherFacingLabel"/></button>
+                    <button type="button" class="gd-btn gd-bad gd-icon" t-on-click.prevent="stopCamera" title="Cancel" aria-label="Cancel"><i class="fa fa-times"/></button>
+                </div>
+            </t>
+            <!-- idle: pick the camera -->
+            <t t-if="!imageUrl and !state.isCameraOpen">
+                <t t-if="!props.readonly">
+                    <button type="button" class="gd-cam" t-on-click.prevent="() => this.openWith('environment')">
+                        <span class="gd-lens"><i class="fa fa-camera"/></span>
+                        <b>Tap to open back camera</b>
+                        <span>Best for visitors, vehicles and documents</span>
                     </button>
-                </div>
+                    <button type="button" class="gd-btn gd-sm" t-on-click.prevent="() => this.openWith('user')"><i class="fa fa-user-circle-o"/> Use front camera (selfie)</button>
+                </t>
+                <div t-else="" class="gd-empty">No photo</div>
             </t>
-
-            <!-- Initial State: Trigger Camera -->
-            <t t-if="!imageUrl &amp;&amp; !state.isCameraOpen">
-                <div class="p-5 border rounded bg-light text-center cursor-pointer w-100 py-5" t-on-click="startCamera"
-                     style="border: 2px dashed #007bff !important; max-width: 450px;">
-                    <i class="fa fa-camera fa-4x text-primary mb-3"/>
-                    <div class="text-primary fw-bold fs-4">Tap to Open Camera</div>
-                </div>
-            </t>
-
             <canvas t-ref="canvas" class="d-none"/>
         </div>
     </t>
