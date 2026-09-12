@@ -1,115 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <!-- Report Action -->
-        <record id="action_report_gate_invitation" model="ir.actions.report">
-            <field name="name">Visitor Invitation</field>
-            <field name="model">gate.entry</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">gate_management.report_gate_invitation_template</field>
-            <field name="report_file">gate_management.report_gate_invitation_template</field>
-            <field name="print_report_name">'Invitation - %s' % object.name</field>
-            <field name="binding_model_id" ref="model_gate_entry"/>
-            <field name="binding_type">report</field>
-        </record>
+    <record id="action_report_gate_invitation" model="ir.actions.report">
+        <field name="name">Visitor Invitation</field>
+        <field name="model">gate.entry</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gate_management.report_gate_invitation_template</field>
+        <field name="report_file">gate_management.report_gate_invitation_template</field>
+        <field name="print_report_name">'Invitation - %s' % object.name</field>
+        <field name="binding_model_id" ref="model_gate_entry"/>
+        <field name="binding_type">report</field>
+    </record>
 
-        <!-- Report Template -->
-        <template id="report_gate_invitation_template">
-            <t t-call="web.html_container">
-                <t t-foreach="docs" t-as="doc">
-                    <t t-call="web.basic_layout">
-                        <div class="page" style="font-family: 'Helvetica', sans-serif; background-color: #FAF4E8; padding: 0; margin: 0; color: #4A4A4A;">
-                            <!-- Main Container -->
-                            <div style="background-color: #FAF4E8; padding: 15px 0; width: 100%; height: auto;">
-                                
-                                <!-- Card -->
-                                <div style="background-color: #FFFFFF; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); padding: 20px; margin: 0 auto; max-width: 485px; text-align: center;">
-                                    
-                                    <!-- Header Logo -->
-                                    <div style="margin-bottom: 12px;">
-                                        <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 75px; width: auto;" alt="Logo"/>
-                                    </div>
+    <template id="report_gate_invitation_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <div class="page" style="font-family: Helvetica, Arial, sans-serif; background-color: #EEE9DF; padding: 0; margin: 0; color: #1F242E;">
+                        <div style="background-color: #EEE9DF; padding: 18px 0; width: 100%;">
+                            <div style="background: #FAF7F1; border: 1px solid #FFFFFF; border-radius: 22px; box-shadow: 0 10px 24px rgba(184,170,146,.35); padding: 26px 22px; margin: 0 auto; max-width: 480px; text-align: center;">
+                                <div style="margin-bottom: 10px;">
+                                    <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 64px; width: auto;" alt="Logo"/>
+                                </div>
+                                <div style="font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #8B8577; font-weight: bold;">Gate pass</div>
+                                <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 26px; margin: 4px 0 10px;"><span t-field="doc.company_id.name"/></div>
+                                <div style="color: #8B8577; font-size: 11px; margin-bottom: 14px;">Show this QR code or the entry code to the guard at the gate</div>
 
-                                    <div style="color: #666; font-size: 11px; margin-bottom: 12px; font-weight: 500;">
-                                        Show this QR code or OTP to the guard at gate
+                                <div t-if="doc.qr_code_image" style="margin-bottom: 10px;">
+                                    <div style="display: inline-block; background: #E9E3D8; border-radius: 18px; padding: 12px;">
+                                        <img t-att-src="image_data_uri(doc.qr_code_image)" style="width: 130px; height: 130px; display: block;"/>
                                     </div>
-                                    
-                                    <!-- QR Code -->
-                                    <div t-if="doc.qr_code_image" style="margin-bottom: 8px;">
-                                        <img t-att-src="image_data_uri(doc.qr_code_image)" style="width: 120px; height: 120px;"/>
-                                    </div>
-                                    
-                                    <!-- OR Divider -->
-                                    <div style="margin: 6px 0; color: #bbb; font-size: 10px;">
-                                        <span>&#8212; OR &#8212;</span>
-                                    </div>
+                                </div>
+                                <div style="margin: 6px 0; color: #B9B3A6; font-size: 10px;">&#8212; OR &#8212;</div>
+                                <div style="background: #2E3035; color: #E3C77E; font-family: 'Courier New', monospace; font-size: 26px; font-weight: bold; letter-spacing: 6px; padding: 8px 20px 8px 26px; border-radius: 14px; display: inline-block; margin-bottom: 14px; border: 1.5px solid #E3C77E;">
+                                    <span t-field="doc.otp"/>
+                                </div>
 
-                                    <!-- OTP Code -->
-                                    <div style="background-color: #2C3E50; color: #FFF; font-size: 24px; font-weight: bold; letter-spacing: 3px; padding: 6px 20px; border-radius: 8px; display: inline-block; margin-bottom: 12px;">
-                                        <span t-field="doc.otp"/>
+                                <div style="margin-bottom: 14px; background: #F3EEE5; padding: 10px; border-radius: 14px;">
+                                    <div style="font-size: 14px; font-weight: bold;">
+                                        <span t-field="doc.scheduled_start" t-options='{"widget": "datetime", "format": "EEEE d MMMM yyyy"}'/>
                                     </div>
-
-                                    <!-- Date Time -->
-                                    <div style="margin-bottom: 12px; background-color: #F8F9FA; padding: 8px; border-radius: 8px;">
-                                        <div style="font-size: 14px; font-weight: bold; color: #2C3E50;">
-                                            <span t-field="doc.scheduled_start" t-options='{"widget": "datetime", "format": "d MMMM yyyy"}'/>
-                                        </div>
-                                        <div style="font-size: 12px; color: #7F8C8D; font-weight: 500; margin-top: 2px;">
-                                            <span t-field="doc.scheduled_start" t-options='{"widget": "datetime", "format": "hh:mm a"}'/> - 
-                                            <span t-field="doc.scheduled_end" t-options='{"widget": "datetime", "format": "hh:mm a"}'/>
-                                        </div>
+                                    <div style="font-size: 12px; color: #8B8577; margin-top: 2px;">
+                                        <span t-field="doc.scheduled_start" t-options='{"widget": "datetime", "format": "hh:mm a"}'/> &#8211;
+                                        <span t-field="doc.scheduled_end" t-options='{"widget": "datetime", "format": "hh:mm a"}'/>
                                     </div>
+                                </div>
 
-                                    <!-- Visitor Info -->
-                                    <div style="border-top: 1px solid #EEE; border-bottom: 1px solid #EEE; padding: 10px 0; margin-bottom: 12px; text-align: left; font-size: 13px; color: #333;">
-                                        <table style="width: 100%; border-collapse: collapse;">
-                                            <tr>
-                                                <td style="padding: 2px 0; width: 50%;">
-                                                    <span style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; display: block;">Visitor</span>
-                                                    <strong style="font-size: 14px; color: #2C3E50;"><span t-field="doc.visitor_name"/></strong>
-                                                </td>
-                                                <td style="text-align: right; padding: 2px 0; width: 50%;" t-if="doc.mobile_number">
-                                                    <span style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; display: block;">Mobile</span>
-                                                    <strong style="font-size: 14px; color: #2C3E50;"><span t-field="doc.mobile_number"/></strong>
-                                                </td>
-                                            </tr>
-                                            <tr t-if="doc.visit_purpose">
-                                                <td colspan="2" style="padding-top: 6px;">
-                                                    <span style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; display: block;">Purpose of Visit</span>
-                                                    <strong style="font-size: 12px; color: #2C3E50;">
-                                                        <span t-if="doc.visit_purpose != 'other'" t-field="doc.visit_purpose"/>
-                                                        <span t-else="" t-field="doc.visit_purpose_detail"/>
-                                                    </strong>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                <table style="width: 100%; font-size: 12px; text-align: left; border-top: 1px solid #E3DDD1; padding-top: 10px;">
+                                    <tr>
+                                        <td style="padding: 8px 4px; width: 50%; vertical-align: top;">
+                                            <div style="font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #8B8577;">Visitor</div>
+                                            <div style="font-weight: bold; font-size: 14px;"><t t-esc="doc.visitor_name or doc.driver_name or 'Guest'"/></div>
+                                            <div t-if="doc.visit_purpose" style="color: #8B8577;"><t t-esc="doc._purpose_label()"/></div>
+                                        </td>
+                                        <td style="padding: 8px 4px; width: 50%; vertical-align: top; text-align: right;">
+                                            <div style="font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #8B8577;">Host · Vehicle</div>
+                                            <div style="font-weight: bold; font-size: 14px;"><t t-esc="doc.host_id.name or '--'"/></div>
+                                            <div style="color: #8B8577; font-family: 'Courier New', monospace;"><t t-esc="doc.vehicle_number or '--'"/><t t-if="doc.vendor_id"> (<t t-esc="doc.vendor_id.name"/>)</t></div>
+                                        </td>
+                                    </tr>
+                                </table>
 
-                                    <!-- Address -->
-                                    <div style="margin-bottom: 12px; color: #7F8C8D; font-size: 11px; line-height: 1.4;">
-                                        <div style="font-weight: bold; font-size: 13px; color: #2C3E50; margin-bottom: 2px;"><span t-field="doc.company_id.name"/></div>
-                                        <div>
-                                            <span t-field="doc.company_id.street"/><br/>
-                                            <span t-if="doc.company_id.street2" t-out="doc.company_id.street2"/><br/>
-                                            <span t-field="doc.company_id.city"/>, <span t-field="doc.company_id.state_id.name"/> <span t-field="doc.company_id.zip"/>
-                                        </div>
-                                    </div>
-
-                                    <!-- Location Link & Get Directions inside the card -->
-                                    <div style="margin-top: 12px; border-top: 1px solid #EEE; padding-top: 12px;">
-                                        <a t-att-href="doc.google_maps_link" target="_blank" style="display: inline-block; background-color: #27AE60; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 12px; box-shadow: 0 2px 4px rgba(39,174,96,0.15);">
-                                            <i class="fa fa-map-marker"/> Get Directions
-                                        </a>
-                                        <div style="color: #95A5A6; font-size: 10px; margin-top: 6px; font-weight: 500;">
-                                            Scan QR for smooth entry
-                                        </div>
-                                    </div>
-
+                                <div style="margin-top: 12px; border-top: 1px solid #E3DDD1; padding-top: 12px; color: #8B8577; font-size: 11px;">
+                                    <div><t t-esc="doc.full_address"/></div>
+                                    <a t-att-href="doc.google_maps_link" target="_blank" style="display: inline-block; margin-top: 10px; background: #C9A452; color: #2A2210; padding: 8px 18px; border-radius: 999px; text-decoration: none; font-weight: bold; font-size: 12px;">Get directions</a>
+                                    <div style="font-size: 9px; margin-top: 10px; color: #B9B3A6;">Ref <t t-esc="doc.name"/> · Safer · Smarter · Together</div>
                                 </div>
                             </div>
                         </div>
-                    </t>
+                    </div>
                 </t>
             </t>
-        </template>
-    </data>
+        </t>
+    </template>
 </odoo>

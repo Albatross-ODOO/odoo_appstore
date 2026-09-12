@@ -4,37 +4,73 @@
         <field name="name">gate.verify.otp.wizard.form</field>
         <field name="model">gate.verify.otp.wizard</field>
         <field name="arch" type="xml">
-            <form string="Verify Entry Code">
-                <field name="state" invisible="1"/>
-                <field name="entry_id" invisible="1"/>
-                
-                <group invisible="state != 'scan'">
-                    <div class="alert alert-info" role="alert">
-                         Please enter the 6-digit code shown on the visitor's invitation or scan the QR code.
-                    </div>
-                    <field name="otp_code" widget="gate_qr_scanner" nolabel="1"/>
-                </group>
-                
-                <group invisible="state != 'photo'">
-                     <div class="alert alert-success" role="alert">
-                        OTP Verified! Please take a photo of the visitor/vehicle to confirm entry.
-                    </div>
-                    <group>
-                        <!-- Large image widget to encourage camera use -->
-                        <field name="force_camera_open" invisible="1"/>
-                        <field name="photo" widget="gate_camera" class="oe_avatar" options="{'size': [256, 256], 'auto_open_field': 'force_camera_open', 'auto_validate': True}"/>
-                    </group>
-                </group>
+            <form string="Verify Invitation" class="o_gate_kiosk" create="false" duplicate="false">
+                <sheet>
+                    <field name="state" invisible="1"/>
+                    <field name="entry_id" invisible="1"/>
+                    <field name="force_camera_open" invisible="1"/>
+                    <field name="window_expired" invisible="1"/>
 
-                <footer>
-                    <button name="action_verify" string="Find &amp; Verify" type="object" class="btn-primary"
-                            invisible="state != 'scan'"/>
-                            
-                    <button name="action_confirm_verification" string="Verify &amp; Enter" type="object" class="btn-success"
-                            invisible="state != 'photo'"/>
-                            
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
-                </footer>
+                    <div class="gd-appbar">
+                        <widget name="gate_home"/>
+                        <div class="gd-titlebox">
+                            <h2 class="gd-title">Verify Invitation</h2>
+                            <div class="gd-sub">Scan or type the 6-digit code</div>
+                        </div>
+                    </div>
+                    <div class="gd-rule"/>
+                    <div class="gd-steps">
+                        <div class="gd-step gd-step-done"/>
+                        <div class="gd-step" invisible="state != 'scan'"/>
+                        <div class="gd-step gd-step-done" invisible="state == 'scan'"/>
+                        <div class="gd-step" invisible="state == 'done'"/>
+                        <div class="gd-step gd-step-done gd-step-ok" invisible="state != 'done'"/>
+                    </div>
+
+                    <!-- Step 1: code -->
+                    <div class="gd-split" invisible="state != 'scan'">
+                        <div class="gd-col">
+                            <field name="otp_code" widget="gate_qr_scanner" nolabel="1"/>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: match card + photo -->
+                    <div class="gd-split" invisible="state != 'photo'">
+                        <div class="gd-col">
+                            <div class="gd-match">
+                                <div class="gd-match-av"><i class="fa fa-user" title="user"/></div>
+                                <div class="gd-match-body">
+                                    <b><field name="visitor_name" readonly="1" class="gd-inline"/></b>
+                                    <small>
+                                        <field name="purpose_label" readonly="1" class="gd-inline"/> · Host <field name="host_name" readonly="1" class="gd-inline"/>
+                                        · <field name="validity_string" readonly="1" class="gd-inline"/>
+                                        · <span class="gd-mono"><field name="entry_name" readonly="1" class="gd-inline"/></span>
+                                        <span invisible="not vehicle_number"> · <span class="gd-mono"><field name="vehicle_number" readonly="1" class="gd-inline"/></span></span>
+                                    </small>
+                                </div>
+                                <span class="gd-pill gd-pill-in" invisible="window_expired"><i class="fa fa-check" title="check"/> Code matched</span>
+                                <span class="gd-pill gd-pill-brk" invisible="not window_expired"><i class="fa fa-clock-o" title="clock o"/> Outside window</span>
+                            </div>
+                            <field name="photo" widget="gate_camera" nolabel="1" options="{'auto_open_field': 'force_camera_open', 'auto_validate': true}"/>
+                            <div class="gd-stack">
+                                <button name="action_confirm_verification" type="object" class="gd-btn gd-ok gd-lit gd-big" invisible="not photo"><i class="fa fa-sign-in" title="sign in"/> Confirm entry</button>
+                                <p class="gd-hint" invisible="photo">Camera opens by itself · capture confirms the entry</p>
+                                <button name="action_back_to_scan" type="object" class="gd-btn gd-sm"><i class="fa fa-arrow-left" title="arrow left"/> Back</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: done -->
+                    <div class="gd-done-screen" invisible="state != 'done'">
+                        <div class="gd-tick"><i class="fa fa-check" title="check"/></div>
+                        <h3><field name="result_message" readonly="1" class="gd-inline"/></h3>
+                        <div class="gd-bigtime"><field name="result_time" readonly="1" class="gd-inline"/></div>
+                        <p class="gd-hint">Photo attached · entry recorded</p>
+                        <div class="gd-stack gd-narrow">
+                            <button name="action_next_visitor" type="object" class="gd-btn gd-primary gd-lit gd-big"><i class="fa fa-qrcode" title="qrcode"/> Next visitor</button>
+                        </div>
+                    </div>
+                </sheet>
             </form>
         </field>
     </record>
@@ -43,6 +79,6 @@
         <field name="name">Verify Invitation</field>
         <field name="res_model">gate.verify.otp.wizard</field>
         <field name="view_mode">form</field>
-        <field name="target">new</field>
+        <field name="target">current</field>
     </record>
 </odoo>

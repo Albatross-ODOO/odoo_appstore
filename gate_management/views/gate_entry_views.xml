@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Search View -->
+    <!-- Search -->
     <record id="view_gate_entry_search" model="ir.ui.view">
         <field name="name">gate.entry.search</field>
         <field name="model">gate.entry</field>
@@ -9,7 +9,10 @@
                 <field name="name"/>
                 <field name="vehicle_number"/>
                 <field name="visitor_name"/>
+                <field name="mobile_number"/>
                 <field name="scan_code"/>
+                <field name="host_id"/>
+                <field name="worker_id"/>
                 <filter string="Visitor / Guest" name="type_visitor" domain="[('entry_type', '=', 'visitor')]"/>
                 <filter string="Commercial Vehicle" name="type_vehicle" domain="[('entry_type', '=', 'vehicle')]"/>
                 <filter string="Material Flow" name="type_material" domain="[('entry_type', '=', 'material')]"/>
@@ -18,19 +21,24 @@
                 <filter string="Incoming" name="incoming" domain="[('operation_type', '=', 'incoming')]"/>
                 <filter string="Outgoing" name="outgoing" domain="[('operation_type', '=', 'outgoing')]"/>
                 <separator/>
-                <filter string="Authorized" name="authorized" domain="[('state', '=', 'authorized')]"/>
                 <filter string="Scheduled" name="scheduled" domain="[('state', '=', 'scheduled')]"/>
+                <filter string="Authorized" name="authorized" domain="[('state', '=', 'authorized')]"/>
                 <filter string="Inside Premises" name="entered" domain="[('state', '=', 'entered')]"/>
+                <filter string="Overdue (past scheduled end)" name="overdue" domain="[('is_overdue', '=', True)]"/>
                 <filter string="Exited" name="exited" domain="[('state', '=', 'exited')]"/>
-                <group expand="0" string="Group By">
+                <separator/>
+                <filter string="Today" name="today" domain="[('create_date', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <group>
                     <filter string="Entry Type" name="group_entry_type" context="{'group_by': 'entry_type'}"/>
                     <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Host" name="group_host" context="{'group_by': 'host_id'}"/>
+                    <filter string="Check-in Day" name="group_day" context="{'group_by': 'check_in_time:day'}"/>
                 </group>
             </search>
         </field>
     </record>
 
-    <!-- List View -->
+    <!-- List -->
     <record id="view_gate_entry_tree" model="ir.ui.view">
         <field name="name">gate.entry.list</field>
         <field name="model">gate.entry</field>
@@ -38,66 +46,65 @@
             <list decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" decoration-success="state == 'exited'" decoration-warning="state == 'entered'">
                 <field name="name"/>
                 <field name="entry_type"/>
-                <field name="operation_type"/>
+                <field name="operation_type" optional="show"/>
                 <field name="visitor_name"/>
+                <field name="mobile_number" optional="hide"/>
                 <field name="worker_id" optional="hide"/>
                 <field name="vehicle_number"/>
+                <field name="host_id" optional="show"/>
                 <field name="check_in_time"/>
                 <field name="check_out_time"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
                 <field name="state" widget="badge" decoration-success="state in ['verified', 'exited']" decoration-info="state in ['otp_sent', 'scheduled']" decoration-warning="state == 'entered'"/>
             </list>
         </field>
     </record>
 
-    <!-- Kanban View (Main Gate Operations Active inside Roster Dashboard) -->
+    <!-- Kanban: Gate Desk glass rows -->
     <record id="view_gate_entry_kanban" model="ir.ui.view">
         <field name="name">gate.entry.kanban</field>
         <field name="model">gate.entry</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_mobile" default_group_by="state">
+            <kanban class="o_kanban_mobile gd-kanban" default_group_by="state" sample="1">
                 <field name="id"/>
                 <field name="name"/>
                 <field name="visitor_name"/>
                 <field name="vehicle_number"/>
+                <field name="material_name"/>
                 <field name="entry_type"/>
                 <field name="state"/>
                 <field name="entry_photo"/>
+                <field name="host_id"/>
+                <field name="check_in_time"/>
+                <field name="is_overdue"/>
                 <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click p-3 mb-2 rounded-3 shadow-sm bg-white border-start border-4"
-                             t-attf-style="border-color: #{record.state.raw_value == 'entered' ? '#10B981' : (record.state.raw_value == 'scheduled' ? '#3B82F6' : '#9CA3AF')} !important;">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <span class="badge rounded-pill mb-2 text-white bg-info" t-if="record.entry_type.raw_value == 'visitor'">
-                                        Visitor
-                                    </span>
-                                     <span class="badge rounded-pill mb-2 text-white bg-primary" t-elif="record.entry_type.raw_value == 'vehicle'">
-                                         Vehicle
-                                     </span>
-                                     <span class="badge rounded-pill mb-2 text-white bg-success" t-elif="record.entry_type.raw_value == 'worker'">
-                                         Worker
-                                     </span>
-                                     <span class="badge rounded-pill mb-2 text-dark bg-warning" t-else="">
-                                         Material
-                                     </span>
-                                     <h4 class="mb-1 text-dark fw-bold">
-                                         <t t-if="record.visitor_name.value" t-esc="record.visitor_name.value"/>
-                                         <t t-else="">Asset / Material / Worker</t>
-                                     </h4>
-                                    <div class="text-muted small mb-1"><t t-esc="record.name.value"/></div>
-                                    <div class="text-muted small" t-if="record.vehicle_number.value">
-                                        <i class="fa fa-car"/> <t t-esc="record.vehicle_number.value"/>
-                                    </div>
+                    <t t-name="card">
+                        <div t-attf-class="gd-card gd-card-#{record.state.raw_value} #{record.is_overdue.raw_value ? 'gd-card-overdue' : ''}">
+                            <div class="gd-card-av" t-attf-class="gd-card-av gd-av-#{record.entry_type.raw_value}">
+                                <img t-if="record.entry_photo.raw_value" t-attf-src="/web/image/gate.entry/#{record.id.raw_value}/entry_photo" alt="Photo"/>
+                                <t t-elif="record.entry_type.raw_value == 'vehicle'"><i class="fa fa-truck" role="img" aria-label="Vehicle"/></t>
+                                <t t-elif="record.entry_type.raw_value == 'material'"><i class="fa fa-cube" role="img" aria-label="Material"/></t>
+                                <t t-elif="record.entry_type.raw_value == 'worker'"><i class="fa fa-id-badge" role="img" aria-label="Worker"/></t>
+                                <t t-else=""><i class="fa fa-user" role="img" aria-label="Visitor"/></t>
+                            </div>
+                            <div class="gd-card-body">
+                                <div class="gd-card-title">
+                                    <t t-if="record.entry_type.raw_value == 'vehicle' and record.vehicle_number.raw_value"><span class="gd-mono"><t t-esc="record.vehicle_number.value"/></span></t>
+                                    <t t-elif="record.visitor_name.raw_value"><t t-esc="record.visitor_name.value"/></t>
+                                    <t t-elif="record.material_name.raw_value"><t t-esc="record.material_name.value"/></t>
+                                    <t t-else=""><t t-esc="record.name.value"/></t>
                                 </div>
-                                <div class="o_kanban_image" style="width: 50px; height: 50px;">
-                                    <img t-if="record.entry_photo.raw_value" 
-                                         t-att-src="kanban_image('gate.entry', 'entry_photo', record.id.raw_value)" 
-                                         class="rounded w-100 h-100 object-fit-cover"/>
+                                <div class="gd-card-sub">
+                                    <span class="gd-mono"><t t-esc="record.name.value"/></span> · <t t-esc="record.entry_type.value"/>
+                                    <t t-if="record.host_id.value"> · <t t-esc="record.host_id.value"/></t>
+                                    <t t-if="record.vehicle_number.raw_value and record.entry_type.raw_value != 'vehicle'"> · <span class="gd-mono"><t t-esc="record.vehicle_number.value"/></span></t>
+                                    <t t-if="record.check_in_time.raw_value"> · <t t-esc="record.check_in_time.value"/></t>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-end align-items-center mt-3 pt-2 border-top" t-if="record.state.raw_value == 'entered'">
-                                <button name="action_exit" type="object" class="btn btn-sm btn-danger py-1 px-3 fw-bold">
-                                    Check-Out
+                            <div class="gd-card-side">
+                                <field name="state" widget="badge" decoration-success="state == 'entered'" decoration-warning="state in ['scheduled', 'otp_sent', 'verified', 'authorized']" decoration-muted="state in ['exited', 'cancel']"/>
+                                <button t-if="record.state.raw_value == 'entered'" name="action_exit" type="object" class="gd-btn gd-bad gd-lit gd-sm">
+                                    <i class="fa fa-sign-out" title="sign out"/> Check-Out
                                 </button>
                             </div>
                         </div>
@@ -107,52 +114,34 @@
         </field>
     </record>
 
-    <!-- Worker Attendance Kanban View -->
+    <!-- Kanban: worker attendance entries -->
     <record id="view_gate_entry_worker_kanban" model="ir.ui.view">
         <field name="name">gate.entry.worker.kanban</field>
         <field name="model">gate.entry</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_mobile" default_group_by="state">
+            <kanban class="o_kanban_mobile gd-kanban" default_group_by="state" sample="1">
                 <field name="id"/>
                 <field name="name"/>
                 <field name="visitor_name"/>
                 <field name="worker_id"/>
-                <field name="entry_type"/>
                 <field name="state"/>
-                <field name="entry_photo"/>
                 <field name="check_in_time"/>
+                <field name="check_out_time"/>
                 <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click p-3 mb-2 rounded-3 shadow-sm bg-white border-start border-4"
-                             t-attf-style="border-color: #{record.state.raw_value == 'entered' ? '#10B981' : '#9CA3AF'} !important;">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <span class="badge rounded-pill mb-2 text-white bg-success">
-                                        Worker
-                                    </span>
-                                    <h4 class="mb-1 text-dark fw-bold">
-                                        <t t-if="record.visitor_name.value" t-esc="record.visitor_name.value"/>
-                                        <t t-else="">Worker</t>
-                                    </h4>
-                                    <div class="text-muted small mb-1"><t t-esc="record.name.value"/></div>
-                                    <div class="text-muted small" t-if="record.check_in_time.value">
-                                        <i class="fa fa-clock-o"/> In: <t t-esc="record.check_in_time.value"/>
-                                    </div>
-                                </div>
-                                <div class="o_kanban_image" style="width: 50px; height: 50px;">
-                                    <img t-if="record.entry_photo.raw_value" 
-                                         t-att-src="kanban_image('gate.entry', 'entry_photo', record.id.raw_value)" 
-                                         class="rounded-circle w-100 h-100 object-fit-cover"/>
-                                    <div t-else="" class="rounded-circle w-100 h-100 bg-success d-flex align-items-center justify-content-center text-white font-weight-bold" style="font-size: 20px;">
-                                        <t t-if="record.visitor_name.value" t-esc="record.visitor_name.value.charAt(0).toUpperCase()"/>
-                                        <t t-else="">W</t>
-                                    </div>
+                    <t t-name="card">
+                        <div t-attf-class="gd-card gd-card-#{record.state.raw_value}">
+                            <div class="gd-card-av gd-av-worker"><i class="fa fa-id-badge" role="img" aria-label="Worker"/></div>
+                            <div class="gd-card-body">
+                                <div class="gd-card-title"><t t-esc="record.visitor_name.value or record.worker_id.value"/></div>
+                                <div class="gd-card-sub">
+                                    <span class="gd-mono"><t t-esc="record.name.value"/></span>
+                                    <t t-if="record.check_in_time.raw_value"> · In <t t-esc="record.check_in_time.value"/></t>
+                                    <t t-if="record.check_out_time.raw_value"> · Out <t t-esc="record.check_out_time.value"/></t>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-end align-items-center mt-3 pt-2 border-top" t-if="record.state.raw_value == 'entered'">
-                                <button name="action_exit" type="object" class="btn btn-sm btn-danger py-1 px-3 fw-bold">
-                                    Check-Out
-                                </button>
+                            <div class="gd-card-side">
+                                <field name="state" widget="badge" decoration-success="state == 'entered'" decoration-muted="state == 'exited'"/>
+                                <button t-if="record.state.raw_value == 'entered'" name="action_exit" type="object" class="gd-btn gd-bad gd-lit gd-sm"><i class="fa fa-sign-out" title="sign out"/> Check-Out</button>
                             </div>
                         </div>
                     </t>
@@ -161,102 +150,69 @@
         </field>
     </record>
 
-    <!-- Form View -->
+    <!-- Manager form (standard Odoo form: the audit surface) -->
     <record id="view_gate_entry_form" model="ir.ui.view">
         <field name="name">gate.entry.form</field>
         <field name="model">gate.entry</field>
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_generate_otp" string="Generate OTP" type="object" class="btn-secondary"
-                            invisible="state != 'draft' or entry_type == 'material'"/>
-
-                    <button name="action_schedule" string="Schedule Invitation" type="object" class="oe_highlight" 
-                            invisible="state != 'draft' or entry_type == 'material'"/>
-
-                    <button name="action_print_invitation" string="Print Invitation" type="object" class="btn-primary" icon="fa-print"
-                            invisible="state != 'scheduled'"/>
-                    
-                    <button name="action_open_share_wizard" string="Share Invitation" type="object" class="btn-primary" icon="fa-share-alt"
-                            invisible="state == 'draft' or entry_type == 'material'"/>
-                    
-                    <button name="action_send_whatsapp_invitation" string="Send WhatsApp" type="object" class="btn-success" icon="fa-whatsapp"
-                            invisible="state != 'scheduled' or entry_type == 'material'"/>
-                    
-                    <button name="action_verify_otp" string="Verify OTP" type="object" class="btn-success" 
-                            invisible="state not in ['otp_sent', 'scheduled']"/>
-                            
-                    <button name="action_authorize" string="Authorize Entry" type="object" class="oe_highlight"
-                            invisible="state != 'verified'" groups="gate_management.group_gate_guard"/>
-                            
-                    <button name="action_confirm_entry" string="Validate &amp; Enter" type="object" class="oe_highlight"
-                            invisible="state not in ['draft', 'authorized']"/>
-                            
-                    <button name="action_exit" string="Exit Premises" type="object" class="oe_highlight"
-                            invisible="state != 'entered'"/>
-                            
-                    <button name="action_cancel" string="Cancel" type="object" 
-                            invisible="1"/>
-                            
-                    <field name="state" widget="statusbar" statusbar_visible="scheduled,entered,exited"/>
+                    <button name="action_generate_otp" string="Generate OTP" type="object" class="btn-secondary" invisible="state != 'draft' or entry_type == 'material'"/>
+                    <button name="action_schedule" string="Schedule Invitation" type="object" class="oe_highlight" invisible="state != 'draft' or entry_type == 'material'"/>
+                    <button name="action_print_invitation" string="Print Invitation" type="object" class="btn-primary" icon="fa-print" invisible="state != 'scheduled'"/>
+                    <button name="action_open_share_wizard" string="Share Invitation" type="object" class="btn-primary" icon="fa-share-alt" invisible="state == 'draft' or entry_type == 'material'"/>
+                    <button name="action_send_whatsapp_invitation" string="Send WhatsApp" type="object" class="btn-success" icon="fa-whatsapp" invisible="state != 'scheduled' or entry_type == 'material' or not whatsapp_available"/>
+                    <button name="action_verify_otp" string="Verify OTP" type="object" class="btn-success" invisible="state not in ['otp_sent', 'scheduled']"/>
+                    <button name="action_authorize" string="Authorize Entry" type="object" class="oe_highlight" invisible="state != 'verified'" groups="gate_management.group_gate_guard"/>
+                    <button name="action_confirm_entry" string="Validate &amp; Enter" type="object" class="oe_highlight" invisible="state not in ['draft', 'authorized']"/>
+                    <button name="action_exit" string="Exit Premises" type="object" class="oe_highlight" invisible="state != 'entered'"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state in ['exited', 'cancel']" groups="gate_management.group_gate_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,scheduled,entered,exited"/>
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" title="Overdue" bg_color="text-bg-warning" invisible="not is_overdue"/>
+                    <field name="is_overdue" invisible="1"/>
+                    <field name="whatsapp_available" invisible="1"/>
+                    <field name="entry_photo" widget="image" class="oe_avatar" options="{'size': [96, 96]}" invisible="entry_type == 'material'"/>
                     <div class="oe_title">
-                        <h1>
-                            <field name="name"/>
-                        </h1>
+                        <h1><field name="name"/></h1>
                     </div>
                     <group>
                         <group string="Basic Information">
-                             <field name="entry_type"/>
-                             <field name="operation_type"/>
-                             <field name="worker_id" invisible="entry_type != 'worker'"/>
-                             <field name="visitor_name" invisible="entry_type in ['material', 'worker']"/>
-                             <field name="mobile_number" widget="phone" invisible="entry_type in ['material', 'worker']"/>
-                             <field name="visit_purpose" invisible="entry_type in ['material', 'worker']"/>
-                             <field name="visit_purpose_detail" invisible="entry_type in ['material', 'worker'] or visit_purpose != 'other'"/>
-                             <field name="vehicle_number" invisible="entry_type == 'worker'"/>
-                             <field name="vendor_id" invisible="entry_type == 'worker'"/>
+                            <field name="entry_type"/>
+                            <field name="operation_type"/>
+                            <field name="worker_id" invisible="entry_type != 'worker'"/>
+                            <field name="visitor_name" invisible="entry_type in ['material', 'worker']"/>
+                            <field name="mobile_number" widget="phone" invisible="entry_type in ['material', 'worker']"/>
+                            <field name="visit_purpose" invisible="entry_type in ['material', 'worker']"/>
+                            <field name="visit_purpose_detail" invisible="entry_type in ['material', 'worker'] or visit_purpose != 'other'"/>
+                            <field name="vehicle_number" invisible="entry_type == 'worker'"/>
+                            <field name="vendor_id" invisible="entry_type == 'worker'"/>
                         </group>
-                        <group string="Host &amp; Organization Details" invisible="entry_type == 'worker'">
-                             <field name="host_id"/>
-                             <field name="host_department" invisible="state in ['entered', 'exited']"/>
-                             <field name="company_id" groups="base.group_multi_company"/>
-                             <field name="scan_code" invisible="state in ['entered', 'exited']"/>
-                             <field name="otp" invisible="entry_type == 'material' or state in ['entered', 'exited']"/>
-                             <field name="otp_verified" widget="boolean_toggle" invisible="entry_type == 'material' or state in ['entered', 'exited']"/>
-                             <field name="qr_code_image" widget="image" class="oe_avatar" readonly="1" invisible="entry_type == 'material' or not qr_code_image or state in ['entered', 'exited']"/>
-                        </group>
-                    </group>
-                    <group string="Schedule Information" invisible="entry_type in ['material', 'worker'] or state in ['entered', 'exited']">
-                        <group>
-                            <field name="scheduled_start"/>
-                        </group>
-                        <group>
-                            <field name="scheduled_end"/>
+                        <group string="Host &amp; Organization" invisible="entry_type == 'worker'">
+                            <field name="host_id"/>
+                            <field name="host_department" invisible="state in ['entered', 'exited']"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="scan_code" invisible="state in ['entered', 'exited']"/>
+                            <field name="otp" invisible="entry_type == 'material' or state in ['entered', 'exited']"/>
+                            <field name="otp_verified" widget="boolean_toggle" invisible="entry_type == 'material' or state in ['entered', 'exited']"/>
+                            <field name="qr_code_image" widget="image" class="oe_avatar" readonly="1" invisible="entry_type == 'material' or not qr_code_image or state in ['entered', 'exited']"/>
                         </group>
                     </group>
-                    <group string="Material Inward/Outward Details" invisible="entry_type != 'material'">
-                        <group>
-                            <field name="material_name"/>
-                            <field name="material_slip_no"/>
-                        </group>
-                        <group>
-                            <field name="material_qty"/>
-                            <field name="material_flow"/>
-                        </group>
+                    <group string="Schedule" invisible="entry_type in ['material', 'worker']">
+                        <group><field name="scheduled_start"/></group>
+                        <group><field name="scheduled_end"/></group>
                     </group>
-                    <group string="Entry Audit Logs">
-                        <group>
-                            <field name="check_in_time"/>
-                            <field name="check_out_time"/>
-                        </group>
-                        <group>
-                            <field name="entry_photo" widget="gate_camera" class="oe_avatar" options="{'size': [128, 128]}" invisible="entry_type == 'material'"/>
-                        </group>
+                    <group string="Material Inward/Outward" invisible="entry_type != 'material'">
+                        <group><field name="material_name"/><field name="material_slip_no"/></group>
+                        <group><field name="material_qty"/><field name="material_flow"/></group>
+                    </group>
+                    <group string="Entry Audit">
+                        <group><field name="check_in_time"/><field name="check_out_time"/></group>
+                        <group><field name="share_link" widget="CopyClipboardChar" invisible="state not in ['scheduled', 'verified', 'authorized']"/></group>
                     </group>
                     <group string="Exit Details" invisible="state not in ['entered', 'exited']">
-                         <field name="exit_remarks"/>
+                        <field name="exit_remarks"/>
                     </group>
                 </sheet>
                 <chatter/>
@@ -264,71 +220,94 @@
         </field>
     </record>
 
-    <!-- Form View for Kiosk Mode -->
+    <!-- =============== Gate Desk page: Walk-In Entry =============== -->
     <record id="view_gate_entry_form_kiosk" model="ir.ui.view">
         <field name="name">gate.entry.form.kiosk</field>
         <field name="model">gate.entry</field>
         <field name="arch" type="xml">
-            <form string="Visitor Gate Entry Kiosk" create="true" edit="true" class="o_kiosk_form">
-                <header>
-                    <button name="action_confirm_entry" 
-                            string="✅ Confirm Check-In" 
-                            type="object" 
-                            class="oe_highlight btn-lg w-100 mb-2 py-3 fs-4" 
-                            invisible="state != 'draft' or not entry_photo"/>
-                    <button name="action_exit" 
-                            string="🚪 Confirm Check-Out" 
-                            type="object" 
-                            class="btn-danger btn-lg w-100 mb-2 py-3 fs-4" 
-                            invisible="state != 'entered'"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,entered,exited"/>
-                </header>
-                <sheet class="p-3">
-                    <div class="text-center mb-3">
-                        <h2 class="text-primary fw-bold fs-2">Visitor Gate Registration</h2>
-                        <p class="text-muted fs-6">Fill in details and snap a photo to check-in.</p>
+            <form string="Walk-In Entry" class="o_gate_kiosk" create="true" edit="true" duplicate="false">
+                <sheet>
+                    <div class="gd-appbar">
+                        <widget name="gate_home"/>
+                        <div class="gd-titlebox">
+                            <h2 class="gd-title">Walk-In Entry</h2>
+                            <div class="gd-sub">New entry · <field name="name" readonly="1" class="gd-mono gd-inline"/></div>
+                        </div>
+                        <field name="state" widget="badge" decoration-success="state == 'entered'" decoration-warning="state == 'draft'" decoration-muted="state == 'exited'"/>
                     </div>
-                    
-                    <div class="row g-3">
-                        <div class="col-12 col-md-6">
-                            <label for="visitor_name" class="fw-bold fs-5 mb-1">Visitor Name</label>
-                            <field name="visitor_name" required="1" placeholder="Enter full name" style="font-size: 1.2rem; height: 50px;"/>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label for="mobile_number" class="fw-bold fs-5 mb-1">Mobile Number</label>
-                            <field name="mobile_number" widget="phone" required="1" placeholder="Enter contact number" style="font-size: 1.2rem; height: 50px;"/>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label for="visit_purpose" class="fw-bold fs-5 mb-1">Purpose of Visit</label>
-                            <field name="visit_purpose" required="1" style="font-size: 1.2rem; height: 50px;"/>
-                        </div>
-                        <div class="col-12 col-md-6" invisible="visit_purpose != 'other'">
-                            <label for="visit_purpose_detail" class="fw-bold fs-5 mb-1">Other Details</label>
-                            <field name="visit_purpose_detail" placeholder="Explain purpose..." style="font-size: 1.2rem; height: 50px;"/>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label for="vehicle_number" class="fw-bold fs-5 mb-1">Vehicle Number</label>
-                            <field name="vehicle_number" placeholder="Enter vehicle plate (optional)" style="font-size: 1.2rem; height: 50px;"/>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label for="host_id" class="fw-bold fs-5 mb-1">Person Visited (Host)</label>
-                            <field name="host_id" required="1" options="{'no_create': True}" placeholder="Search colleague..." style="font-size: 1.2rem; height: 50px;"/>
-                        </div>
-                    </div>
+                    <div class="gd-rule"/>
 
-                    <div class="mt-4 pt-3 border-top text-center">
-                        <h4 class="fw-bold mb-3 fs-5">Visitor Photo Capture</h4>
-                        <div class="d-flex justify-content-center">
-                            <field name="entry_photo" 
-                                   widget="gate_camera" 
-                                   class="oe_avatar" 
-                                   options="{'size': [256, 256]}"/>
+                    <field name="entry_type" widget="gate_chips" nolabel="1" options="{'exclude': ['worker'], 'icons': {'visitor': 'fa-user', 'vehicle': 'fa-truck', 'material': 'fa-cube'}, 'labels': {'visitor': 'Visitor', 'vehicle': 'Vehicle', 'material': 'Material'}}" readonly="state != 'draft'"/>
+                    <field name="operation_type" widget="gate_chips" nolabel="1" options="{'segment': true}" readonly="state != 'draft'"/>
+
+                    <div class="gd-split">
+                        <div class="gd-col">
+                            <div class="gd-field" invisible="entry_type == 'material'">
+                                <label for="mobile_number" string="Mobile number"/>
+                                <field name="mobile_number" widget="phone" placeholder="Repeat visitors auto-fill" required="entry_type == 'visitor'" readonly="state != 'draft'"/>
+                            </div>
+                            <div class="gd-field" invisible="entry_type == 'material'">
+                                <label for="visitor_name" string="Visitor name"/>
+                                <field name="visitor_name" placeholder="Full name" required="entry_type == 'visitor'" readonly="state != 'draft'"/>
+                            </div>
+                            <div class="gd-grid2" invisible="entry_type == 'material'">
+                                <div class="gd-field">
+                                    <label for="visit_purpose" string="Purpose"/>
+                                    <field name="visit_purpose" readonly="state != 'draft'"/>
+                                </div>
+                                <div class="gd-field">
+                                    <label for="host_id" string="Host"/>
+                                    <field name="host_id" options="{'no_create': True, 'no_open': True}" placeholder="Search colleague…" required="entry_type == 'visitor'" readonly="state != 'draft'"/>
+                                </div>
+                            </div>
+                            <div class="gd-field" invisible="entry_type == 'material' or visit_purpose != 'other'">
+                                <label for="visit_purpose_detail" string="Purpose details"/>
+                                <field name="visit_purpose_detail" placeholder="Explain the purpose…" readonly="state != 'draft'"/>
+                            </div>
+                            <div class="gd-field" invisible="entry_type == 'visitor'">
+                                <label for="vendor_id" string="Vendor / supplier"/>
+                                <field name="vendor_id" options="{'no_open': True}" placeholder="Search partner…" readonly="state != 'draft'"/>
+                            </div>
+                            <div class="gd-field">
+                                <label for="vehicle_number" string="Vehicle number" invisible="entry_type != 'vehicle'"/>
+                                <label for="vehicle_number" string="Vehicle number · optional" invisible="entry_type == 'vehicle'"/>
+                                <field name="vehicle_number" class="gd-plate" placeholder="GJ 05 XX 0000" required="entry_type == 'vehicle'" readonly="state != 'draft'"/>
+                            </div>
+                            <div invisible="entry_type != 'material'">
+                                <div class="gd-field">
+                                    <label for="material_name" string="Material / description"/>
+                                    <field name="material_name" placeholder="e.g. 40 bags cement" required="entry_type == 'material'" readonly="state != 'draft'"/>
+                                </div>
+                                <div class="gd-grid2">
+                                    <div class="gd-field">
+                                        <label for="material_slip_no" string="Challan / slip no."/>
+                                        <field name="material_slip_no" class="gd-mono" placeholder="CH-1042" readonly="state != 'draft'"/>
+                                    </div>
+                                    <div class="gd-field">
+                                        <label for="material_qty" string="Quantity"/>
+                                        <field name="material_qty" class="gd-mono" readonly="state != 'draft'"/>
+                                    </div>
+                                </div>
+                                <field name="material_flow" widget="gate_chips" nolabel="1" options="{'segment': true}" readonly="state != 'draft'"/>
+                            </div>
                         </div>
-                        <div class="mt-3" invisible="not entry_photo or state != 'draft'">
-                            <button name="action_confirm_entry" 
-                                    string="✅ Confirm Check-In" 
-                                    type="object" 
-                                    class="oe_highlight btn-lg w-100 py-3 fs-4"/>
+                        <div class="gd-col">
+                            <div class="gd-field" invisible="entry_type == 'material'">
+                                <label for="entry_photo" string="Photo · required to check in"/>
+                                <field name="entry_photo" widget="gate_camera" nolabel="1" readonly="state != 'draft'"/>
+                            </div>
+                            <div class="gd-stack">
+                                <button name="action_confirm_entry" type="object" class="gd-btn gd-ok gd-lit gd-big" invisible="state != 'draft' or (entry_type != 'material' and not entry_photo)">
+                                    <i class="fa fa-sign-in" title="sign in"/> Confirm Check-In
+                                </button>
+                                <p class="gd-hint" invisible="state != 'draft' or entry_type == 'material' or entry_photo">Take the photo to enable check-in</p>
+                                <button name="action_exit" type="object" class="gd-btn gd-bad gd-lit gd-big" invisible="state != 'entered'">
+                                    <i class="fa fa-sign-out" title="sign out"/> Confirm Check-Out
+                                </button>
+                                <div class="gd-done" invisible="state != 'exited'">
+                                    <i class="fa fa-check" title="check"/> Exited · <field name="check_out_time" readonly="1" class="gd-inline"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </sheet>
@@ -336,121 +315,110 @@
         </field>
     </record>
 
-    <!-- Action for Visitor Kiosk Mode -->
     <record id="action_gate_entry_kiosk_visitor" model="ir.actions.act_window">
-        <field name="name">Walk-In Visitor Entry</field>
+        <field name="name">Walk-In Entry</field>
         <field name="res_model">gate.entry</field>
         <field name="view_mode">form</field>
         <field name="target">current</field>
-        <field name="context">{
-            'default_entry_type': 'visitor',
-            'default_operation_type': 'incoming',
-            'default_state': 'draft'
-        }</field>
+        <field name="context">{'default_entry_type': 'visitor', 'default_operation_type': 'incoming', 'default_state': 'draft', 'form_view_initial_mode': 'edit'}</field>
         <field name="view_id" ref="view_gate_entry_form_kiosk"/>
     </record>
 
-    <!-- Form View for Kiosk Mode: Schedule Visit -->
+    <!-- =============== Gate Desk page: Schedule Visit =============== -->
+
     <record id="view_gate_entry_form_schedule_kiosk" model="ir.ui.view">
         <field name="name">gate.entry.form.schedule.kiosk</field>
         <field name="model">gate.entry</field>
         <field name="arch" type="xml">
-            <form string="Schedule Visitor Invitation" create="true" edit="true" class="o_kiosk_form">
-                <header>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,scheduled"/>
-                </header>
-                <sheet class="p-3">
-                    <div class="text-center mb-3">
-                        <h2 class="text-primary fw-bold fs-2">Schedule Invitation</h2>
-                        <p class="text-muted fs-6">Pre-register visitors and share digital gate passes.</p>
+            <form string="Schedule Visit" class="o_gate_kiosk" create="true" edit="true" duplicate="false">
+                <sheet>
+                    <div class="gd-appbar">
+                        <widget name="gate_home"/>
+                        <div class="gd-titlebox">
+                            <h2 class="gd-title">Schedule Visit</h2>
+                            <div class="gd-sub">Pre-register · send a digital pass</div>
+                        </div>
+                        <field name="state" widget="badge" decoration-warning="state == 'scheduled'" decoration-success="state in ['verified', 'authorized', 'entered']" decoration-muted="state in ['exited', 'cancel']"/>
                     </div>
-                    
-                    <!-- Fill Details (Name and mobile first) -->
-                    <div class="row g-3">
-                        <div class="col-12 col-md-6">
-                            <label for="visitor_name" class="fw-bold fs-5 mb-1">Visitor Name</label>
-                            <field name="visitor_name" required="1" placeholder="Enter full name" style="font-size: 1.2rem; height: 50px;" readonly="state != 'draft'"/>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label for="mobile_number" class="fw-bold fs-5 mb-1">Mobile Number</label>
-                            <field name="mobile_number" widget="phone" placeholder="Enter contact number (optional)" style="font-size: 1.2rem; height: 50px;" readonly="state != 'draft'"/>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label for="visit_purpose" class="fw-bold fs-5 mb-1">Purpose of Visit</label>
-                            <field name="visit_purpose" required="1" style="font-size: 1.2rem; height: 50px;" readonly="state != 'draft'"/>
-                        </div>
-                        <div class="col-12 col-md-6" invisible="visit_purpose != 'other'">
-                            <label for="visit_purpose_detail" class="fw-bold fs-5 mb-1">Other Details</label>
-                            <field name="visit_purpose_detail" placeholder="Explain purpose..." style="font-size: 1.2rem; height: 50px;" readonly="state != 'draft'"/>
-                        </div>
-                        
-                        <!-- Scheduling times -->
-                        <div class="col-12 col-md-6">
-                            <label for="scheduled_start" class="fw-bold fs-5 mb-1">Scheduled From</label>
-                            <field name="scheduled_start" required="1" style="font-size: 1.2rem; height: 50px;" readonly="state != 'draft'"/>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label for="scheduled_end" class="fw-bold fs-5 mb-1">Scheduled To</label>
-                            <field name="scheduled_end" required="1" style="font-size: 1.2rem; height: 50px;" readonly="state != 'draft'"/>
+                    <div class="gd-rule"/>
+
+                    <div class="gd-split">
+                        <div class="gd-col" invisible="state != 'draft'">
+                            <div class="gd-field">
+                                <label for="visitor_name" string="Visitor name"/>
+                                <field name="visitor_name" placeholder="Full name" required="1"/>
+                            </div>
+                            <div class="gd-grid2">
+                                <div class="gd-field">
+                                    <label for="mobile_number" string="Mobile (WhatsApp)"/>
+                                    <field name="mobile_number" widget="phone" placeholder="Optional"/>
+                                </div>
+                                <div class="gd-field">
+                                    <label for="visit_purpose" string="Purpose"/>
+                                    <field name="visit_purpose" required="1"/>
+                                </div>
+                            </div>
+                            <div class="gd-field" invisible="visit_purpose != 'other'">
+                                <label for="visit_purpose_detail" string="Purpose details"/>
+                                <field name="visit_purpose_detail" placeholder="Explain the purpose…"/>
+                            </div>
+                            <div class="gd-grid2">
+                                <div class="gd-field">
+                                    <label for="scheduled_start" string="From"/>
+                                    <field name="scheduled_start" required="1"/>
+                                </div>
+                                <div class="gd-field">
+                                    <label for="scheduled_end" string="To"/>
+                                    <field name="scheduled_end" required="1"/>
+                                </div>
+                            </div>
+                            <div class="gd-grid2">
+                                <div class="gd-field">
+                                    <label for="vehicle_number" string="Vehicle · optional"/>
+                                    <field name="vehicle_number" class="gd-plate" placeholder="—"/>
+                                </div>
+                                <div class="gd-field">
+                                    <label for="host_id" string="Host"/>
+                                    <field name="host_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                                </div>
+                            </div>
+                            <button name="action_schedule" type="object" class="gd-btn gd-primary gd-lit gd-big"><i class="fa fa-calendar-check-o" title="calendar check o"/> Create invitation pass</button>
                         </div>
 
-                        <!-- Vehicle and Host name at the end -->
-                        <div class="col-12 col-md-6">
-                            <label for="vehicle_number" class="fw-bold fs-5 mb-1">Vehicle Number</label>
-                            <field name="vehicle_number" placeholder="Enter vehicle plate (optional)" style="font-size: 1.2rem; height: 50px;" readonly="state != 'draft'"/>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label for="host_id" class="fw-bold fs-5 mb-1">Person Visited (Host)</label>
-                            <field name="host_id" required="1" options="{'no_create': True}" placeholder="Search colleague..." style="font-size: 1.2rem; height: 50px;" readonly="state != 'draft'"/>
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons directly inside sheet (under times) -->
-                    <div class="mt-4 pt-3 border-top w-100">
-                        <!-- Click Schedule Invite Button -->
-                        <button name="action_schedule" 
-                                string="📅 Click Schedule Invite" 
-                                type="object" 
-                                class="oe_highlight btn-lg w-100 py-3 fs-4" 
-                                invisible="state != 'draft'"/>
-
-                        <!-- Sharing/Download buttons displayed after scheduling -->
-                        <div invisible="state != 'scheduled'" class="d-flex flex-column gap-2 w-100">
-                            <button name="action_send_whatsapp_invitation" 
-                                    string="💬 Send via WhatsApp" 
-                                    type="object" 
-                                    class="btn-success btn-lg w-100 py-3 fs-4"/>
-                            
-                            <button name="action_send_email_invitation" 
-                                    string="✉️ Send via Email" 
-                                    type="object" 
-                                    class="btn-info btn-lg w-100 py-3 fs-4"/>
-                            
-                            <button name="action_print_invitation" 
-                                    string="📄 Download PDF" 
-                                    type="object" 
-                                    class="btn-secondary btn-lg w-100 py-3 fs-4"/>
-                        </div>
-                    </div>
-
-                    <!-- Generated Pass Info (Only visible once scheduled) -->
-                    <div invisible="state != 'scheduled'" class="mt-4 pt-3 border-top text-center">
-                        <h4 class="fw-bold mb-3 fs-4 text-primary">Invitation Pass Generated</h4>
-                        
-                        <div class="mb-3">
-                            <span class="fs-5 text-muted">Verification Code (OTP)</span>
-                            <div class="display-6 fw-bold text-success my-2" style="letter-spacing: 2px;">
-                                <field name="otp" readonly="1"/>
+                        <div class="gd-col" invisible="state == 'draft'">
+                            <div class="gd-pass">
+                                <field name="qr_code_image" widget="image" readonly="1" nolabel="1" class="gd-qr" invisible="not qr_code_image"/>
+                                <div class="gd-code"><field name="otp" readonly="1" class="gd-inline"/></div>
+                                <div class="gd-pass-when"><field name="validity_string" readonly="1" class="gd-inline"/></div>
+                                <div class="gd-pass-meta">
+                                    <field name="visitor_name" readonly="1" class="gd-inline"/> · <field name="visit_purpose" readonly="1" class="gd-inline"/> · Host <field name="host_id" readonly="1" class="gd-inline" options="{'no_open': True}"/>
+                                </div>
+                                <field name="share_link" widget="CopyClipboardChar" readonly="1" nolabel="1" class="gd-linkbox"/>
+                            </div>
+                            <div class="gd-share">
+                                <field name="whatsapp_available" invisible="1"/>
+                                <button name="action_send_whatsapp_invitation" type="object" class="gd-btn gd-wa" invisible="not whatsapp_available"><i class="fa fa-whatsapp" title="whatsapp"/> WhatsApp</button>
+                                <button name="action_send_email_invitation" type="object" class="gd-btn"><i class="fa fa-envelope-o" title="envelope o"/> Email</button>
+                                <button name="action_print_invitation" type="object" class="gd-btn"><i class="fa fa-file-pdf-o" title="file pdf o"/> PDF</button>
+                                <button name="action_open_share_wizard" type="object" class="gd-btn"><i class="fa fa-share-alt" title="share alt"/> Share</button>
+                            </div>
+                            <div class="gd-stack">
+                                <button name="action_schedule_another" type="object" class="gd-btn gd-sm"><i class="fa fa-plus" title="plus"/> Schedule another</button>
                             </div>
                         </div>
-
-                        <div class="d-flex justify-content-center my-3" invisible="not qr_code_image">
-                            <field name="qr_code_image" widget="image" class="oe_avatar" style="width: 180px; height: 180px;" readonly="1"/>
-                        </div>
-                        <p class="text-muted">Use the sharing buttons above to send these details to the visitor.</p>
                     </div>
                 </sheet>
             </form>
         </field>
+    </record>
+
+
+    <record id="action_gate_entry_schedule" model="ir.actions.act_window">
+        <field name="name">Schedule Visit</field>
+        <field name="res_model">gate.entry</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'default_entry_type': 'visitor', 'default_operation_type': 'incoming', 'default_state': 'draft', 'form_view_initial_mode': 'edit'}</field>
+        <field name="view_id" ref="view_gate_entry_form_schedule_kiosk"/>
     </record>
 </odoo>
