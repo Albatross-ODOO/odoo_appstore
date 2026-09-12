@@ -1,263 +1,209 @@
 <!--
   Field Sales Activity & Tracking — Odoo Apps Store description page.
-  Self-contained fragment: no JS, no inline event handlers, no external fonts or CDN assets.
+  Written for the store's HTML sanitizer: no <style>, no JS; layout via Bootstrap 5 classes,
+  inline styles limited to the whitelisted properties (colors, type, padding/margin, border, radius, sizes).
   Every asset path is relative to static/description/.
 -->
-<style>
-  .fs { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #282d3c; background: #ffffff; line-height: 1.6; font-size: 16px; }
-  .fs * { box-sizing: border-box; }
-  .fs img { max-width: 100%; height: auto; display: block; }
-  .fs .fs-wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-  .fs h1, .fs h2, .fs h3, .fs h4 { margin: 0; letter-spacing: -.01em; line-height: 1.15; }
-  .fs p { margin: 0; }
-  .fs .fs-ground { background: #e2eaeb; }
-  .fs .fs-raised { background: #e2eaeb; border-radius: 22px; box-shadow: 8px 8px 18px rgba(162,185,191,.75), -8px -8px 18px #ffffff; }
-  .fs .fs-inset { background: #e2eaeb; border-radius: 18px; box-shadow: inset 4px 4px 8px rgba(162,185,191,.75), inset -4px -4px 8px #ffffff; }
-  .fs .fs-white-card { background: #ffffff; border: 1px solid #e3e9ec; border-radius: 18px; box-shadow: 0 10px 30px rgba(40,45,60,.06); }
-  .fs .fs-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #c9381d; }
-  .fs .fs-h2 { font-size: 34px; font-weight: 800; color: #0f4c81; margin-top: 8px; }
-  .fs .fs-lead { color: #58646d; font-size: 18px; margin-top: 12px; max-width: 64ch; }
-  .fs .fs-g2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .fs .fs-g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-  .fs .fs-g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
-  .fs .fs-split { display: grid; grid-template-columns: 340px 1fr; gap: 44px; align-items: center; }
-  .fs .fs-split-r { display: grid; grid-template-columns: 1fr 340px; gap: 44px; align-items: center; }
-  .fs .fs-phone { border-radius: 34px; padding: 10px; background: #e2eaeb; box-shadow: 14px 14px 34px rgba(162,185,191,.8), -12px -12px 30px #ffffff, inset 0 0 0 2px rgba(255,255,255,.45); }
-  .fs .fs-phone img { border-radius: 26px; }
-  .fs .fs-win { border-radius: 16px; overflow: hidden; background: #ffffff; border: 1px solid #d9e1e5; box-shadow: 10px 10px 24px rgba(162,185,191,.65), -8px -8px 20px #ffffff; }
-  .fs .fs-win .fs-win-bar { height: 30px; background: #eef2f4; border-bottom: 1px solid #d9e1e5; display: flex; align-items: center; gap: 7px; padding: 0 12px; }
-  .fs .fs-win .fs-win-bar i { width: 10px; height: 10px; border-radius: 50%; background: #c3ced4; display: block; }
-  .fs .fs-chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #58646d; background: #e2eaeb; box-shadow: 4px 4px 8px rgba(162,185,191,.75), -4px -4px 8px #ffffff; }
-  .fs .fs-chip.fs-live { color: #009b77; }
-  .fs .fs-chip .fs-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px rgba(0,155,119,.18); }
-  .fs .fs-num { width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; color: #c9381d; background: #e2eaeb; box-shadow: 4px 4px 8px rgba(162,185,191,.75), -4px -4px 8px #ffffff; flex: 0 0 auto; }
-  .fs .fs-icon { width: 46px; height: 46px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; background: #e2eaeb; box-shadow: 4px 4px 8px rgba(162,185,191,.75), -4px -4px 8px #ffffff; margin-bottom: 14px; }
-  .fs .fs-check { color: #009b77; font-weight: 800; margin-right: 8px; }
-  .fs .fs-tbl { width: 100%; border-collapse: collapse; font-size: 15px; }
-  .fs .fs-tbl th, .fs .fs-tbl td { text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(162,185,191,.45); vertical-align: top; }
-  .fs .fs-tbl th { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #58646d; font-weight: 800; }
-  .fs .fs-faq { border-radius: 18px; padding: 20px 22px; }
-  .fs .fs-faq h4 { font-size: 17px; color: #0f4c81; margin-bottom: 8px; }
-  .fs .fs-faq p { color: #58646d; font-size: 15px; }
-  .fs .fs-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 24px; border-radius: 16px; font-weight: 800; font-size: 14px; letter-spacing: .03em; text-decoration: none; color: #ffffff; background: linear-gradient(145deg, #ff6f61, #dd4124); box-shadow: 6px 6px 14px rgba(162,185,191,.75), -6px -6px 14px #ffffff, inset 0 1px 0 rgba(255,255,255,.25); }
-  .fs .fs-btn.fs-ghost { color: #282d3c; background: #e2eaeb; }
-  @media (max-width: 900px) {
-    .fs .fs-g3, .fs .fs-g4 { grid-template-columns: repeat(2, 1fr); }
-    .fs .fs-split, .fs .fs-split-r { grid-template-columns: 1fr; gap: 28px; }
-    .fs .fs-split .fs-phone, .fs .fs-split-r .fs-phone { max-width: 320px; margin: 0 auto; }
-    .fs .fs-h2 { font-size: 28px; }
-  }
-  @media (max-width: 620px) {
-    .fs .fs-g2, .fs .fs-g3, .fs .fs-g4 { grid-template-columns: 1fr; }
-  }
-</style>
-
-<div class="fs">
+<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:#282d3c; line-height:1.6;">
 
   <!-- ============================= HERO ============================= -->
-  <div class="fs-ground" style="padding: 56px 0 48px;">
-    <div class="fs-wrap">
-      <div style="text-align:center; max-width: 820px; margin: 0 auto 34px;">
-        <span class="fs-eyebrow">Field Sales Activity &amp; Tracking · Odoo 18</span>
-        <h1 style="font-size: 46px; font-weight: 800; color: #0f4c81; margin-top: 12px;">Every visit verified. Every lead assigned.</h1>
-        <p class="fs-lead" style="margin: 16px auto 0;">A kiosk your field reps open on their phone: GPS + selfie check-in, a one-field-at-a-time client visit form with a site photo, and contacts &amp; CRM leads created on the spot — tagged to the rep who found them.</p>
-        <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top: 24px;">
-          <span class="fs-chip fs-live"><span class="fs-dot"></span> Odoo 18.0</span>
-          <span class="fs-chip">Community &amp; Enterprise</span>
-          <span class="fs-chip">Mobile first</span>
-          <span class="fs-chip">No external services</span>
-        </div>
-      </div>
-      <div class="fs-raised" style="padding: 12px; border-radius: 28px;">
-        <img src="img/banner.png" alt="Field Sales kiosk on two phones: active session and the step-by-step client visit form" style="border-radius: 20px;"/>
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#e2eaeb;">
+    <div class="text-center mx-auto mb-4" style="max-width:820px;">
+      <p class="mb-2" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">Field Sales Activity &amp; Tracking · Odoo 18</p>
+      <h1 class="fs-1 mb-3" style="font-weight:800; line-height:1.15; color:#0f4c81;">Every visit verified. Every lead assigned.</h1>
+      <p class="mb-4" style="font-size:18px; color:#58646d;">A kiosk your field reps open on their phone: GPS + selfie check-in, a one-field-at-a-time client visit form with a site photo, and contacts &amp; CRM leads created on the spot — tagged to the rep who found them.</p>
+      <div class="d-flex flex-wrap justify-content-center gap-2">
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#009b77; background-color:#ffffff; border:1px solid #d3dde0;"><i class="fa fa-circle me-1"></i> Odoo 18.0</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#58646d; background-color:#ffffff; border:1px solid #d3dde0;">Community &amp; Enterprise</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#58646d; background-color:#ffffff; border:1px solid #d3dde0;">Mobile first</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#58646d; background-color:#ffffff; border:1px solid #d3dde0;">No external services</span>
       </div>
     </div>
+    <img class="img-fluid rounded-4 mx-auto d-none d-md-block" src="img/banner.png" alt="Field Sales kiosk on three phones: active session, the visit form and the camera"/>
+    <img class="img-fluid rounded-4 mx-auto d-block d-md-none" style="max-width:320px;" src="img/phone-records.png" alt="Client visit form with Create contact and Create lead switched on"/>
   </div>
 
   <!-- ============================= A REP'S DAY ============================= -->
-  <div style="padding: 72px 0 64px;">
-    <div class="fs-wrap">
-      <span class="fs-eyebrow">The rep's day</span>
-      <h2 class="fs-h2">One screen. Four moments.</h2>
-      <p class="fs-lead">No menus to learn and no separate app to install — the rep signs into Odoo on their phone and lands on the kiosk. The same screen adapts to a tablet or a desktop.</p>
+  <div class="mb-5 px-2 px-md-3">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">The rep's day</p>
+    <h2 class="fs-2 mb-3" style="font-weight:800; color:#0f4c81;">One screen. Four moments.</h2>
+    <p class="mb-4" style="font-size:17px; color:#58646d; max-width:70ch;">No menus to learn and no separate app to install — the rep signs into Odoo on their phone and lands on the kiosk. The same screen adapts to a tablet or a desktop.</p>
 
-      <div class="fs-g4" style="margin-top: 40px;">
-        <div>
-          <div class="fs-phone"><img src="img/screen-checkin.png" alt="Check-in screen"/></div>
-          <div style="display:flex; gap:12px; align-items:flex-start; margin-top: 18px;">
-            <span class="fs-num">1</span>
-            <div><h3 style="font-size:17px; color:#0f4c81;">Check in</h3><p style="color:#58646d; font-size:15px; margin-top:4px;">GPS lock plus a verification selfie. No selfie, no shift.</p></div>
-          </div>
-        </div>
-        <div>
-          <div class="fs-phone"><img src="img/screen-session.png" alt="Active session dashboard"/></div>
-          <div style="display:flex; gap:12px; align-items:flex-start; margin-top: 18px;">
-            <span class="fs-num">2</span>
-            <div><h3 style="font-size:17px; color:#0f4c81;">Start a client visit</h3><p style="color:#58646d; font-size:15px; margin-top:4px;">Arriving at the client checks the rep in on site, with the coordinates.</p></div>
-          </div>
-        </div>
-        <div>
-          <div class="fs-phone"><img src="img/screen-step.png" alt="Client visit form, one field at a time"/></div>
-          <div style="display:flex; gap:12px; align-items:flex-start; margin-top: 18px;">
-            <span class="fs-num">3</span>
-            <div><h3 style="font-size:17px; color:#0f4c81;">Log the visit</h3><p style="color:#58646d; font-size:15px; margin-top:4px;">One question at a time. Completed steps fold away; buttons stay above the keyboard.</p></div>
-          </div>
-        </div>
-        <div>
-          <div class="fs-phone"><img src="img/screen-camera.png" alt="Full-screen camera for the site photo"/></div>
-          <div style="display:flex; gap:12px; align-items:flex-start; margin-top: 18px;">
-            <span class="fs-num">4</span>
-            <div><h3 style="font-size:17px; color:#0f4c81;">Photo &amp; check out</h3><p style="color:#58646d; font-size:15px; margin-top:4px;">Full-screen camera for the site photo, then a checkout selfie ends the day.</p></div>
-          </div>
+    <div class="rounded-4 p-3 p-md-4" style="background-color:#e2eaeb;">
+    <div class="row g-4">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <img class="img-fluid rounded-4 d-block mx-auto" style="max-width:320px;" src="img/phone-checkin.png" alt="Check-in screen"/>
+        <div class="d-flex align-items-start gap-3 mt-3 mx-auto" style="max-width:320px;">
+          <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#c9381d; background-color:#e2eaeb; border:1px solid #d3dde0;">1</span>
+          <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#0f4c81;">Check in</h3><p class="mb-0" style="font-size:15px; color:#58646d;">GPS lock plus a verification selfie. No selfie, no shift.</p></div>
         </div>
       </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <img class="img-fluid rounded-4 d-block mx-auto" style="max-width:320px;" src="img/phone-session.png" alt="Active session dashboard"/>
+        <div class="d-flex align-items-start gap-3 mt-3 mx-auto" style="max-width:320px;">
+          <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#c9381d; background-color:#e2eaeb; border:1px solid #d3dde0;">2</span>
+          <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#0f4c81;">Start a client visit</h3><p class="mb-0" style="font-size:15px; color:#58646d;">Arriving at the client checks the rep in on site, with the coordinates.</p></div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <img class="img-fluid rounded-4 d-block mx-auto" style="max-width:320px;" src="img/phone-step.png" alt="Client visit form, one field at a time"/>
+        <div class="d-flex align-items-start gap-3 mt-3 mx-auto" style="max-width:320px;">
+          <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#c9381d; background-color:#e2eaeb; border:1px solid #d3dde0;">3</span>
+          <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#0f4c81;">Log the visit</h3><p class="mb-0" style="font-size:15px; color:#58646d;">One question at a time. Completed steps fold away; buttons stay above the keyboard.</p></div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <img class="img-fluid rounded-4 d-block mx-auto" style="max-width:320px;" src="img/phone-camera.png" alt="Full-screen camera for the site photo"/>
+        <div class="d-flex align-items-start gap-3 mt-3 mx-auto" style="max-width:320px;">
+          <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#c9381d; background-color:#e2eaeb; border:1px solid #d3dde0;">4</span>
+          <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#0f4c81;">Photo &amp; check out</h3><p class="mb-0" style="font-size:15px; color:#58646d;">Full-screen camera for the site photo, then a checkout selfie ends the day.</p></div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 
   <!-- ============================= STEP FORM ============================= -->
-  <div class="fs-ground" style="padding: 64px 0;">
-    <div class="fs-wrap">
-      <div class="fs-split">
-        <div class="fs-phone"><img src="img/screen-records.png" alt="Create contact and Create lead toggles"/></div>
-        <div>
-          <span class="fs-eyebrow">Built for a phone in one hand</span>
-          <h2 class="fs-h2">A form that asks one thing at a time</h2>
-          <p class="fs-lead">Long forms fail in the field. Reps skip fields, mistype, and give up when the keyboard hides the save button. So the visit form is a guided flow of eight small steps.</p>
-          <div style="display:grid; gap:12px; margin-top: 24px;">
-            <div class="fs-inset" style="padding: 14px 18px;"><span class="fs-check">✓</span><strong>Live contact search</strong> — type a name, phone or email; link an existing contact and the rest prefills.</div>
-            <div class="fs-inset" style="padding: 14px 18px;"><span class="fs-check">✓</span><strong>Required vs optional is honest</strong> — Next only unlocks when a required field is valid; optional steps say "Skip".</div>
-            <div class="fs-inset" style="padding: 14px 18px;"><span class="fs-check">✓</span><strong>Edit without retyping</strong> — tap any folded step to reopen it; everything else stays.</div>
-            <div class="fs-inset" style="padding: 14px 18px;"><span class="fs-check">✓</span><strong>Keyboard-safe</strong> — the sheet sizes itself to the visible screen, so Back / Next are always reachable, on iOS too.</div>
-            <div class="fs-inset" style="padding: 14px 18px;"><span class="fs-check">✓</span><strong>Drafts survive</strong> — close the form by accident and it reopens where you were.</div>
-          </div>
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#e2eaeb;">
+    <div class="row g-4 g-lg-5 align-items-center">
+      <div class="col-12 col-lg-4">
+        <img class="img-fluid rounded-4 d-block mx-auto" style="max-width:360px;" src="img/phone-records.png" alt="Create contact and Create lead toggles"/>
+      </div>
+      <div class="col-12 col-lg-8">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">Built for a phone in one hand</p>
+        <h2 class="fs-2 mb-3" style="font-weight:800; color:#0f4c81;">A form that asks one thing at a time</h2>
+        <p class="mb-4" style="font-size:17px; color:#58646d;">Long forms fail in the field. Reps skip fields, mistype, and give up when the keyboard hides the save button. So the visit form is a guided flow of eight small steps.</p>
+        <div class="d-flex flex-column gap-2">
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #d3dde0; font-size:15px;"><i class="fa fa-check me-2" style="color:#009b77;"></i><strong>Live contact search</strong> — type a name, phone or email; link an existing contact and the rest prefills.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #d3dde0; font-size:15px;"><i class="fa fa-check me-2" style="color:#009b77;"></i><strong>Required vs optional is honest</strong> — Next only unlocks when a required field is valid; optional steps say "Skip".</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #d3dde0; font-size:15px;"><i class="fa fa-check me-2" style="color:#009b77;"></i><strong>Edit without retyping</strong> — tap any folded step to reopen it; everything else stays.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #d3dde0; font-size:15px;"><i class="fa fa-check me-2" style="color:#009b77;"></i><strong>Keyboard-safe</strong> — the sheet sizes itself to the visible screen, so Back / Next are always reachable, on iOS too.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #d3dde0; font-size:15px;"><i class="fa fa-check me-2" style="color:#009b77;"></i><strong>Drafts survive</strong> — close the form by accident and it reopens where you were.</div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- ============================= CRM ============================= -->
-  <div style="padding: 72px 0 64px;">
-    <div class="fs-wrap">
-      <div style="text-align:center; max-width: 780px; margin: 0 auto;">
-        <span class="fs-eyebrow">Straight into CRM</span>
-        <h2 class="fs-h2">Turn the toggles on — the contact and the lead are created for you</h2>
-        <p class="fs-lead" style="margin-left:auto; margin-right:auto;">Step 5 of the form asks what Odoo should create. Switch on <strong>Create contact</strong> and <strong>Create lead</strong> and, the moment the rep checks out, both records exist — no back-office retyping.</p>
-      </div>
-      <div class="fs-win" style="margin-top: 36px;">
-        <div class="fs-win-bar"><i></i><i></i><i></i></div>
-        <img src="img/crm-pipeline.png" alt="CRM pipeline showing leads generated from client visits, assigned to the salesperson"/>
-      </div>
-      <div class="fs-g3" style="margin-top: 28px;">
-        <div class="fs-white-card" style="padding: 22px;">
-          <div class="fs-icon">👤</div>
-          <h3 style="font-size:17px; color:#0f4c81;">Contact, tagged "Field Lead"</h3>
-          <p style="color:#58646d; font-size:15px; margin-top:8px;">A company contact (plus a child contact for the person met) is created in Contacts with the <em>Field Lead</em> tag, so marketing can filter every prospect that came from the street.</p>
+  <div class="mb-5 px-2 px-md-3">
+    <div class="text-center mx-auto" style="max-width:800px;">
+      <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">Straight into CRM</p>
+      <h2 class="fs-2 mb-3" style="font-weight:800; color:#0f4c81;">Turn the toggles on — the contact and the lead are created for you</h2>
+      <p class="mb-4" style="font-size:17px; color:#58646d;">Step 5 of the form asks what Odoo should create. Switch on <strong>Create contact</strong> and <strong>Create lead</strong> and, the moment the rep checks out, both records exist — no back-office retyping.</p>
+    </div>
+    <div class="rounded-4 p-2 p-md-3 mb-4" style="background-color:#e2eaeb;"><img class="img-fluid rounded-4 d-block mx-auto" src="img/win-crm-pipeline.jpg" alt="CRM pipeline showing leads generated from client visits, assigned to the salesperson"/></div>
+    <div class="row g-4">
+      <div class="col-12 col-md-4">
+        <div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;">
+          <span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff; border:1px solid #d3dde0;">👤</span>
+          <h3 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Contact, tagged "Field Lead"</h3>
+          <p class="mb-0" style="font-size:15px; color:#58646d;">A company contact (plus a child contact for the person met) is created in Contacts with the <em>Field Lead</em> tag, so marketing can filter every prospect that came from the street.</p>
         </div>
-        <div class="fs-white-card" style="padding: 22px;">
-          <div class="fs-icon">🎯</div>
-          <h3 style="font-size:17px; color:#0f4c81;">Lead, assigned to the rep</h3>
-          <p style="color:#58646d; font-size:15px; margin-top:8px;">The CRM lead carries the visit notes as its description and the salesperson who logged the visit as its owner. Pipeline attribution is automatic and honest.</p>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;">
+          <span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff; border:1px solid #d3dde0;">🎯</span>
+          <h3 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Lead, assigned to the rep</h3>
+          <p class="mb-0" style="font-size:15px; color:#58646d;">The CRM lead carries the visit notes as its description and the salesperson who logged the visit as its owner. Pipeline attribution is automatic and honest.</p>
         </div>
-        <div class="fs-white-card" style="padding: 22px;">
-          <div class="fs-icon">🛡️</div>
-          <h3 style="font-size:17px; color:#0f4c81;">No duplicates</h3>
-          <p style="color:#58646d; font-size:15px; margin-top:8px;">Before creating anything the module matches by phone or email. An existing contact is reused, tagged, and assigned to the rep only if it had no salesperson yet.</p>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;">
+          <span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff; border:1px solid #d3dde0;">🛡️</span>
+          <h3 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">No duplicates</h3>
+          <p class="mb-0" style="font-size:15px; color:#58646d;">Before creating anything the module matches by phone or email. An existing contact is reused, tagged, and assigned to the rep only if it had no salesperson yet.</p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- ============================= REVIEW + PHOTO ============================= -->
-  <div class="fs-ground" style="padding: 64px 0;">
-    <div class="fs-wrap">
-      <div class="fs-split-r">
-        <div>
-          <span class="fs-eyebrow">Proof of presence</span>
-          <h2 class="fs-h2">Photo, position and a final review</h2>
-          <p class="fs-lead">Every client visit stores its own coordinates and accuracy radius, a site photo, check-in and check-out times and the computed duration. The rep sees a full summary before saving.</p>
-          <div class="fs-g2" style="margin-top: 24px; gap: 14px;">
-            <div class="fs-raised" style="padding: 18px;"><strong style="color:#0f4c81;">Rear camera by default</strong><p style="color:#58646d; font-size:14.5px; margin-top:6px;">Flip to the front camera with one tap. Selfies show a face guide.</p></div>
-            <div class="fs-raised" style="padding: 18px;"><strong style="color:#0f4c81;">Native camera fallback</strong><p style="color:#58646d; font-size:14.5px; margin-top:6px;">If the in-page camera is blocked, the phone's own camera app takes over.</p></div>
-            <div class="fs-raised" style="padding: 18px;"><strong style="color:#0f4c81;">Light uploads</strong><p style="color:#58646d; font-size:14.5px; margin-top:6px;">Photos are downscaled on the device before upload — fine on 4G.</p></div>
-            <div class="fs-raised" style="padding: 18px;"><strong style="color:#0f4c81;">Stored as attachments</strong><p style="color:#58646d; font-size:14.5px; margin-top:6px;">Selfies and site photos live on the session and visit records in Odoo.</p></div>
-          </div>
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#e2eaeb;">
+    <div class="row g-4 g-lg-5 align-items-center">
+      <div class="col-12 col-lg-8 order-2 order-lg-1">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">Proof of presence</p>
+        <h2 class="fs-2 mb-3" style="font-weight:800; color:#0f4c81;">Photo, position and a final review</h2>
+        <p class="mb-4" style="font-size:17px; color:#58646d;">Every client visit stores its own coordinates and accuracy radius, a site photo, check-in and check-out times and the computed duration. The rep sees a full summary before saving.</p>
+        <div class="row g-3">
+          <div class="col-12 col-sm-6"><div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #d3dde0;"><strong style="color:#0f4c81;">Rear camera by default</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#58646d;">Flip to the front camera with one tap. Selfies show a face guide.</p></div></div>
+          <div class="col-12 col-sm-6"><div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #d3dde0;"><strong style="color:#0f4c81;">Native camera fallback</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#58646d;">If the in-page camera is blocked, the phone's own camera app takes over.</p></div></div>
+          <div class="col-12 col-sm-6"><div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #d3dde0;"><strong style="color:#0f4c81;">Light uploads</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#58646d;">Photos are downscaled on the device before upload — fine on 4G.</p></div></div>
+          <div class="col-12 col-sm-6"><div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #d3dde0;"><strong style="color:#0f4c81;">Stored as attachments</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#58646d;">Selfies and site photos live on the session and visit records in Odoo.</p></div></div>
         </div>
-        <div class="fs-phone"><img src="img/screen-review.png" alt="Review step before check-out"/></div>
+      </div>
+      <div class="col-12 col-lg-4 order-1 order-lg-2">
+        <img class="img-fluid rounded-4 d-block mx-auto" style="max-width:360px;" src="img/phone-review.png" alt="Review step before check-out"/>
       </div>
     </div>
   </div>
 
   <!-- ============================= MANAGER VIEW ============================= -->
-  <div style="padding: 72px 0 64px;">
-    <div class="fs-wrap">
-      <span class="fs-eyebrow">For managers</span>
-      <h2 class="fs-h2">Everything the rep did, in the backend</h2>
-      <p class="fs-lead">Sessions, visits and location pings are ordinary Odoo records — list them, filter them, group them by salesperson, and export them.</p>
-      <div class="fs-g2" style="margin-top: 36px;">
-        <div>
-          <div class="fs-win"><div class="fs-win-bar"><i></i><i></i><i></i></div><img src="img/session-form.jpg" alt="Work session form with selfies, coordinates and location verification" style="width:100%; height:330px; object-fit:cover; object-position:top;"/></div>
-          <h3 style="font-size:17px; color:#0f4c81; margin-top: 16px;">Work session record</h3>
-          <p style="color:#58646d; font-size:15px; margin-top:4px;">Check-in and check-out selfies, coordinates with Google Maps links, and a <em>Location verification</em> badge: "Same location" when the rep ended the day within 200 m of where it started, "Location changed" otherwise.</p>
-        </div>
-        <div>
-          <div class="fs-win"><div class="fs-win-bar"><i></i><i></i><i></i></div><img src="img/route-map.jpg" alt="Route map of a session with visit markers" style="width:100%; height:330px; object-fit:cover; object-position:top;"/></div>
-          <h3 style="font-size:17px; color:#0f4c81; margin-top: 16px;">Route map</h3>
-          <p style="color:#58646d; font-size:15px; margin-top:4px;">Check-in, interval pings every 15 minutes, each client visit and the check-out point drawn as a trajectory on an OpenStreetMap layer — bundled with the module, no API key.</p>
-        </div>
-        <div>
-          <div class="fs-win"><div class="fs-win-bar"><i></i><i></i><i></i></div><img src="img/visits-list.jpg" alt="Client visits list" style="width:100%; height:330px; object-fit:cover; object-position:left top;"/></div>
-          <h3 style="font-size:17px; color:#0f4c81; margin-top: 16px;">Client visits</h3>
-          <p style="color:#58646d; font-size:15px; margin-top:4px;">Status, salesperson, linked contact and lead, duration. Filters for <em>My visits</em>, <em>Lead generated</em>, <em>Contact created</em>; group by salesperson, session, status or day.</p>
-        </div>
-        <div>
-          <div class="fs-win"><div class="fs-win-bar"><i></i><i></i><i></i></div><img src="img/sessions-list.jpg" alt="Work sessions list" style="width:100%; height:120px; object-fit:cover; object-position:left top;"/><div style="padding: 22px 24px; background:#fff; height:210px; display:flex; align-items:center;"><p style="color:#58646d; font-size: 15px; line-height:1.7;">📄 <strong style="color:#0f4c81;">End-of-day PDF</strong> — one click on a session prints a report with the rep, date, both selfies, location verification, the visit timeline with durations and notes, and the visit count.</p></div></div>
-          <h3 style="font-size:17px; color:#0f4c81; margin-top: 16px;">Sessions &amp; PDF report</h3>
-          <p style="color:#58646d; font-size:15px; margin-top:4px;">Every workday is one session with its counters. Managers see everyone; reps see only their own.</p>
-        </div>
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#e2eaeb;">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">For managers</p>
+    <h2 class="fs-2 mb-3" style="font-weight:800; color:#0f4c81;">Everything the rep did, in the backend</h2>
+    <p class="mb-4" style="font-size:17px; color:#58646d; max-width:70ch;">Sessions, visits and location pings are ordinary Odoo records — list them, filter them, group them by salesperson, and export them.</p>
+    <div class="row g-4">
+      <div class="col-12 col-md-6">
+        <img class="img-fluid rounded-4 d-block" src="img/win-session-form.jpg" alt="Work session form with selfies, coordinates and location verification"/>
+        <h3 class="mt-3 mb-1" style="font-size:17px; font-weight:700; color:#0f4c81;">Work session record</h3>
+        <p class="mb-0" style="font-size:15px; color:#58646d;">Check-in and check-out selfies, coordinates with Google Maps links, and a <em>Location verification</em> badge: "Same location" when the rep ended the day within 200 m of where it started, "Location changed" otherwise.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <img class="img-fluid rounded-4 d-block" src="img/win-route-map.jpg" alt="Route map of a session with visit markers"/>
+        <h3 class="mt-3 mb-1" style="font-size:17px; font-weight:700; color:#0f4c81;">Route map</h3>
+        <p class="mb-0" style="font-size:15px; color:#58646d;">Check-in, interval pings every 15 minutes, each client visit and the check-out point drawn as a trajectory on an OpenStreetMap layer — bundled with the module, no API key.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <img class="img-fluid rounded-4 d-block" src="img/win-visits-list.jpg" alt="Client visits list"/>
+        <h3 class="mt-3 mb-1" style="font-size:17px; font-weight:700; color:#0f4c81;">Client visits</h3>
+        <p class="mb-0" style="font-size:15px; color:#58646d;">Status, salesperson, linked contact and lead, duration. Filters for <em>My visits</em>, <em>Lead generated</em>, <em>Contact created</em>; group by salesperson, session, status or day.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <img class="img-fluid rounded-4 d-block" src="img/win-sessions-list.jpg" alt="Work sessions list"/>
+        <h3 class="mt-3 mb-1" style="font-size:17px; font-weight:700; color:#0f4c81;">Sessions &amp; end-of-day PDF</h3>
+        <p class="mb-0" style="font-size:15px; color:#58646d;">Every workday is one session with its counters. One click prints a PDF with the rep, date, both selfies, location verification and the visit timeline with durations and notes.</p>
       </div>
     </div>
   </div>
 
   <!-- ============================= FEATURES ============================= -->
-  <div class="fs-ground" style="padding: 64px 0;">
-    <div class="fs-wrap">
-      <span class="fs-eyebrow">Everything included</span>
-      <h2 class="fs-h2">What's in the box</h2>
-      <div class="fs-g3" style="margin-top: 32px;">
-        <div class="fs-raised" style="padding: 24px;"><div class="fs-icon">📍</div><h3 style="font-size:17px; color:#0f4c81;">GPS lock with accuracy</h3><p style="color:#58646d; font-size:15px; margin-top:8px;">Waits for a fix under 15 m (up to 7 s), rejects stale readings, stores lat/long to seven decimals plus the accuracy radius.</p></div>
-        <div class="fs-raised" style="padding: 24px;"><div class="fs-icon">🤳</div><h3 style="font-size:17px; color:#0f4c81;">Selfie verification</h3><p style="color:#58646d; font-size:15px; margin-top:8px;">A session cannot open or close without a selfie. Both are attached to the session record.</p></div>
-        <div class="fs-raised" style="padding: 24px;"><div class="fs-icon">🧭</div><h3 style="font-size:17px; color:#0f4c81;">Guarded workflow</h3><p style="color:#58646d; font-size:15px; margin-top:8px;">One open session per rep, one open visit per session, and no day check-out while a visit is still in progress — enforced on the server.</p></div>
-        <div class="fs-raised" style="padding: 24px;"><div class="fs-icon">🗺️</div><h3 style="font-size:17px; color:#0f4c81;">Route trajectory</h3><p style="color:#58646d; font-size:15px; margin-top:8px;">Background pings every 15 minutes while checked in, drawn with visits on a Leaflet map inside the session form.</p></div>
-        <div class="fs-raised" style="padding: 24px;"><div class="fs-icon">🔐</div><h3 style="font-size:17px; color:#0f4c81;">Two roles</h3><p style="color:#58646d; font-size:15px; margin-top:8px;"><em>Representative</em> sees and edits only their own sessions and visits. <em>Manager</em> sees everything and can delete.</p></div>
-        <div class="fs-raised" style="padding: 24px;"><div class="fs-icon">✨</div><h3 style="font-size:17px; color:#0f4c81;">Made for thumbs</h3><p style="color:#58646d; font-size:15px; margin-top:8px;">A calm, high-contrast kiosk with big touch targets, scoped to its own screen so the rest of your Odoo looks exactly as before.</p></div>
-      </div>
+  <div class="mb-5 px-2 px-md-3">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">Everything included</p>
+    <h2 class="fs-2 mb-4" style="font-weight:800; color:#0f4c81;">What's in the box</h2>
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">📍</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">GPS lock with accuracy</h3><p class="mb-0" style="font-size:15px; color:#58646d;">Waits for a fix under 15 m (up to 7 s), rejects stale readings, stores lat/long to seven decimals plus the accuracy radius.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">🤳</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Selfie verification</h3><p class="mb-0" style="font-size:15px; color:#58646d;">A session cannot open or close without a selfie. Both are attached to the session record.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">🧭</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Guarded workflow</h3><p class="mb-0" style="font-size:15px; color:#58646d;">One open session per rep, one open visit per session, and no day check-out while a visit is still in progress — enforced on the server.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">🗺️</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Route trajectory</h3><p class="mb-0" style="font-size:15px; color:#58646d;">Background pings every 15 minutes while checked in, drawn with visits on a Leaflet map inside the session form.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">🔐</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Two roles</h3><p class="mb-0" style="font-size:15px; color:#58646d;"><em>Representative</em> sees and edits only their own sessions and visits. <em>Manager</em> sees everything and can delete.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">✨</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Made for thumbs</h3><p class="mb-0" style="font-size:15px; color:#58646d;">A calm, high-contrast kiosk with big touch targets, scoped to its own screen so the rest of your Odoo looks exactly as before.</p></div></div>
     </div>
   </div>
 
   <!-- ============================= COMPATIBILITY ============================= -->
-  <div style="padding: 72px 0 64px;">
-    <div class="fs-wrap">
-      <div class="fs-g2" style="align-items:start;">
-        <div>
-          <span class="fs-eyebrow">Compatibility</span>
-          <h2 class="fs-h2">Plain Odoo, nothing else</h2>
-          <p class="fs-lead">No third-party APIs, no subscriptions, no data leaving your server. Maps use the bundled Leaflet library with OpenStreetMap tiles.</p>
-          <table class="fs-tbl" style="margin-top: 22px;">
-            <tr><th>Odoo versions</th><td>18.0 — Community and Enterprise</td></tr>
-            <tr><th>Depends on</th><td><code>base</code>, <code>web</code>, <code>crm</code></td></tr>
-            <tr><th>Devices</th><td>Any phone, tablet or desktop browser. Camera and GPS require HTTPS (or localhost).</td></tr>
-            <tr><th>Upgrading</th><td>From 1.x: a migration script marks past visits as completed and refreshes counters.</td></tr>
-            <tr><th>Tests</th><td>18 automated tests cover sessions, visits, CRM generation and access rules.</td></tr>
-            <tr><th>Licence</th><td>OPL-1</td></tr>
-          </table>
-        </div>
-        <div class="fs-raised" style="padding: 28px;">
-          <span class="fs-eyebrow">Security model</span>
-          <h3 style="font-size: 22px; color: #0f4c81; margin-top: 8px;">Reps see their own work. Managers see the team.</h3>
-          <div style="display:grid; gap: 12px; margin-top: 18px;">
-            <div class="fs-inset" style="padding: 14px 18px;"><strong>Representative</strong><p style="color:#58646d; font-size:14.5px; margin-top:4px;">Kiosk access; read / write / create own sessions, visits and pings; no delete.</p></div>
-            <div class="fs-inset" style="padding: 14px 18px;"><strong>Manager</strong><p style="color:#58646d; font-size:14.5px; margin-top:4px;">All records, all reps, full rights, plus the Prospects view of Field Leads.</p></div>
-            <div class="fs-inset" style="padding: 14px 18px;"><strong>Record generation</strong><p style="color:#58646d; font-size:14.5px; margin-top:4px;">Contacts and leads are created on the rep's behalf even when the rep has no CRM rights of their own.</p></div>
+  <div class="mb-5 px-2 px-md-3">
+    <div class="row g-4 g-lg-5">
+      <div class="col-12 col-lg-7">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">Compatibility</p>
+        <h2 class="fs-2 mb-3" style="font-weight:800; color:#0f4c81;">Plain Odoo, nothing else</h2>
+        <p class="mb-4" style="font-size:17px; color:#58646d;">No third-party APIs, no subscriptions, no data leaving your server. Maps use the bundled Leaflet library with OpenStreetMap tiles.</p>
+        <table class="w-100" style="border-collapse:collapse; font-size:15px;">
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; border-bottom:1px solid #d3dde0; white-space:nowrap;">Odoo version</th><td class="py-2" style="border-bottom:1px solid #d3dde0;">18.0 — Community and Enterprise</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; border-bottom:1px solid #d3dde0; white-space:nowrap;">Depends on</th><td class="py-2" style="border-bottom:1px solid #d3dde0;"><code>base</code>, <code>web</code>, <code>crm</code></td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; border-bottom:1px solid #d3dde0; white-space:nowrap;">Devices</th><td class="py-2" style="border-bottom:1px solid #d3dde0;">Any phone, tablet or desktop browser. Camera and GPS require HTTPS (or localhost).</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; border-bottom:1px solid #d3dde0; white-space:nowrap;">Upgrading</th><td class="py-2" style="border-bottom:1px solid #d3dde0;">From 1.x: a migration script marks past visits as completed and refreshes counters.</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; border-bottom:1px solid #d3dde0; white-space:nowrap;">Tests</th><td class="py-2" style="border-bottom:1px solid #d3dde0;">18 automated tests cover sessions, visits, CRM generation and access rules.</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; white-space:nowrap;">Licence</th><td class="py-2">OPL-1</td></tr>
+        </table>
+      </div>
+      <div class="col-12 col-lg-5">
+        <div class="h-100 rounded-4 p-4" style="background-color:#e2eaeb; border:1px solid #d3dde0;">
+          <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">Security model</p>
+          <h3 class="mb-3" style="font-size:21px; font-weight:800; color:#0f4c81;">Reps see their own work. Managers see the team.</h3>
+          <div class="d-flex flex-column gap-2">
+            <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #d3dde0;"><strong>Representative</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#58646d;">Kiosk access; read / write / create own sessions, visits and pings; no delete.</p></div>
+            <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #d3dde0;"><strong>Manager</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#58646d;">All records, all reps, full rights, plus the Prospects view of Field Leads.</p></div>
+            <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #d3dde0;"><strong>Record generation</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#58646d;">Contacts and leads are created on the rep's behalf even when the rep has no CRM rights of their own.</p></div>
           </div>
         </div>
       </div>
@@ -265,35 +211,29 @@
   </div>
 
   <!-- ============================= FAQ ============================= -->
-  <div class="fs-ground" style="padding: 64px 0;">
-    <div class="fs-wrap">
-      <span class="fs-eyebrow">FAQ</span>
-      <h2 class="fs-h2">Before you install</h2>
-      <div class="fs-g2" style="margin-top: 30px;">
-        <div class="fs-faq fs-raised"><h4>Do reps need the Odoo mobile app?</h4><p>No. Any browser works. The kiosk is a responsive Odoo action, so it also runs inside the official Odoo mobile app if you prefer.</p></div>
-        <div class="fs-faq fs-raised"><h4>Why does the camera not open on my phone?</h4><p>Browsers only allow camera and GPS on HTTPS (or localhost). Put Odoo behind HTTPS and it works. Until then, the "Phone camera" button uses the device's own camera app.</p></div>
-        <div class="fs-faq fs-raised"><h4>What happens if a rep forgets to check out?</h4><p>The session stays open and blocks a new check-in the next day, so it can't be missed. A manager can close it from the backend.</p></div>
-        <div class="fs-faq fs-raised"><h4>Can I link a visit to an existing customer?</h4><p>Yes. The first step searches your Contacts by name, phone or email. Pick one and phone and email prefill; the visit is linked instead of creating a new contact.</p></div>
-        <div class="fs-faq fs-raised"><h4>Does it track reps after check-out?</h4><p>No. Location pings run only while a session is open, every 15 minutes, and only in the browser tab that has the kiosk open.</p></div>
-        <div class="fs-faq fs-raised"><h4>Can I change the 200 m location check or the ping interval?</h4><p>Both are single constants in the module (the Haversine threshold in the session model, the interval in the kiosk component) and are easy for your integrator to adjust.</p></div>
-      </div>
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#e2eaeb;">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">FAQ</p>
+    <h2 class="fs-2 mb-4" style="font-weight:800; color:#0f4c81;">Before you install</h2>
+    <div class="row g-3">
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d3dde0;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Do reps need the Odoo mobile app?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">No. Any browser works. The kiosk is a responsive Odoo action, so it also runs inside the official Odoo mobile app if you prefer.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d3dde0;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Why does the camera not open on my phone?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Browsers only allow camera and GPS on HTTPS (or localhost). Put Odoo behind HTTPS and it works. Until then, the "Phone camera" button uses the device's own camera app.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d3dde0;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">What happens if a rep forgets to check out?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">The session stays open and blocks a new check-in the next day, so it can't be missed. A manager can close it from the backend.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d3dde0;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Can I link a visit to an existing customer?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Yes. The first step searches your Contacts by name, phone or email. Pick one and phone and email prefill; the visit is linked instead of creating a new contact.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d3dde0;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Does it track reps after check-out?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">No. Location pings run only while a session is open, every 15 minutes, and only in the browser tab that has the kiosk open.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d3dde0;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#0f4c81;">Can I change the 200 m location check or the ping interval?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Both are single constants in the module (the Haversine threshold in the session model, the interval in the kiosk component) and are easy for your integrator to adjust.</p></div></div>
     </div>
   </div>
 
   <!-- ============================= SUPPORT ============================= -->
-  <div style="padding: 64px 0 72px;">
-    <div class="fs-wrap">
-      <div class="fs-raised" style="padding: 36px; text-align:center;">
-        <span class="fs-eyebrow">Support</span>
-        <h2 class="fs-h2">Questions, ideas, a feature you need?</h2>
-        <p class="fs-lead" style="margin: 12px auto 0;">We answer within one business day and ship fixes for confirmed bugs free of charge for 90 days after purchase.</p>
-        <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top: 26px;">
-          <span class="fs-btn">✉ Contact Albatross</span>
-          <span class="fs-btn fs-ghost">📘 Read the documentation</span>
-        </div>
-        <p style="color:#7e8a93; font-size: 13px; margin-top: 22px;">Field Sales Activity &amp; Tracking · © Albatross · Licence OPL-1</p>
-      </div>
+  <div class="rounded-4 p-4 p-md-5 text-center" style="background-color:#e2eaeb;">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c9381d;">Support</p>
+    <h2 class="fs-2 mb-3" style="font-weight:800; color:#0f4c81;">Questions, ideas, a feature you need?</h2>
+    <p class="mx-auto mb-4" style="font-size:17px; color:#58646d; max-width:60ch;">We answer within one business day and ship fixes for confirmed bugs free of charge for 90 days after purchase.</p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <span class="d-inline-block rounded-4 px-4 py-3" style="font-weight:800; font-size:14px; letter-spacing:.03em; color:#ffffff; background-color:#e6503d; background-image:linear-gradient(145deg,#ff6f61,#dd4124);"><i class="fa fa-envelope me-2"></i>Contact Albatross</span>
+      <span class="d-inline-block rounded-4 px-4 py-3" style="font-weight:800; font-size:14px; letter-spacing:.03em; color:#282d3c; background-color:#ffffff; border:1px solid #d3dde0;"><i class="fa fa-book me-2"></i>Read the documentation</span>
     </div>
+    <p class="mt-4 mb-0" style="color:#7e8a93; font-size:13px;">Field Sales Activity &amp; Tracking · © Albatross · Licence OPL-1</p>
   </div>
 
 </div>
