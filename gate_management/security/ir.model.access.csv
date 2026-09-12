@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gate_entry_guard,gate.entry.guard,model_gate_entry,gate_management.group_gate_guard,1,1,1,0
+access_gate_entry_manager,gate.entry.manager,model_gate_entry,gate_management.group_gate_manager,1,1,1,1
+access_gate_share_wizard,gate.share.wizard,model_gate_share_wizard,gate_management.group_gate_guard,1,1,1,1
+access_gate_verify_otp_wizard,gate.verify.otp.wizard,model_gate_verify_otp_wizard,gate_management.group_gate_guard,1,1,1,1
+access_gate_worker_guard,gate.worker.guard,model_gate_worker,gate_management.group_gate_guard,1,0,0,0
+access_gate_worker_manager,gate.worker.manager,model_gate_worker,gate_management.group_gate_manager,1,1,1,1
+access_gate_worker_log_guard,gate.worker.log.guard,model_gate_worker_log,gate_management.group_gate_guard,1,1,1,0
+access_gate_worker_log_manager,gate.worker.log.manager,model_gate_worker_log,gate_management.group_gate_manager,1,1,1,1
+access_worker_kiosk_search_guard,worker.kiosk.search.guard,model_worker_kiosk_search,gate_management.group_gate_guard,1,1,1,1
+access_worker_kiosk_search_manager,worker.kiosk.search.manager,model_worker_kiosk_search,gate_management.group_gate_manager,1,1,1,1
+
