@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action for Gate Entries (Visitors, Vehicles, Material, Scheduled) -->
+    <record id="action_gate_entry" model="ir.actions.act_window">
+        <field name="name">Gate Entries</field>
+        <field name="res_model">gate.entry</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('state', 'in', ['scheduled', 'entered', 'exited']), ('entry_type', '!=', 'worker')]</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new Gate Entry
+          </p>
+        </field>
+    </record>
+
+    <!-- Action for Worker Attendance Gate Entries -->
+    <record id="action_gate_worker_attendance" model="ir.actions.act_window">
+        <field name="name">Worker Attendance</field>
+        <field name="res_model">gate.entry</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('entry_type', '=', 'worker'), ('state', 'in', ['entered', 'exited'])]</field>
+        <field name="context">{'default_entry_type': 'worker'}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No Worker Attendance entries recorded yet.
+          </p>
+        </field>
+    </record>
+
+    <record id="action_gate_worker_attendance_kanban_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_gate_entry_worker_kanban"/>
+        <field name="act_window_id" ref="action_gate_worker_attendance"/>
+    </record>
+
+    <!-- Action for Workforce -->
+    <record id="action_gate_worker" model="ir.actions.act_window">
+        <field name="name">Workforce Profile</field>
+        <field name="res_model">gate.worker</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <!-- Action for Workforce Logs -->
+    <record id="action_gate_worker_log" model="ir.actions.act_window">
+        <field name="name">Workforce Entry Logs</field>
+        <field name="res_model">gate.worker.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Action to Schedule a Visit -->
+    <record id="action_gate_entry_schedule" model="ir.actions.act_window">
+        <field name="name">Schedule Visit</field>
+        <field name="res_model">gate.entry</field>
+        <field name="view_mode">form,list</field>
+        <field name="target">current</field>
+        <field name="context">{
+            'default_entry_type': 'visitor',
+            'default_operation_type': 'incoming',
+            'default_state': 'draft'
+        }</field>
+        <field name="view_id" ref="view_gate_entry_form_schedule_kiosk"/>
+    </record>
+
+    <!-- Action for Worker Kiosk Search (Server Action to initialize a transient record) -->
+    <record id="action_gate_worker_kiosk_search" model="ir.actions.server">
+        <field name="name">Worker Attendance</field>
+        <field name="model_id" ref="model_worker_kiosk_search"/>
+        <field name="state">code</field>
+        <field name="code">
+action = {
+    'type': 'ir.actions.act_window',
+    'res_model': 'worker.kiosk.search',
+    'view_mode': 'form',
+    'res_id': env['worker.kiosk.search'].create({}).id,
+    'target': 'current',
+}
+        </field>
+    </record>
+
+    <!-- Top Menu -->
+    <menuitem id="menu_gate_management_root" name="Gate Management" sequence="10" web_icon="gate_management,static/description/icon.png" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+
+    <!-- Kiosk Mode Section Menu (For Watchmen / Guards) -->
+    <menuitem id="menu_gate_kiosk_root" name="Gate Entry" parent="menu_gate_management_root" sequence="5" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+    
+    <!-- Kiosk Submenus -->
+    <menuitem id="menu_visitor_kiosk" name="Walk-In Visitor Entry" parent="menu_gate_kiosk_root" action="action_gate_entry_kiosk_visitor" sequence="10" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+    <menuitem id="menu_kiosk_schedule_visit" name="Schedule Visit" parent="menu_gate_kiosk_root" action="action_gate_entry_schedule" sequence="15" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+    <menuitem id="menu_worker_kiosk" name="Worker Attendance" parent="menu_gate_kiosk_root" action="action_gate_worker_kiosk_search" sequence="20" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+    <menuitem id="menu_verify_scheduled_invite" name="Verify Scheduled Invitation" parent="menu_gate_kiosk_root" action="action_gate_verify_otp_wizard" sequence="30" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+
+    <!-- Sub Menu (Standard Operations - Accessible to Guards and Managers) -->
+    <menuitem id="menu_gate_entry" name="Gate Operations" parent="menu_gate_management_root" sequence="10" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+
+    <!-- Action Menu -->
+    <menuitem id="menu_gate_entry_action" name="Entries" parent="menu_gate_entry" action="action_gate_entry" sequence="10" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_worker_attendance_entry" name="Worker Attendance" parent="menu_gate_entry" action="action_gate_worker_attendance" sequence="15" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_verify_otp" name="Verify Invitation" parent="menu_gate_entry" action="action_gate_verify_otp_wizard" sequence="20" groups="gate_management.group_gate_guard,gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_worker" name="Workforce Profiles" parent="menu_gate_entry" action="action_gate_worker" sequence="30" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_worker_log" name="Workforce Logs" parent="menu_gate_entry" action="action_gate_worker_log" sequence="40" groups="gate_management.group_gate_manager"/>
+</odoo>

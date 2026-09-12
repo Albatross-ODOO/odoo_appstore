@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="invitation_landing_page" name="Invitation Landing Page">
+        <t t-call="web.layout">
+            <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+                
+                <!-- Open Graph Tags for WhatsApp Link Preview -->
+                <meta property="og:title" t-att-content="'Gate Pass: %s' % (gate_entry.visitor_name or gate_entry.driver_name or 'Guest')"/>
+                <meta property="og:description" t-att-content="'Code: %s | %s' % (gate_entry.otp, gate_entry.scheduled_start.strftime('%d %b %I:%M %p') if gate_entry.scheduled_start else '')"/>
+                <meta property="og:image" content="/gate_management/static/description/icon.png"/>
+                <meta property="og:type" content="website"/>
+                
+                <style>
+                    body {
+                        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                        background-color: #f4f6f9;
+                        margin: 0;
+                        padding: 0;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                    }
+                    .card {
+                        background: #fff;
+                        border-radius: 16px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                        width: 100%;
+                        max-width: 420px;
+                        margin: 20px;
+                        overflow: hidden;
+                        text-align: center;
+                    }
+                    .header {
+                        background-color: #fff;
+                        padding: 25px 20px 10px;
+                    }
+                    .logo {
+                        max-height: 80px;
+                        margin-bottom: 10px;
+                    }
+                    .otp-box {
+                        background: #1F2937;
+                        color: #FFFFFF;
+                        border: none;
+                        border-radius: 8px;
+                        padding: 10px 20px;
+                        margin: 10px auto;
+                        font-size: 28px;
+                        font-weight: 700;
+                        letter-spacing: 3px;
+                        display: inline-block;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    }
+                    .details {
+                        padding: 0 0 20px 0;
+                        text-align: left;
+                        color: #4B5563;
+                        font-size: 14px;
+                        line-height: 1.6;
+                    }
+                    .label {
+                        font-size: 12px;
+                        text-transform: uppercase;
+                        color: #9CA3AF;
+                        font-weight: 600;
+                        margin-top: 15px;
+                        display: block;
+                        font-family: inherit;
+                    }
+                    .value {
+                        color: #111827;
+                        font-weight: 500;
+                        font-size: 16px;
+                    }
+                    .footer {
+                        padding: 25px;
+                        background: #F9FAFB;
+                        border-top: 1px solid #E5E7EB;
+                        margin-top: 20px;
+                    }
+                    .btn-download {
+                        background-color: #2563EB;
+                        color: white;
+                        text-decoration: none;
+                        display: block;
+                        padding: 14px;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        font-size: 16px;
+                        box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+                        transition: transform 0.2s;
+                    }
+                    .btn-download:active {
+                        transform: scale(0.98);
+                    }
+                    .map-link {
+                         color: #2563EB;
+                         text-decoration: none;
+                         font-weight: 500;
+                         display: inline-flex;
+                         align-items: center;
+                         gap: 5px;
+                         margin-top: 5px;
+                    }
+                    .status-badge {
+                        display: inline-block;
+                        padding: 4px 12px;
+                        border-radius: 20px;
+                        font-size: 12px;
+                        font-weight: bold;
+                        background: #DEF7EC;
+                        color: #03543F;
+                        margin-bottom: 10px;
+                    }
+                </style>
+            </t>
+            <div class="card">
+                <div class="header" style="background-color: #FDFBF7; border-bottom: 1px dashed #D1D5DB; padding-top: 30px;">
+                    <h5 style="color: #6B7280; font-weight: 500; margin-bottom: 15px; font-size: 14px;">Show this QR code or OTP to the guard</h5>
+                    
+                    <!-- QR Code -->
+                    <img t-if="qr_base64" t-att-src="'data:image/png;base64,%s' % qr_base64"
+                         style="width: 180px; height: 180px; margin-bottom: 10px; mix-blend-mode: multiply;"/>
+                    <div t-else="" style="color: red; font-size: 10px; border: 1px solid red; padding: 5px;">
+                        QR Generation Failed: <t t-esc="qr_error"/>
+                    </div>
+                    
+                    <div style="color: #9CA3AF; font-size: 12px; margin-bottom: 10px;">— OR —</div>
+
+                    <div class="otp-box">
+                        <t t-esc="gate_entry.otp"/>
+                    </div>
+                </div>
+
+                <div class="details" style="background-color: #FDFBF7; padding-top: 20px;">
+                    <div style="text-align: center; margin-bottom: 20px;" t-if="gate_entry.scheduled_start">
+                        <div style="font-weight: bold; color: #4B5563; font-size: 14px;">
+                            <span t-field="gate_entry.scheduled_start" t-options='{"widget": "datetime", "format": "d MMMM yyyy"}'/>
+                        </div>
+                        <div style="color: #6B7280; font-size: 13px;">
+                            <span t-field="gate_entry.scheduled_start" t-options='{"widget": "datetime", "format": "hh:mm a"}'/> - 
+                            <span t-field="gate_entry.scheduled_end" t-options='{"widget": "datetime", "format": "hh:mm a"}'/>
+                        </div>
+                    </div>
+
+                    <!-- Company details -->
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div t-if="gate_entry.company_id.logo" style="text-align: center; margin-bottom: 15px;">
+                            <img t-att-src="image_data_uri(gate_entry.company_id.logo)" style="max-height: 60px; width: auto;"/>
+                        </div>
+                        <h3 style="margin: 0; color: #111827; font-size: 18px;"><span t-field="gate_entry.company_id.name"/></h3>
+                        <div style="color: #6B7280; font-size: 13px; padding: 0 40px;">
+                            <span t-field="gate_entry.company_id.street"/>, <span t-if="gate_entry.company_id.street2" t-out="gate_entry.company_id.street2"/>, <span t-field="gate_entry.company_id.city"/>
+                        </div>
+                    </div>
+
+                    <div class="row" style="border-top: 1px solid #E5E7EB; margin: 0 20px; padding: 15px 0;">
+                        <div class="col-6" style="text-align: left;">
+                            <span class="label">Visitor</span>
+                            <div class="value" t-esc="gate_entry.visitor_name or gate_entry.driver_name or 'Guest'"/>
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                             <span class="label">Vehicle</span>
+                            <div class="value" t-esc="gate_entry.vehicle_number or '--'"/>
+                            <div class="value" style="font-size: 12px; color: #6B7280; font-weight: normal;" t-if="gate_entry.vendor_id">(<t t-esc="gate_entry.vendor_id.name"/>)</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 10px;">
+                        <a t-att-href="gate_entry.google_maps_link" 
+                           class="map-link" target="_blank">
+                            <span>📍 Get Directions</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <a t-att-href="download_url" class="btn-download">
+                        Download PDF Pass
+                    </a>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gate_share_wizard_form" model="ir.ui.view">
+        <field name="name">gate.share.wizard.form</field>
+        <field name="model">gate.share.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Share Invitation">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        Share this link with the visitor for direct entry.
+                    </div>
+                    <group>
+                        <field name="share_link" widget="CopyClipboardChar" readonly="1" string="Link"/>
+                        <field name="mobile" placeholder="e.g. 919876543210" string="WhatsApp Number"/>
+                    </group>
+                    <footer>
+                        <button name="action_share_whatsapp" string="Share on WhatsApp" type="object" class="btn-success" icon="fa-whatsapp"/>
+                        <button name="action_download_pdf" string="Download PDF" type="object" class="btn-info" icon="fa-download"/>
+                        <button name="action_send_email" string="Send Email" type="object" class="btn-primary" icon="fa-envelope"/>
+                        <button string="Close" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gate_share_wizard" model="ir.actions.act_window">
+        <field name="name">Share Invitation</field>
+        <field name="res_model">gate.share.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

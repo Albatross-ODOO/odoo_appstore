@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_gate_management_category" model="ir.module.category">
+        <field name="name">Gate Management</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_gate_guard" model="res.groups">
+        <field name="name">Security Guard</field>
+        <field name="category_id" ref="module_gate_management_category"/>
+    </record>
+
+    <record id="group_gate_manager" model="res.groups">
+        <field name="name">Gate Manager</field>
+        <field name="category_id" ref="module_gate_management_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_gate_guard'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Gate Worker Search View -->
+    <record id="view_gate_worker_search" model="ir.ui.view">
+        <field name="name">gate.worker.search</field>
+        <field name="model">gate.worker</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="worker_code"/>
+                <field name="mobile"/>
+                <field name="srno"/>
+                <field name="employeename"/>
+                <field name="employee_phone_number"/>
+                <filter string="Inside" name="inside" domain="[('current_state', '=', 'inside')]"/>
+                <filter string="Outside" name="outside" domain="[('current_state', '=', 'outside')]"/>
+                <separator/>
+                <filter string="Permanent" name="permanent" domain="[('worker_type', '=', 'permanent')]"/>
+                <filter string="Contract" name="contract" domain="[('worker_type', '=', 'contract')]"/>
+                <filter string="Daily Wage" name="daily_wage" domain="[('worker_type', '=', 'daily_wage')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Current Status" name="group_current_state" context="{'group_by': 'current_state'}"/>
+                    <filter string="Worker Type" name="group_worker_type" context="{'group_by': 'worker_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Gate Worker List View -->
+    <record id="view_gate_worker_tree" model="ir.ui.view">
+        <field name="name">gate.worker.list</field>
+        <field name="model">gate.worker</field>
+        <field name="arch" type="xml">
+            <list decoration-success="current_state == 'inside'" decoration-warning="current_state == 'outside'">
+                <field name="worker_code"/>
+                <field name="name"/>
+                <field name="worker_type"/>
+                <field name="mobile"/>
+                <field name="srno" optional="hide"/>
+                <field name="employeename" optional="hide"/>
+                <field name="employee_phone_number" optional="hide"/>
+                <field name="current_state" widget="badge" decoration-success="current_state == 'inside'" decoration-warning="current_state == 'outside'"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Gate Worker Kanban View -->
+    <record id="view_gate_worker_kanban" model="ir.ui.view">
+        <field name="name">gate.worker.kanban</field>
+        <field name="model">gate.worker</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="worker_code"/>
+                <field name="worker_type"/>
+                <field name="mobile"/>
+                <field name="photo"/>
+                <field name="current_state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click d-flex justify-content-between align-items-center p-3 border-start border-4 rounded-3 shadow-sm bg-white" 
+                             t-attf-style="border-color: #{record.current_state.raw_value == 'inside' ? '#10B981' : '#EF4444'} !important;">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="o_kanban_image" style="width: 50px; height: 50px;">
+                                    <img t-if="record.photo.raw_value" 
+                                         t-att-src="kanban_image('gate.worker', 'photo', record.id.raw_value)" 
+                                         class="rounded-circle w-100 h-100 object-fit-cover"/>
+                                    <div t-else="" class="rounded-circle w-100 h-100 bg-secondary d-flex align-items-center justify-content-center text-white font-weight-bold" style="font-size: 20px;">
+                                        <t t-esc="record.name.raw_value.charAt(0).toUpperCase()"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1 text-dark fw-bold"><t t-esc="record.name.value"/></h5>
+                                    <div class="text-muted small"><t t-esc="record.worker_code.value"/> | <t t-esc="record.worker_type.value"/></div>
+                                    <div class="text-muted small"><t t-esc="record.mobile.value or 'No Phone'"/></div>
+                                </div>
+                            </div>
+                            <div>
+                                <!-- Toggle Button -->
+                                <button name="action_toggle_attendance" type="object" 
+                                        t-attf-class="btn btn-sm #{record.current_state.raw_value == 'inside' ? 'btn-danger' : 'btn-success'} py-2 px-3 fw-bold"
+                                        style="border-radius: 8px;">
+                                    <t t-if="record.current_state.raw_value == 'inside'">Check-Out</t>
+                                    <t t-else="">Check-In</t>
+                                </button>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Gate Worker Form View -->
+    <record id="view_gate_worker_form" model="ir.ui.view">
+        <field name="name">gate.worker.form</field>
+        <field name="model">gate.worker</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_toggle_attendance" string="Toggle Attendance" type="object" class="oe_highlight"/>
+                    <field name="current_state" widget="statusbar" statusbar_visible="outside,inside"/>
+                </header>
+                <sheet>
+                    <field name="photo" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. John Doe"/>
+                        </h1>
+                        <label for="worker_code" class="oe_edit_only"/>
+                        <h3>
+                            <field name="worker_code" placeholder="e.g. WRK001"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="worker_type"/>
+                            <field name="mobile"/>
+                        </group>
+                        <group>
+                            <field name="status"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Attendance Logs" name="attendance_logs">
+                            <field name="log_ids" readonly="1">
+                                <list>
+                                    <field name="check_in_time"/>
+                                    <field name="check_out_time"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'inside'" decoration-warning="state == 'outside'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Gate Worker Log List View -->
+    <record id="view_gate_worker_log_tree" model="ir.ui.view">
+        <field name="name">gate.worker.log.list</field>
+        <field name="model">gate.worker.log</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false">
+                <field name="worker_id"/>
+                <field name="check_in_time"/>
+                <field name="check_out_time"/>
+                <field name="state" widget="badge" decoration-success="state == 'inside'" decoration-warning="state == 'outside'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Gate Worker Log Form View -->
+    <record id="view_gate_worker_log_form" model="ir.ui.view">
+        <field name="name">gate.worker.log.form</field>
+        <field name="model">gate.worker.log</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="worker_id"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="check_in_time"/>
+                            <field name="check_out_time"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

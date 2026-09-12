@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gate_verify_otp_wizard_form" model="ir.ui.view">
+        <field name="name">gate.verify.otp.wizard.form</field>
+        <field name="model">gate.verify.otp.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Verify Entry Code">
+                <field name="state" invisible="1"/>
+                <field name="entry_id" invisible="1"/>
+                
+                <group invisible="state != 'scan'">
+                    <div class="alert alert-info" role="alert">
+                         Please enter the 6-digit code shown on the visitor's invitation or scan the QR code.
+                    </div>
+                    <field name="otp_code" widget="gate_qr_scanner" nolabel="1"/>
+                </group>
+                
+                <group invisible="state != 'photo'">
+                     <div class="alert alert-success" role="alert">
+                        OTP Verified! Please take a photo of the visitor/vehicle to confirm entry.
+                    </div>
+                    <group>
+                        <!-- Large image widget to encourage camera use -->
+                        <field name="force_camera_open" invisible="1"/>
+                        <field name="photo" widget="gate_camera" class="oe_avatar" options="{'size': [256, 256], 'auto_open_field': 'force_camera_open', 'auto_validate': True}"/>
+                    </group>
+                </group>
+
+                <footer>
+                    <button name="action_verify" string="Find &amp; Verify" type="object" class="btn-primary"
+                            invisible="state != 'scan'"/>
+                            
+                    <button name="action_confirm_verification" string="Verify &amp; Enter" type="object" class="btn-success"
+                            invisible="state != 'photo'"/>
+                            
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gate_verify_otp_wizard" model="ir.actions.act_window">
+        <field name="name">Verify Invitation</field>
+        <field name="res_model">gate.verify.otp.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

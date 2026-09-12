@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence for Incoming Gate Entries -->
+        <record id="seq_gate_entry_in" model="ir.sequence">
+            <field name="name">Gate Entry Incoming</field>
+            <field name="code">gate.entry.in</field>
+            <field name="prefix">IN/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for Outgoing Gate Entries -->
+        <record id="seq_gate_entry_out" model="ir.sequence">
+            <field name="name">Gate Entry Outgoing</field>
+            <field name="code">gate.entry.out</field>
+            <field name="prefix">OUT/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>
