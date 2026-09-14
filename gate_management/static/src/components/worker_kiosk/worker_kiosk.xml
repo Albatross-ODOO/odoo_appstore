@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="gate_management.WorkerRow">
+        <div t-attf-class="gd-row gd-row-#{row.state === 'inside' ? 'in' : row.state === 'break' ? 'break' : 'out'} #{state.gone[row.id] ? 'gd-gone' : ''}">
+            <div t-attf-class="gd-av #{row.state === 'inside' ? 'gd-av-in' : row.state === 'break' ? 'gd-av-warn' : 'gd-av-out'}">
+                <img t-if="row.has_photo" t-attf-src="/web/image?model=gate.worker&amp;id=#{row.id}&amp;field=photo" alt=""/>
+                <t t-else="" t-esc="initials(row.name)"/>
+            </div>
+            <div class="gd-who">
+                <b><t t-esc="row.name"/></b>
+                <small>
+                    <em><t t-esc="row.code"/></em> · <t t-esc="row.type"/> ·
+                    <span t-if="row.state === 'inside'" class="gd-pill gd-pill-in"><i class="gd-dot"/>Inside</span>
+                    <span t-if="row.state === 'break'" class="gd-pill gd-pill-brk"><i class="gd-dot"/>On break</span>
+                    <span t-if="row.state === 'outside'" class="gd-pill gd-pill-out"><i class="gd-dot"/>Outside</span>
+                    <t t-if="row.state === 'inside' and row.since"> · in <span class="gd-since"><t t-esc="row.since"/></span></t>
+                    <t t-if="row.state === 'break' and row.break_since"> · since <span class="gd-since"><t t-esc="row.break_since"/></span></t>
+                </small>
+            </div>
+            <div class="gd-acts">
+                <t t-if="row.state === 'inside'">
+                    <button type="button" class="gd-btn gd-brk gd-sm" t-on-click="() => this.act(row, 'break')" t-att-disabled="state.busy"><i class="fa fa-coffee"/> Break</button>
+                    <button type="button" t-attf-class="gd-btn gd-bad gd-lit gd-sm #{state.morph[row.id] ? 'gd-morph' : ''}" t-on-click="() => this.act(row, 'out')" t-att-disabled="state.busy"><i class="fa fa-sign-out"/> Check-Out</button>
+                </t>
+                <t t-elif="row.state === 'break'">
+                    <button type="button" t-attf-class="gd-btn gd-warn gd-lit gd-sm #{state.morph[row.id] ? 'gd-morph' : ''}" t-on-click="() => this.act(row, 'resume')" t-att-disabled="state.busy"><i class="fa fa-play"/> Break over</button>
+                    <button type="button" class="gd-btn gd-bad gd-lit gd-sm" t-on-click="() => this.act(row, 'out')" t-att-disabled="state.busy"><i class="fa fa-sign-out"/> Check-Out</button>
+                </t>
+                <t t-else="">
+                    <button type="button" t-attf-class="gd-btn gd-ok gd-lit gd-sm #{state.morph[row.id] ? 'gd-morph' : ''}" t-on-click="() => this.act(row, 'in')" t-att-disabled="state.busy"><i class="fa fa-sign-in"/> Check-In</button>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="gate_management.WorkerKiosk">
+        <div class="gd-app o_action">
+            <div class="gd-main">
+                <div class="gd-appbar">
+                    <button type="button" class="gd-ico" title="Gate Desk" aria-label="Gate Desk" t-on-click="goHome"><i class="fa fa-home"/></button>
+                    <div class="gd-titlebox">
+                        <h2 class="gd-title">Worker Attendance</h2>
+                        <div class="gd-sub">Search by name · mobile · worker code</div>
+                    </div>
+                    <div class="gd-acts"><span class="gd-pill gd-pill-gold gd-mono"><t t-esc="state.clock"/></span></div>
+                </div>
+                <div class="gd-rule"/>
+
+                <div class="gd-search"><i class="fa fa-search"/><input type="search" placeholder="Search a worker to check in…" t-att-value="state.term" t-on-input="onSearch"/></div>
+
+                <div class="gd-wk-summary">
+                    <div class="gd-s gd-in"><b><t t-esc="state.counts.inside"/></b><span>Inside</span></div>
+                    <div class="gd-s gd-brk"><b><t t-esc="state.counts.break"/></b><span>On break</span></div>
+                    <div class="gd-s gd-out"><b><t t-esc="state.counts.outside"/></b><span>Outside</span></div>
+                </div>
+
+                <div class="gd-allbreak">
+                    <span class="gd-well gd-c-warn"><i class="fa fa-coffee"/></span>
+                    <div class="gd-txt">
+                        <t t-if="state.counts.break > 0">
+                            <b t-if="state.counts.inside === 0">Everyone is on break</b>
+                            <b t-else=""><t t-esc="state.counts.break"/> on break, <t t-esc="state.counts.inside"/> working</b>
+                            <small>One press brings every worker on break back inside</small>
+                        </t>
+                        <t t-else="">
+                            <b>Common break</b>
+                            <small>Puts every worker inside on break in one press</small>
+                        </t>
+                    </div>
+                    <button t-if="state.counts.break > 0" type="button" class="gd-btn gd-warn gd-lit gd-sm" t-on-click="breakOverAll"><i class="fa fa-play"/> Break over · all</button>
+                    <button t-else="" type="button" class="gd-btn gd-brk gd-sm" t-on-click="askBreakAll" t-att-disabled="state.counts.inside === 0"><i class="fa fa-coffee"/> All on break</button>
+                </div>
+                <div t-if="state.confirm" class="gd-confirm">
+                    <span>Put <t t-esc="state.counts.inside"/> workers on break?</span>
+                    <button type="button" class="gd-btn gd-warn gd-lit gd-sm" t-on-click="breakAll">Yes, break</button>
+                    <button type="button" class="gd-btn gd-sm" t-on-click="() => state.confirm = false">No</button>
+                </div>
+
+                <div class="gd-tabs gd-wk-tabs">
+                    <button type="button" class="gd-ftab" t-att-aria-pressed="state.tab === 'inside' ? 'true' : 'false'" t-on-click="() => state.tab = 'inside'"><span class="gd-pill gd-pill-in"><i class="gd-dot"/></span>Inside <span class="gd-n"><t t-esc="state.counts.inside"/></span></button>
+                    <button type="button" class="gd-ftab" t-att-aria-pressed="state.tab === 'break' ? 'true' : 'false'" t-on-click="() => state.tab = 'break'"><span class="gd-pill gd-pill-brk"><i class="gd-dot"/></span>On break <span class="gd-n"><t t-esc="state.counts.break"/></span></button>
+                    <button type="button" class="gd-ftab" t-att-aria-pressed="state.tab === 'outside' ? 'true' : 'false'" t-on-click="() => state.tab = 'outside'"><span class="gd-pill gd-pill-out"><i class="gd-dot"/></span>Outside <span class="gd-n"><t t-esc="state.counts.outside"/></span></button>
+                </div>
+
+                <div class="gd-wk-cols">
+                    <t t-foreach="['inside', 'break', 'outside']" t-as="s" t-key="s">
+                        <div>
+                            <div class="gd-colhead"><i t-attf-style="background: var(--gd-#{s === 'inside' ? 'in' : s === 'break' ? 'brk' : 'out'})"/><t t-esc="s === 'inside' ? 'Inside' : s === 'break' ? 'On break' : 'Outside'"/> · <t t-esc="state.counts[s]"/></div>
+                            <div t-attf-class="gd-wk-list #{state.tab === s ? 'gd-on' : ''}">
+                                <div t-if="!rowsFor(s).length" class="gd-empty"><t t-if="state.term">No match</t><t t-else="">Nobody <t t-esc="s === 'break' ? 'on break' : s"/></t></div>
+                                <t t-foreach="rowsFor(s)" t-as="row" t-key="row.id"><t t-call="gate_management.WorkerRow"/></t>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
