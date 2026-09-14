@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <form string="Share Invitation">
                 <sheet>
+                    <field name="entry_id" invisible="1"/>
                     <field name="whatsapp_available" invisible="1"/>
                     <div class="alert alert-info" role="alert">Share this link with the visitor: it opens the digital pass with the QR code and entry code.</div>
                     <group>

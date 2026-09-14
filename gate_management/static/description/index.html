@@ -1,29 +1,253 @@
-<section class="container" style="font-family: Inter, 'Segoe UI', system-ui, sans-serif; color:#1F242E; max-width: 960px; margin: 0 auto; padding: 24px 16px;">
-  <div style="text-align:center; padding: 32px 16px; background: linear-gradient(160deg,#F3EFE7,#E9E2D6); border-radius: 26px;">
-    <img src="icon.png" alt="Gate Desk" style="width: 96px; height: 96px; border-radius: 24px;"/>
-    <div style="font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #8B8577; margin-top: 16px; font-weight: 600;">Security &amp; Access</div>
-    <h1 style="font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: 40px; margin: 6px 0 10px;">Gate Desk</h1>
-    <p style="max-width: 60ch; margin: 0 auto; color: #3B404A; font-size: 16px;">Visitor, vehicle, material and workforce gate control built for the security guard — on a phone, a tablet or a laptop. A clean back office for the gate manager.</p>
+<!--
+  Gate Management (Gate Desk) &mdash; Odoo Apps Store description page.
+  Written for the store HTML sanitizer: no stylesheet block, no JS; layout via Bootstrap 5 classes,
+  inline styles limited to the whitelisted properties (colors, type, padding/margin, border, radius, sizes).
+  Every asset path is relative to static/description/.
+-->
+<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:#1f242e; line-height:1.6; font-weight:400;">
+
+  <!-- ============================= HERO ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#eee9df;">
+    <div class="text-center mx-auto mb-4" style="max-width:820px;">
+      <p class="mb-2" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">Gate Management &middot; Gate Desk &middot; Odoo 18</p>
+      <h1 class="fs-1 mb-3" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; line-height:1.12; color:#1f242e;">The gate, run from the phone <span style="color:#a8853a;">in the guard's hand.</span></h1>
+      <p class="mb-4" style="font-size:18px; color:#5f636c;">A security-guard app that runs on the phone, tablet or laptop at the barrier: walk-in visitors, vehicles and material with a photo, QR / 6-digit gate passes, worker check-in and breaks &mdash; and a clean Odoo back office for the gate manager.</p>
+      <div class="d-flex flex-wrap justify-content-center gap-2">
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#4a7355; background-color:#ffffff; border:1px solid #ddd5c6;"><i class="fa fa-circle me-1"></i> Odoo 18.0</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; background-color:#ffffff; border:1px solid #ddd5c6;">Community &amp; Enterprise</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; background-color:#ffffff; border:1px solid #ddd5c6;">Phone &middot; Tablet &middot; Desktop</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; background-color:#ffffff; border:1px solid #ddd5c6;">Depends on base &middot; mail &middot; web only</span>
+      </div>
+    </div>
+    <img class="img-fluid rounded-4 mx-auto d-none d-md-block" src="img/banner.png" alt="Gate Desk on three phones: the home screen with live counters, a matched invitation code and a digital gate pass"/>
+    <div class="mx-auto" style="max-width:320px;"><img class="img-fluid rounded-4 d-block d-md-none" src="img/phone-home.png" alt="Gate Desk home screen with inside, expected and exited counters"/></div>
   </div>
 
-  <h2 style="font-family: Georgia, serif; font-weight: 400; font-size: 28px; margin: 36px 0 12px;">For the guard</h2>
-  <ul style="line-height: 1.7; color: #3B404A;">
-    <li><b>Gate Desk home</b> — live inside / expected / exited counters, four task tiles, the inside-now list with one-tap Check-Out. Every page has a Home button, so it works on a phone where Odoo's menu is hidden.</li>
-    <li><b>Walk-In Entry</b> — Visitor, Vehicle or Material in one form; repeat visitors auto-fill from their mobile number; photo capture from the device camera is required for people and vehicles.</li>
-    <li><b>Verify Invitation</b> — type the 6-digit code on a keypad, scan the QR with the camera (works offline) or a handheld scanner; a match card shows who the pass belongs to before the photo confirms the entry.</li>
-    <li><b>Worker Attendance</b> — Inside / On break / Outside lists, per-worker Check-In, Break, Break over and Check-Out, and a common break for the whole floor with one press.</li>
-    <li><b>Schedule Visit</b> — create an invitation pass (entry code + QR + validity) and share it by e-mail, PDF, link and — on Odoo Enterprise with the WhatsApp app — WhatsApp.</li>
-  </ul>
+  <!-- ============================= THE GUARD'S SHIFT ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">The guard's shift</p>
+    <h2 class="fs-2 mb-3" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">One home screen. Four jobs.</h2>
+    <p class="mb-4" style="font-size:17px; color:#5f636c; max-width:70ch;">The guard signs into Odoo and lands on Gate Desk: live <em>Inside now</em>, <em>Expected today</em> and <em>Exited today</em> counters, four big tiles, and the inside-now list with one-tap Check-Out. Every page has a Home button, so it works on a phone where Odoo's menu is hidden.</p>
 
-  <h2 style="font-family: Georgia, serif; font-weight: 400; font-size: 28px; margin: 36px 0 12px;">For the manager</h2>
-  <ul style="line-height: 1.7; color: #3B404A;">
-    <li>Entries kanban / list / form with chatter, audit times, overdue ribbon and a duplicate-vehicle guard.</li>
-    <li>Workforce profiles (spreadsheet import mapping included), shift logs with break minutes, break logs.</li>
-    <li>Auto-exit of expired entries every 30 minutes, multi-company record rules, two roles: Security Guard and Gate Manager.</li>
-    <li>Public digital pass page and printable PDF pass with directions.</li>
-  </ul>
+    <div class="rounded-4 p-3 p-md-4" style="background-color:#eee9df;">
+    <div class="row g-4">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="mx-auto" style="max-width:320px;"><img class="img-fluid rounded-4 d-block" src="img/phone-walkin.png" alt="Walk-In Entry form with Vehicle selected and the visitor auto-filled from the mobile number"/></div>
+        <div class="d-flex align-items-start gap-3 mt-3 mx-auto" style="max-width:320px;">
+          <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#a8853a; background-color:#eee9df; border:1px solid #ddd5c6;">1</span>
+          <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#1f242e;">Walk-In Entry</h3><p class="mb-0" style="font-size:15px; color:#5f636c;">Visitor, vehicle or material in one form. Repeat visitors auto-fill from their mobile number.</p></div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="mx-auto" style="max-width:320px;"><img class="img-fluid rounded-4 d-block" src="img/phone-verify-match.png" alt="Verify Invitation: the code matched and the match card shows the visitor, host and validity"/></div>
+        <div class="d-flex align-items-start gap-3 mt-3 mx-auto" style="max-width:320px;">
+          <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#a8853a; background-color:#eee9df; border:1px solid #ddd5c6;">2</span>
+          <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#1f242e;">Verify Invitation</h3><p class="mb-0" style="font-size:15px; color:#5f636c;">Type the 6-digit code or scan the QR. A match card shows who the pass belongs to before the photo confirms.</p></div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="mx-auto" style="max-width:320px;"><img class="img-fluid rounded-4 d-block" src="img/phone-worker.png" alt="Worker Attendance with Inside, On break and Outside counters and per-worker buttons"/></div>
+        <div class="d-flex align-items-start gap-3 mt-3 mx-auto" style="max-width:320px;">
+          <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#a8853a; background-color:#eee9df; border:1px solid #ddd5c6;">3</span>
+          <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#1f242e;">Worker Attendance</h3><p class="mb-0" style="font-size:15px; color:#5f636c;">Check-in, Break, Break over and Check-out per worker &mdash; or a common break for the whole floor.</p></div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="mx-auto" style="max-width:320px;"><img class="img-fluid rounded-4 d-block" src="img/phone-pass.png" alt="Schedule Visit: the created gate pass with QR code, entry code, validity and share buttons"/></div>
+        <div class="d-flex align-items-start gap-3 mt-3 mx-auto" style="max-width:320px;">
+          <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#a8853a; background-color:#eee9df; border:1px solid #ddd5c6;">4</span>
+          <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#1f242e;">Schedule Visit</h3><p class="mb-0" style="font-size:15px; color:#5f636c;">Create an invitation pass with entry code, QR and validity, then share it by e-mail, PDF, link or WhatsApp.</p></div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
 
-  <h2 style="font-family: Georgia, serif; font-weight: 400; font-size: 28px; margin: 36px 0 12px;">Compatibility</h2>
-  <p style="color: #3B404A; line-height: 1.7;">Odoo Community and Odoo Enterprise. Depends only on <code>base</code>, <code>mail</code> and <code>web</code>. On Enterprise, installing the WhatsApp app enables the WhatsApp send option automatically — no extra module.</p>
-  <p style="color: #3B404A; line-height: 1.7;">Setup: Settings → Users → give the guard the <b>Gate Management / Security Guard</b> access and the manager <b>Gate Management / Gate Manager</b>. Use HTTPS so the browser allows camera access at the gate.</p>
-</section>
+  <!-- ============================= WALK-IN ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#eee9df;">
+    <div class="row g-4 g-lg-5 align-items-center">
+      <div class="col-12 col-lg-4">
+        <div class="mx-auto" style="max-width:360px;"><img class="img-fluid rounded-4 d-block" src="img/phone-walkin.png" alt="Walk-In Entry with Visitor, Vehicle and Material chips, Incoming / Outgoing, mobile number and photo capture"/></div>
+      </div>
+      <div class="col-12 col-lg-8">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">Walk-in entry</p>
+        <h2 class="fs-2 mb-3" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">One form for people, trucks and goods</h2>
+        <p class="mb-4" style="font-size:17px; color:#5f636c;">Three chips switch the form between a visitor, a commercial vehicle and a material movement. Big fields, large touch targets and a camera that opens in place &mdash; nothing for the guard to hunt for.</p>
+        <div class="d-flex flex-column gap-2">
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Repeat visitors auto-fill</strong> &mdash; type the mobile number and the name, vehicle and vendor prefill from the last visit.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Photo required to check in</strong> &mdash; rear camera for people, vehicles and documents; one tap flips to the front camera for a selfie.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Vehicle plate in a plate field</strong> &mdash; monospaced, normalised, and blocked if the same plate is already inside.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Material inward / outward</strong> &mdash; description, challan or gate-pass slip number, quantity and flow, with a vendor / supplier link.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Host and purpose on every entry</strong> &mdash; meeting, plant visit, maintenance, interview or a free-text purpose; the host is an Odoo user.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= VERIFY ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#eee9df;">
+    <div class="row g-4 g-lg-5 align-items-center">
+      <div class="col-12 col-lg-8 order-2 order-lg-1">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">Verify invitation</p>
+        <h2 class="fs-2 mb-3" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">Six digits or a QR. Verified before the barrier lifts.</h2>
+        <p class="mb-4" style="font-size:17px; color:#5f636c;">Invited visitors arrive with a pass. The guard types the code on a large keypad &mdash; it verifies by itself at the sixth digit &mdash; or scans the QR with the device camera. A handheld USB / Bluetooth scanner works too.</p>
+        <div class="row g-3">
+          <div class="col-12 col-sm-6"><div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #ddd5c6;"><strong style="color:#1f242e;">Match card first</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5f636c;">Name, purpose, host, validity window, reference and vehicle plate &mdash; the guard sees who the pass belongs to before anything is recorded.</p></div></div>
+          <div class="col-12 col-sm-6"><div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #ddd5c6;"><strong style="color:#1f242e;">Outside the window? It says so.</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5f636c;">A pass used before or after its scheduled time shows an <em>Outside window</em> flag instead of a silent pass-through.</p></div></div>
+          <div class="col-12 col-sm-6"><div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #ddd5c6;"><strong style="color:#1f242e;">QR scanning works offline</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5f636c;">Decoding runs in the browser with the bundled jsQR library &mdash; no cloud service, nothing leaves your server.</p></div></div>
+          <div class="col-12 col-sm-6"><div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #ddd5c6;"><strong style="color:#1f242e;">Photo confirms, then "Next visitor"</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5f636c;">The camera opens by itself; the capture records the entry with its time and photo, and the kiosk is ready for the next person.</p></div></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 order-1 order-lg-2">
+        <div class="mx-auto" style="max-width:360px;"><img class="img-fluid rounded-4 d-block" src="img/phone-verify.png" alt="Verify Invitation keypad with six code boxes, digits 0-9, Clear, and a Scan QR code button"/></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= GATE PASS ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <div class="text-center mx-auto" style="max-width:800px;">
+      <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">Digital gate pass</p>
+      <h2 class="fs-2 mb-3" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">Schedule the visit. The pass sends itself.</h2>
+      <p class="mb-4" style="font-size:17px; color:#5f636c;">Pre-register a visitor with a validity window and Odoo generates the entry code and QR. Share it as a link to a public pass page, as a PDF, by e-mail &mdash; or on WhatsApp when the Enterprise WhatsApp app is installed.</p>
+    </div>
+    <div class="rounded-4 p-3 p-md-4" style="background-color:#eee9df;">
+      <div class="row g-4 align-items-center">
+        <div class="col-12 col-md-4">
+          <div class="mx-auto" style="max-width:320px;"><img class="img-fluid rounded-4 d-block" src="img/phone-public-pass.png" alt="Public gate pass page on the visitor's phone with the company logo, QR code, entry code, date, host and a Get directions button"/></div>
+        </div>
+        <div class="col-12 col-md-8">
+          <img class="img-fluid rounded-4 d-block mb-3" src="img/win-share-wizard.jpg" alt="Share Invitation dialog in the back office with the pass link, Download PDF and Send Email"/>
+          <div class="row g-3">
+            <div class="col-6 col-lg-3"><div class="h-100 rounded-4 p-3 text-center" style="background-color:#ffffff; border:1px solid #ddd5c6;"><i class="fa fa-link d-block mb-1" style="font-size:22px; color:#a8853a;"></i><strong style="font-size:14px;">Link</strong><p class="mb-0" style="font-size:13px; color:#5f636c;">Tokenised public page, no login</p></div></div>
+            <div class="col-6 col-lg-3"><div class="h-100 rounded-4 p-3 text-center" style="background-color:#ffffff; border:1px solid #ddd5c6;"><i class="fa fa-file-pdf-o d-block mb-1" style="font-size:22px; color:#a8853a;"></i><strong style="font-size:14px;">PDF</strong><p class="mb-0" style="font-size:13px; color:#5f636c;">Printable pass with directions</p></div></div>
+            <div class="col-6 col-lg-3"><div class="h-100 rounded-4 p-3 text-center" style="background-color:#ffffff; border:1px solid #ddd5c6;"><i class="fa fa-envelope-o d-block mb-1" style="font-size:22px; color:#a8853a;"></i><strong style="font-size:14px;">E-mail</strong><p class="mb-0" style="font-size:13px; color:#5f636c;">Pass attached, logged in chatter</p></div></div>
+            <div class="col-6 col-lg-3"><div class="h-100 rounded-4 p-3 text-center" style="background-color:#ffffff; border:1px solid #ddd5c6;"><i class="fa fa-whatsapp d-block mb-1" style="font-size:22px; color:#4a7355;"></i><strong style="font-size:14px;">WhatsApp</strong><p class="mb-0" style="font-size:13px; color:#5f636c;">Enterprise, via approved template</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= WORKFORCE ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#eee9df;">
+    <div class="row g-4 g-lg-5 align-items-center">
+      <div class="col-12 col-lg-4">
+        <div class="mx-auto" style="max-width:360px;"><img class="img-fluid rounded-4 d-block" src="img/phone-worker.png" alt="Worker Attendance kiosk: search, Inside / On break / Outside counters, Break over all, and per-worker Break and Check-Out buttons"/></div>
+      </div>
+      <div class="col-12 col-lg-8">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">Workforce at the gate</p>
+        <h2 class="fs-2 mb-3" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">Contract and daily-wage workers, without an HR module</h2>
+        <p class="mb-4" style="font-size:17px; color:#5f636c;">Plants and sites run on people who are not Odoo users. Gate Desk keeps its own lightweight workforce register and records every shift and break from the same kiosk.</p>
+        <div class="d-flex flex-column gap-2">
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Find a worker in one line</strong> &mdash; search by name, mobile or worker code; results are grouped Inside, On break and Outside.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Check-in, Break, Break over, Check-out</strong> &mdash; the right button for each worker's current state, nothing else.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Common break with one press</strong> &mdash; lunch for the whole floor starts and ends together.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Shift and break logs</strong> &mdash; each shift stores check-in / check-out times, shift minutes and break minutes; breaks are their own records.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6; font-size:15px;"><i class="fa fa-check me-2" style="color:#4a7355;"></i><strong>Import from a spreadsheet</strong> &mdash; CSV / XLSX with SrNo, Employee Name and Employee Phone Number columns map automatically.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= MANAGER VIEW ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#eee9df;">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">For the gate manager</p>
+    <h2 class="fs-2 mb-3" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">Everything that passed the gate, in the backend</h2>
+    <p class="mb-4" style="font-size:17px; color:#5f636c; max-width:70ch;">Entries, workers, shifts and breaks are ordinary Odoo records with chatter and tracking &mdash; list them, filter them, group them, export them.</p>
+    <div class="row g-4">
+      <div class="col-12 col-md-6">
+        <img class="img-fluid rounded-4 d-block" src="img/win-entries-kanban.jpg" alt="Gate Entries kanban grouped by status: Inside Premises, Exited, Scheduled, each card with a Check-Out button"/>
+        <h3 class="mt-3 mb-1" style="font-size:17px; font-weight:700; color:#1f242e;">Entries kanban</h3>
+        <p class="mb-0" style="font-size:15px; color:#5f636c;">Grouped by status with a <em>Check-Out</em> button on every card inside. Filters for entry type, incoming / outgoing, scheduled, inside, overdue and exited; group by type, status, host or check-in day.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <img class="img-fluid rounded-4 d-block" src="img/win-entries-list.jpg" alt="Gate Entries list with reference, entry type, operation type, visitor, vehicle number, host, check-in and check-out times and status"/>
+        <h3 class="mt-3 mb-1" style="font-size:17px; font-weight:700; color:#1f242e;">Audit list</h3>
+        <p class="mb-0" style="font-size:15px; color:#5f636c;">Reference, type, visitor, plate, host, check-in and check-out times and status in one exportable list. Entries carry a full chatter with every state change tracked.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <img class="img-fluid rounded-4 d-block" src="img/win-workers.jpg" alt="Workforce profiles kanban with each worker's status and Break, Break over, Check-In and Check-Out buttons"/>
+        <h3 class="mt-3 mb-1" style="font-size:17px; font-weight:700; color:#1f242e;">Workforce profiles</h3>
+        <p class="mb-0" style="font-size:15px; color:#5f636c;">Permanent, contractual and daily-wage workers with code, mobile, photo and live status. The same attendance buttons are available here for the manager.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <img class="img-fluid rounded-4 d-block" src="img/win-shift-logs.jpg" alt="Shift Logs list with worker, check-in time, check-out time, shift minutes, break minutes and state"/>
+        <h3 class="mt-3 mb-1" style="font-size:17px; font-weight:700; color:#1f242e;">Shift &amp; break logs</h3>
+        <p class="mb-0" style="font-size:15px; color:#5f636c;">One row per shift with computed shift and break minutes, plus a separate break log &mdash; the numbers a contractor invoice or a wage sheet needs.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= FEATURES ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">Everything included</p>
+    <h2 class="fs-2 mb-4" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">What's in the box</h2>
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#eee9df; border:1px solid #ddd5c6;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F4CA;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Live counters</h3><p class="mb-0" style="font-size:15px; color:#5f636c;">Inside now, expected today and exited today, plus workers in and on break &mdash; each one taps through to the matching list.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#eee9df; border:1px solid #ddd5c6;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x23F0;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Auto-exit of expired entries</h3><p class="mb-0" style="font-size:15px; color:#5f636c;">A scheduled action closes entries whose validity has ended, every 30 minutes. Overdue entries are flagged on the home screen and in the kanban.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#eee9df; border:1px solid #ddd5c6;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F69A;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Duplicate-vehicle guard</h3><p class="mb-0" style="font-size:15px; color:#5f636c;">Plates are normalised (spaces, case) and a vehicle that is already inside cannot be entered twice &mdash; enforced on the server.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#eee9df; border:1px solid #ddd5c6;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F510;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Two roles</h3><p class="mb-0" style="font-size:15px; color:#5f636c;"><em>Security Guard</em> sees only Gate Desk. <em>Gate Manager</em> gets Operations, Gate Pages and Workforce menus on top.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#eee9df; border:1px solid #ddd5c6;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F3E2;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Multi-company</h3><p class="mb-0" style="font-size:15px; color:#5f636c;">Entries and workers belong to a company; record rules keep each site's gate to itself. Passes print the company address and a Google Maps directions link.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#eee9df; border:1px solid #ddd5c6;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F4F1;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Built for the barrier</h3><p class="mb-0" style="font-size:15px; color:#5f636c;">High-contrast, big buttons, Home on every page, monospaced codes and plates. Scoped to its own screens so the rest of Odoo looks exactly as before.</p></div></div>
+    </div>
+  </div>
+
+  <!-- ============================= COMPATIBILITY ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <div class="row g-4 g-lg-5">
+      <div class="col-12 col-lg-7">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">Compatibility</p>
+        <h2 class="fs-2 mb-3" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">Plain Odoo, nothing else</h2>
+        <p class="mb-4" style="font-size:17px; color:#5f636c;">No third-party APIs, no subscriptions, no data leaving your server. QR codes are generated and decoded locally. WhatsApp is optional and uses Odoo's own Enterprise app.</p>
+        <table class="w-100" style="border-collapse:collapse; font-size:15px;">
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; border-bottom:1px solid #ddd5c6; white-space:nowrap;">Odoo version</th><td class="py-2" style="border-bottom:1px solid #ddd5c6;">18.0 &mdash; Community and Enterprise</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; border-bottom:1px solid #ddd5c6; white-space:nowrap;">Depends on</th><td class="py-2" style="border-bottom:1px solid #ddd5c6;"><code>base</code>, <code>mail</code>, <code>web</code></td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; border-bottom:1px solid #ddd5c6; white-space:nowrap;">WhatsApp</th><td class="py-2" style="border-bottom:1px solid #ddd5c6;">Appears automatically when the Enterprise <code>whatsapp</code> app is installed. The <em>Gate Pass Invitation</em> template is created on first use and submitted to Meta for approval.</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; border-bottom:1px solid #ddd5c6; white-space:nowrap;">Devices</th><td class="py-2" style="border-bottom:1px solid #ddd5c6;">Any phone, tablet or desktop browser. Camera access requires HTTPS (or localhost).</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; border-bottom:1px solid #ddd5c6; white-space:nowrap;">Setup</th><td class="py-2" style="border-bottom:1px solid #ddd5c6;">Install, then give users the <em>Security Guard</em> or <em>Gate Manager</em> access right. No configuration screens to fill in first.</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; border-bottom:1px solid #ddd5c6; white-space:nowrap;">Tests</th><td class="py-2" style="border-bottom:1px solid #ddd5c6;">Automated Python tests and a browser tour cover entries, verification, workers and the kiosk.</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5f636c; white-space:nowrap;">Licence</th><td class="py-2">LGPL-3</td></tr>
+        </table>
+      </div>
+      <div class="col-12 col-lg-5">
+        <div class="h-100 rounded-4 p-4" style="background-color:#eee9df; border:1px solid #ddd5c6;">
+          <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">Security model</p>
+          <h3 class="mb-3" style="font-size:21px; font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">The guard sees the gate. The manager sees the site.</h3>
+          <div class="d-flex flex-column gap-2">
+            <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6;"><strong>Security Guard</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5f636c;">Gate Desk only: Home, Walk-In Entry, Verify Invitation, Worker Attendance, Schedule Visit. Creates and updates entries; no delete, no back office.</p></div>
+            <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6;"><strong>Gate Manager</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5f636c;">Everything the guard has, plus Operations (entries, inside now, worker attendance), Gate Pages and Workforce (profiles, shift logs, break logs), with cancel and delete rights.</p></div>
+            <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #ddd5c6;"><strong>Visitors</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5f636c;">Never need an account. The public pass page is reachable only with the entry's own random token.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= FAQ ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#eee9df;">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">FAQ</p>
+    <h2 class="fs-2 mb-4" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">Before you install</h2>
+    <div class="row g-3">
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #ddd5c6;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Does the guard need the Odoo mobile app?</h4><p class="mb-0" style="font-size:15px; color:#5f636c;">No. Any browser works. Gate Desk is a responsive Odoo action with its own Home button, so it also runs inside the official Odoo mobile app if you prefer.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #ddd5c6;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Why does the camera not open on the gate tablet?</h4><p class="mb-0" style="font-size:15px; color:#5f636c;">Browsers only allow camera access on HTTPS (or localhost). Put Odoo behind HTTPS and it works. A handheld scanner and the keypad work regardless.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #ddd5c6;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Does WhatsApp work on Community?</h4><p class="mb-0" style="font-size:15px; color:#5f636c;">WhatsApp sending needs Odoo Enterprise with the WhatsApp app. On Community the option is simply hidden; link, PDF and e-mail sharing work everywhere.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #ddd5c6;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Is there an SMS gateway?</h4><p class="mb-0" style="font-size:15px; color:#5f636c;">No gateway is bundled. Set the <code>gate_management.sms_gateway</code> system parameter to name yours; OTP messages are logged in the entry's chatter for your integrator to hook into.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #ddd5c6;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">What if a visitor never checks out?</h4><p class="mb-0" style="font-size:15px; color:#5f636c;">Entries past their scheduled end show as overdue on the home screen. The auto-exit scheduled action closes them every 30 minutes, and a manager can exit any entry from the backend.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #ddd5c6;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#1f242e;">Do workers have to be employees in Odoo?</h4><p class="mb-0" style="font-size:15px; color:#5f636c;">No. Gate Desk has its own workforce register (permanent, contractual, daily wage) and does not depend on the Employees app. Import your list from a spreadsheet and start checking in.</p></div></div>
+    </div>
+  </div>
+
+  <!-- ============================= SUPPORT ============================= -->
+  <div class="rounded-4 p-4 p-md-5 text-center" style="background-color:#eee9df;">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a8853a;">Support</p>
+    <h2 class="fs-2 mb-3" style="font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#1f242e;">Questions, ideas, a feature you need?</h2>
+    <p class="mx-auto mb-4" style="font-size:17px; color:#5f636c; max-width:60ch;">We answer within one business day and ship fixes for confirmed bugs free of charge for 90 days after purchase.</p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <span class="d-inline-block rounded-4 px-4 py-3" style="font-weight:800; font-size:14px; letter-spacing:.03em; color:#ffffff; background-color:#2e3035;"><i class="fa fa-envelope me-2"></i>Contact Albatross</span>
+      <span class="d-inline-block rounded-4 px-4 py-3" style="font-weight:800; font-size:14px; letter-spacing:.03em; color:#1f242e; background-color:#ffffff; border:1px solid #ddd5c6;"><i class="fa fa-book me-2"></i>Read the documentation</span>
+    </div>
+    <p class="mt-4 mb-0" style="color:#8b8577; font-size:13px;">Gate Management &middot; Gate Desk &middot; &copy; Albatross &middot; Licence LGPL-3</p>
+  </div>
+
+</div>
