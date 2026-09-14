@@ -8,8 +8,10 @@
     'description': """
 Discuss Chat Monitor for Odoo 18
     """,
-    'author': 'Custom Odoo Team',
-    'license': 'LGPL-3',
+    'author': 'Albatross',
+    'license': 'OPL-1',
+    'price': 25.00,
+    'currency': 'EUR',
     'depends': [
         'base',
         'mail',
