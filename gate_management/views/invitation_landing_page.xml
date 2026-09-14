@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="invitation_landing_page" name="Invitation Landing Page">
+        <t t-call="web.layout">
+            <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta property="og:title" t-att-content="'Gate Pass: %s' % (gate_entry.visitor_name or gate_entry.driver_name or 'Guest')"/>
+                <meta property="og:description" t-att-content="'Entry code %s · %s' % (gate_entry.otp, gate_entry.validity_string or '')"/>
+                <meta property="og:image" content="/gate_management/static/description/icon.png"/>
+                <meta property="og:type" content="website"/>
+                <style>
+                    body { font-family: Inter, "Segoe UI", system-ui, -apple-system, sans-serif; background: linear-gradient(160deg,#F3EFE7 0%,#ECE6DB 55%,#E9E2D6 100%); margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; color: #1F242E; padding: 20px 16px; box-sizing: border-box; }
+                    .card { background: linear-gradient(135deg, rgba(253,251,247,.9), rgba(242,237,227,.8)); border: 1px solid rgba(255,255,255,.8); border-radius: 26px; box-shadow: 10px 10px 30px rgba(184,170,146,.45), -8px -8px 24px rgba(255,255,255,.9); width: 100%; max-width: 420px; overflow: hidden; text-align: center; padding: 28px 22px; box-sizing: border-box; }
+                    .eyebrow { font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: #8B8577; font-weight: 600; }
+                    h1 { font-family: "Libre Baskerville", Baskerville, Georgia, serif; font-weight: 400; font-size: 28px; margin: 6px 0 10px; }
+                    .note { color: #8B8577; font-size: 13px; margin-bottom: 16px; }
+                    .qr { display: inline-block; background: #E9E3D8; border-radius: 20px; padding: 12px; box-shadow: inset 5px 5px 12px rgba(184,170,146,.42), inset -5px -5px 12px rgba(255,255,255,.95); }
+                    .qr img { width: 170px; height: 170px; display: block; border-radius: 12px; mix-blend-mode: multiply; }
+                    .or { color: #B9B3A6; font-size: 11px; margin: 12px 0; letter-spacing: .2em; }
+                    .code { display: inline-block; font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 30px; font-weight: 600; letter-spacing: .34em; padding: 10px 18px 10px 26px; border-radius: 16px; background: linear-gradient(150deg,#2E3035,#141518); color: #E3C77E; box-shadow: 0 0 0 1.5px #E3C77E; }
+                    .when { margin: 18px 0 6px; font-weight: 600; font-size: 16px; }
+                    .whenm { color: #8B8577; font-size: 13px; }
+                    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; text-align: left; border-top: 1px solid rgba(31,36,46,.08); padding-top: 14px; }
+                    .label { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: #8B8577; font-weight: 700; }
+                    .value { font-weight: 600; font-size: 15px; margin-top: 2px; }
+                    .mono { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; }
+                    .addr { color: #8B8577; font-size: 13px; margin: 8px 0 14px; }
+                    .btn { display: block; text-decoration: none; padding: 15px; border-radius: 18px; font-weight: 600; font-size: 15px; margin-top: 10px; transition: transform .15s; }
+                    .btn:active { transform: scale(.98); }
+                    .gold { background: linear-gradient(145deg,#E3C77E,#A8853A); color: #2A2210; box-shadow: 5px 5px 12px rgba(184,170,146,.42), -4px -4px 10px rgba(255,255,255,.95), 0 0 22px rgba(201,164,82,.5); }
+                    .soft { background: #FAF7F1; color: #1F242E; box-shadow: 5px 5px 12px rgba(184,170,146,.42), -4px -4px 10px rgba(255,255,255,.95); }
+                    .foot { margin-top: 18px; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: #B9B3A6; }
+                    .err { color: #B85C5C; font-size: 12px; }
+                </style>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400&amp;family=Inter:wght@400;600&amp;family=IBM+Plex+Mono:wght@600&amp;display=swap"/>
+            </t>
+            <div class="card">
+                <img t-if="gate_entry.company_id.logo" t-att-src="image_data_uri(gate_entry.company_id.logo)" style="max-height: 56px; width: auto; margin-bottom: 10px;"/>
+                <div class="eyebrow">Gate pass</div>
+                <h1><span t-field="gate_entry.company_id.name"/></h1>
+                <div class="note">Show this QR code or the entry code to the guard at the gate</div>
+
+                <div t-if="qr_base64" class="qr"><img t-att-src="'data:image/png;base64,%s' % qr_base64" alt="QR code"/></div>
+                <div t-else="" class="err">QR code unavailable — use the entry code below.</div>
+                <div class="or">OR</div>
+                <div class="code"><t t-esc="gate_entry.otp"/></div>
+
+                <div t-if="gate_entry.scheduled_start">
+                    <div class="when"><span t-field="gate_entry.scheduled_start" t-options='{"widget": "datetime", "format": "EEEE d MMMM yyyy"}'/></div>
+                    <div class="whenm"><span t-field="gate_entry.scheduled_start" t-options='{"widget": "datetime", "format": "hh:mm a"}'/> – <span t-field="gate_entry.scheduled_end" t-options='{"widget": "datetime", "format": "hh:mm a"}'/></div>
+                </div>
+
+                <div class="grid">
+                    <div><div class="label">Visitor</div><div class="value" t-esc="gate_entry.visitor_name or gate_entry.driver_name or 'Guest'"/><div class="whenm" t-esc="gate_entry._purpose_label()"/></div>
+                    <div style="text-align:right"><div class="label">Host · Vehicle</div><div class="value" t-esc="gate_entry.host_id.name or '--'"/><div class="whenm mono" t-esc="gate_entry.vehicle_number or '--'"/></div>
+                </div>
+
+                <div class="addr"><t t-esc="gate_entry.full_address"/></div>
+                <a t-att-href="gate_entry.google_maps_link" class="btn gold" target="_blank">Get directions</a>
+                <a t-att-href="download_url" class="btn soft">Download PDF pass</a>
+                <div class="foot">Ref <t t-esc="gate_entry.name"/></div>
+            </div>
+        </t>
+    </template>
+</odoo>

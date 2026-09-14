@@ -1,0 +1,3 @@
+jsQR 1.4.0 — https://github.com/cozmo/jsQR
+Copyright (c) 2014 Cosmo Wolfe. Licensed under the Apache License, Version 2.0.
+Bundled unmodified so QR scanning works on gates without internet access.
