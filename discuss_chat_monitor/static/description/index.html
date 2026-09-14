@@ -1,0 +1,117 @@
+<!--
+  Discuss Chat Monitor &mdash; Odoo Apps Store description page.
+  Written for the store HTML sanitizer: no stylesheet block, no JS; layout via Bootstrap 5 classes,
+  inline styles limited to the whitelisted properties. Asset paths are relative to static/description/.
+-->
+<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:#282d3c; line-height:1.6; font-weight:400;">
+
+  <!-- ============================= HERO ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#f1edfb;">
+    <div class="text-center mx-auto mb-4" style="max-width:820px;">
+      <p class="mb-2" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6d3bd6;">Discuss Chat Monitor &middot; Odoo 19</p>
+      <h1 class="fs-1 mb-3" style="font-weight:800; line-height:1.15; color:#2b1d5e;">Every Discuss conversation, one read-only console.</h1>
+      <p class="mb-4" style="font-size:18px; color:#58646d;">Give managers and compliance officers a dual-pane view of all Discuss activity &mdash; direct chats, group chats and channels &mdash; with search, date filters, full transcripts and attachments. Nothing to configure, nothing leaves your server.</p>
+      <div class="d-flex flex-wrap justify-content-center gap-2">
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#009b77; background-color:#ffffff; border:1px solid #d9d0f2;"><i class="fa fa-circle me-1"></i> Odoo 19.0</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#58646d; background-color:#ffffff; border:1px solid #d9d0f2;">Community &amp; Enterprise</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#58646d; background-color:#ffffff; border:1px solid #d9d0f2;">Read-only</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#58646d; background-color:#ffffff; border:1px solid #d9d0f2;">No external services</span>
+      </div>
+    </div>
+    <img class="img-fluid rounded-4 mx-auto d-block" src="banner.png" alt="Discuss Chat Monitor: conversation list on the left, full transcript on the right"/>
+  </div>
+
+  <!-- ============================= HOW IT WORKS ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6d3bd6;">How it works</p>
+    <h2 class="fs-2 mb-3" style="font-weight:800; color:#2b1d5e;">Open the app. Pick a conversation. Read.</h2>
+    <p class="mb-4" style="font-size:17px; color:#58646d; max-width:70ch;">Chat Monitor is a separate app in the Odoo menu, visible only to users in the <b>Chat Monitor Manager</b> group. It reads the messages Odoo already stores &mdash; it does not copy, forward or alter them.</p>
+    <div class="rounded-4 p-3 p-md-4" style="background-color:#f1edfb;">
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="d-flex align-items-start gap-3">
+            <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#6d3bd6; background-color:#ffffff; border:1px solid #d9d0f2;">1</span>
+            <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#2b1d5e;">Browse the sidebar</h3><p class="mb-0" style="font-size:15px; color:#58646d;">Every conversation, newest activity first, with participant avatars, message count, last message time and a one-line preview.</p></div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="d-flex align-items-start gap-3">
+            <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#6d3bd6; background-color:#ffffff; border:1px solid #d9d0f2;">2</span>
+            <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#2b1d5e;">Narrow it down</h3><p class="mb-0" style="font-size:15px; color:#58646d;">Switch between All / Direct / Group / Channel, pick Today, Yesterday or This week, and search by conversation title or participant name.</p></div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="d-flex align-items-start gap-3">
+            <span class="rounded-circle d-inline-block text-center" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#6d3bd6; background-color:#ffffff; border:1px solid #d9d0f2;">3</span>
+            <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#2b1d5e;">Read the transcript</h3><p class="mb-0" style="font-size:15px; color:#58646d;">The full thread in the right pane: author, avatar, local-time stamps as in Discuss, formatted message body and downloadable attachments.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= FEATURES ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6d3bd6;">Features</p>
+    <h2 class="fs-2 mb-4" style="font-weight:800; color:#2b1d5e;">Built for oversight, not for chatting</h2>
+    <div class="row g-3">
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><p class="mb-2" style="font-size:22px; color:#6d3bd6;"><i class="fa fa-comments"></i></p><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">All three conversation types</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Direct messages between two users, private group chats and public or private channels are all listed &mdash; including conversations the manager is not a member of.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><p class="mb-2" style="font-size:22px; color:#6d3bd6;"><i class="fa fa-filter"></i></p><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Type and date filters</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Filter the list by conversation type and by activity date. The date filter also trims the transcript, so &ldquo;Today&rdquo; shows only today's messages of that thread.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><p class="mb-2" style="font-size:22px; color:#6d3bd6;"><i class="fa fa-search"></i></p><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Instant search</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Type a name and the sidebar narrows as you go &mdash; matches on the conversation title or on any participant's name.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><p class="mb-2" style="font-size:22px; color:#6d3bd6;"><i class="fa fa-paperclip"></i></p><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Attachments included</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Files shared in a conversation are listed under the message with their name and type, and can be downloaded with one click.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><p class="mb-2" style="font-size:22px; color:#6d3bd6;"><i class="fa fa-clock-o"></i></p><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Times you recognise</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Timestamps are shown in the manager's own timezone in the same style as Discuss: &ldquo;Today at 03:11 PM&rdquo;, &ldquo;Yesterday at 05:00 PM&rdquo;, or the full date.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><p class="mb-2" style="font-size:22px; color:#6d3bd6;"><i class="fa fa-refresh"></i></p><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Refresh on demand</h4><p class="mb-0" style="font-size:15px; color:#58646d;">A refresh button reloads the open thread and the sidebar counters; the view scrolls to the latest message automatically.</p></div></div>
+    </div>
+  </div>
+
+  <!-- ============================= ACCESS & PRIVACY ============================= -->
+  <div class="mb-5 rounded-4 p-4 p-md-5" style="background-color:#f1edfb;">
+    <div class="row g-4 align-items-center">
+      <div class="col-12 col-lg-7">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6d3bd6;">Access &amp; privacy</p>
+        <h2 class="fs-2 mb-3" style="font-weight:800; color:#2b1d5e;">Who can see what</h2>
+        <p class="mb-3" style="font-size:17px; color:#58646d;">Installing the app adds one security group, <b>Chat Monitor Manager</b>, in its own category under Settings &rsaquo; Users. Only members of that group see the Chat Monitor menu; for everyone else Discuss behaves exactly as before.</p>
+        <p class="mb-3" style="font-size:17px; color:#58646d;">Managers in the group can read <b>every</b> Discuss conversation on the database, including private direct chats. That is the point of the app &mdash; and also a responsibility. Make sure monitoring is covered by your workplace policy and, where required, that staff have been informed.</p>
+        <p class="mb-0" style="font-size:17px; color:#58646d;">The console is strictly read-only: it cannot send messages, join channels, edit or delete anything. Data stays in your Odoo database; no third-party service is contacted.</p>
+      </div>
+      <div class="col-12 col-lg-5">
+        <div class="rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;">
+          <table class="w-100" style="font-size:15px;">
+            <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; white-space:nowrap;">Version</th><td class="py-2">19.0.1.0.0</td></tr>
+            <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; white-space:nowrap;">Editions</th><td class="py-2">Community and Enterprise</td></tr>
+            <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; white-space:nowrap;">Depends on</th><td class="py-2">base, mail, web</td></tr>
+            <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; white-space:nowrap;">Access</th><td class="py-2">Chat Monitor Manager group</td></tr>
+            <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; white-space:nowrap;">Data</th><td class="py-2">Reads existing messages; adds no tables to Discuss</td></tr>
+            <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#58646d; white-space:nowrap;">Licence</th><td class="py-2">OPL-1</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= FAQ ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6d3bd6;">FAQ</p>
+    <h2 class="fs-2 mb-4" style="font-weight:800; color:#2b1d5e;">Before you install</h2>
+    <div class="row g-3">
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Do users know they are being monitored?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">The app shows no indicator inside Discuss. Informing staff is your organisation's responsibility under local employment and privacy law.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Does it show messages posted on records (chatter)?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">No. It covers Discuss conversations only: direct chats, group chats and channels. Chatter on invoices, tasks and other records is out of scope.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Can a monitor reply from the console?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">No. The console is deliberately read-only. To take part in a conversation, use Discuss as usual.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Does it work with many conversations?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Yes. The sidebar shows previews only; the full transcript loads when you open a conversation. Date filters keep long-running channels manageable.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Is anything sent outside my server?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">Nothing. The app uses only Odoo's own RPC calls between your browser and your Odoo instance.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #d9d0f2;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#2b1d5e;">Multi-company?</h4><p class="mb-0" style="font-size:15px; color:#58646d;">The console lists all Discuss conversations on the database regardless of company. Restrict the manager group accordingly if you need per-company monitors.</p></div></div>
+    </div>
+  </div>
+
+  <!-- ============================= SUPPORT ============================= -->
+  <div class="rounded-4 p-4 p-md-5 text-center" style="background-color:#f1edfb;">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6d3bd6;">Support</p>
+    <h2 class="fs-2 mb-3" style="font-weight:800; color:#2b1d5e;">Questions, ideas, a feature you need?</h2>
+    <p class="mx-auto mb-4" style="font-size:17px; color:#58646d; max-width:60ch;">We answer within one business day and ship fixes for confirmed bugs free of charge for 90 days after purchase.</p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <span class="d-inline-block rounded-4 px-4 py-3" style="font-weight:800; font-size:14px; letter-spacing:.03em; color:#ffffff; background-color:#6d3bd6;"><i class="fa fa-envelope me-2"></i>Contact Albatross</span>
+    </div>
+    <p class="mt-4 mb-0" style="color:#7e8a93; font-size:13px;">Discuss Chat Monitor &middot; &copy; Albatross &middot; Licence OPL-1</p>
+  </div>
+
+</div>

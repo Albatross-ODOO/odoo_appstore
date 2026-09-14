@@ -33,6 +33,8 @@ in real time via a modern dual-pane UI.
             'discuss_chat_monitor/static/src/xml/chat_monitor.xml',
         ],
     },
+    'website': 'https://www.odoo.com/apps',
+    'images': ['static/description/banner.png'],
     'installable': True,
     'application': True,
     'auto_install': False,
