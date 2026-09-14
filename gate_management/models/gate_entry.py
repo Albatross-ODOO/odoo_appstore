@@ -214,7 +214,8 @@ class GateEntry(models.Model):
             token = record.access_token or str(uuid.uuid4())
             if not record.access_token:
                 record.access_token = token
-            record.share_link = f"{base_url}/gate/invitation/share?id={record.id}&token={token}&db={db_name}"
+            entry_id = record._origin.id or record.id
+            record.share_link = f"{base_url}/gate/invitation/share?id={entry_id}&token={token}&db={db_name}"
 
     @api.depends('name', 'otp', 'scheduled_start', 'scheduled_end', 'vehicle_number', 'company_id', 'google_maps_link', 'visit_purpose', 'visit_purpose_detail')
     def _compute_invite_message(self):
