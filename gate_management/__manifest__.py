@@ -28,7 +28,9 @@ the WhatsApp option appears automatically and sends passes through an approved M
     'category': 'Services/Gate Management',
     'author': 'Albatross',
     'website': 'https://www.odoo.com/apps',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
+    'price': 25.00,
+    'currency': 'EUR',
     'depends': ['base', 'mail', 'web'],
     'data': [
         'security/security_groups.xml',
