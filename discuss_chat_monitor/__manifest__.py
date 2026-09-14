@@ -11,8 +11,10 @@ Discuss Chat Monitor for Odoo 19
 Allows administrators and managers to monitor, inspect, and filter Discuss chat conversations
 in real time via a modern dual-pane UI.
     """,
-    'author': 'Custom Odoo Team',
-    'license': 'LGPL-3',
+    'author': 'Albatross',
+    'license': 'OPL-1',
+    'price': 25.00,
+    'currency': 'EUR',
     'depends': [
         'base',
         'mail',
