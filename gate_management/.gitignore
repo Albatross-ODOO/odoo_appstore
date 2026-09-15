@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Odoo / tooling artefacts
+*.log
+*.orig
+*.rej
+.coverage
+htmlcov/
+
+# Editors & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Design sources that must not ship with the module
+static/description/*.psd
+static/description/*.xcf
+static/description/*.sketch
+static/description/*.fig
