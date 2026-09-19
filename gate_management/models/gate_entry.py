@@ -421,16 +421,11 @@ class GateEntry(models.Model):
                 'visitor_name', 'vehicle_number', 'company_id.name', 'host_id.name']
 
     @api.model
-    def _get_or_create_wa_template(self):
-        """The Meta template lives in the WhatsApp app (Enterprise). It is created on first use so the
-        module itself never depends on `whatsapp` and installs cleanly on Community."""
-        if not self._whatsapp_installed():
-            return False
-        template = self.env.ref('gate_management.wa_template_gate_pass_invitation', raise_if_not_found=False)
-        if template:
-            return template
-        Template = self.env['whatsapp.template'].sudo()
-        template = Template.create({
+    def _wa_template_vals(self):
+        """Definition of the Meta template, kept in one place so a template Meta has not approved yet can be
+        refreshed from it. Meta rejects a template whose text starts or ends with a variable, so the header
+        carries none and the body closes on a static line."""
+        return {
             'name': 'Gate Pass Invitation',
             'template_name': 'gate_pass_invitation',
             'model_id': self.env['ir.model']._get_id('gate.entry'),
@@ -438,18 +433,36 @@ class GateEntry(models.Model):
             'template_type': 'utility',
             'status': 'draft',
             'header_type': 'text',
-            'header_text': 'Gate pass from {{1}}',
+            'header_text': 'Gate pass',
+            'header_attachment_ids': [(5, 0, 0)],
             'phone_field': 'mobile_number',
             'body': "You have been invited. Show the entry code or the digital pass to the guard at the gate.\n\n"
-                    "*Entry Code:* {{1}}\n*Validity:* {{2}}\n*Location:* {{3}}\n*Digital Pass:* {{4}}",
+                    "*Entry Code:* {{1}}\n*Validity:* {{2}}\n*Location:* {{3}}\n*Digital Pass:* {{4}}\n\n"
+                    "Please carry the digital pass with you.",
             'variable_ids': [
-                (0, 0, {'name': '{{1}}', 'line_type': 'header', 'field_type': 'field', 'field_name': 'company_id.name', 'demo_value': 'Albatross'}),
+                (5, 0, 0),
                 (0, 0, {'name': '{{1}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'otp', 'demo_value': '123456'}),
                 (0, 0, {'name': '{{2}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'validity_string', 'demo_value': '13 Jul 2026, 11:30 AM - 05:00 PM'}),
                 (0, 0, {'name': '{{3}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'full_address', 'demo_value': '123 Main St, Springfield'}),
                 (0, 0, {'name': '{{4}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'share_link', 'demo_value': 'https://example.com/gate/invitation/share'}),
             ],
-        })
+        }
+
+    @api.model
+    def _get_or_create_wa_template(self):
+        """The Meta template lives in the WhatsApp app (Enterprise). It is created on first use so the
+        module itself never depends on `whatsapp` and installs cleanly on Community."""
+        if not self._whatsapp_installed():
+            return False
+        template = self.env.ref('gate_management.wa_template_gate_pass_invitation', raise_if_not_found=False)
+        if template:
+            # An approved template is left exactly as Meta approved it. A draft, rejected or older-version
+            # template is refreshed, so a rejection can be corrected and resubmitted without hand-editing.
+            if template.status != 'approved':
+                template.sudo().write(self._wa_template_vals())
+            return template
+        Template = self.env['whatsapp.template'].sudo()
+        template = Template.create(self._wa_template_vals())
         self.env['ir.model.data'].sudo().create({
             'name': 'wa_template_gate_pass_invitation',
             'module': 'gate_management',
