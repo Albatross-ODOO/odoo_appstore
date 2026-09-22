@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_upi_qr" inherit_id="account.report_invoice_document">
+        <!-- The card goes right after Odoo's own payment QR block, before the terms and conditions. -->
+        <xpath expr="//div[@id='qrcode']" position="after">
+            <t t-call="upi_qr_payment.upi_qr_card">
+                <t t-set="doc" t-value="o"/>
+            </t>
+        </xpath>
+        <!-- Optionally hide Odoo's built-in bank / UPI QR when the Scan & Pay card is printed. -->
+        <xpath expr="//t[@t-set='show_qr']" position="attributes">
+            <attribute name="t-value">o.display_qr_code and o.amount_residual > 0 and not (o.company_id.upi_qr_replace_native and o.upi_qr_image)</attribute>
+        </xpath>
+    </template>
+</odoo>

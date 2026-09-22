@@ -1,0 +1,815 @@
+<title>UPI Scan &amp; Pay</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #e2eaeb;
+    --hi: #ffffff;
+    --sh: rgba(162, 185, 191, .75);
+    --ink: #282d3c;
+    --head: #0f4c81;
+    --muted: #58646d;
+    --muted-2: #7e8a93;
+    --accent: #ff6f61;
+    --accent-2: #dd4124;
+    --accent-text: #c9381d;
+    --accent-soft: rgba(255, 111, 97, .28);
+    --success: #009b77;
+    --violet: #5f4b8b;
+    --line: rgba(88, 100, 109, .18);
+    --code-bg: rgba(15, 76, 129, .07);
+    --display: "Sora", "Segoe UI", system-ui, sans-serif;
+    --body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    --r: 18px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #242a33;
+      --hi: rgba(255, 255, 255, .06);
+      --sh: rgba(0, 0, 0, .55);
+      --ink: #e4e9ee;
+      --head: #93c4ee;
+      --muted: #a6b0ba;
+      --muted-2: #7f8994;
+      --accent-text: #ff8a7d;
+      --accent-soft: rgba(255, 111, 97, .32);
+      --success: #3fc9a3;
+      --line: rgba(166, 176, 186, .2);
+      --code-bg: rgba(147, 196, 238, .1);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #242a33;
+    --hi: rgba(255, 255, 255, .06);
+    --sh: rgba(0, 0, 0, .55);
+    --ink: #e4e9ee;
+    --head: #93c4ee;
+    --muted: #a6b0ba;
+    --muted-2: #7f8994;
+    --accent-text: #ff8a7d;
+    --accent-soft: rgba(255, 111, 97, .32);
+    --success: #3fc9a3;
+    --line: rgba(166, 176, 186, .2);
+    --code-bg: rgba(147, 196, 238, .1);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 15px; line-height: 1.5;
+    padding-block: 0 4rem; padding-inline: clamp(16px, 4vw, 48px);
+    font-variant-numeric: tabular-nums;
+  }
+  h1, h2, h3, h4 { font-family: var(--display); letter-spacing: -.01em; text-wrap: balance; color: var(--head); margin: 0; }
+  h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); font-weight: 800; line-height: 1.1; }
+  h2 { font-size: 1.4rem; font-weight: 700; }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--ink); }
+  p { margin: 0; }
+  a { color: var(--head); }
+  code, .mono { font-family: var(--mono); font-size: .86em; }
+  code { background: var(--code-bg); padding: .08em .35em; border-radius: 6px; }
+  pre { margin: 0; font-family: var(--mono); font-size: .8rem; line-height: 1.55; overflow-x: auto; padding: 1rem 1.2rem; border-radius: var(--r); box-shadow: inset 4px 4px 8px var(--sh), inset -4px -4px 8px var(--hi); color: var(--ink); }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  .wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 4rem; }
+  .eyebrow { font-family: var(--display); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); }
+  .lede { color: var(--muted); max-width: 62ch; font-size: 1.08rem; }
+  .sec-head { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1.6rem; max-width: 72ch; }
+  .sec-head p { color: var(--muted); }
+  .raised { box-shadow: 7px 7px 14px var(--sh), -7px -7px 14px var(--hi); }
+  .inset  { box-shadow: inset 4px 4px 8px var(--sh), inset -4px -4px 8px var(--hi); }
+  .flat   { box-shadow: 3px 3px 6px var(--sh), -3px -3px 6px var(--hi); }
+
+  /* top bar */
+  .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); margin-inline: calc(-1 * clamp(16px, 4vw, 48px)); padding: .8rem clamp(16px, 4vw, 48px); display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; box-shadow: 0 8px 18px -12px var(--sh); }
+  .top b { font-family: var(--display); font-weight: 800; color: var(--head); }
+  .top nav { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .top nav a { text-decoration: none; font-family: var(--display); font-size: .78rem; font-weight: 700; color: var(--muted); padding: .45rem .9rem; border-radius: 999px; box-shadow: 3px 3px 6px var(--sh), -3px -3px 6px var(--hi); }
+  .top nav a:hover, .top nav a:focus-visible { color: var(--accent-text); outline: none; }
+
+  header.hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2.5rem; align-items: center; padding-top: 2.5rem; }
+  header.hero .txt { display: flex; flex-direction: column; gap: .9rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .chip { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .85rem; border-radius: 999px; font-family: var(--display); font-size: .66rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); box-shadow: 3px 3px 6px var(--sh), -3px -3px 6px var(--hi); }
+  .chip.price { color: var(--accent-text); font-size: .8rem; }
+  .chip.ok { color: var(--success); }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .fact { border-radius: var(--r); padding: 1rem 1.1rem; box-shadow: inset 4px 4px 8px var(--sh), inset -4px -4px 8px var(--hi); }
+  .fact b { display: block; font-family: var(--display); font-size: 1.45rem; font-weight: 800; color: var(--head); line-height: 1.1; }
+  .fact small { display: block; margin-top: .3rem; color: var(--muted); font-size: .8rem; }
+
+  /* mock grid */
+  .mocks { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4rem; align-items: start; }
+  .mock { display: flex; flex-direction: column; gap: .8rem; min-width: 0; }
+  .mock-cap { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .mock-cap strong { font-family: var(--display); font-size: .95rem; }
+  .mock-cap span { font-size: .78rem; color: var(--muted); }
+  .note { color: var(--muted); font-size: .88rem; }
+
+  /* paper (PDF) — always paper-white, like a printed page */
+  .paper { container-type: inline-size; width: 100%; max-width: 620px; margin: 0 auto; background: #ffffff; color: #1f2430; border-radius: 6px; box-shadow: 10px 10px 24px var(--sh), -10px -10px 24px var(--hi); font-family: Helvetica, Arial, "Nunito Sans", sans-serif; overflow: hidden; }
+  .sheet { font-size: 1.85cqi; padding: 5.5cqi 6cqi 4cqi; aspect-ratio: 210 / 297; display: flex; flex-direction: column; line-height: 1.4; }
+  .sheet .grow { flex: 1 1 auto; }
+  .ph { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 1em; border-bottom: .18em solid #1f2430; margin-bottom: 1.6em; }
+  .logo { display: inline-flex; align-items: center; gap: .5em; font-weight: 800; font-size: 1.5em; color: #0f4c81; letter-spacing: -.02em; }
+  .logo i { width: 1.1em; height: 1.1em; border-radius: .3em; background: #0f4c81; display: inline-block; }
+  .ph .co { text-align: right; color: #58646d; font-size: .92em; line-height: 1.45; }
+  .doc-title { font-size: 1.9em; font-weight: 700; margin-bottom: .6em; color: #1f2430; }
+  .addr { display: flex; justify-content: flex-end; margin-bottom: 1.4em; }
+  .addr div { width: 42%; line-height: 1.45; }
+  .addr b { display: block; }
+  .info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1em; margin-bottom: 1.4em; }
+  .info b { display: block; font-size: .92em; }
+  .info span { color: #58646d; }
+  table.lines { width: 100%; border-collapse: collapse; margin-bottom: .6em; }
+  table.lines th { text-align: left; border-bottom: .12em solid #1f2430; padding: .45em .3em; font-weight: 700; }
+  table.lines td { padding: .5em .3em; border-bottom: .06em solid #dfe4e8; vertical-align: top; }
+  table.lines .r { text-align: right; }
+  table.lines .desc small { display: block; color: #58646d; }
+  .totals { display: flex; justify-content: flex-end; margin-bottom: 1em; }
+  .totals table { width: 46%; border-collapse: collapse; }
+  .totals td { padding: .35em .3em; }
+  .totals td.r { text-align: right; }
+  .totals tr.tot td { border-top: .12em solid #1f2430; font-weight: 700; font-size: 1.1em; padding-top: .55em; }
+  .totals tr.due td { font-weight: 700; color: #0f4c81; }
+  .terms { font-size: .92em; color: #58646d; line-height: 1.5; margin-top: 1.2em; }
+  .terms b { color: #1f2430; }
+  .pf { border-top: .06em solid #dfe4e8; padding-top: .7em; margin-top: 1.4em; display: flex; justify-content: space-between; color: #7e8a93; font-size: .84em; }
+  .sig { display: flex; justify-content: flex-end; margin-top: 1.4em; }
+  .sig div { width: 40%; text-align: center; color: #58646d; font-size: .9em; }
+  .sig div span { display: block; border-top: .06em solid #9aa4ad; margin-top: 2.6em; padding-top: .4em; }
+
+  /* THE CARD — the shared QWeb template, rendered here at paper scale and zoomed */
+  .upi { background: #e6ecee; border-radius: 1.25em; padding: 1.1em 1.3em; display: flex; gap: 1.4em; align-items: center; margin-top: .4em; break-inside: avoid; color: #1f2430; }
+  .upi-qr { flex: 0 0 auto; background: #e6ecee; border-radius: 1em; padding: .65em; box-shadow: .45em .45em .9em rgba(162,185,191,.72), -.45em -.45em .9em #ffffff; }
+  .upi-qr img { width: 9em; height: 9em; display: block; border-radius: .45em; }
+  .upi-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: .35em; }
+  .upi-eyebrow { font-size: .68em; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #c9381d; }
+  .upi-amt { display: flex; align-items: baseline; gap: .6em; flex-wrap: wrap; }
+  .upi-amt b { font-size: 1.95em; font-weight: 800; color: #0f4c81; letter-spacing: -.02em; line-height: 1.1; }
+  .upi-amt span { font-size: .78em; color: #58646d; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
+  .upi-rows { display: grid; grid-template-columns: auto 1fr; gap: .12em 1em; font-size: .92em; }
+  .upi-rows small { color: #58646d; text-transform: uppercase; letter-spacing: .08em; font-size: .78em; font-weight: 700; align-self: center; }
+  .upi-rows span { font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+  .upi-rows span.mono { font-family: "JetBrains Mono", "Courier New", monospace; font-size: .95em; }
+  .upi-cap { color: #58646d; font-size: .86em; line-height: 1.4; }
+  .upi-fx { font-size: .8em; color: #58646d; }
+  .upi-fx b { color: #1f2430; }
+  .upi-apps { display: inline-flex; flex-wrap: wrap; gap: .4em; margin-top: .2em; }
+  .upi-apps i { font-style: normal; font-size: .72em; font-weight: 700; color: #58646d; padding: .28em .7em; border-radius: 999px; box-shadow: inset .18em .18em .4em rgba(162,185,191,.65), inset -.18em -.18em .4em #ffffff; }
+
+  /* zoomed anatomy */
+  .anatomy { display: grid; grid-template-columns: minmax(300px, 1.25fr) 1fr; gap: 2.4rem; align-items: center; }
+  .zoom { font-size: clamp(9px, 1.55vw, 14.5px); background: #ffffff; padding: 1.4em; border-radius: 14px; box-shadow: 10px 10px 24px var(--sh), -10px -10px 24px var(--hi); font-family: Helvetica, Arial, "Nunito Sans", sans-serif; }
+  .callouts { display: flex; flex-direction: column; gap: .7rem; counter-reset: c; }
+  .callouts li { list-style: none; display: grid; grid-template-columns: 30px 1fr; gap: .8rem; align-items: start; }
+  .callouts li::before { counter-increment: c; content: counter(c); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: .78rem; color: var(--accent-text); box-shadow: 3px 3px 6px var(--sh), -3px -3px 6px var(--hi); }
+  .callouts li::before { grid-column: 1; grid-row: 1 / span 2; }
+  .callouts li > b, .callouts li > p { grid-column: 2; }
+  .callouts b { display: block; font-family: var(--display); font-size: .92rem; }
+  .callouts p { color: var(--muted); font-size: .9rem; }
+
+  /* settings mock — a screen of Odoo's own settings page, so it stays light */
+  .screen { width: 100%; max-width: 620px; margin: 0 auto; background: #f9fafb; color: #1f2430; border-radius: 12px; overflow: hidden; box-shadow: 10px 10px 24px var(--sh), -10px -10px 24px var(--hi); font-family: -apple-system, "Segoe UI", Roboto, "Nunito Sans", sans-serif; font-size: 13px; container-type: inline-size; }
+  .odoo-bar { background: #714b67; color: #fff; padding: .55em .9em; display: flex; gap: 1em; align-items: center; font-size: .92em; }
+  .odoo-bar b { font-weight: 700; }
+  .odoo-bar span { opacity: .8; }
+  .odoo-cp { background: #fff; border-bottom: 1px solid #dee2e6; padding: .6em .9em; display: flex; gap: .6em; align-items: center; }
+  .odoo-cp .btn { background: #714b67; color: #fff; border-radius: .3em; padding: .35em .8em; font-weight: 600; font-size: .92em; }
+  .odoo-cp .btn.o { background: #fff; color: #495057; border: 1px solid #ced4da; }
+  .odoo-body { display: grid; grid-template-columns: 26% 1fr; min-height: 32em; }
+  .odoo-side { background: #fff; border-right: 1px solid #dee2e6; padding: .8em 0; }
+  .odoo-side div { padding: .5em 1em; color: #495057; }
+  .odoo-side div.on { background: #f1e9ef; color: #714b67; font-weight: 700; border-left: 3px solid #714b67; }
+  .odoo-main { padding: 1.2em 1.4em; display: flex; flex-direction: column; gap: 1.2em; }
+  .odoo-h { font-size: 1.15em; font-weight: 700; border-bottom: 1px solid #dee2e6; padding-bottom: .4em; color: #1f2430; }
+  .odoo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2em 1.6em; }
+  .o-set { display: grid; grid-template-columns: 1.4em 1fr; gap: .5em; align-items: start; }
+  .o-set .cb { width: 1.05em; height: 1.05em; border: 1px solid #adb5bd; border-radius: .2em; margin-top: .15em; background: #fff; display: grid; place-items: center; }
+  .o-set .cb.on { background: #714b67; border-color: #714b67; }
+  .o-set .cb.on::after { content: ""; width: .45em; height: .25em; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-.1em); }
+  .o-set b { display: block; font-weight: 700; }
+  .o-set p { color: #6c757d; font-size: .92em; }
+  .o-field { display: grid; grid-template-columns: 6.5em 1fr; gap: .5em; align-items: center; margin-top: .45em; }
+  .o-field label { color: #495057; font-size: .92em; }
+  .o-field span { border-bottom: 1px solid #ced4da; padding: .2em .1em; color: #1f2430; font-weight: 600; }
+  .o-field span.mono { font-family: var(--mono); font-size: .9em; }
+  .o-prev { grid-column: 1 / -1; display: flex; gap: 1.2em; align-items: center; background: #e6ecee; border-radius: 14px; padding: 1em 1.2em; margin-top: .3em; }
+  .o-prev .q { background: #e6ecee; border-radius: 10px; padding: .5em; box-shadow: 6px 6px 12px rgba(162,185,191,.72), -6px -6px 12px #fff; flex: 0 0 auto; }
+  .o-prev .q img { width: 7.2em; height: 7.2em; display: block; border-radius: 6px; }
+  .o-prev .t b { display: block; color: #0f4c81; font-weight: 800; font-size: 1.05em; }
+  .o-prev .t p { color: #58646d; font-size: .92em; margin-top: .25em; }
+  .o-prev .t i { display: inline-block; font-style: normal; margin-top: .5em; font-size: .78em; font-weight: 700; color: #009b77; padding: .3em .8em; border-radius: 999px; box-shadow: inset 2px 2px 4px rgba(162,185,191,.65), inset -2px -2px 4px #fff; }
+
+  /* buyer's phone */
+  .phone-wrap { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: 2.4rem; align-items: center; }
+  .frame { background: var(--bg); border-radius: 34px; padding: 14px; width: 100%; max-width: 340px; margin: 0 auto; box-shadow: 12px 12px 28px var(--sh), -12px -12px 28px var(--hi), inset 0 0 0 2px rgba(255,255,255,.35); }
+  .status { display: flex; justify-content: space-between; font-size: .72rem; font-weight: 700; color: var(--muted); padding: .35rem .9rem .6rem; font-family: var(--display); }
+  .pscreen { background: #f6f8f9; color: #1f2430; border-radius: 24px; padding: 1.1rem; min-height: 520px; display: flex; flex-direction: column; gap: .9rem; font-family: -apple-system, "Segoe UI", Roboto, "Nunito Sans", sans-serif; }
+  .pscreen .bar { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: .9rem; color: #58646d; }
+  .payee { display: flex; gap: .8rem; align-items: center; background: #fff; border-radius: 16px; padding: .9rem; box-shadow: 0 6px 16px rgba(40,45,60,.08); }
+  .payee .av { width: 44px; height: 44px; border-radius: 50%; background: #0f4c81; color: #fff; display: grid; place-items: center; font-weight: 800; flex: 0 0 auto; }
+  .payee b { display: block; font-size: .95rem; }
+  .payee small { display: block; color: #58646d; font-family: var(--mono); font-size: .74rem; }
+  .pamt { text-align: center; padding: .8rem 0 .2rem; }
+  .pamt small { display: block; color: #58646d; font-size: .74rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
+  .pamt b { font-size: 2.4rem; font-weight: 800; color: #1f2430; letter-spacing: -.02em; }
+  .pamt .lock { display: inline-flex; align-items: center; gap: .35rem; margin-top: .35rem; font-size: .72rem; color: #009b77; font-weight: 700; }
+  .prow { display: flex; justify-content: space-between; gap: 1rem; background: #fff; border-radius: 14px; padding: .7rem .9rem; font-size: .84rem; }
+  .prow small { color: #58646d; }
+  .prow b { text-align: right; min-width: 0; overflow-wrap: anywhere; }
+  .pbtn { margin-top: auto; background: #0f4c81; color: #fff; border-radius: 16px; padding: .95rem; text-align: center; font-weight: 800; font-size: .95rem; }
+  .pin { display: grid; grid-template-columns: repeat(6, 1fr); gap: .35rem; }
+  .pin i { height: 2.4rem; border-radius: 10px; background: #fff; box-shadow: inset 0 0 0 1px #dfe4e8; display: grid; place-items: center; font-style: normal; font-weight: 800; }
+  .steps { display: flex; flex-direction: column; gap: .9rem; counter-reset: s; }
+  .steps li { list-style: none; display: grid; grid-template-columns: 34px 1fr; gap: .9rem; align-items: start; }
+  .steps li::before { counter-increment: s; content: counter(s); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: .8rem; color: var(--accent-text); box-shadow: 3px 3px 6px var(--sh), -3px -3px 6px var(--hi); }
+  .steps li::before { grid-column: 1; grid-row: 1 / span 2; }
+  .steps li > b, .steps li > p { grid-column: 2; }
+  .steps b { display: block; font-family: var(--display); font-size: .95rem; }
+  .steps p { color: var(--muted); font-size: .92rem; }
+
+  /* payload */
+  .uri { font-family: var(--mono); font-size: .86rem; line-height: 1.7; padding: 1rem 1.2rem; border-radius: var(--r); box-shadow: inset 4px 4px 8px var(--sh), inset -4px -4px 8px var(--hi); overflow-x: auto; white-space: nowrap; }
+  .uri em { font-style: normal; color: var(--accent-text); font-weight: 600; }
+  .uri u { text-decoration: none; color: var(--head); font-weight: 600; }
+
+  /* tables */
+  .tbl-wrap { overflow-x: auto; border-radius: var(--r); box-shadow: 5px 5px 12px var(--sh), -5px -5px 12px var(--hi); }
+  table.t { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 560px; }
+  table.t th { text-align: left; font-family: var(--display); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: .8rem 1rem; border-bottom: 1px solid var(--line); }
+  table.t td { padding: .7rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.t tr:last-child td { border-bottom: 0; }
+  table.t td:first-child { font-weight: 700; white-space: nowrap; }
+  .tag { display: inline-block; font-family: var(--display); font-size: .64rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .55rem; border-radius: 999px; color: var(--success); box-shadow: inset 2px 2px 4px var(--sh), inset -2px -2px 4px var(--hi); }
+  .tag.warn { color: var(--accent-text); }
+  .tag.dim { color: var(--muted); }
+
+  /* plan blocks */
+  .plan { display: flex; flex-direction: column; gap: 2.6rem; }
+  .block { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 1.6rem 2.4rem; align-items: start; }
+  .block .side { display: flex; flex-direction: column; gap: .4rem; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 4.2rem); }
+  .block .side .num { font-family: var(--display); font-size: 2rem; font-weight: 800; color: var(--accent-text); line-height: 1; }
+  .block .side p { color: var(--muted); font-size: .92rem; }
+  .block .main { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+  ul.list { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; }
+  ul.list li::marker { color: var(--accent-text); }
+  .card { border-radius: var(--r); padding: 1.1rem 1.25rem; box-shadow: 7px 7px 14px var(--sh), -7px -7px 14px var(--hi); display: flex; flex-direction: column; gap: .5rem; }
+  .card h3 { font-size: .95rem; }
+  .cards2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .rule { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; align-items: start; padding: .6rem 0; border-bottom: 1px solid var(--line); }
+  .rule:last-child { border-bottom: 0; }
+  .rule b { font-family: var(--display); font-size: .82rem; }
+  .rule p { color: var(--muted); font-size: .92rem; }
+  .phases { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+  .ph-card { border-radius: var(--r); padding: 1rem; display: flex; flex-direction: column; gap: .4rem; box-shadow: 7px 7px 14px var(--sh), -7px -7px 14px var(--hi); }
+  .ph-card.now { box-shadow: inset 4px 4px 8px var(--sh), inset -4px -4px 8px var(--hi); }
+  .ph-card small { font-family: var(--display); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 800; color: var(--accent-text); }
+  .ph-card b { font-family: var(--display); font-size: .92rem; }
+  .ph-card p { color: var(--muted); font-size: .84rem; }
+
+  /* questions */
+  .qs { display: flex; flex-direction: column; gap: 1rem; counter-reset: q; }
+  .q { border-radius: var(--r); padding: 1.1rem 1.25rem; box-shadow: 7px 7px 14px var(--sh), -7px -7px 14px var(--hi); display: grid; grid-template-columns: 34px 1fr; gap: 1rem; align-items: start; }
+  .q::before { counter-increment: q; content: "Q" counter(q); font-family: var(--display); font-weight: 800; font-size: .8rem; color: var(--accent-text); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; box-shadow: inset 3px 3px 6px var(--sh), inset -3px -3px 6px var(--hi); }
+  .q b { display: block; font-family: var(--display); font-size: .98rem; color: var(--head); margin-bottom: .25rem; }
+  .q p { color: var(--muted); font-size: .92rem; }
+  .q .rec { margin-top: .5rem; display: inline-flex; gap: .5rem; align-items: baseline; font-size: .9rem; color: var(--ink); }
+  .q .rec i { font-style: normal; font-family: var(--display); font-size: .64rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--success); }
+
+  footer { color: var(--muted); font-size: .82rem; text-align: center; }
+
+  @media (max-width: 900px) {
+    header.hero, .mocks, .anatomy, .phone-wrap, .block, .cards2 { grid-template-columns: 1fr; }
+    .block .side { position: static; }
+    .phases { grid-template-columns: 1fr 1fr; }
+    .facts { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .facts { grid-template-columns: 1fr; }
+    .phases { grid-template-columns: 1fr; }
+    .odoo-grid { grid-template-columns: 1fr; }
+    .odoo-body { grid-template-columns: 1fr; }
+    .odoo-side { display: none; }
+    .rule { grid-template-columns: 1fr; gap: .2rem; }
+    .upi { flex-direction: column; align-items: flex-start; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .top nav a { transition: color .15s; }
+  }
+</style>
+
+<div class="top">
+  <b>UPI Scan &amp; Pay</b>
+  <nav>
+    <a href="#design">Design</a>
+    <a href="#payload">QR payload</a>
+    <a href="#plan">Plan</a>
+    <a href="#questions">Decisions</a>
+  </nav>
+</div>
+
+<main class="wrap">
+
+  <header class="hero">
+    <div class="txt">
+      <span class="eyebrow">Odoo Apps Store · Albatross · Phase 1 — plan &amp; design</span>
+      <h1>UPI Scan &amp; Pay</h1>
+      <p class="lede">A UPI payment QR on every customer invoice and quotation PDF. The buyer scans it, the amount and the payee are already filled in, they just enter their UPI PIN. Works for any company in any currency — a non-INR amount is converted to INR automatically. No Indian localisation module required.</p>
+      <div class="chips">
+        <span class="chip price">€ 14.00</span>
+        <span class="chip">Odoo 18 &amp; 19</span>
+        <span class="chip">Community &amp; Enterprise</span>
+        <span class="chip ok">Depends on sale · account only</span>
+      </div>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>2 PDFs</b><small>Customer invoice and quotation / sales order</small></div>
+      <div class="fact"><b>1 block</b><small>UPI ID, payee name, caption, amount mode and three switches — all in Settings</small></div>
+      <div class="fact"><b>Any currency</b><small>USD, EUR, AED… converted to INR with Odoo's exchange rates</small></div>
+    </div>
+  </header>
+
+  <!-- ============================ DESIGN ============================ -->
+  <section id="design">
+    <div class="sec-head">
+      <span class="eyebrow">How it looks</span>
+      <h2>One card, printed on both documents</h2>
+      <p>The card is a single shared QWeb template. On the invoice it sits below the totals and payment terms, where Odoo already puts its own payment QR. On the quotation it sits directly under the totals. Colours are neutral so it fits any company's document layout; the card inherits the document font.</p>
+    </div>
+
+    <div class="mocks">
+      <!-- INVOICE -->
+      <div class="mock">
+        <div class="mock-cap"><strong>Customer invoice PDF</strong><span>account.report_invoice_document</span></div>
+        <div class="paper"><div class="sheet">
+          <div class="ph">
+            <div class="logo"><i></i>Albatross</div>
+            <div class="co">Albatross Pvt Ltd<br>D 503, Heliconia, Thaltej<br>Ahmedabad 380059, Gujarat<br>GSTIN 24AAACA1234A1Z5</div>
+          </div>
+          <div class="doc-title">Invoice INV/2026/00042</div>
+          <div class="addr"><div><b>Meridian Textiles LLP</b>14, Ring Road Industrial Estate<br>Surat 395004, Gujarat<br>GSTIN 24AABCM9876B1Z2</div></div>
+          <div class="info">
+            <div><b>Invoice Date</b><span>22/09/2026</span></div>
+            <div><b>Due Date</b><span>07/10/2026</span></div>
+            <div><b>Source</b><span>S00318</span></div>
+            <div><b>Reference</b><span>PO-7781</span></div>
+          </div>
+          <table class="lines">
+            <thead><tr><th>Description</th><th class="r">Qty</th><th class="r">Unit Price</th><th class="r">Taxes</th><th class="r">Amount</th></tr></thead>
+            <tbody>
+              <tr><td class="desc">Axial fan AF-450 <small>450 mm, 1.1 kW, IP55</small></td><td class="r">2.00 Units</td><td class="r">4,200.00</td><td class="r">GST 18%</td><td class="r">8,400.00</td></tr>
+              <tr><td class="desc">Installation service <small>On-site, per unit</small></td><td class="r">2.00 Hours</td><td class="r">1,300.00</td><td class="r">GST 18%</td><td class="r">2,600.00</td></tr>
+            </tbody>
+          </table>
+          <div class="totals"><table>
+            <tr><td>Untaxed Amount</td><td class="r">₹ 11,000.00</td></tr>
+            <tr><td>GST 18%</td><td class="r">₹ 1,980.00</td></tr>
+            <tr class="tot"><td>Total</td><td class="r">₹ 12,980.00</td></tr>
+            <tr class="due"><td>Amount Due</td><td class="r">₹ 12,980.00</td></tr>
+          </table></div>
+          <div class="terms"><b>Payment terms:</b> 15 Days · Payment Communication: <b>INV/2026/00042</b></div>
+
+          <!-- the card -->
+          <div class="upi">
+            <div class="upi-qr"><img src="data:image/png;base64,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" alt="UPI QR code for INV/2026/00042"></div>
+            <div class="upi-body">
+              <div class="upi-eyebrow">Scan &amp; Pay · UPI</div>
+              <div class="upi-amt"><b>₹ 12,980.00</b><span>Invoice total</span></div>
+              <div class="upi-rows">
+                <small>UPI ID</small><span class="mono">albatross@okhdfcbank</span>
+                <small>Payee</small><span>Albatross Pvt Ltd</span>
+                <small>Reference</small><span class="mono">INV/2026/00042</span>
+              </div>
+              <div class="upi-cap">Scan with any UPI app — the amount and payee are pre-filled, just confirm with your UPI PIN.</div>
+              <div class="upi-apps"><i>PhonePe</i><i>Google Pay</i><i>Paytm</i><i>BHIM</i><i>any UPI app</i></div>
+            </div>
+          </div>
+
+          <div class="terms">Goods once sold will not be taken back. Interest @18% p.a. will be charged on overdue invoices.</div>
+          <div class="grow"></div>
+          <div class="pf"><span>Albatross Pvt Ltd · +91 79 4000 1234 · hello@albatross.in</span><span>Page 1 / 1</span></div>
+        </div></div>
+        <p class="note">Amount encoded = <b>Invoice total</b> (your decision; a per-company setting can switch it to Amount Due). Fully paid invoices do not print the card.</p>
+      </div>
+
+      <!-- QUOTATION -->
+      <div class="mock">
+        <div class="mock-cap"><strong>Quotation / Sales order PDF</strong><span>sale.report_saleorder_document</span></div>
+        <div class="paper"><div class="sheet">
+          <div class="ph">
+            <div class="logo"><i></i>Albatross</div>
+            <div class="co">Albatross Pvt Ltd<br>D 503, Heliconia, Thaltej<br>Ahmedabad 380059, Gujarat<br>GSTIN 24AAACA1234A1Z5</div>
+          </div>
+          <div class="doc-title">Quotation # S00318</div>
+          <div class="addr"><div><b>Meridian Textiles LLP</b>14, Ring Road Industrial Estate<br>Surat 395004, Gujarat</div></div>
+          <div class="info">
+            <div><b>Quotation Date</b><span>22/09/2026</span></div>
+            <div><b>Expiration</b><span>22/10/2026</span></div>
+            <div><b>Salesperson</b><span>Hardik A.</span></div>
+            <div><b>Currency</b><span>USD · export</span></div>
+          </div>
+          <table class="lines">
+            <thead><tr><th>Description</th><th class="r">Quantity</th><th class="r">Unit Price</th><th class="r">Taxes</th><th class="r">Amount</th></tr></thead>
+            <tbody>
+              <tr><td class="desc">Axial fan AF-450 <small>450 mm, 1.1 kW, IP55</small></td><td class="r">6.00 Units</td><td class="r">50.00</td><td class="r">GST 0% (Export)</td><td class="r">300.00</td></tr>
+              <tr><td class="desc">Ducting kit DK-450 <small>Galvanised, 3 m run</small></td><td class="r">6.00 Units</td><td class="r">21.50</td><td class="r">GST 0% (Export)</td><td class="r">129.00</td></tr>
+              <tr><td class="desc">Commissioning service <small>Remote, per unit</small></td><td class="r">6.00 Hours</td><td class="r">28.50</td><td class="r">GST 0% (Export)</td><td class="r">171.00</td></tr>
+            </tbody>
+          </table>
+          <div class="totals"><table>
+            <tr><td>Untaxed Amount</td><td class="r">$ 600.00</td></tr>
+            <tr><td>GST 0% (Export)</td><td class="r">$ 0.00</td></tr>
+            <tr class="tot"><td>Total</td><td class="r">$ 600.00</td></tr>
+          </table></div>
+
+          <!-- the card -->
+          <div class="upi">
+            <div class="upi-qr"><img src="data:image/png;base64,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" alt="UPI QR code for S00318"></div>
+            <div class="upi-body">
+              <div class="upi-eyebrow">Scan &amp; Pay · UPI</div>
+              <div class="upi-amt"><b>₹ 49,560.00</b><span>Order total</span></div>
+              <div class="upi-fx"><b>$ 600.00</b> converted at 1 USD = ₹ 82.60 on 22/09/2026</div>
+              <div class="upi-rows">
+                <small>UPI ID</small><span class="mono">albatross@okhdfcbank</span>
+                <small>Payee</small><span>Albatross Pvt Ltd</span>
+                <small>Reference</small><span class="mono">S00318</span>
+              </div>
+              <div class="upi-cap">Scan with any UPI app — the amount and payee are pre-filled, just confirm with your UPI PIN.</div>
+              <div class="upi-apps"><i>PhonePe</i><i>Google Pay</i><i>Paytm</i><i>BHIM</i><i>any UPI app</i></div>
+            </div>
+          </div>
+
+          <div class="terms"><b>Payment terms:</b> Advance with order. Export under LUT, GST 0%.</div>
+          <div class="sig"><div><span>Signature</span></div></div>
+          <div class="grow"></div>
+          <div class="pf"><span>Albatross Pvt Ltd · +91 79 4000 1234 · hello@albatross.in</span><span>Page 1 / 1</span></div>
+        </div></div>
+        <p class="note">Amount encoded = <b>Order total</b>, converted to INR when the document is in another currency — the original amount and the rate are printed under it. Shown on quotations (draft / sent) and confirmed orders; hidden on cancelled ones.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ ANATOMY ============================ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Card anatomy</span>
+      <h2>What is on the card, and why</h2>
+      <p>Same template, zoomed. Every element answers a question the buyer has at the moment of paying.</p>
+    </div>
+    <div class="anatomy">
+      <div class="zoom">
+        <div class="upi" style="margin-top:0">
+          <div class="upi-qr"><img src="data:image/png;base64,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" alt="UPI QR code for INV/2026/00042"></div>
+          <div class="upi-body">
+            <div class="upi-eyebrow">Scan &amp; Pay · UPI</div>
+            <div class="upi-amt"><b>₹ 12,980.00</b><span>Invoice total</span></div>
+            <div class="upi-rows">
+              <small>UPI ID</small><span class="mono">albatross@okhdfcbank</span>
+              <small>Payee</small><span>Albatross Pvt Ltd</span>
+              <small>Reference</small><span class="mono">INV/2026/00042</span>
+            </div>
+            <div class="upi-cap">Scan with any UPI app — the amount and payee are pre-filled, just confirm with your UPI PIN.</div>
+            <div class="upi-apps"><i>PhonePe</i><i>Google Pay</i><i>Paytm</i><i>BHIM</i><i>any UPI app</i></div>
+          </div>
+        </div>
+      </div>
+      <ol class="callouts">
+        <li><b>QR on a raised tile</b><p>A real <code>upi://pay</code> QR (the one above scans). Rendered server-side with Odoo's own barcode helper at error-correction level M, embedded as a data URI, so nothing is fetched while printing. 30 mm on paper — scannable from a phone held at arm's length.</p></li>
+        <li><b>The amount, large</b><p>The number the buyer will see in their app: the grand total of the invoice or order (a setting can switch invoices to amount due). Documents in another currency are converted to INR with Odoo's exchange rate, and the original amount and rate are printed under it so the buyer understands the figure.</p></li>
+        <li><b>UPI ID · Payee · Reference</b><p>The UPI ID in monospace so it can be typed if the QR is smudged. The reference is the document number and is also passed to the app as the transaction reference and note, so it appears on the payer's statement.</p></li>
+        <li><b>Caption &amp; app chips</b><p>The caption is editable in Settings (translatable). The chips are plain text — no third-party logos shipped in the module.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================ SETTINGS ============================ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Configuration</span>
+      <h2>Settings → Invoicing → UPI Scan &amp; Pay</h2>
+      <p>One block, per company, using Odoo's standard settings layout so it looks native in 18 and 19. The preview card at the bottom re-renders as the UPI ID is typed — the admin scans it with their own phone and confirms the right payee name appears before a single invoice goes out.</p>
+    </div>
+    <div class="mocks">
+      <div class="mock">
+        <div class="mock-cap"><strong>Settings block</strong><span>res.config.settings · after "Customer Payments"</span></div>
+        <div class="screen">
+          <div class="odoo-bar"><b>Settings</b><span>General Settings · Sales · <u>Invoicing</u> · Website</span></div>
+          <div class="odoo-cp"><span class="btn">Save</span><span class="btn o">Discard</span></div>
+          <div class="odoo-body">
+            <div class="odoo-side">
+              <div>Taxes</div><div>Currencies</div><div>Customer Invoices</div><div>Customer Payments</div><div class="on">UPI Scan &amp; Pay</div><div>Vendor Bills</div><div>Vendor Payments</div><div>Digitization</div>
+            </div>
+            <div class="odoo-main">
+              <div class="odoo-h">UPI Scan &amp; Pay</div>
+              <div class="odoo-grid">
+                <div class="o-set"><span class="cb on"></span><div><b>QR on customer invoices</b><p>Print a Scan &amp; Pay card on invoices and receipts with an amount due.</p></div></div>
+                <div class="o-set"><span class="cb on"></span><div><b>QR on quotations &amp; orders</b><p>Print the card on quotations and confirmed sales orders.</p></div></div>
+                <div class="o-set"><span class="cb"></span><div><b>Replace Odoo's built-in payment QR</b><p>Hide the standard bank QR on invoices when the UPI card is printed, so the customer sees one code.</p></div></div>
+                <div class="o-set"><span></span><div><b>UPI account</b><p>Used for every document of this company.</p>
+                  <div class="o-field"><label>UPI ID</label><span class="mono">albatross@okhdfcbank</span></div>
+                  <div class="o-field"><label>Payee name</label><span>Albatross Pvt Ltd</span></div>
+                  <div class="o-field"><label>Amount on QR</label><span>Grand total ▾</span></div>
+                  <div class="o-field"><label>Caption</label><span>Scan with any UPI app — the amount and payee are pre-filled…</span></div>
+                </div></div>
+                <div class="o-prev">
+                  <div class="q"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARoAAAEaCAIAAABB0Q/tAAAHs0lEQVR4nO3dS46ktxGFUbWghXjiBWj/i9ACPNFOyjMPxBzQxMdHFc4ZNup/ZHZeEAgEGb++vr5+Awq/334B+DnECTLiBBlxgow4QeaP8Z/+9e8/z7/H//z9n7/+8S/j+4x/M1r7FGtPr96wuvPMs2ZU38bMnUfVs/YZ38fqBBlxgow4QUacICNOkPlQ2RutVZNmrFVm1mpHM1dV1aTqc1U1zKpmeLeON+Pub9XqBBlxgow4QUacICNOkJmq7I2qHrDKvjuvPb2q0VX1rlHV+zfz2fd9ihknf6tWJ8iIE2TECTLiBBlxgsxiZe+ku/tP1/6mUvXIVTt/9/Xsje7WA9dYnSAjTpARJ8iIE2TECTLfoLK37yy1uyfmzdj32U/uF66e/j6rE2TECTLiBBlxgow4QWaxsvda39q+0/C+43SMqq+v+hR3u+9OPsvqBBlxgow4QUacICNOkJmq7N3tsDpZX9r3N2tOzrlYu8/dvxnd/a1anSAjTpARJ8iIE2TECTK/vr6+br/D/21fbe3u3tK759HtOzFv5lmvdfqtsTpBRpwgI06QESfIiBNkPvTsfcdeqX3vXO1snXHyVL3Xqn8nu/j21YGtTpARJ8iIE2TECTLiBJkPPXvfsQPttYpT9fQZ+7oT9/0STu56Pvn7sTpBRpwgI06QESfIiBNkFit7VY3lZFXq/ae/ttf1ZGVv5qo1J3/PVifIiBNkxAky4gQZcYLMxp69UVUTW/N+b9ua13ojR3f31erZg29JnCAjTpARJ8iIE2SmZuOe7JE7WYfZ96zqqpMTPfZV7fY9vbpz9Qu3OkFGnCAjTpARJ8iIE2Sy3biVk/Wlu7No1+zrdpu5qnJyN/e+U/5GVifIiBNkxAky4gQZcYLMh569mSrHyVPsTp4IN9rXi1jdeeY+J88YHJ3crbzvO5xhdYKMOEFGnCAjTpARJ8h8qOyd7Nm7Ww8c7Zs9cbK6tfbZ35+gsa9GV93Z6gQZcYKMOEFGnCAjTpDZeM7ezH32ncl2clrHvlrovl3Gd7vvTu5fnlG9j9UJMuIEGXGCjDhBRpwgM3XO3r5ZD6O7k3nXnNyxO3PVPidrqien3FbvY3WCjDhBRpwgI06QESfITPXsje7WYdbcnQexb2LF+52H++6z9qx9dWmrE2TECTLiBBlxgow4QWZxgsbMVaOT9a61KRIn53fs+1bfP9OvetbIBA34IcQJMuIEGXGCjDhB5sNu3DUnq0kz7tYn734bd2dhvPZtjPZVoa1OkBEnyIgTZMQJMuIEmcXduCfP4jt5ctrMVSfn8M54rUNvX61v3/ejZw+eI06QESfIiBNkxAkyHyp7VXVrxr7q1t15GTNXnXzW3XPt9tn3f7FWT7Y6QUacICNOkBEnyIgTZKbO2Rvt2925z8kT8+5Omjg5nbbqvjvZxbdvv7DVCTLiBBlxgow4QUacIPPhnL2TPWlr7k7d/Rnfz2hfre/9XcbVqYxWJ8iIE2TECTLiBBlxgszGc/ZO3vm1XauvVbdO7rB+/+S9kXP24DniBBlxgow4QUacILO4G7dS7X6t7lw96+R82JPVrWrmyOjkN7bvzlYnyIgTZMQJMuIEGXGCTDZBY999Zuzr0Hu/A+21fsW1Z53ceztj7fuxOkFGnCAjTpARJ8iIE2Smevbuzp6427u17wy9fSfUVaouvpP21VRnvg2rE2TECTLiBBlxgow4QWaxZ29UzSBY+5uT9ZzqzvucrMSOTlb/9k30WHtDqxNkxAky4gQZcYKMOEHmw2zcSlW9eX/S62sTY0/ODr7br/jap7A6QUacICNOkBEnyIgTZD5U9vZV5O5OjL1bp1pz8sS8k/XJmaePTn6utadbnSAjTpARJ8iIE2TECTIfduOO9s25OFl1WbNvb+ndORcne+327eE92WM5w+oEGXGCjDhBRpwgI06QmerZO3lq3MmZGlVt7bWz+O7uUZ151r43vFsZtjpBRpwgI06QESfIiBNkpmbjrqmqLlXH18m9pT9jj+ras9Z6Gu/O+KjuY3WCjDhBRpwgI06QESfITO3GrXq3RieriPvsqyve3bE786wZ7/fsVfexOkFGnCAjTpARJ8iIE2Sy3bj7OutmnnWyH2/mfe46uV/4tZ2/M/Z1OVqdICNOkBEnyIgTZMQJMh8qe6852TF4ct/ozJ1n3K0rnpyAfPI+a1dZnSAjTpARJ8iIE2TECTIfduO+Vila+5vRvjPr9vWkVafhnZyF8dq8lZmrRmufwuoEGXGCjDhBRpwgI06QmTpn76fuY71blZrx2mmBM1fNqL756qrqd2h1gow4QUacICNOkBEnyExV9kb7zm2rnr6vt23fVVV96f0zBvdNSV5T/Z9anSAjTpARJ8iIE2TECTKLlb33VVM29tXfqveZufNo38STk7NoX9sdbHWCjDhBRpwgI06QESfIfIPK3slOvzX76oEnT+c76e5ZfKPxfdYqjVYnyIgTZMQJMuIEGXGCzGJl77VK0Uwta63+tu+TVqe9vdah9x0naDhnD54jTpARJ8iIE2TECTJTlb3X5lxUTs5Rrf6mqkrt20VbXTU6+c5rrE6QESfIiBNkxAky4gSZX19fX7ffAX4IqxNkxAky4gQZcYKMOEHmv0TqktAboA0yAAAAAElFTkSuQmCC" alt="Preview UPI QR"></div>
+                  <div class="t"><b>Scan to verify</b><p>Open any UPI app and scan. It should show <b>Albatross Pvt Ltd</b> as the payee with ₹ 1.00 pre-filled — cancel, do not pay. Nothing is saved until you click Save.</p><i>UPI ID format OK</i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mock">
+        <div class="mock-cap"><strong>Rules the settings enforce</strong><span>server-side, on Save</span></div>
+        <div class="card">
+          <div class="rule"><b>UPI ID</b><p>Must look like <code>handle@bank</code>: <code>^[A-Za-z0-9._-]{2,}@[A-Za-z]{2,}$</code>. Saved lower-case. Empty = feature off for that company.</p></div>
+          <div class="rule"><b>Payee name</b><p>Defaults to the company name. Letters, digits and spaces only (UPI apps drop or reject other characters). Max 99 characters.</p></div>
+          <div class="rule"><b>Caption</b><p>Translatable text under the QR. Default: "Scan with any UPI app — the amount and payee are pre-filled, just confirm with your UPI PIN."</p></div>
+          <div class="rule"><b>Amount on QR</b><p>Grand total (default) or Amount due — applies to invoices; orders always use the total.</p></div>
+          <div class="rule"><b>Currency</b><p>Any. A non-INR document is converted with Odoo's rate for INR at the document date. If no INR rate exists, Settings shows a warning and the card is skipped rather than printing a wrong number.</p></div>
+          <div class="rule"><b>Switches</b><p>Invoices on, quotations/orders on, replace built-in QR off. All company-dependent — multi-company safe.</p></div>
+          <div class="rule"><b>Preview</b><p>Computed on the settings record from the two fields above — encodes ₹ 1.00 with note "Verification" so a scan is harmless.</p></div>
+        </div>
+        <p class="note">No new menu, no new model, no access rights to assign. Install → type the UPI ID → Save → print.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ BUYER'S PHONE ============================ -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">The buyer's side</span>
+      <h2>What happens after the scan</h2>
+      <p>This is the functional requirement, seen from the phone. Any UPI app (PhonePe, Google Pay, Paytm, BHIM, bank apps) reads the same <code>upi://pay</code> intent.</p>
+    </div>
+    <div class="phone-wrap">
+      <div class="frame">
+        <div class="status"><span>9:41</span><span>UPI app</span></div>
+        <div class="pscreen">
+          <div class="bar"><span>‹ Back</span><span>Pay</span><span></span></div>
+          <div class="payee"><div class="av">A</div><div><b>Albatross Pvt Ltd</b><small>albatross@okhdfcbank</small></div></div>
+          <div class="pamt"><small>Paying</small><b>₹12,980</b><div class="lock">● Amount set by merchant</div></div>
+          <div class="prow"><small>Note</small><b>Payment for INV/2026/00042</b></div>
+          <div class="prow"><small>Reference</small><b>INV/2026/00042</b></div>
+          <div class="prow"><small>Pay from</small><b>HDFC Bank ••4821</b></div>
+          <div class="pin"><i>•</i><i>•</i><i>•</i><i></i><i></i><i></i></div>
+          <div class="pbtn">Enter UPI PIN to pay</div>
+        </div>
+      </div>
+      <ol class="steps">
+        <li><b>Scan the card on the PDF</b><p>From the printed page or from the PDF on a screen. The QR contains the full intent; no internet round-trip to Odoo is needed.</p></li>
+        <li><b>Payee and amount are already there</b><p>The app shows the company as payee and the exact amount, locked. The note and reference carry the document number.</p></li>
+        <li><b>Buyer enters their own UPI PIN</b><p>The 4- or 6-digit PIN the buyer created with their bank when they linked the account in their UPI app. It belongs to the buyer; Odoo never sets, sees or stores it. The money lands in the company's UPI-linked bank account within seconds.</p></li>
+        <li><b>Accountant reconciles as usual</b><p>The document number is on the bank statement line (note / reference). Registering the payment stays Odoo-standard — the module does not touch payment records.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================ PAYLOAD ============================ -->
+  <section id="payload">
+    <div class="sec-head">
+      <span class="eyebrow">QR payload</span>
+      <h2>The <code>upi://pay</code> intent, exactly as encoded</h2>
+      <p>NPCI's deep-link format. Six parameters, percent-encoded. This is what the invoice QR above contains.</p>
+    </div>
+    <div class="uri">upi://pay?<em>pa</em>=<u>albatross%40okhdfcbank</u>&amp;<em>pn</em>=<u>Albatross%20Pvt%20Ltd</u>&amp;<em>am</em>=<u>12980.00</u>&amp;<em>cu</em>=<u>INR</u>&amp;<em>tn</em>=<u>Payment%20for%20INV%2F2026%2F00042</u>&amp;<em>tr</em>=<u>INV%2F2026%2F00042</u></div>
+    <div style="height:1.4rem"></div>
+    <div class="tbl-wrap"><table class="t">
+      <thead><tr><th>Param</th><th>Meaning</th><th>Source in Odoo</th><th>Rule</th></tr></thead>
+      <tbody>
+        <tr><td>pa</td><td>Payee address (VPA)</td><td><code>company.upi_qr_id</code></td><td>Required. Validated on save.</td></tr>
+        <tr><td>pn</td><td>Payee name shown in the app</td><td><code>company.upi_qr_payee_name</code> → company name</td><td>Sanitised to letters / digits / spaces.</td></tr>
+        <tr><td>am</td><td>Amount, pre-filled and locked</td><td>Grand total (invoices can be switched to amount due)</td><td>Two decimals, dot separator, must be &gt; 0. Converted to INR first if the document is in another currency.</td></tr>
+        <tr><td>cu</td><td>Currency</td><td>Always <code>INR</code></td><td>UPI apps accept INR only, so a USD / EUR / AED document is converted with <code>currency._convert()</code> at the document date and the original amount + rate are printed on the card.</td></tr>
+        <tr><td>tn</td><td>Transaction note</td><td>"Payment for " + document number</td><td>Appears on both parties' statements. Max 80 chars.</td></tr>
+        <tr><td>tr</td><td>Transaction reference</td><td>Invoice: payment reference or number · Order: number</td><td>Lets the accountant match the bank line to the document.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ============================ PLAN ============================ -->
+  <section id="plan">
+    <div class="sec-head">
+      <span class="eyebrow">Implementation plan</span>
+      <h2>How it gets built</h2>
+      <p>One code base, built and tested on 18 first, then copied to 19 with only the manifest version and the store copy changed. The reference module from the Yami pins repo is the starting point; the parts that tied it to <code>l10n_in</code> are replaced.</p>
+    </div>
+
+    <div class="plan">
+
+      <!-- 1 identity -->
+      <div class="block">
+        <div class="side"><span class="num">1</span><h3>Module identity</h3><p>What the store listing and the manifest say.</p></div>
+        <div class="main">
+          <div class="tbl-wrap"><table class="t">
+            <tbody>
+              <tr><td>Technical name</td><td><code>upi_qr_payment</code> — folders renamed in both repos <span class="tag">done</span></td></tr>
+              <tr><td>Display name</td><td>To be chosen — shortlist in the Decisions section below</td></tr>
+              <tr><td>Summary</td><td>Scan &amp; Pay: dynamic UPI QR with the amount pre-filled on invoice and quotation PDFs — any UPI app, any currency</td></tr>
+              <tr><td>Version</td><td><code>18.0.1.0.0</code> in the 18 repo · <code>19.0.1.0.0</code> in the 19 repo</td></tr>
+              <tr><td>Category</td><td>Accounting/Accounting</td></tr>
+              <tr><td>Author · Licence · Price</td><td>Albatross · OPL-1 · <b>14.00 EUR</b></td></tr>
+              <tr><td>Depends</td><td><code>sale</code>, <code>account</code> — nothing else. Works whether or not <code>l10n_in</code> is installed. INR is activated on install if it is not already.</td></tr>
+              <tr><td>Application</td><td><code>False</code> — it is a plug-in that shows up in Settings, not a new app on the home screen</td></tr>
+              <tr><td>Assets</td><td><code>web.report_assets_common</code> (card styles for PDF) · <code>web.assets_backend</code> (settings preview styles)</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- 2 files -->
+      <div class="block">
+        <div class="side"><span class="num">2</span><h3>File layout</h3><p>Same tree in both repos. Identical files except the manifest and the store copy.</p></div>
+        <div class="main">
+<pre><code>upi_qr_payment/
+├── __init__.py
+├── __manifest__.py
+├── README.md
+├── models/
+│   ├── __init__.py
+│   ├── res_company.py            # 5 company fields + validation
+│   ├── res_config_settings.py    # related fields + live preview
+│   ├── upi_qr_mixin.py           # upi.qr.mixin — URI builder, QR renderer, hooks
+│   ├── account_move.py           # inherits the mixin: amount due, customer invoices only
+│   └── sale_order.py             # inherits the mixin: order total, quotation/order states
+├── views/
+│   ├── res_config_settings_views.xml
+│   ├── report_upi_qr_card.xml    # the shared card template
+│   ├── report_invoice.xml        # xpath after div#qrcode (+ optional replace of built-in QR)
+│   └── report_saleorder.xml      # xpath after div[name='so_total_summary']
+├── static/
+│   ├── description/              # icon.png, banner.png, index.html, img/ (store page)
+│   └── src/scss/
+│       ├── upi_qr_report.scss    # card styles (report bundle)
+│       └── upi_qr_settings.scss  # preview card (backend bundle)
+└── tests/
+    ├── __init__.py
+    └── test_upi_qr.py</code></pre>
+        </div>
+      </div>
+
+      <!-- 3 data model -->
+      <div class="block">
+        <div class="side"><span class="num">3</span><h3>Data model</h3><p>No new tables. Five columns on the company, computed fields on the documents.</p></div>
+        <div class="main">
+          <div class="tbl-wrap"><table class="t">
+            <thead><tr><th>Model</th><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>res.company</td><td><code>upi_qr_id</code></td><td>Char</td><td>The VPA. Regex-validated, lower-cased on write. Empty disables the feature.</td></tr>
+              <tr><td>res.company</td><td><code>upi_qr_payee_name</code></td><td>Char</td><td>Default = company name. Sanitised.</td></tr>
+              <tr><td>res.company</td><td><code>upi_qr_caption</code></td><td>Char, translate</td><td>Text under the QR.</td></tr>
+              <tr><td>res.company</td><td><code>upi_qr_on_invoice</code> · <code>upi_qr_on_sale_order</code> · <code>upi_qr_replace_native</code></td><td>Boolean</td><td>Defaults: on · on · off.</td></tr>
+              <tr><td>res.company</td><td><code>upi_qr_amount_mode</code></td><td>Selection</td><td><code>total</code> (default) · <code>due</code>. Invoices only; orders always use the total.</td></tr>
+              <tr><td>res.config.settings</td><td>same seven, <code>related</code>, readonly=False</td><td>—</td><td>Plus <code>upi_qr_preview</code> (Binary, computed, not stored) for the "Scan to verify" card.</td></tr>
+              <tr><td>upi.qr.mixin</td><td><code>upi_qr_uri</code> · <code>upi_qr_image</code> · <code>upi_qr_amount</code></td><td>Char · Binary · Monetary, computed, not stored</td><td>Plus <code>upi_qr_fx_note</code> (Char) — "$ 600.00 converted at 1 USD = ₹ 82.60 on …" when converted. Hooks: <code>_upi_qr_is_applicable()</code>, <code>_upi_qr_get_amount()</code>, <code>_upi_qr_get_reference()</code>, <code>_upi_qr_get_date()</code>. Any model can adopt it later (POS, purchase…).</td></tr>
+              <tr><td>account.move</td><td>inherits mixin</td><td>—</td><td>Applicable: <code>move_type</code> in out_invoice / out_receipt, state ≠ cancel, not fully paid, switch on, amount &gt; 0. Amount = <code>amount_total</code> (or <code>amount_residual</code> when the mode is "due"). Date = <code>invoice_date</code>. Reference = <code>payment_reference</code> or <code>name</code>.</td></tr>
+              <tr><td>sale.order</td><td>inherits mixin</td><td>—</td><td>Applicable: state in draft / sent / sale, switch on, total &gt; 0. Amount = <code>amount_total</code>. Date = <code>date_order</code>. Reference = <code>name</code>.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="cards2">
+            <div class="card"><h3>QR rendering</h3><p class="note"><code>env['ir.actions.report'].barcode('QR', uri, width=300, height=300, barLevel='M')</code> → PNG bytes → base64. This is the helper Odoo itself uses for EPC and Swiss QR bills; it runs on reportlab, already a core dependency, so nothing to install on the customer's server.</p></div>
+            <div class="card"><h3>Currency conversion</h3><p class="note">In the mixin: <code>doc.currency_id._convert(amount, INR, doc.company_id, doc_date)</code> — the same call Odoo uses for its own reports, identical in 18 and 19. INR documents pass through untouched. For a non-INR document the card prints the INR figure large and the original amount + rate in a line under it. Rates come from Accounting → Configuration → Currencies; on Enterprise the automatic rate updater keeps them fresh, on Community they are entered by hand. If INR has no rate at all, the card is skipped and the settings page says why — never a silently wrong amount.</p></div>
+            <div class="card"><h3>Why a mixin, not copy-paste</h3><p class="note">The reference module duplicated the compute in two models. One abstract model holds the URI rules, encoding and rendering; each document only answers "which amount, which reference, when". Adding a third document later is ten lines.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 rendering rules -->
+      <div class="block">
+        <div class="side"><span class="num">4</span><h3>When the card prints</h3><p>The template checks one computed field; the rules live in Python where they can be tested.</p></div>
+        <div class="main">
+          <div class="card">
+            <div class="rule"><b>Prints</b><p>Customer invoice or receipt that is not fully paid, company switch on, UPI ID set — any currency. Quotation or confirmed order with a total, switch on — any currency.</p></div>
+            <div class="rule"><b>Never prints</b><p>Credit notes, vendor bills, cancelled documents, fully paid invoices, zero-amount documents, companies with no UPI ID, non-INR documents when no INR exchange rate exists.</p></div>
+            <div class="rule"><b>Multi-company</b><p>Everything reads <code>doc.company_id</code>, never the current user's company, so a batch print across companies is correct.</p></div>
+            <div class="rule"><b>Indian layout</b><p><code>l10n_in</code> renders invoices through a <em>primary</em> copy of the invoice template. Primary copies receive every extension of their parent, so the card appears on the Indian layout too — verified against the 18 and 19 source.</p></div>
+            <div class="rule"><b>Studio reports</b><p>Not covered, as with any inherited report — noted on the store page.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 report integration -->
+      <div class="block">
+        <div class="side"><span class="num">5</span><h3>Report integration</h3><p>Anchors checked in both source trees; identical, so one XML file serves both versions.</p></div>
+        <div class="main">
+          <div class="tbl-wrap"><table class="t">
+            <thead><tr><th>Document</th><th>Inherits</th><th>Anchor (xpath)</th><th>18</th><th>19</th></tr></thead>
+            <tbody>
+              <tr><td>Invoice</td><td><code>account.report_invoice_document</code></td><td><code>//div[@id='qrcode']</code> · position after</td><td><span class="tag">present</span></td><td><span class="tag">present</span></td></tr>
+              <tr><td>Quotation / order</td><td><code>sale.report_saleorder_document</code></td><td><code>//div[@name='so_total_summary']</code> · position after</td><td><span class="tag">present</span></td><td><span class="tag">present</span></td></tr>
+              <tr><td>Settings</td><td><code>account.res_config_settings_view_form</code></td><td><code>//block[@id='pay_invoice_online_setting_container']</code> · position after</td><td><span class="tag">present</span></td><td><span class="tag">present</span></td></tr>
+              <tr><td>Built-in QR (optional)</td><td><code>account.report_invoice_document</code></td><td><code>//t[@t-set='show_qr']</code> · attribute <code>t-value</code></td><td><span class="tag">present</span></td><td><span class="tag">present</span></td></tr>
+            </tbody>
+          </table></div>
+          <div class="cards2">
+            <div class="card"><h3>Built for wkhtmltopdf</h3><p class="note">Two-column layout as a table (not flex), <code>page-break-inside: avoid</code> on the card, soft shadows via <code>box-shadow</code> (rendering confirmed with the gate-pass PDF on this stack), QR as a data URI so the PDF worker never makes an HTTP call.</p></div>
+            <div class="card"><h3>Translatable</h3><p class="note">Every label on the card and in Settings goes through the translation layer; a <code>.pot</code> ships with the module. Number formatting on the card uses the document currency like the rest of the invoice.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 version matrix -->
+      <div class="block">
+        <div class="side"><span class="num">6</span><h3>18 vs 19</h3><p>What is shared and what is not.</p></div>
+        <div class="main">
+          <div class="tbl-wrap"><table class="t">
+            <thead><tr><th>Area</th><th>18</th><th>19</th></tr></thead>
+            <tbody>
+              <tr><td>Models, mixin, compute logic</td><td colspan="2">Identical — no API used that changed between the versions</td></tr>
+              <tr><td>Settings XML</td><td colspan="2">Identical — <code>&lt;app&gt;/&lt;block&gt;/&lt;setting&gt;</code> tags are the same in both</td></tr>
+              <tr><td>Report XML &amp; anchors</td><td colspan="2">Identical (table above)</td></tr>
+              <tr><td>Asset bundles</td><td colspan="2">Identical — <code>web.report_assets_common</code> and <code>web.assets_backend</code> exist in both</td></tr>
+              <tr><td>Manifest version</td><td><code>18.0.1.0.0</code></td><td><code>19.0.1.0.0</code></td></tr>
+              <tr><td>Store copy (index.html, README, manifest description)</td><td>Mentions only Odoo 18</td><td>Mentions only Odoo 19</td></tr>
+              <tr><td>Test database</td><td>a v18 DB with sale + account + l10n_in</td><td>a v19 DB with the same</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- 7 coexistence -->
+      <div class="block">
+        <div class="side"><span class="num">7</span><h3>Odoo's own QR</h3><p>Avoiding two codes on one invoice.</p></div>
+        <div class="main">
+          <div class="card">
+            <p class="note">Odoo's "QR Codes" setting (Invoicing → Customer Payments) prints a bank QR in <code>div#qrcode</code>: EPC in Europe, Swiss QR-bill, and — when <code>l10n_in</code> is installed and the company's <b>UPI Id</b> is filled on the company form — an Indian UPI QR. A customer who already uses that would get two UPI codes.</p>
+            <p class="note">Proposed: a third switch, <b>Replace Odoo's built-in payment QR</b>, off by default. When on and our card prints, the module rewrites the <code>show_qr</code> expression so the native block is skipped. Both versions expose the same <code>t-set</code>, so one xpath covers both. With the switch off, nothing of Odoo's is touched. The store page explains this in one line.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 tests -->
+      <div class="block">
+        <div class="side"><span class="num">8</span><h3>Tests</h3><p>Automated on both versions, then a scan with real apps.</p></div>
+        <div class="main">
+          <div class="cards2">
+            <div class="card"><h3>Unit — URI builder</h3><ul class="list note"><li>Encoding of <code>@</code>, spaces, <code>/</code></li><li>Amount always two decimals, no thousands separators</li><li>Payee sanitisation, note ≤ 80 chars</li><li>UPI ID regex accepts / rejects the right strings</li></ul></div>
+            <div class="card"><h3>Unit — documents</h3><ul class="list note"><li>Invoice: draft → total, posted → residual, part-paid → balance, paid → no QR</li><li>Credit note, vendor bill, cancelled → no QR</li><li>Order: draft / sent / sale → QR, cancel → none</li><li>USD document → INR amount at the rate of the document date, fx note printed; INR document → untouched; no INR rate → no card</li><li>Amount mode total vs due on a part-paid invoice</li><li>Switch off → none; second company isolated</li></ul></div>
+            <div class="card"><h3>Report render</h3><ul class="list note"><li>Render both reports to HTML; assert the card node exists / is absent per rule</li><li>Render with <code>l10n_in</code> installed on an Indian company: card present on the Indian layout</li><li>Replace-native switch hides <code>div#qrcode</code></li></ul></div>
+            <div class="card"><h3>Manual</h3><ul class="list note"><li>Print PDF on 18 and 19; card intact on page 1 and when it lands near a page break</li><li>Scan with PhonePe, Google Pay, Paytm, BHIM: payee and amount pre-filled, PIN only</li><li>Settings preview: scan shows the right payee name</li></ul></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9 store -->
+      <div class="block">
+        <div class="side"><span class="num">9</span><h3>Store listing</h3><p>Same pattern as the other Albatross modules.</p></div>
+        <div class="main">
+          <ul class="list">
+            <li><b>Icon</b> 128 px — a QR mark on a raised tile in the store palette.</li>
+            <li><b>Banner</b> — invoice on paper with the card, phone beside it showing the pre-filled payment.</li>
+            <li><b>index.html</b> — store-sanitizer-safe (Bootstrap classes, inline whitelisted styles, no <code>&lt;style&gt;</code>), version-exclusive copy in each repo.</li>
+            <li><b>Screenshots</b> — invoice PDF, quotation PDF, settings block, phone after scan.</li>
+            <li><b>README.md</b> — install in three steps, the coexistence note, how INR rates are maintained for foreign-currency documents.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 10 phases -->
+      <div class="block">
+        <div class="side"><span class="num">10</span><h3>Build sequence</h3><p>Each phase ends with something you can open and check.</p></div>
+        <div class="main">
+          <div class="phases">
+            <div class="ph-card"><small>Phase 1 · done</small><b>Plan &amp; design</b><p>This page. Decisions recorded below; only the store name is open.</p></div>
+            <div class="ph-card now"><small>Phase 2 · next</small><b>Build on 18</b><p>Models, settings, card template, report hooks, tests. PDF printed from a v18 DB and scanned.</p></div>
+            <div class="ph-card"><small>Phase 3</small><b>Port to 19</b><p>Copy, bump manifest, run the same tests on a v19 DB, print and scan again.</p></div>
+            <div class="ph-card"><small>Phase 4</small><b>Store assets</b><p>Icon, banner, screenshots, index.html and README for each version; commit both repos.</p></div>
+            <div class="ph-card"><small>Optional</small><b>Extras</b><p>Portal "Pay with UPI" card, QR tab on the form, QR in the invoice e-mail — a later release, per the decisions below.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================ DECISIONS ============================ -->
+  <section id="questions">
+    <div class="sec-head">
+      <span class="eyebrow">Decisions</span>
+      <h2>Recorded on 22 September 2026</h2>
+      <p>Answers to the Phase 1 questions. One item is still open: the store name.</p>
+    </div>
+    <div class="qs">
+      <div class="q"><div><b>Technical name</b><p>Folder renamed <code>UPI_QRcode</code> → <code>upi_qr_payment</code> in both the 18 and the 19 repo.</p><div class="rec"><i>Done</i></div></div></div>
+      <div class="q"><div><b>Amount on the QR: grand total</b><p>The full amount of the invoice or order is encoded, not the balance. A per-company setting "Amount on QR" (Grand total / Amount due) is kept for customers who part-pay; default is Grand total. Fully paid invoices still do not print the card.</p><div class="rec"><i>Decided</i>total</div></div></div>
+      <div class="q"><div><b>Any currency, converted automatically</b><p>The module is global: a company running in USD, EUR, AED or any other currency gets the same card; the amount is converted to INR with Odoo's exchange rate at the document date, and the original amount and rate are printed under the INR figure. If no INR rate is available the card is skipped and Settings explains what to add.</p><div class="rec"><i>Decided</i>convert, never skip silently</div></div></div>
+      <div class="q"><div><b>Odoo's built-in Indian UPI QR</b><p>A "Replace Odoo's built-in payment QR" switch, off by default.</p><div class="rec"><i>Decided</i>switch, default off</div></div></div>
+      <div class="q"><div><b>Quotations and orders</b><p>Both, behind one switch.</p><div class="rec"><i>Decided</i>yes</div></div></div>
+      <div class="q"><div><b>Scope of v1.0 and card position</b><p>PDFs only; the card sits full-width below the totals. Portal card, form tab and e-mail QR stay on the list for a later release.</p><div class="rec"><i>Decided</i>yes</div></div></div>
+      <div class="q"><div><b>Store name — open</b><p>People find modules on apps.odoo.com by searching a need: "UPI", "QR", "payment", "invoice". The name should carry those words; the summary carries the benefit and the app names. Shortlist:</p>
+        <ul class="list" style="margin-top:.5rem">
+          <li><b>UPI QR Payment on Invoice &amp; Quotation</b> — keyword-complete, 37 characters, reads well in search results.</li>
+          <li><b>Invoice &amp; Quotation UPI QR Code — Scan &amp; Pay</b> — document-first, for buyers searching "invoice QR".</li>
+          <li><b>UPI Scan &amp; Pay</b> — short and brandable, but the store search needs the summary to carry the keywords.</li>
+          <li><b>Dynamic UPI QR — Invoice &amp; Quotation PDF</b> — "dynamic" signals that the amount is pre-filled, which is the differentiator over static QR modules.</li>
+        </ul>
+        <div class="rec"><i>Recommended</i>UPI QR Payment on Invoice &amp; Quotation, with summary "Scan &amp; Pay: dynamic UPI QR with the amount pre-filled on invoice and quotation PDFs — any UPI app, any currency".</div></div></div>
+    </div>
+  </section>
+
+  <footer>UPI Scan &amp; Pay · Phase 1 · 22 September 2026 · sample data on this page is invented</footer>
+</main>
