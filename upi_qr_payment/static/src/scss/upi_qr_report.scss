@@ -1,0 +1,129 @@
+// UPI Scan & Pay card printed on invoices and quotations.
+// Neutral palette so it sits on any company's document layout; soft raised tile for the QR.
+// Table layout and explicit resets on purpose: the card must survive wkhtmltopdf and
+// whatever table styling the surrounding report layout applies.
+$upi-ground: #e6ecee;
+$upi-ink: #1f2430;
+$upi-head: #0f4c81;
+$upi-muted: #58646d;
+$upi-eyebrow: #c9381d;
+$upi-shade: rgba(162, 185, 191, 0.72);
+$upi-light: #ffffff;
+
+.upi_qr_card {
+    clear: both;
+    margin: 10px 0 8px;
+    background: $upi-ground;
+    border-radius: 16px;
+    padding: 9px 16px;
+    color: $upi-ink;
+    page-break-inside: avoid;
+    -webkit-region-break-inside: avoid;
+
+    table, tr, td {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    // document layouts (boxed, striped ...) draw frames on every table through pseudo-elements
+    table::before, table::after {
+        display: none !important;
+        content: none !important;
+    }
+}
+.upi_qr_table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.upi_qr_cell_qr {
+    width: 120px;
+    padding: 0 16px 0 0 !important;
+    vertical-align: middle;
+}
+.upi_qr_tile {
+    display: inline-block;
+    background: $upi-ground !important;
+    border-radius: 12px;
+    padding: 5px;
+    box-shadow: 6px 6px 12px $upi-shade, -6px -6px 12px $upi-light;
+}
+.upi_qr_img {
+    display: block;
+    width: 104px;
+    height: 104px;
+    border-radius: 6px;
+    background: #ffffff !important;
+}
+.upi_qr_cell_body {
+    vertical-align: middle;
+    padding: 0 !important;
+}
+.upi_qr_eyebrow {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: $upi-eyebrow;
+}
+.upi_qr_amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: $upi-head;
+    line-height: 1.15;
+    margin: 0;
+    small {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        color: $upi-muted;
+        margin-left: 8px;
+    }
+}
+.upi_qr_fx {
+    font-size: 10px;
+    color: $upi-muted;
+    margin-bottom: 2px;
+}
+.upi_qr_rows {
+    margin: 4px 0 2px;
+}
+.upi_qr_row {
+    font-size: 11px;
+    line-height: 1.45;
+    white-space: nowrap;
+}
+.upi_qr_k {
+    display: inline-block;
+    width: 80px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: $upi-muted;
+    vertical-align: baseline;
+}
+.upi_qr_v {
+    font-weight: 700;
+}
+.upi_qr_mono {
+    font-family: "DejaVu Sans Mono", "Courier New", monospace;
+    font-size: 11px;
+}
+.upi_qr_caption {
+    font-size: 10px;
+    line-height: 1.35;
+    color: $upi-muted;
+    margin-top: 2px;
+}
+.upi_qr_apps span {
+    display: inline-block;
+    font-size: 8.5px;
+    font-weight: 700;
+    color: $upi-muted;
+    padding: 1px 8px;
+    margin: 4px 5px 0 0;
+    border-radius: 999px;
+    box-shadow: inset 2px 2px 4px $upi-shade, inset -2px -2px 4px $upi-light;
+}

@@ -1,0 +1,192 @@
+<!--
+  UPI QR Payment on Invoice & Quotation &mdash; Odoo Apps Store description page.
+  Written for the store HTML sanitizer: no stylesheet block, no JS; layout via Bootstrap 5 classes,
+  inline styles limited to the whitelisted properties (colors, type, padding/margin, border, radius, sizes).
+  Every asset path is relative to static/description/.
+-->
+<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:#24303d; line-height:1.6; font-weight:400;">
+
+  <!-- ============================= HERO ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#f4f2ed;">
+    <div class="text-center mx-auto mb-4" style="max-width:820px;">
+      <p class="mb-2" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">UPI QR Payment on Invoice &amp; Quotation &middot; Odoo 19</p>
+      <h1 class="fs-1 mb-3" style="font-weight:800; line-height:1.15; color:#173a63;">Scan the invoice. <span style="color:#1f7ab0;">Paid in seconds.</span></h1>
+      <p class="mb-4" style="font-size:18px; color:#5e6570;">A Scan &amp; Pay card with a dynamic UPI QR code on every customer invoice and quotation PDF. Your customer scans it with any UPI app &mdash; PhonePe, Google Pay, Paytm, BHIM or their bank's app &mdash; and the payee and the exact amount are already filled in. They only enter their own UPI PIN.</p>
+      <div class="d-flex flex-wrap justify-content-center gap-2">
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#173a63; background-color:#ffffff; border:1px solid #e3e0d8;"><i class="fa fa-circle me-1"></i> Odoo 19.0</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; background-color:#ffffff; border:1px solid #e3e0d8;">Community &amp; Enterprise</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; background-color:#ffffff; border:1px solid #e3e0d8;">Any UPI app</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; background-color:#ffffff; border:1px solid #e3e0d8;">Any currency &rarr; INR</span>
+        <span class="rounded-pill px-3 py-2" style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; background-color:#ffffff; border:1px solid #e3e0d8;">No gateway, no fees</span>
+      </div>
+    </div>
+    <img class="img-fluid rounded-4 mx-auto d-none d-md-block" src="banner.png" alt="An Odoo invoice with the Scan &amp; Pay UPI card and a phone showing the payment pre-filled with the payee and the amount"/>
+    <div class="mx-auto" style="max-width:320px;"><img class="img-fluid rounded-4 d-block d-md-none" src="img/phone-pay.png" alt="UPI app payment screen with the payee and amount pre-filled from the invoice QR"/></div>
+  </div>
+
+  <!-- ============================= HOW IT WORKS ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <div class="text-center mx-auto" style="max-width:800px;">
+      <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">How it works</p>
+      <h2 class="fs-2 mb-3" style="font-weight:800; color:#173a63;">From the PDF to the payment in ten seconds</h2>
+      <p class="mb-4" style="font-size:17px; color:#5e6570;">Watch what your customer sees: scan the card on the invoice, the UPI app opens with everything filled in, enter the PIN, done.</p>
+    </div>
+    <div class="rounded-4 p-3 p-md-4" style="background-color:#f4f2ed;">
+      <div class="mx-auto" style="max-width:900px;"><img class="img-fluid rounded-4 d-block" src="img/scan-to-pay.gif" alt="Animation: a UPI app scans the QR on the invoice, shows Albatross Pvt Ltd and 12,980 rupees pre-filled, the buyer enters their PIN and the payment succeeds"/></div>
+      <div class="row g-3 mt-2">
+        <div class="col-6 col-md">
+          <div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #e3e0d8;"><span class="rounded-circle d-inline-block text-center mb-2" style="width:34px; height:34px; line-height:32px; font-weight:800; color:#1a638f; background-color:#f4f2ed; border:1px solid #e3e0d8;">1</span><h3 class="mb-1" style="font-size:15px; font-weight:700; color:#173a63;">Scan</h3><p class="mb-0" style="font-size:13.5px; color:#5e6570;">Any UPI app, from paper or from the PDF on a screen.</p></div>
+        </div>
+        <div class="col-6 col-md">
+          <div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #e3e0d8;"><span class="rounded-circle d-inline-block text-center mb-2" style="width:34px; height:34px; line-height:32px; font-weight:800; color:#1a638f; background-color:#f4f2ed; border:1px solid #e3e0d8;">2</span><h3 class="mb-1" style="font-size:15px; font-weight:700; color:#173a63;">Recognised</h3><p class="mb-0" style="font-size:13.5px; color:#5e6570;">The QR carries your UPI ID, the amount and the invoice number.</p></div>
+        </div>
+        <div class="col-6 col-md">
+          <div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #e3e0d8;"><span class="rounded-circle d-inline-block text-center mb-2" style="width:34px; height:34px; line-height:32px; font-weight:800; color:#1a638f; background-color:#f4f2ed; border:1px solid #e3e0d8;">3</span><h3 class="mb-1" style="font-size:15px; font-weight:700; color:#173a63;">Pre-filled</h3><p class="mb-0" style="font-size:13.5px; color:#5e6570;">Payee and amount are locked to what the invoice says. Nothing to type.</p></div>
+        </div>
+        <div class="col-6 col-md">
+          <div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #e3e0d8;"><span class="rounded-circle d-inline-block text-center mb-2" style="width:34px; height:34px; line-height:32px; font-weight:800; color:#1a638f; background-color:#f4f2ed; border:1px solid #e3e0d8;">4</span><h3 class="mb-1" style="font-size:15px; font-weight:700; color:#173a63;">PIN</h3><p class="mb-0" style="font-size:13.5px; color:#5e6570;">The buyer confirms with their own UPI PIN &mdash; the only input.</p></div>
+        </div>
+        <div class="col-6 col-md">
+          <div class="h-100 rounded-4 p-3" style="background-color:#ffffff; border:1px solid #e3e0d8;"><span class="rounded-circle d-inline-block text-center mb-2" style="width:34px; height:34px; line-height:32px; font-weight:800; color:#1a638f; background-color:#f4f2ed; border:1px solid #e3e0d8;">5</span><h3 class="mb-1" style="font-size:15px; font-weight:700; color:#173a63;">Paid</h3><p class="mb-0" style="font-size:13.5px; color:#5e6570;">Straight into your bank account, invoice number on the statement line.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= THE CARD ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#f4f2ed;">
+    <div class="row g-4 g-lg-5 align-items-center">
+      <div class="col-12 col-lg-7">
+        <img class="img-fluid rounded-4 d-block" src="img/card-closeup.png" alt="Close-up of the Scan &amp; Pay card: QR code, amount 12,980 rupees, UPI ID, payee, reference and the app chips"/>
+      </div>
+      <div class="col-12 col-lg-5">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">The Scan &amp; Pay card</p>
+        <h2 class="fs-2 mb-3" style="font-weight:800; color:#173a63;">Everything the buyer needs, on the document itself</h2>
+        <p class="mb-4" style="font-size:17px; color:#5e6570;">One card, printed below the totals on invoices and quotations. It inherits your document's font and sits on any layout.</p>
+        <div class="d-flex flex-column gap-2">
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:15px;"><i class="fa fa-check me-2" style="color:#173a63;"></i><strong>Dynamic QR</strong> &mdash; generated per document with the exact amount; scans reliably from print (error-correction M, proper quiet zone).</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:15px;"><i class="fa fa-check me-2" style="color:#173a63;"></i><strong>The amount, large</strong> &mdash; what is printed is what the app pre-fills, so there is never a mismatch.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:15px;"><i class="fa fa-check me-2" style="color:#173a63;"></i><strong>UPI ID, payee, reference</strong> &mdash; the ID in monospace so it can be typed if the code is smudged; the reference lands on both bank statements.</div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:15px;"><i class="fa fa-check me-2" style="color:#173a63;"></i><strong>Your caption</strong> &mdash; editable and translatable in Settings.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= TWO DOCUMENTS ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">Invoices and quotations</p>
+    <h2 class="fs-2 mb-3" style="font-weight:800; color:#173a63;">Printed on both documents. Any currency.</h2>
+    <p class="mb-4" style="font-size:17px; color:#5e6570; max-width:70ch;">Customer invoices and receipts carry the card while an amount is outstanding. Quotations and confirmed orders carry it so the customer can pay an advance straight from the quote. A document in another currency is converted to INR with Odoo's exchange rate, and the original amount and rate are printed under the INR figure.</p>
+    <div class="rounded-4 p-3 p-md-4" style="background-color:#f4f2ed;">
+      <div class="row g-4">
+        <div class="col-12 col-md-6">
+          <img class="img-fluid rounded-4 d-block" src="img/pdf-invoice.png" alt="Customer invoice PDF in INR with the Scan &amp; Pay card below the totals, on the Indian invoice layout"/>
+          <div class="d-flex align-items-start gap-3 mt-3">
+            <span class="rounded-circle d-inline-block text-center flex-shrink-0" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#1a638f; background-color:#f4f2ed; border:1px solid #e3e0d8;"><i class="fa fa-file-text-o"></i></span>
+            <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#173a63;">Customer invoice &middot; INR</h3><p class="mb-0" style="font-size:15px; color:#5e6570;">Grand total by default, or the amount due &mdash; your choice per company. Fully paid invoices print without the card.</p></div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <img class="img-fluid rounded-4 d-block" src="img/pdf-quotation.png" alt="Quotation PDF in US dollars: the card shows 49,560 rupees with the note 600 dollars converted at 82.60"/>
+          <div class="d-flex align-items-start gap-3 mt-3">
+            <span class="rounded-circle d-inline-block text-center flex-shrink-0" style="width:40px; height:40px; line-height:38px; font-weight:800; color:#1a638f; background-color:#f4f2ed; border:1px solid #e3e0d8;"><i class="fa fa-globe"></i></span>
+            <div><h3 class="mb-1" style="font-size:17px; font-weight:700; color:#173a63;">Quotation &middot; USD, converted</h3><p class="mb-0" style="font-size:15px; color:#5e6570;">$ 600.00 becomes &#8377; 49,560.00 at the rate of the order date, printed with the rate so the buyer understands the figure.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= SETTINGS ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#f4f2ed;">
+    <div class="row g-4 g-lg-5 align-items-center">
+      <div class="col-12 col-lg-5 order-2 order-lg-1">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">Two-minute setup</p>
+        <h2 class="fs-2 mb-3" style="font-weight:800; color:#173a63;">Type your UPI ID. Scan to verify. Print.</h2>
+        <p class="mb-4" style="font-size:17px; color:#5e6570;">One block under Settings &rarr; Invoicing. No new menus, no access rights to assign, no gateway account. Every setting is per company.</p>
+        <div class="d-flex flex-column gap-2">
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:15px;"><strong>UPI ID &amp; payee name</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5e6570;">The account that receives the money and the name the buyer sees. The ID is validated on save.</p></div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:15px;"><strong>Scan to verify</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5e6570;">A live preview QR: scan it with your own phone and confirm the right payee appears before the first invoice goes out.</p></div>
+          <div class="rounded-4 px-3 py-3" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:15px;"><strong>Switches</strong><p class="mb-0 mt-1" style="font-size:14.5px; color:#5e6570;">Invoices on / off, quotations &amp; orders on / off, grand total or amount due, and an option to replace Odoo's built-in payment QR so the customer sees one code.</p></div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-7 order-1 order-lg-2">
+        <img class="img-fluid rounded-4 d-block" src="img/settings.png" alt="Settings &rarr; Invoicing &rarr; UPI Scan &amp; Pay: UPI ID, payee name, QR amount, caption, three switches and the Scan to Verify preview"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= FEATURES ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">Everything included</p>
+    <h2 class="fs-2 mb-4" style="font-weight:800; color:#173a63;">What's in the box</h2>
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#f4f2ed; border:1px solid #e3e0d8;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F4F1;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Any UPI app</h3><p class="mb-0" style="font-size:15px; color:#5e6570;">A standard <code>upi://pay</code> intent with payee, name, amount, currency, note and reference. PhonePe, Google Pay, Paytm, BHIM and every bank app read it.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#f4f2ed; border:1px solid #e3e0d8;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F30F;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Works for any company</h3><p class="mb-0" style="font-size:15px; color:#5e6570;">Depends on Sales and Invoicing only. The Indian localisation is not required &mdash; and when it is installed, the card appears on the Indian invoice layout too.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#f4f2ed; border:1px solid #e3e0d8;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F4B1;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Any currency &rarr; INR</h3><p class="mb-0" style="font-size:15px; color:#5e6570;">USD, EUR, AED&hellip; converted with Odoo's exchange rate at the document date. If no INR rate exists, the card is skipped and Settings tells you what to add &mdash; never a wrong number.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#f4f2ed; border:1px solid #e3e0d8;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F6E1;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Sensible rules</h3><p class="mb-0" style="font-size:15px; color:#5e6570;">No card on credit notes, vendor bills, cancelled or fully paid documents or zero amounts. Multi-company safe: every document reads its own company.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#f4f2ed; border:1px solid #e3e0d8;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F5A8;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Built for the PDF engine</h3><p class="mb-0" style="font-size:15px; color:#5e6570;">The card never splits across pages, the QR is embedded in the document (no fetch while printing), and it renders on every standard Odoo layout.</p></div></div>
+      <div class="col-12 col-md-6 col-lg-4"><div class="h-100 rounded-4 p-4" style="background-color:#f4f2ed; border:1px solid #e3e0d8;"><span class="d-inline-block rounded-3 text-center mb-3" style="width:46px; height:46px; line-height:46px; font-size:22px; background-color:#ffffff;">&#x1F9E9;</span><h3 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Extensible</h3><p class="mb-0" style="font-size:15px; color:#5e6570;">One mixin holds the rules; invoices and orders answer "which amount, which reference". Your integrator can add the card to another document in a few lines.</p></div></div>
+    </div>
+  </div>
+
+  <!-- ============================= COMPATIBILITY ============================= -->
+  <div class="mb-5 px-2 px-md-3">
+    <div class="row g-4 g-lg-5">
+      <div class="col-12 col-lg-7">
+        <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">Compatibility</p>
+        <h2 class="fs-2 mb-3" style="font-weight:800; color:#173a63;">Plain Odoo, nothing else</h2>
+        <p class="mb-4" style="font-size:17px; color:#5e6570;">No payment gateway, no subscription, no Python package to install, no data leaving your server. The QR is generated with Odoo's own barcode engine.</p>
+        <table class="w-100" style="border-collapse:collapse; font-size:15px;">
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; border-bottom:1px solid #e3e0d8; white-space:nowrap;">Odoo version</th><td class="py-2" style="border-bottom:1px solid #e3e0d8;">19.0 &mdash; Community and Enterprise</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; border-bottom:1px solid #e3e0d8; white-space:nowrap;">Depends on</th><td class="py-2" style="border-bottom:1px solid #e3e0d8;"><code>sale</code>, <code>account</code></td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; border-bottom:1px solid #e3e0d8; white-space:nowrap;">Documents</th><td class="py-2" style="border-bottom:1px solid #e3e0d8;">Customer invoices and receipts, quotations and sales orders (standard Odoo reports, including the Indian localisation layout)</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; border-bottom:1px solid #e3e0d8; white-space:nowrap;">Currencies</th><td class="py-2" style="border-bottom:1px solid #e3e0d8;">Any. Non-INR documents use the exchange rate under Accounting &rarr; Configuration &rarr; Currencies (Enterprise can update it automatically).</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; border-bottom:1px solid #e3e0d8; white-space:nowrap;">Studio reports</th><td class="py-2" style="border-bottom:1px solid #e3e0d8;">Reports rebuilt from scratch in Studio do not inherit the card; the standard reports do.</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; border-bottom:1px solid #e3e0d8; white-space:nowrap;">Tests</th><td class="py-2" style="border-bottom:1px solid #e3e0d8;">18 automated tests cover the link format, amounts, currency conversion, document states, report rendering and multi-company.</td></tr>
+          <tr><th class="text-start pe-3 py-2" style="font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#5e6570; white-space:nowrap;">Licence</th><td class="py-2">OPL-1</td></tr>
+        </table>
+      </div>
+      <div class="col-12 col-lg-5">
+        <div class="h-100 rounded-4 p-4" style="background-color:#f4f2ed; border:1px solid #e3e0d8;">
+          <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">What the QR contains</p>
+          <h3 class="mb-3" style="font-size:21px; font-weight:800; color:#173a63;">The standard UPI intent, nothing proprietary</h3>
+          <div class="rounded-4 px-3 py-3 mb-3" style="background-color:#ffffff; border:1px solid #e3e0d8; font-family:Menlo,Consolas,monospace; font-size:12.5px; color:#24303d; word-break:break-all;">upi://pay?pa=<span style="color:#1a638f;">yourid@bank</span>&amp;pn=<span style="color:#1a638f;">Your Company</span>&amp;am=<span style="color:#1a638f;">12980.00</span>&amp;cu=INR&amp;tn=Payment for INV/2026/0001&amp;tr=INV/2026/0001</div>
+          <div class="d-flex flex-column gap-2">
+            <div class="rounded-4 px-3 py-2" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:14.5px;"><strong>pa / pn</strong> &mdash; your UPI ID and payee name from Settings</div>
+            <div class="rounded-4 px-3 py-2" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:14.5px;"><strong>am / cu</strong> &mdash; the amount in INR, locked in the app</div>
+            <div class="rounded-4 px-3 py-2" style="background-color:#ffffff; border:1px solid #e3e0d8; font-size:14.5px;"><strong>tn / tr</strong> &mdash; note and reference with the document number, for reconciliation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= FAQ ============================= -->
+  <div class="rounded-4 p-4 p-md-5 mb-5" style="background-color:#f4f2ed;">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">FAQ</p>
+    <h2 class="fs-2 mb-4" style="font-weight:800; color:#173a63;">Before you install</h2>
+    <div class="row g-3">
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #e3e0d8;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Do I need a payment gateway or a merchant account?</h4><p class="mb-0" style="font-size:15px; color:#5e6570;">No. The QR points at your existing UPI ID. The money goes bank-to-bank, with no fees and no intermediary. Odoo never touches the payment.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #e3e0d8;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Where does the UPI PIN come from?</h4><p class="mb-0" style="font-size:15px; color:#5e6570;">It is the buyer's own PIN, created with their bank when they linked their account in their UPI app. Nothing PIN-related is stored or configured in Odoo.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #e3e0d8;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Do I need the Indian localisation?</h4><p class="mb-0" style="font-size:15px; color:#5e6570;">No. The module depends on Sales and Invoicing only. If <code>l10n_in</code> is installed the card also prints on the Indian invoice layout, and a switch lets you hide Odoo's built-in UPI QR so the customer sees one code.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #e3e0d8;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">My company runs in USD. Does it still work?</h4><p class="mb-0" style="font-size:15px; color:#5e6570;">Yes. UPI apps only accept INR, so the amount is converted with your INR exchange rate at the document date and the original amount and rate are printed on the card. Keep the INR rate current under Accounting &rarr; Configuration &rarr; Currencies.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #e3e0d8;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">What about part-paid invoices?</h4><p class="mb-0" style="font-size:15px; color:#5e6570;">The QR encodes the grand total by default. Switch <em>QR Amount</em> to <em>Amount Due</em> and it encodes the outstanding balance instead. Fully paid invoices never print the card.</p></div></div>
+      <div class="col-12 col-md-6"><div class="h-100 rounded-4 p-4" style="background-color:#ffffff; border:1px solid #e3e0d8;"><h4 class="mb-2" style="font-size:17px; font-weight:700; color:#173a63;">Does the payment get registered in Odoo automatically?</h4><p class="mb-0" style="font-size:15px; color:#5e6570;">No &mdash; UPI has no callback into Odoo. The invoice number travels in the note and reference, so the bank statement line matches the invoice at a glance and reconciliation stays standard Odoo.</p></div></div>
+    </div>
+  </div>
+
+  <!-- ============================= SUPPORT ============================= -->
+  <div class="rounded-4 p-4 p-md-5 text-center" style="background-color:#f4f2ed;">
+    <p class="mb-1" style="font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#1a638f;">Support</p>
+    <h2 class="fs-2 mb-3" style="font-weight:800; color:#173a63;">Questions, ideas, a feature you need?</h2>
+    <p class="mx-auto mb-4" style="font-size:17px; color:#5e6570; max-width:60ch;">We answer within one business day and ship fixes for confirmed bugs free of charge for 90 days after purchase.</p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <span class="d-inline-block rounded-4 px-4 py-3" style="font-weight:800; font-size:14px; letter-spacing:.03em; color:#ffffff; background-color:#1f7ab0;"><i class="fa fa-envelope me-2"></i>Contact Albatross</span>
+      <span class="d-inline-block rounded-4 px-4 py-3" style="font-weight:800; font-size:14px; letter-spacing:.03em; color:#24303d; background-color:#ffffff; border:1px solid #e3e0d8;"><i class="fa fa-book me-2"></i>Read the documentation</span>
+    </div>
+    <p class="mt-4 mb-0" style="color:#87857e; font-size:13px;">UPI QR Payment on Invoice &amp; Quotation &middot; &copy; Albatross &middot; Licence OPL-1</p>
+  </div>
+
+</div>

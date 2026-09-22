@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_upi_qr" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.upi_qr_payment</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='pay_invoice_online_setting_container']" position="after">
+                <block title="UPI Scan &amp; Pay" id="upi_qr_payment_setting_container"
+                       help="Print a UPI payment QR code on invoices and quotations. The customer scans it with any UPI app; the payee and the amount are pre-filled.">
+                    <setting id="upi_qr_account" string="UPI Account" company_dependent="1"
+                             help="The UPI ID that receives the money and the name the customer sees in their app.">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <label for="upi_qr_id" string="UPI ID" class="col-lg-4 o_light_label"/>
+                                <field name="upi_qr_id" placeholder="business@okhdfcbank"/>
+                            </div>
+                            <div class="row">
+                                <label for="upi_qr_payee_name" string="Payee Name" class="col-lg-4 o_light_label"/>
+                                <field name="upi_qr_payee_name" placeholder="Company name"/>
+                            </div>
+                            <div class="row">
+                                <label for="upi_qr_amount_mode" string="QR Amount" class="col-lg-4 o_light_label"/>
+                                <field name="upi_qr_amount_mode"/>
+                            </div>
+                            <div class="row">
+                                <label for="upi_qr_caption" string="Caption" class="col-lg-4 o_light_label"/>
+                                <field name="upi_qr_caption"/>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning mt-2 mb-0 p-2 small" role="alert" invisible="not upi_qr_rate_warning">
+                            <field name="upi_qr_rate_warning" nolabel="1" readonly="1" class="o_upi_qr_inline_text"/>
+                        </div>
+                    </setting>
+                    <setting id="upi_qr_on_invoice_setting" company_dependent="1"
+                             help="Print the Scan &amp; Pay card on customer invoices and receipts that are not fully paid.">
+                        <field name="upi_qr_on_invoice"/>
+                    </setting>
+                    <setting id="upi_qr_on_sale_order_setting" company_dependent="1"
+                             help="Print the card on quotations and confirmed sales orders.">
+                        <field name="upi_qr_on_sale_order"/>
+                    </setting>
+                    <setting id="upi_qr_replace_native_setting" company_dependent="1"
+                             help="Hide Odoo's standard bank / UPI payment QR on invoices when the Scan &amp; Pay card is printed, so the customer sees one code.">
+                        <field name="upi_qr_replace_native"/>
+                    </setting>
+                    <setting id="upi_qr_preview_setting" string="Scan to Verify" invisible="not upi_qr_id"
+                             help="Check the UPI ID with your own phone before the first document goes out.">
+                        <div class="o_upi_qr_preview">
+                            <div class="o_upi_qr_preview_tile" invisible="not upi_qr_preview">
+                                <field name="upi_qr_preview" widget="image" nolabel="1" options="{'size': [128, 128]}"/>
+                            </div>
+                            <div class="o_upi_qr_preview_text">
+                                <field name="upi_qr_preview_info" nolabel="1" readonly="1" class="o_upi_qr_inline_text"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,44 @@
+// "Scan to verify" preview in Settings > Invoicing > UPI Scan & Pay.
+.o_upi_qr_preview {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: #e6ecee;
+    color: #1f2430;
+}
+.o_upi_qr_preview_tile {
+    flex: 0 0 auto;
+    padding: 6px;
+    border-radius: 12px;
+    background: #e6ecee;
+    box-shadow: 6px 6px 12px rgba(162, 185, 191, 0.72), -6px -6px 12px #ffffff;
+    img {
+        display: block;
+        border-radius: 6px;
+    }
+}
+.o_upi_qr_preview_text {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #58646d;
+}
+.o_upi_qr_inline_text .o_input,
+.o_upi_qr_inline_text {
+    border: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: inherit;
+}
+.o_upi_qr_preview_text .o_field_widget,
+.o_upi_qr_preview_text .o_field_widget > span,
+.o_upi_qr_preview_text .o_field_widget > div {
+    display: block;
+    width: 100% !important;
+    max-width: none !important;
+    white-space: normal;
+}
