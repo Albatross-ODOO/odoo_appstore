@@ -4,6 +4,7 @@ import { Component, onWillStart, onWillUnmount, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
+import { sprintf } from "@web/core/utils/strings";
 import { gateToast, goHome, loadGateFonts, nowHM } from "../utils";
 
 const ACTIONS = {
@@ -94,7 +95,8 @@ export class WorkerKiosk extends Component {
             row.break_since = now;
         }
         this.state.morph[row.id] = true;
-        gateToast(_t(spec.msg, row.name, now));
+        // spec.msg is already a (lazy) translated string: format it, do not pass it through _t() again
+        gateToast(sprintf(String(spec.msg), row.name, now));
         this.state.busy = false;
         await this.refreshCounts();
         clearTimeout(this.moveTimer);
@@ -111,14 +113,14 @@ export class WorkerKiosk extends Component {
     async breakAll() {
         this.state.confirm = false;
         const n = await this.orm.call("gate.worker", "action_break_all", []);
-        gateToast(_t("%s workers on break · %s", n, nowHM()));
+        gateToast(n === 1 ? _t("1 worker on break · %s", nowHM()) : _t("%s workers on break · %s", n, nowHM()));
         this.state.tab = "break";
         await this.load();
     }
 
     async breakOverAll() {
         const n = await this.orm.call("gate.worker", "action_break_over_all", []);
-        gateToast(_t("Break over · %s workers back inside", n));
+        gateToast(n === 1 ? _t("Break over · 1 worker back inside") : _t("Break over · %s workers back inside", n));
         this.state.tab = "inside";
         await this.load();
     }

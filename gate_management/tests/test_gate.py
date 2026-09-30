@@ -37,10 +37,12 @@ class TestGate(TransactionCase):
         with self.assertRaises(ValidationError):
             entry.action_confirm_entry()
         entry.entry_photo = b'aGVsbG8='
-        action = entry.action_confirm_entry()
+        action = entry.with_context(gate_kiosk=True).action_confirm_entry()
         self.assertEqual(entry.state, 'entered')
         self.assertTrue(entry.check_in_time)
-        self.assertEqual(action['res_model'], 'gate.entry')  # lands on a fresh walk-in form
+        # lands on a fresh walk-in form, opened in place of the current one (no breadcrumb per visitor)
+        self.assertEqual(action['tag'], 'gate_management.in_place')
+        self.assertEqual(action['params']['action']['res_model'], 'gate.entry')
         entry.action_exit()
         self.assertEqual(entry.state, 'exited')
         self.assertTrue(entry.check_out_time)
@@ -83,7 +85,7 @@ class TestGate(TransactionCase):
 
         wizard = self.env['gate.verify.otp.wizard'].create({'otp_code': entry.otp})
         result = wizard.action_verify()
-        self.assertEqual(result.get('res_model'), 'gate.verify.otp.wizard')
+        self.assertEqual(result['params']['action']['res_model'], 'gate.verify.otp.wizard')
         self.assertEqual(wizard.state, 'photo')
         self.assertEqual(wizard.entry_id, entry)
         self.assertEqual(entry.state, 'authorized')
@@ -223,3 +225,15 @@ class TestGate(TransactionCase):
     def test_whatsapp_hidden_without_enterprise_app(self):
         entry = self.env['gate.entry'].create({'entry_type': 'visitor', 'visitor_name': 'X'})
         self.assertEqual(entry.whatsapp_available, 'whatsapp.composer' in self.env)
+
+    def test_duplicate_worker_and_entry(self):
+        copy = self.worker.copy()
+        self.assertEqual(copy.worker_code, 'WRK042-COPY')
+        self.assertEqual(self.worker.copy().worker_code, 'WRK042-COPY2')
+        entry = self.env['gate.entry'].create({'entry_type': 'visitor', 'visitor_name': 'Anita Shah', 'entry_photo': b'aGVsbG8='})
+        entry.action_confirm_entry()
+        entry.action_exit()
+        dup = entry.copy()
+        self.assertEqual(dup.state, 'draft')
+        self.assertFalse(dup.check_in_time or dup.check_out_time or dup.entry_time or dup.exit_time)
+        self.assertNotEqual(dup.otp, entry.otp)

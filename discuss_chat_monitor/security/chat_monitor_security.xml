@@ -26,31 +26,12 @@
 
         <!-- Record Rules -->
 
-        <!-- Rule 1: Discuss Channel Full Read Access for Chat Monitor Admin -->
-        <record id="rule_discuss_channel_chat_monitor_admin" model="ir.rule">
-            <field name="name">Discuss Channel: Chat Monitor Admin Full Access</field>
-            <field name="model_id" ref="mail.model_discuss_channel"/>
-            <field name="groups" eval="[(4, ref('group_chat_monitor_admin'))]"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_create" eval="False"/>
-            <field name="perm_unlink" eval="False"/>
-        </record>
+        <!-- No rule on discuss.channel / discuss.channel.member: monitors get no ORM access to
+             conversations they are not part of (that would let them post into other people's chats
+             and join restricted channels). The console reads everything through the group-checked
+             RPCs of discuss.channel and the /discuss_chat_monitor/attachment/<id> route. -->
 
-        <!-- Rule 2: Discuss Channel Member Full Read Access for Chat Monitor Admin -->
-        <record id="rule_discuss_channel_member_chat_monitor_admin" model="ir.rule">
-            <field name="name">Discuss Channel Member: Chat Monitor Admin Full Access</field>
-            <field name="model_id" ref="mail.model_discuss_channel_member"/>
-            <field name="groups" eval="[(4, ref('group_chat_monitor_admin'))]"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_create" eval="False"/>
-            <field name="perm_unlink" eval="False"/>
-        </record>
-
-        <!-- Rule 3: Discuss Chat Session Rules -->
+        <!-- Discuss Chat Session Rules -->
         <record id="rule_discuss_chat_session_admin" model="ir.rule">
             <field name="name">Discuss Chat Session: Admin Access</field>
             <field name="model_id" ref="model_discuss_chat_session"/>

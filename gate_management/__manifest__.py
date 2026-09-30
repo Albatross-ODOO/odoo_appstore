@@ -1,6 +1,6 @@
 {
     'name': 'Gate Management',
-    'version': '19.0.2.1.0',
+    'version': '19.0.2.1.1',
     'summary': 'Gate Desk: visitor, vehicle, material and workforce gate control built for the security guard',
     'description': """
 Gate Desk: gate management for warehouses, plants and offices

@@ -15,7 +15,13 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
-                    <div class="page" style="font-family: Helvetica, Arial, sans-serif; background-color: #EEE9DF; padding: 0; margin: 0; color: #1F242E;">
+                    <style>
+                        /* wkhtmltopdf draws hairlines around the cells of collapsed tables: the pass keeps only the borders set inline */
+                        .gd-pdf table { border-collapse: separate !important; border-spacing: 0; }
+                        .gd-pdf thead, .gd-pdf tbody, .gd-pdf tr, .gd-pdf td, .gd-pdf th { border-style: none; }
+                        .gd-pdf .gd-nowrap { white-space: nowrap; }
+                    </style>
+                    <div class="page gd-pdf" style="font-family: Helvetica, Arial, sans-serif; background-color: #EEE9DF; padding: 0; margin: 0; color: #1F242E;">
                         <div style="background-color: #EEE9DF; padding: 18px 0; width: 100%;">
                             <div style="background: #FAF7F1; border: 1px solid #FFFFFF; border-radius: 22px; box-shadow: 0 10px 24px rgba(184,170,146,.35); padding: 26px 22px; margin: 0 auto; max-width: 480px; text-align: center;">
                                 <div style="margin-bottom: 10px;">
@@ -62,7 +68,7 @@
 
                                 <div style="margin-top: 12px; border-top: 1px solid #E3DDD1; padding-top: 12px; color: #8B8577; font-size: 11px;">
                                     <div><t t-esc="doc.full_address"/></div>
-                                    <a t-att-href="doc.google_maps_link" target="_blank" style="display: inline-block; margin-top: 10px; background: #C9A452; color: #2A2210; padding: 8px 18px; border-radius: 999px; text-decoration: none; font-weight: bold; font-size: 12px;">Get directions</a>
+                                    <a t-att-href="doc.google_maps_link" target="_blank" class="gd-nowrap" style="display: inline-block; white-space: nowrap; margin-top: 10px; background: #C9A452; color: #2A2210; padding: 8px 18px; border-radius: 999px; text-decoration: none; font-weight: bold; font-size: 12px;">Get directions</a>
                                     <div style="font-size: 9px; margin-top: 10px; color: #B9B3A6;">Ref <t t-esc="doc.name"/> · Safer · Smarter · Together</div>
                                 </div>
                             </div>

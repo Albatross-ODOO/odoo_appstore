@@ -1,4 +1,8 @@
+import logging
+
 from odoo import _, api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class ResConfigSettings(models.TransientModel):
@@ -30,10 +34,15 @@ class ResConfigSettings(models.TransientModel):
                 continue
             payee = settings.upi_qr_payee_name or settings.company_id.name
             uri = mixin._upi_qr_build_uri(upi_id, payee, 1.0, reference='VERIFY', note='Verification')
-            settings.upi_qr_preview = mixin._upi_qr_render(uri, size=360)
+            try:
+                settings.upi_qr_preview = mixin._upi_qr_render(uri, size=360)
+            except Exception:  # noqa: BLE001 - never break the Settings page over a preview
+                _logger.exception("UPI QR preview rendering failed")
+                settings.upi_qr_preview_info = _("The QR preview could not be rendered, see the server log.")
+                continue
             settings.upi_qr_preview_info = _(
                 "Scan with your own UPI app: it should show \"%s\" as the payee with 1.00 pre-filled. Cancel, do not pay.",
-                mixin._upi_qr_clean_payee(payee))
+                mixin._upi_qr_clean_payee(payee) or 'Payee')
 
     @api.depends('company_id', 'upi_qr_id')
     def _compute_upi_qr_rate_warning(self):
@@ -47,6 +56,6 @@ class ResConfigSettings(models.TransientModel):
                 continue
             if not mixin._upi_qr_has_rate(inr, company, today):
                 settings.upi_qr_rate_warning = _(
-                    "%s runs in %s. Add an exchange rate for INR (Accounting > Configuration > Currencies) "
+                    "%s runs in %s. Add an exchange rate for INR (Invoicing / Accounting > Configuration > Currencies) "
                     "so amounts can be converted; until then the UPI QR is not printed.",
                     company.name, company.currency_id.name)

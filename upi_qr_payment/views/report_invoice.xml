@@ -9,7 +9,7 @@
         </xpath>
         <!-- Optionally hide Odoo's built-in bank / UPI QR when the Scan & Pay card is printed. -->
         <xpath expr="//t[@t-set='show_qr']" position="attributes">
-            <attribute name="t-value">o.display_qr_code and o.amount_residual > 0 and not (o.company_id.upi_qr_replace_native and o.upi_qr_image)</attribute>
+            <attribute name="t-value" add="and not (o.company_id.upi_qr_replace_native and o.upi_qr_image)" separator=" "/>
         </xpath>
     </template>
 </odoo>

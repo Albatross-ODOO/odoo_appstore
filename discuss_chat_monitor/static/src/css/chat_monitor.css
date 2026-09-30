@@ -31,6 +31,7 @@
 .o_chat_monitor_sidebar {
     width: 350px !important;
     min-width: 320px !important;
+    flex-shrink: 0;
     background-color: var(--cm-bg-sidebar) !important;
     border-right: 1px solid var(--cm-border-color) !important;
 }
@@ -169,6 +170,11 @@
     color: #6b21a8 !important;
 }
 
+.cm-badge-archived {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+}
+
 .cm-avatar-placeholder {
     background-color: #e2e8f0 !important;
     color: #475569 !important;
@@ -177,6 +183,7 @@
 /* Right Main Chat Pane */
 .o_chat_monitor_main {
     background-color: #ffffff !important;
+    min-width: 0;
 }
 
 .cm-main-header {
@@ -300,4 +307,32 @@
 
 .cm-empty-state h4 {
     color: #0f172a !important;
+}
+
+/* Phones: stack the list above the transcript instead of squeezing the transcript off-screen */
+@media (max-width: 767.98px) {
+    .o_chat_monitor_container {
+        flex-direction: column !important;
+    }
+    .o_chat_monitor_sidebar {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-height: 45%;
+        border-right: none !important;
+        border-bottom: 1px solid var(--cm-border-color) !important;
+    }
+    .o_chat_monitor_main {
+        min-height: 0;
+    }
+    .o_chat_monitor_thread {
+        padding: 0.75rem !important;
+    }
+    .cm-bubble-body {
+        max-width: 100% !important;
+    }
+}
+
+/* "+N more" participant tag: the full list is in its tooltip */
+.cm-more-partners {
+    cursor: help;
 }

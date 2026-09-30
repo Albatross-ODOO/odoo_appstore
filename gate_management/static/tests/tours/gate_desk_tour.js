@@ -40,8 +40,8 @@ registry.category("web_tour.tours").add("gate_desk_tour", {
         // material flow of the shipped form: flow + vendor, Issue Gate Pass (scheduled), Truck Arrived (inside)
         { trigger: ".o_field_widget[name='material_flow'] .gd-seg button:contains('Inward')", run: "click" },
         { trigger: ".o_field_widget[name='material_flow'] .gd-seg button[aria-pressed='true']:contains('Inward')" },
-        { trigger: ".o_field_widget[name='vendor_id'] input", run: "edit My Company" },
-        { trigger: ".o_field_widget[name='vendor_id'] .o-autocomplete--dropdown-item .dropdown-item:contains('My Company')", run: "click" },
+        { trigger: ".o_field_widget[name='vendor_id'] input", run: "edit Gate Tour Vendor" },
+        { trigger: ".o_field_widget[name='vendor_id'] .o-autocomplete--dropdown-item .dropdown-item:contains('Gate Tour Vendor')", run: "click" },
         { trigger: ".gd-btn:contains('Issue Gate Pass')", run: "click" },
         { trigger: ".gd-btn:contains('Truck Arrived')", run: "click" },
         { trigger: ".gd-btn:contains('Confirm Check-Out')" },

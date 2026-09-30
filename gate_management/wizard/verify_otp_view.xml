@@ -65,7 +65,8 @@
                         <div class="gd-tick"><i class="fa fa-check" title="check"/></div>
                         <h3><field name="result_message" readonly="1" class="gd-inline"/></h3>
                         <div class="gd-bigtime"><field name="result_time" readonly="1" class="gd-inline"/></div>
-                        <p class="gd-hint">Photo attached · entry recorded</p>
+                        <p class="gd-hint" invisible="not photo">Photo attached · entry recorded</p>
+                        <p class="gd-hint" invisible="photo">Gate pass scanned · movement recorded</p>
                         <div class="gd-stack gd-narrow">
                             <button name="action_next_visitor" type="object" class="gd-btn gd-primary gd-lit gd-big"><i class="fa fa-qrcode" title="qrcode"/> Next visitor</button>
                         </div>

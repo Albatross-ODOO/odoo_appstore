@@ -6,7 +6,7 @@ class SaleOrder(models.Model):
     _inherit = ['sale.order', 'upi.qr.mixin']
 
     @api.depends(
-        'amount_total', 'currency_id', 'state', 'date_order', 'name', 'company_id',
+        'amount_total', 'currency_id', 'state', 'date_order', 'name', 'company_id', 'invoice_status',
         'company_id.upi_qr_id', 'company_id.upi_qr_payee_name', 'company_id.upi_qr_on_sale_order',
     )
     def _compute_upi_qr(self):
@@ -14,7 +14,12 @@ class SaleOrder(models.Model):
 
     def _upi_qr_is_applicable(self):
         self.ensure_one()
-        return self.state in ('draft', 'sent', 'sale') and self.company_id.upi_qr_on_sale_order
+        # once fully invoiced, the invoice carries the card (and knows what is still due)
+        return (
+            self.state in ('draft', 'sent', 'sale')
+            and self.invoice_status != 'invoiced'
+            and self.company_id.upi_qr_on_sale_order
+        )
 
     def _upi_qr_get_amount(self):
         self.ensure_one()

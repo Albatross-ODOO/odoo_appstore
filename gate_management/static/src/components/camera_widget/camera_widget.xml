@@ -15,7 +15,7 @@
                     <span class="gd-cam-tag"><i class="fa fa-video-camera"/> <t t-esc="facingLabel"/></span>
                 </div>
                 <div class="gd-spread">
-                    <button type="button" class="gd-btn gd-primary" style="flex:2" t-on-click.prevent="capture" t-att-disabled="state.busy"><i class="fa fa-camera"/> Capture</button>
+                    <button type="button" class="gd-btn gd-primary gd-capture" t-on-click.prevent="capture" t-att-disabled="state.busy"><i class="fa fa-camera"/> Capture</button>
                     <button type="button" class="gd-btn" t-on-click.prevent="switchCamera" title="Switch between back and front camera"><i class="fa fa-refresh"/> Flip · <t t-esc="otherFacingLabel"/></button>
                     <button type="button" class="gd-btn gd-bad gd-icon" t-on-click.prevent="stopCamera" title="Cancel" aria-label="Cancel"><i class="fa fa-times"/></button>
                 </div>
@@ -29,6 +29,8 @@
                         <span>Best for visitors, vehicles and documents</span>
                     </button>
                     <button type="button" class="gd-btn gd-sm" t-on-click.prevent="() => this.openWith('user')"><i class="fa fa-user-circle-o"/> Use front camera (selfie)</button>
+                    <button type="button" class="gd-btn gd-sm gd-upload" t-on-click.prevent="pickFile"><i class="fa fa-upload"/> Upload photo</button>
+                    <input type="file" accept="image/*" capture="environment" class="d-none gd-file" t-ref="file" t-on-change="onFileChange"/>
                 </t>
                 <div t-else="" class="gd-empty">No photo</div>
             </t>

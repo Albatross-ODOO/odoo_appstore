@@ -2,7 +2,7 @@
 
 {
     'name': 'Discuss Chat Monitor',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'category': 'Discuss/Administration',
     'summary': 'Monitor Discuss chat sessions in a dual-pane sidebar/chat interface',
     'description': """
@@ -31,6 +31,9 @@ in real time via a modern dual-pane UI.
             'discuss_chat_monitor/static/src/css/chat_monitor.css',
             'discuss_chat_monitor/static/src/js/chat_monitor.js',
             'discuss_chat_monitor/static/src/xml/chat_monitor.xml',
+        ],
+        'web.assets_web_dark': [
+            'discuss_chat_monitor/static/src/css/chat_monitor.dark.css',
         ],
     },
     'website': 'https://www.odoo.com/apps',

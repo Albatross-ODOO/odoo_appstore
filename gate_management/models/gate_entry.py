@@ -11,6 +11,7 @@ import pytz
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+from odoo.tools import html_escape
 
 _logger = logging.getLogger(__name__)
 
@@ -53,11 +54,12 @@ class GateEntry(models.Model):
     material_qty = fields.Float(string='Quantity')
     material_flow = fields.Selection([('inward', 'Inward'), ('outward', 'Outward')], string='Flow')
     gate_pass_no = fields.Char(string='Gate Pass No.', readonly=True, copy=False, index=True, tracking=True)
-    truck_arrived_time = fields.Datetime(string='Truck Arrived', readonly=True, tracking=True)
+    truck_arrived_time = fields.Datetime(string='Truck Arrived', readonly=True, copy=False, tracking=True)
 
     # Host
     host_id = fields.Many2one('res.users', string='Host Name', default=lambda self: self.env.user, tracking=True)
     host_department = fields.Char(string='Host Department', compute='_compute_host_department', store=True, readonly=False)
+    hr_available = fields.Boolean(string='HR Installed', compute='_compute_hr_available')
 
     visit_purpose = fields.Selection([
         ('meeting', 'Meeting / Appointment'),
@@ -72,16 +74,17 @@ class GateEntry(models.Model):
 
     # OTP / QR
     otp = fields.Char(string='OTP', readonly=True, copy=False, default=lambda self: ''.join(random.choices(string.digits, k=6)))
-    otp_verified = fields.Boolean(string='OTP Verified', default=False, tracking=True)
+    otp_verified = fields.Boolean(string='OTP Verified', default=False, copy=False, tracking=True)
     scan_code = fields.Char(string='Scanned Code', help="Barcode or QR code scanned data")
     qr_code_image = fields.Binary(string="QR Code Image", compute='_compute_qr_code_image', store=True)
 
     # Photo & timestamps
     entry_photo = fields.Binary(string='Entry Photo', attachment=True)
-    check_in_time = fields.Datetime(string='Check-In Time', readonly=True, tracking=True)
-    check_out_time = fields.Datetime(string='Check-Out Time', readonly=True, tracking=True)
-    entry_time = fields.Datetime(string='Entry Time', readonly=True, tracking=True)
-    exit_time = fields.Datetime(string='Exit Time', readonly=True, tracking=True)
+    # a copy is a new visit: none of the audit times carry over
+    check_in_time = fields.Datetime(string='Check-In Time', readonly=True, copy=False, tracking=True)
+    check_out_time = fields.Datetime(string='Check-Out Time', readonly=True, copy=False, tracking=True)
+    entry_time = fields.Datetime(string='Entry Time', readonly=True, copy=False, tracking=True)
+    exit_time = fields.Datetime(string='Exit Time', readonly=True, copy=False, tracking=True)
     exit_remarks = fields.Text(string='Exit Remarks')
 
     # Scheduling / invitation
@@ -130,6 +133,12 @@ class GateEntry(models.Model):
             department = getattr(employee, 'department_id', False) if employee else False
             record.host_department = department.name if department else False
 
+    def _compute_hr_available(self):
+        # the department comes from the Employees app; without it the field would always stay empty
+        available = 'hr.employee' in self.env
+        for record in self:
+            record.hr_available = available
+
     def _company_address(self):
         """Address shown on passes: the gate address if one is configured, else the company one."""
         company = self.company_id
@@ -161,14 +170,22 @@ class GateEntry(models.Model):
         except Exception:
             return pytz.utc
 
+    def _pass_tz_name(self):
+        """Time zone printed on passes: the host's, else the creator's, else the current user's."""
+        return (self.host_id.tz or self.create_uid.tz or self.env.user.tz or 'UTC') if self else (self.env.user.tz or 'UTC')
+
     def _local(self, dt):
         if not dt:
             return False
         if dt.tzinfo is None:
             dt = pytz.utc.localize(dt)
-        return dt.astimezone(self._user_tz())
+        try:
+            tz = pytz.timezone(self[:1]._pass_tz_name())
+        except Exception:
+            tz = pytz.utc
+        return dt.astimezone(tz)
 
-    @api.depends('scheduled_start', 'scheduled_end')
+    @api.depends('scheduled_start', 'scheduled_end', 'host_id.tz')
     def _compute_validity_string(self):
         for record in self:
             if record.scheduled_start and record.scheduled_end:
@@ -203,19 +220,7 @@ class GateEntry(models.Model):
             record.qr_code_image = base64.b64encode(png) if png else False
 
     def _base_url(self):
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url') or 'http://localhost:8069'
-        if 'localhost' in base_url or '127.0.0.1' in base_url:
-            # development convenience: make the share link reachable from a phone on the same network
-            import socket
-            try:
-                s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                s.connect(("8.8.8.8", 80))
-                local_ip = s.getsockname()[0]
-                s.close()
-                base_url = base_url.replace('localhost', local_ip).replace('127.0.0.1', local_ip)
-            except Exception:
-                pass
-        return base_url
+        return self.env['ir.config_parameter'].sudo().get_param('web.base.url') or 'http://localhost:8069'
 
     def _compute_share_link(self):
         base_url = self._base_url()
@@ -269,23 +274,40 @@ class GateEntry(models.Model):
             record.is_overdue = bool(record.state == 'entered' and record.scheduled_end and record.scheduled_end < now)
 
     def _search_is_overdue(self, operator, value):
-        domain = [('state', '=', 'entered'), ('scheduled_end', '<', fields.Datetime.now())]
-        if (operator == '=' and value) or (operator == '!=' and not value):
-            return domain
-        return ['!'] + domain
+        # Odoo 19 normalises `= True` to `in [True]` before calling the search method
+        if operator in ('in', 'not in'):
+            wanted = {bool(v) for v in value}
+            if len(wanted) != 1:
+                return [(1, '=', 1)] if operator == 'in' else [(0, '=', 1)]
+            positive = (True in wanted) == (operator == 'in')
+        elif operator in ('=', '!='):
+            positive = bool(value) == (operator == '=')
+        else:
+            return NotImplemented
+        # '&' is explicit so that '!' negates the whole condition, not only its first leaf
+        domain = ['&', ('state', '=', 'entered'), ('scheduled_end', '<', fields.Datetime.now())]
+        return domain if positive else ['!'] + domain
 
     # ------------------------------------------------------------------
     # Constraints / onchange / CRUD
     # ------------------------------------------------------------------
+    @api.model
+    def _plate_key(self, plate):
+        """GJ05BX4821, 'gj 05 bx 4821' and GJ-05-BX-4821 are the same truck."""
+        return re.sub(r'[^0-9A-Z]', '', (plate or '').upper())
+
     @api.constrains('vehicle_number', 'state')
     def _check_active_entry(self):
         for record in self:
             if record.state == 'entered' and record.vehicle_number:
-                duplicate = self.search([
+                key = self._plate_key(record.vehicle_number)
+                # each site checks its own gate: another company's truck neither blocks nor is revealed
+                duplicate = self.sudo().search([
                     ('id', '!=', record.id),
-                    ('vehicle_number', '=', record.vehicle_number),
+                    ('company_id', '=', record.company_id.id),
+                    ('vehicle_number', '!=', False),
                     ('state', '=', 'entered'),
-                ], limit=1)
+                ]).filtered(lambda e: self._plate_key(e.vehicle_number) == key)[:1]
                 if duplicate:
                     raise ValidationError(_("Vehicle %s is already inside the premises (Ref: %s).") % (record.vehicle_number, duplicate.name))
 
@@ -362,6 +384,7 @@ class GateEntry(models.Model):
                 raise ValidationError(_("Visitor Name is required to schedule an invitation."))
             record.otp = ''.join(random.choices(string.digits, k=6))
             record.state = 'scheduled'
+        return True
 
     def _send_otp_sms(self):
         self.ensure_one()
@@ -377,6 +400,7 @@ class GateEntry(models.Model):
             record.otp = ''.join(random.choices(string.digits, k=6))
             record.state = 'otp_sent'
             record._send_otp_sms()
+        return True
 
     def action_verify_otp(self):
         for record in self:
@@ -384,12 +408,18 @@ class GateEntry(models.Model):
                 raise ValidationError(_("No OTP generated yet."))
             record.otp_verified = True
             record.state = 'verified'
+        return True
 
     def action_print_invitation(self):
         for record in self:
             if not record.otp:
                 record.action_schedule()
-        return self.env.ref(self._pass_report_xmlid()).report_action(self)
+        return self.env.ref(self._pass_report_xmlid()).report_action(self, config=False)
+
+    def _pass_closed_reason(self):
+        """'cancel' or 'used' when the pass may no longer be shown to the gate, else False."""
+        self.ensure_one()
+        return {'cancel': 'cancel', 'exited': 'used'}.get(self.state, False)
 
     def _pass_report_xmlid(self):
         """Material entries carry a gate pass; everybody else gets the visitor invitation."""
@@ -531,7 +561,7 @@ class GateEntry(models.Model):
         self.ensure_one()
         if self.state == 'draft':
             self.action_schedule()
-        body = f"<p>Hello {self.visitor_name or 'Guest'},</p>"
+        body = f"<p>Hello {html_escape(self.visitor_name or 'Guest')},</p>"
         body += "<p>You have been invited to visit. Please find your invitation details below:</p><ul>"
         body += f"<li><strong>Entry Code (OTP):</strong> {self.otp or ''}</li>"
         if self.validity_string:
@@ -541,6 +571,17 @@ class GateEntry(models.Model):
         body += f"<li><strong>Location:</strong> <a href='{self.google_maps_link}' target='_blank'>Get Directions</a></li>"
         body += f"<li><strong>Digital Pass:</strong> <a href='{self.share_link}' target='_blank'>{self.share_link}</a></li>"
         body += "</ul><p>Show the OTP/QR code to the guard at the entrance.</p><p>Thank you!</p>"
+        attachment = self.env['ir.attachment']
+        try:  # attach the PDF pass; never block the e-mail if wkhtmltopdf is missing
+            report = self.env.ref(self._pass_report_xmlid())
+            pdf, _fmt = report.sudo()._render_qweb_pdf(report.report_name, [self.id])
+            attachment = attachment.create({
+                'name': 'Gate Pass - %s.pdf' % (self.gate_pass_no or self.name).replace('/', '-'),
+                'raw': pdf, 'mimetype': 'application/pdf',
+                'res_model': self._name, 'res_id': self.id,
+            })
+        except Exception as e:  # noqa: BLE001
+            _logger.warning("Gate pass PDF not attached to the invitation e-mail: %s", e)
         return {
             'name': _('Send Email Invitation'),
             'type': 'ir.actions.act_window',
@@ -553,11 +594,13 @@ class GateEntry(models.Model):
                 'default_body': body,
                 'default_subject': f"Invitation Pass - {self.name}",
                 'default_composition_mode': 'comment',
+                'default_attachment_ids': [(6, 0, attachment.ids)],
             },
         }
 
     def action_authorize(self):
         self.write({'state': 'authorized'})
+        return True
 
     def action_confirm_entry(self):
         now = fields.Datetime.now()
@@ -570,7 +613,14 @@ class GateEntry(models.Model):
                 values['scheduled_end'] = record._material_auto_exit_deadline()
             record.write(values)
         # kiosk flow: land on a fresh walk-in form for the next visitor
-        return self.env['ir.actions.act_window']._for_xml_id('gate_management.action_gate_entry_kiosk_visitor')
+        if self.env.context.get('gate_kiosk'):
+            return self._gate_in_place(self.env['ir.actions.act_window']._for_xml_id('gate_management.action_gate_entry_kiosk_visitor'))
+        return True
+
+    @api.model
+    def _gate_in_place(self, action):
+        """Open a kiosk page in place of the current one, so the breadcrumbs do not grow with every visitor."""
+        return {'type': 'ir.actions.client', 'tag': 'gate_management.in_place', 'params': {'action': action}}
 
     # ------------------------------------------------------------------
     # Material gate pass
@@ -578,7 +628,8 @@ class GateEntry(models.Model):
     def _material_auto_exit_deadline(self):
         """End of the truck's own local day, per the company's Auto Check-Out Time."""
         self.ensure_one()
-        cutoff = min(max(self.company_id.gate_auto_exit_hour or 23.98, 0.0), 23.99)
+        hour_value = self.company_id.gate_auto_exit_hour
+        cutoff = min(max(23.98 if hour_value is None else hour_value, 0.0), 23.99)
         hour = int(cutoff)
         minute = min(int(round((cutoff - hour) * 60)), 59)
         tz = self._user_tz()
@@ -609,7 +660,7 @@ class GateEntry(models.Model):
 
     def action_print_gate_pass(self):
         self.ensure_one()
-        return self.env.ref('gate_management.action_report_material_gate_pass').report_action(self)
+        return self.env.ref('gate_management.action_report_material_gate_pass').report_action(self, config=False)
 
     def action_truck_arrived(self):
         """Outward: the truck reports at the gate and comes in to be loaded."""
@@ -631,9 +682,10 @@ class GateEntry(models.Model):
 
     def action_cancel(self):
         self.write({'state': 'cancel'})
+        return True
 
     def action_schedule_another(self):
-        return self.env['ir.actions.act_window']._for_xml_id('gate_management.action_gate_entry_schedule')
+        return self._gate_in_place(self.env['ir.actions.act_window']._for_xml_id('gate_management.action_gate_entry_schedule'))
 
     def action_open_gate_desk(self):
         return self.env['ir.actions.client']._for_xml_id('gate_management.action_gate_desk_home')
@@ -684,15 +736,29 @@ class GateEntry(models.Model):
         }
 
     @api.model
-    def gate_desk_data(self):
+    def _desk_domains(self):
+        """Visitor, vehicle and material entries per Gate Desk counter / Entries tab."""
         day_start, day_end = self._desk_day_bounds()
-        inside = self.search([('state', '=', 'entered')], order='check_in_time desc', limit=100)
-        expected = self.search([('state', 'in', ('scheduled', 'otp_sent', 'verified', 'authorized')), ('scheduled_start', '>=', day_start), ('scheduled_start', '<', day_end)], order='scheduled_start asc', limit=50)
-        exited_today = self.search_count([('state', '=', 'exited'), ('check_out_time', '>=', day_start), ('check_out_time', '<', day_end)])
+        base = [('entry_type', '!=', 'worker')]
+        return {
+            'inside': base + [('state', '=', 'entered')],
+            'expected': base + [('state', 'in', ('scheduled', 'otp_sent', 'verified', 'authorized')),
+                                ('scheduled_start', '>=', day_start), ('scheduled_start', '<', day_end)],
+            'scheduled': base + [('state', 'in', ('scheduled', 'otp_sent', 'verified', 'authorized'))],
+            'exited': base + [('state', '=', 'exited'), ('check_out_time', '>=', day_start), ('check_out_time', '<', day_end)],
+        }
+
+    @api.model
+    def gate_desk_data(self):
+        # each tile counts exactly what the Entries tab it opens lists (workers have their own counters)
+        domains = self._desk_domains()
+        inside = self.search(domains['inside'], order='check_in_time desc', limit=100)
+        expected = self.search(domains['expected'], order='scheduled_start asc', limit=50)
         Worker = self.env['gate.worker']
         workforce = {s: Worker.search_count([('status', '=', 'active'), ('current_state', '=', s)]) for s in ('inside', 'break', 'outside')}
         return {
-            'counts': {'inside': len(inside), 'expected': len(expected), 'exited': exited_today},
+            # the lists are capped for display; the counters must not be
+            'counts': {key: self.search_count(domains[key]) for key in ('inside', 'expected', 'exited')},
             'inside': [e._desk_row() for e in inside],
             'expected': [e._desk_row() for e in expected],
             'workforce': workforce,
@@ -704,14 +770,16 @@ class GateEntry(models.Model):
     @api.model
     def gate_entries_data(self, filter_key='all', term='', limit=200):
         """Rows for the Gate Desk Entries page: today's movements plus everything still open."""
-        day_start, day_end = self._desk_day_bounds()
+        day_start, _day_end = self._desk_day_bounds()
         open_states = ('scheduled', 'otp_sent', 'verified', 'authorized', 'entered')
         domain = [('entry_type', '!=', 'worker'), '|', '|', ('state', 'in', open_states),
                   ('check_out_time', '>=', day_start), ('create_date', '>=', day_start)]
+        desk = self._desk_domains()
         extra = {
-            'inside': [('state', '=', 'entered')],
-            'scheduled': [('state', 'in', ('scheduled', 'otp_sent', 'verified', 'authorized'))],
-            'exited': [('state', '=', 'exited')],
+            'inside': desk['inside'],
+            'expected': desk['expected'],
+            'scheduled': desk['scheduled'],
+            'exited': desk['exited'],
             'vehicle': [('entry_type', '=', 'vehicle')],
             'material': [('entry_type', '=', 'material')],
         }.get(filter_key, [])
@@ -724,12 +792,8 @@ class GateEntry(models.Model):
                 search_domain = [(f, 'ilike', term)] if i == 0 else ['|'] + search_domain + [(f, 'ilike', term)]
             domain += search_domain
         entries = self.search(domain, order='check_in_time desc, scheduled_start asc, create_date desc', limit=limit)
-        counts = {
-            'all': self.search_count(domain[:6]),
-            'inside': self.search_count([('entry_type', '!=', 'worker'), ('state', '=', 'entered')]),
-            'scheduled': self.search_count([('entry_type', '!=', 'worker'), ('state', 'in', ('scheduled', 'otp_sent', 'verified', 'authorized'))]),
-            'exited': self.search_count([('entry_type', '!=', 'worker'), ('state', '=', 'exited'), ('check_out_time', '>=', day_start)]),
-        }
+        counts = {'all': self.search_count(domain[:6])}
+        counts.update({key: self.search_count(desk[key]) for key in ('inside', 'expected', 'scheduled', 'exited')})
         return {'rows': [e._desk_row() for e in entries], 'counts': counts, 'gate': self.env.company.name}
 
     @api.model

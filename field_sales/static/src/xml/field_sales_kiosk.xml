@@ -307,11 +307,11 @@
                                                 <t t-if="step.key === 'review'">
                                                     <div class="nm-review">
                                                         <div class="nm-review-row"><small>Client</small><span><t t-esc="state.companyName"/></span></div>
-                                                        <div class="nm-review-row"><small>Contact</small><span t-att-class="{ 'is-empty': !state.contactName }"><t t-esc="state.contactName || 'Not provided'"/></span></div>
+                                                        <div class="nm-review-row"><small>Contact</small><span t-att-class="{ 'is-empty': !state.contactName }"><t t-if="state.contactName" t-esc="state.contactName"/><t t-else="">Not provided</t></span></div>
                                                         <div class="nm-review-row"><small>Phone</small><span><t t-esc="state.phone"/></span></div>
-                                                        <div class="nm-review-row"><small>Email</small><span t-att-class="{ 'is-empty': !state.email }"><t t-esc="state.email || 'Not provided'"/></span></div>
+                                                        <div class="nm-review-row"><small>Email</small><span t-att-class="{ 'is-empty': !state.email }"><t t-if="state.email" t-esc="state.email"/><t t-else="">Not provided</t></span></div>
                                                         <div class="nm-review-row"><small>Records</small><span><t t-esc="recordsSummary"/></span></div>
-                                                        <div class="nm-review-row"><small>Notes</small><span t-att-class="{ 'is-empty': !state.notes }"><t t-esc="state.notes || 'None'"/></span></div>
+                                                        <div class="nm-review-row"><small>Notes</small><span t-att-class="{ 'is-empty': !state.notes }"><t t-if="state.notes" t-esc="state.notes"/><t t-else="">None</t></span></div>
                                                     </div>
                                                     <t t-if="state.visitPhoto">
                                                         <div class="nm-review-photo"><img t-att-src="'data:image/jpeg;base64,' + state.visitPhoto" alt="Visit photo"/></div>

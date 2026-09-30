@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="alert alert-warning mt-2 mb-0 p-2 small" role="alert" invisible="not upi_qr_rate_warning">
-                            <field name="upi_qr_rate_warning" nolabel="1" readonly="1" class="o_upi_qr_inline_text"/>
+                            <field name="upi_qr_rate_warning" nolabel="1" readonly="1" class="o_upi_qr_inline_text w-100"/>
                         </div>
                     </setting>
                     <setting id="upi_qr_on_invoice_setting" company_dependent="1"

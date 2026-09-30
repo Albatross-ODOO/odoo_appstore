@@ -3,14 +3,14 @@
     <data noupdate="1">
         <!-- Security Category -->
         <record id="module_category_field_sales" model="ir.module.category">
-            <field name="name">Field Sales Tracking</field>
+            <field name="name">Field Sales</field>
             <field name="description">User access levels for field sales activity tracking.</field>
             <field name="sequence">300</field>
         </record>
 
         <!-- Security Privilege -->
         <record id="privilege_field_sales" model="res.groups.privilege">
-            <field name="name">Field Sales Tracking Privilege</field>
+            <field name="name">Field Sales</field>
             <field name="category_id" ref="field_sales.module_category_field_sales"/>
         </record>
 

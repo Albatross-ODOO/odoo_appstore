@@ -14,7 +14,13 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
-                    <div class="page" style="font-family: Helvetica, Arial, sans-serif; color: #1F242E;">
+                    <style>
+                        /* wkhtmltopdf draws hairlines around the cells of collapsed tables: the pass keeps only the borders set inline */
+                        .gd-pdf table { border-collapse: separate !important; border-spacing: 0; }
+                        .gd-pdf thead, .gd-pdf tbody, .gd-pdf tr, .gd-pdf td, .gd-pdf th { border-style: none; }
+                        .gd-pdf .gd-nowrap { white-space: nowrap; }
+                    </style>
+                    <div class="page gd-pdf" style="font-family: Helvetica, Arial, sans-serif; color: #1F242E;">
                         <div style="border: 2px solid #2A2210; border-radius: 10px; padding: 0; max-width: 640px; margin: 0 auto; overflow: hidden;">
 
                             <!-- Header -->
@@ -70,6 +76,13 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td style="padding: 5px 0; color: #8B8577;">Challan No.</td>
+                                                <td style="padding: 5px 0; font-weight: bold; font-family: 'Courier New', monospace;">
+                                                    <span t-if="doc.material_slip_no" t-field="doc.material_slip_no"/>
+                                                    <span t-else="" style="color: #B9B3A6; font-family: Helvetica, Arial, sans-serif; font-weight: normal;">To be filled at gate</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td style="padding: 5px 0; color: #8B8577;">Material</td>
                                                 <td style="padding: 5px 0; font-weight: bold;"><span t-field="doc.material_name"/></td>
                                             </tr>
@@ -108,8 +121,8 @@
                                         <div style="font-size: 12px; margin-top: 4px; line-height: 1.5;"><t t-esc="doc.full_address"/></div>
                                     </td>
                                     <td style="padding: 14px 18px; text-align: right; vertical-align: middle; width: 32%;">
-                                        <a t-att-href="doc.google_maps_link" target="_blank"
-                                           style="display: inline-block; background: #C9A452; color: #2A2210; padding: 9px 18px; border-radius: 999px; text-decoration: none; font-weight: bold; font-size: 11px;">Get Directions</a>
+                                        <a t-att-href="doc.google_maps_link" target="_blank" class="gd-nowrap"
+                                           style="display: inline-block; white-space: nowrap; background: #C9A452; color: #2A2210; padding: 9px 18px; border-radius: 999px; text-decoration: none; font-weight: bold; font-size: 11px;">Get Directions</a>
                                     </td>
                                 </tr>
                             </table>

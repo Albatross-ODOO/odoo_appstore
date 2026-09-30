@@ -33,7 +33,9 @@ class AccountMove(models.Model):
 
     def _upi_qr_get_amount_label(self):
         self.ensure_one()
-        return _("Amount due") if self._upi_qr_use_amount_due() else _("Invoice total")
+        if self._upi_qr_use_amount_due():
+            return _("Amount due")
+        return _("Receipt total") if self.move_type == 'out_receipt' else _("Invoice total")
 
     def _upi_qr_get_reference(self):
         self.ensure_one()

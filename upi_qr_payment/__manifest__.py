@@ -1,6 +1,6 @@
 {
     'name': 'UPI QR Payment on Invoice & Quotation',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'summary': 'Scan & Pay: dynamic UPI QR code with the amount pre-filled on invoice and quotation PDFs - any UPI app, any currency',
     'description': """
 UPI QR Payment on Invoice & Quotation
