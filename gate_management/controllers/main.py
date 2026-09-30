@@ -35,11 +35,12 @@ class GateInvitation(http.Controller):
         if not entry:
             return request.not_found()
         try:
-            pdf_content, _ = request.env['ir.actions.report'].sudo()._render_qweb_pdf('gate_management.report_gate_invitation_template', [entry.id])
+            report_xmlid = entry._pass_report_xmlid()
+            pdf_content, _ = request.env['ir.actions.report'].sudo()._render_qweb_pdf(report_xmlid, [entry.id])
         except Exception as e:
             return request.make_response(f"Error creating PDF: {e}", headers=[('Content-Type', 'text/plain')])
         return request.make_response(pdf_content, headers=[
             ('Content-Type', 'application/pdf'),
             ('Content-Length', len(pdf_content)),
-            ('Content-Disposition', f'inline; filename="Invitation-{entry.name}.pdf"'),
+            ('Content-Disposition', f'inline; filename="{entry.entry_type == "material" and "GatePass" or "Invitation"}-{entry.gate_pass_no or entry.name}.pdf"'),
         ])

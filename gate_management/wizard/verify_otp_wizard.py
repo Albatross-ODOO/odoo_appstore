@@ -51,6 +51,8 @@ class VerifyOtpWizard(models.TransientModel):
         Entry = self.env['gate.entry']
         entry = Entry.search([('otp', '=', code), ('state', 'not in', ('exited', 'cancel'))], limit=1)
         if not entry:
+            entry = Entry.search([('gate_pass_no', '=', code), ('state', 'not in', ('cancel',))], limit=1)
+        if not entry:
             entry = Entry.search([('name', '=', code)], limit=1)
         if not entry and 'id=' in code:
             try:
@@ -101,6 +103,8 @@ class VerifyOtpWizard(models.TransientModel):
         entry = self._find_entry(code)
         if not entry:
             return self._notify(_('Not found'), _('Invalid entry code / reference: %s') % code, 'danger')
+        if entry.entry_type == 'material':
+            return self._handle_material_scan(entry)
         if entry.state == 'entered':
             return self._notify(_('Already inside'), _('%s is already inside the premises.') % (entry.visitor_name or _('This visitor')), 'warning')
         if entry.state in ('exited', 'cancel'):
@@ -110,6 +114,39 @@ class VerifyOtpWizard(models.TransientModel):
         except Exception as e:
             return self._notify(_('Verification error'), str(e), 'danger')
         self.write({'entry_id': entry.id, 'state': 'photo', 'force_camera_open': True})
+        return self._reopen()
+
+    def _handle_material_scan(self, entry):
+        """One scanner for both directions: the first scan lets the truck in, the next lets it out.
+
+        Inward trucks are scanned at the entry gate and checked out by hand (or by the
+        end-of-day cron). Outward trucks come in through the Truck Arrived button and are
+        scanned at the exit gate once they are loaded, which is the same scan-out path.
+        """
+        if entry.state in ('exited', 'cancel'):
+            return self._notify(
+                _('Pass closed'),
+                _('Gate pass %s has already been used or cancelled.') % (entry.gate_pass_no or entry.name),
+                'warning')
+        try:
+            if entry.state == 'entered':
+                entry.action_exit()
+                entry.message_post(body=_("Checked out at the gate by pass scan."))
+                message = _('%s is out') % (entry.gate_pass_no or entry.name)
+            else:
+                if entry.state != 'authorized':
+                    entry.write({'state': 'authorized'})
+                entry.action_confirm_entry()
+                entry.message_post(body=_("Checked in at the gate by pass scan."))
+                message = _('%s is in') % (entry.gate_pass_no or entry.name)
+        except Exception as e:
+            return self._notify(_('Verification error'), str(e), 'danger')
+        self.write({
+            'entry_id': entry.id,
+            'state': 'done',
+            'result_message': message,
+            'result_time': fields.Datetime.context_timestamp(self, fields.Datetime.now()).strftime('%H:%M'),
+        })
         return self._reopen()
 
     def action_back_to_scan(self):
