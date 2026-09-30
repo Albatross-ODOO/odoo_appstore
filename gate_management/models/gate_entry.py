@@ -52,6 +52,8 @@ class GateEntry(models.Model):
     material_slip_no = fields.Char(string='Challan / Gate Pass Slip No.')
     material_qty = fields.Float(string='Quantity')
     material_flow = fields.Selection([('inward', 'Inward'), ('outward', 'Outward')], string='Flow')
+    gate_pass_no = fields.Char(string='Gate Pass No.', readonly=True, copy=False, index=True, tracking=True)
+    truck_arrived_time = fields.Datetime(string='Truck Arrived', readonly=True, tracking=True)
 
     # Host
     host_id = fields.Many2one('res.users', string='Host Name', default=lambda self: self.env.user, tracking=True)
@@ -129,18 +131,26 @@ class GateEntry(models.Model):
             record.host_department = department.name if department else False
 
     def _company_address(self):
+        """Address shown on passes: the gate address if one is configured, else the company one."""
         company = self.company_id
+        gate_address = (company.gate_address or '').strip()
+        if gate_address:
+            return " ".join(gate_address.split())
         parts = [company.street, company.street2, company.city, company.state_id.name, company.country_id.name]
         return ", ".join(p for p in parts if p)
 
-    @api.depends('company_id')
+    @api.depends('company_id', 'company_id.gate_address', 'company_id.gate_maps_url')
     def _compute_google_maps_link(self):
         for record in self:
+            custom = (record.company_id.gate_maps_url or '').strip()
+            if custom:
+                record.google_maps_link = custom
+                continue
             addr = record._company_address()
             record.google_maps_link = (
                 f"https://www.google.com/maps/dir/?api=1&destination={urllib.parse.quote(addr)}" if addr else "https://maps.google.com")
 
-    @api.depends('company_id', 'company_id.street', 'company_id.street2', 'company_id.city', 'company_id.state_id', 'company_id.country_id')
+    @api.depends('company_id', 'company_id.gate_address', 'company_id.street', 'company_id.street2', 'company_id.city', 'company_id.state_id', 'company_id.country_id')
     def _compute_full_address(self):
         for record in self:
             record.full_address = record._company_address() or "Office Address"
@@ -379,7 +389,14 @@ class GateEntry(models.Model):
         for record in self:
             if not record.otp:
                 record.action_schedule()
-        return self.env.ref('gate_management.action_report_gate_invitation').report_action(self)
+        return self.env.ref(self._pass_report_xmlid()).report_action(self)
+
+    def _pass_report_xmlid(self):
+        """Material entries carry a gate pass; everybody else gets the visitor invitation."""
+        self.ensure_one()
+        if self.entry_type == 'material':
+            return 'gate_management.action_report_material_gate_pass'
+        return 'gate_management.action_report_gate_invitation'
 
     def action_open_share_wizard(self):
         self.ensure_one()
@@ -420,6 +437,41 @@ class GateEntry(models.Model):
         return ['name', 'otp', 'validity_string', 'full_address', 'share_link', 'google_maps_link',
                 'visitor_name', 'vehicle_number', 'company_id.name', 'host_id.name']
 
+    def _wa_get_safe_phone_fields(self):
+        """whatsapp.template checks phone_field against this list for non-admin users (sudo() keeps the
+        real user), so a guard sharing the first pass would be refused; the base list only knows
+        partner-style phone fields."""
+        parent = getattr(super(), '_wa_get_safe_phone_fields', None)
+        return ['mobile_number'] + (parent() if parent else [])
+
+    @api.model
+    def _wa_template_vals(self):
+        """Definition of the Meta template, kept in one place so a template Meta has not approved yet can be
+        refreshed from it. Meta rejects a template whose text starts or ends with a variable, so the header
+        carries none and the body closes on a static line."""
+        return {
+            'name': 'Gate Pass Invitation',
+            'template_name': 'gate_pass_invitation',
+            'model_id': self.env['ir.model']._get_id('gate.entry'),
+            'lang_code': 'en',
+            'template_type': 'utility',
+            'status': 'draft',
+            'header_type': 'text',
+            'header_text': 'Gate pass',
+            'header_attachment_ids': [(5, 0, 0)],
+            'phone_field': 'mobile_number',
+            'body': "You have been invited. Show the entry code or the digital pass to the guard at the gate.\n\n"
+                    "*Entry Code:* {{1}}\n*Validity:* {{2}}\n*Location:* {{3}}\n*Digital Pass:* {{4}}\n\n"
+                    "Please carry the digital pass with you.",
+            'variable_ids': [
+                (5, 0, 0),
+                (0, 0, {'name': '{{1}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'otp', 'demo_value': '123456'}),
+                (0, 0, {'name': '{{2}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'validity_string', 'demo_value': '13 Jul 2026, 11:30 AM - 05:00 PM'}),
+                (0, 0, {'name': '{{3}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'full_address', 'demo_value': '123 Main St, Springfield'}),
+                (0, 0, {'name': '{{4}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'share_link', 'demo_value': 'https://example.com/gate/invitation/share'}),
+            ],
+        }
+
     @api.model
     def _get_or_create_wa_template(self):
         """The Meta template lives in the WhatsApp app (Enterprise). It is created on first use so the
@@ -428,28 +480,13 @@ class GateEntry(models.Model):
             return False
         template = self.env.ref('gate_management.wa_template_gate_pass_invitation', raise_if_not_found=False)
         if template:
+            # An approved template is left exactly as Meta approved it. A draft, rejected or older-version
+            # template is refreshed, so a rejection can be corrected and resubmitted without hand-editing.
+            if template.status != 'approved':
+                template.sudo().write(self._wa_template_vals())
             return template
         Template = self.env['whatsapp.template'].sudo()
-        template = Template.create({
-            'name': 'Gate Pass Invitation',
-            'template_name': 'gate_pass_invitation',
-            'model_id': self.env['ir.model']._get_id('gate.entry'),
-            'lang_code': 'en',
-            'template_type': 'utility',
-            'status': 'draft',
-            'header_type': 'text',
-            'header_text': 'Gate pass from {{1}}',
-            'phone_field': 'mobile_number',
-            'body': "You have been invited. Show the entry code or the digital pass to the guard at the gate.\n\n"
-                    "*Entry Code:* {{1}}\n*Validity:* {{2}}\n*Location:* {{3}}\n*Digital Pass:* {{4}}",
-            'variable_ids': [
-                (0, 0, {'name': '{{1}}', 'line_type': 'header', 'field_type': 'field', 'field_name': 'company_id.name', 'demo_value': 'Albatross'}),
-                (0, 0, {'name': '{{1}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'otp', 'demo_value': '123456'}),
-                (0, 0, {'name': '{{2}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'validity_string', 'demo_value': '13 Jul 2026, 11:30 AM - 05:00 PM'}),
-                (0, 0, {'name': '{{3}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'full_address', 'demo_value': '123 Main St, Springfield'}),
-                (0, 0, {'name': '{{4}}', 'line_type': 'body', 'field_type': 'field', 'field_name': 'share_link', 'demo_value': 'https://example.com/gate/invitation/share'}),
-            ],
-        })
+        template = Template.create(self._wa_template_vals())
         self.env['ir.model.data'].sudo().create({
             'name': 'wa_template_gate_pass_invitation',
             'module': 'gate_management',
@@ -527,9 +564,62 @@ class GateEntry(models.Model):
         for record in self:
             if record.entry_type in ('visitor', 'vehicle') and not record.entry_photo:
                 raise ValidationError(_("Visitor photo is required to confirm entry."))
-            record.write({'state': 'entered', 'entry_time': now, 'check_in_time': now})
+            values = {'state': 'entered', 'entry_time': now, 'check_in_time': now}
+            if record.entry_type == 'material':
+                # a truck nobody checks out is auto-exited at the end of its own day
+                values['scheduled_end'] = record._material_auto_exit_deadline()
+            record.write(values)
         # kiosk flow: land on a fresh walk-in form for the next visitor
         return self.env['ir.actions.act_window']._for_xml_id('gate_management.action_gate_entry_kiosk_visitor')
+
+    # ------------------------------------------------------------------
+    # Material gate pass
+    # ------------------------------------------------------------------
+    def _material_auto_exit_deadline(self):
+        """End of the truck's own local day, per the company's Auto Check-Out Time."""
+        self.ensure_one()
+        cutoff = min(max(self.company_id.gate_auto_exit_hour or 23.98, 0.0), 23.99)
+        hour = int(cutoff)
+        minute = min(int(round((cutoff - hour) * 60)), 59)
+        tz = self._user_tz()
+        local_now = pytz.utc.localize(fields.Datetime.now()).astimezone(tz)
+        deadline = local_now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if deadline <= local_now:
+            deadline += timedelta(days=1)
+        return deadline.astimezone(pytz.utc).replace(tzinfo=None)
+
+    def action_issue_gate_pass(self):
+        """Create the pass up front, before the truck reaches the gate."""
+        for record in self:
+            if record.entry_type != 'material':
+                raise ValidationError(_("Gate passes are issued for material entries only."))
+            if not record.material_flow:
+                raise ValidationError(_("Choose whether this pass is Inward or Outward."))
+            if not record.vendor_id:
+                raise ValidationError(_("A vendor / supplier is required on a gate pass."))
+            if not record.gate_pass_no:
+                record.gate_pass_no = self.env['ir.sequence'].next_by_code('gate.material.pass') or '/'
+            if not record.scheduled_start:
+                record.scheduled_start = fields.Datetime.now()
+            if not record.scheduled_end:
+                record.scheduled_end = record._material_auto_exit_deadline()
+            record.state = 'scheduled'
+            record.message_post(body=_("Gate pass %s issued.", record.gate_pass_no))
+        return True
+
+    def action_print_gate_pass(self):
+        self.ensure_one()
+        return self.env.ref('gate_management.action_report_material_gate_pass').report_action(self)
+
+    def action_truck_arrived(self):
+        """Outward: the truck reports at the gate and comes in to be loaded."""
+        for record in self:
+            if record.state in ('entered', 'exited', 'cancel'):
+                raise ValidationError(_("This gate pass is already %s.", record.state))
+            record.truck_arrived_time = fields.Datetime.now()
+            record.message_post(body=_("Truck arrived at the gate."))
+        self.action_confirm_entry()
+        return True
 
     def action_exit(self):
         now = fields.Datetime.now()

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_material_gate_pass" model="ir.actions.report">
+        <field name="name">Material Gate Pass</field>
+        <field name="model">gate.entry</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gate_management.report_material_gate_pass_template</field>
+        <field name="report_file">gate_management.report_material_gate_pass_template</field>
+        <field name="print_report_name">'Gate Pass - %s' % (object.gate_pass_no or object.name)</field>
+    </record>
+
+    <template id="report_material_gate_pass_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <div class="page" style="font-family: Helvetica, Arial, sans-serif; color: #1F242E;">
+                        <div style="border: 2px solid #2A2210; border-radius: 10px; padding: 0; max-width: 640px; margin: 0 auto; overflow: hidden;">
+
+                            <!-- Header -->
+                            <table style="width: 100%; border-collapse: collapse; background: #2A2210; color: #F6F1E5;">
+                                <tr>
+                                    <td style="padding: 14px 18px; vertical-align: middle;">
+                                        <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 40px; width: auto; vertical-align: middle;" alt="Logo"/>
+                                        <div style="font-size: 15px; font-weight: bold; margin-top: 6px;"><span t-field="doc.company_id.name"/></div>
+                                    </td>
+                                    <td style="padding: 14px 18px; text-align: right; vertical-align: middle;">
+                                        <div style="font-size: 18px; font-weight: bold; letter-spacing: 2px;">MATERIAL GATE PASS</div>
+                                        <div style="display: inline-block; margin-top: 6px; background: #C9A452; color: #2A2210; padding: 3px 14px; border-radius: 999px; font-size: 11px; font-weight: bold; letter-spacing: 1px;">
+                                            <span t-if="doc.material_flow == 'inward'">INWARD</span>
+                                            <span t-elif="doc.material_flow == 'outward'">OUTWARD</span>
+                                            <span t-else="">MATERIAL</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Pass number -->
+                            <table style="width: 100%; border-collapse: collapse; background: #F3EEE5; border-bottom: 1px solid #DED5C4;">
+                                <tr>
+                                    <td style="padding: 10px 18px;">
+                                        <div style="font-size: 9px; letter-spacing: 2px; color: #8B8577; font-weight: bold;">GATE PASS NO.</div>
+                                        <div style="font-family: 'Courier New', monospace; font-size: 28px; font-weight: bold; color: #2A2210; letter-spacing: 3px;">
+                                            <span t-esc="doc.gate_pass_no or doc.name"/>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 10px 18px; text-align: right;">
+                                        <div style="font-size: 9px; letter-spacing: 2px; color: #8B8577; font-weight: bold;">ENTRY CODE</div>
+                                        <div style="font-family: 'Courier New', monospace; font-size: 20px; font-weight: bold; color: #2A2210; letter-spacing: 5px;">
+                                            <span t-field="doc.otp"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Details + QR -->
+                            <table style="width: 100%; border-collapse: collapse; background: #FFFFFF;">
+                                <tr>
+                                    <td style="padding: 16px 18px; vertical-align: top; width: 62%;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                            <tr>
+                                                <td style="padding: 5px 0; color: #8B8577; width: 42%;">Vendor / Supplier</td>
+                                                <td style="padding: 5px 0; font-weight: bold;"><span t-field="doc.vendor_id.name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 0; color: #8B8577;">Vehicle No.</td>
+                                                <td style="padding: 5px 0; font-weight: bold; font-family: 'Courier New', monospace;">
+                                                    <span t-if="doc.vehicle_number" t-field="doc.vehicle_number"/>
+                                                    <span t-else="" style="color: #B9B3A6; font-family: Helvetica, Arial, sans-serif; font-weight: normal;">To be filled at gate</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 0; color: #8B8577;">Material</td>
+                                                <td style="padding: 5px 0; font-weight: bold;"><span t-field="doc.material_name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 0; color: #8B8577;">Quantity</td>
+                                                <td style="padding: 5px 0; font-weight: bold;"><span t-field="doc.material_qty"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 0; color: #8B8577;">Issued On</td>
+                                                <td style="padding: 5px 0;"><span t-field="doc.scheduled_start" t-options='{"widget": "datetime", "format": "d MMM yyyy, HH:mm"}'/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 0; color: #8B8577;">Valid Until</td>
+                                                <td style="padding: 5px 0;"><span t-field="doc.scheduled_end" t-options='{"widget": "datetime", "format": "d MMM yyyy, HH:mm"}'/></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding: 16px 18px; vertical-align: top; text-align: center; width: 38%; border-left: 1px dashed #DED5C4;">
+                                        <div t-if="doc.qr_code_image">
+                                            <img t-att-src="image_data_uri(doc.qr_code_image)" style="width: 132px; height: 132px; display: block; margin: 0 auto;"/>
+                                        </div>
+                                        <div style="font-size: 10px; color: #8B8577; margin-top: 8px; line-height: 1.4;">
+                                            Show this pass at the gate.<br/>The guard scans it to log the
+                                            <span t-if="doc.material_flow == 'outward'">exit</span>
+                                            <span t-else="">entry</span>.
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Address + directions -->
+                            <table style="width: 100%; border-collapse: collapse; background: #F3EEE5; border-top: 1px solid #DED5C4;">
+                                <tr>
+                                    <td style="padding: 14px 18px; vertical-align: middle;">
+                                        <div style="font-size: 9px; letter-spacing: 2px; color: #8B8577; font-weight: bold;">REPORT TO</div>
+                                        <div style="font-size: 12px; margin-top: 4px; line-height: 1.5;"><t t-esc="doc.full_address"/></div>
+                                    </td>
+                                    <td style="padding: 14px 18px; text-align: right; vertical-align: middle; width: 32%;">
+                                        <a t-att-href="doc.google_maps_link" target="_blank"
+                                           style="display: inline-block; background: #C9A452; color: #2A2210; padding: 9px 18px; border-radius: 999px; text-decoration: none; font-weight: bold; font-size: 11px;">Get Directions</a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Signatures -->
+                            <table style="width: 100%; border-collapse: collapse; background: #FFFFFF; border-top: 1px solid #DED5C4;">
+                                <tr>
+                                    <td style="padding: 26px 18px 12px; width: 50%;">
+                                        <div style="border-top: 1px solid #8B8577; padding-top: 5px; font-size: 10px; color: #8B8577;">Security / Gate Officer</div>
+                                    </td>
+                                    <td style="padding: 26px 18px 12px; width: 50%;">
+                                        <div style="border-top: 1px solid #8B8577; padding-top: 5px; font-size: 10px; color: #8B8577;">Authorised Signatory</div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

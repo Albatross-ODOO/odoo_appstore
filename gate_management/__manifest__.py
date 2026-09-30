@@ -1,6 +1,6 @@
 {
     'name': 'Gate Management',
-    'version': '19.0.2.0.0',
+    'version': '19.0.2.1.0',
     'summary': 'Gate Desk: visitor, vehicle, material and workforce gate control built for the security guard',
     'description': """
 Gate Desk: gate management for warehouses, plants and offices
@@ -42,8 +42,10 @@ the WhatsApp option appears automatically and sends passes through an approved M
         'views/gate_entry_views.xml',
         'views/gate_worker_views.xml',
         'views/report_gate_pass.xml',
+        'views/report_material_gate_pass.xml',
         'views/invitation_landing_page.xml',
         'views/menus.xml',
+        'views/gate_settings_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

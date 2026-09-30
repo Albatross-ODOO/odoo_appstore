@@ -204,7 +204,7 @@
                         <group><field name="scheduled_end"/></group>
                     </group>
                     <group string="Material Inward/Outward" invisible="entry_type != 'material'">
-                        <group><field name="material_name"/><field name="material_slip_no"/></group>
+                        <group><field name="material_name"/><field name="gate_pass_no"/></group>
                         <group><field name="material_qty"/><field name="material_flow"/></group>
                     </group>
                     <group string="Entry Audit">
@@ -237,7 +237,7 @@
                     </div>
                     <div class="gd-rule"/>
 
-                    <field name="entry_type" widget="gate_chips" nolabel="1" options="{'exclude': ['worker'], 'icons': {'visitor': 'fa-user', 'vehicle': 'fa-truck', 'material': 'fa-cube'}, 'labels': {'visitor': 'Visitor', 'vehicle': 'Vehicle', 'material': 'Material'}}" readonly="state != 'draft'"/>
+                    <field name="entry_type" widget="gate_chips" nolabel="1" options="{'exclude': ['worker', 'vehicle'], 'icons': {'visitor': 'fa-user', 'material': 'fa-cube'}, 'labels': {'visitor': 'Visitor', 'material': 'Material'}}" readonly="state != 'draft'"/>
                     <field name="operation_type" widget="gate_chips" nolabel="1" options="{'segment': true}" readonly="state != 'draft'"/>
 
                     <div class="gd-split">
@@ -269,9 +269,8 @@
                                 <field name="vendor_id" options="{'no_open': True}" placeholder="Search partner…" readonly="state != 'draft'"/>
                             </div>
                             <div class="gd-field">
-                                <label for="vehicle_number" string="Vehicle number" invisible="entry_type != 'vehicle'"/>
-                                <label for="vehicle_number" string="Vehicle number · optional" invisible="entry_type == 'vehicle'"/>
-                                <field name="vehicle_number" class="gd-plate" placeholder="GJ 05 XX 0000" required="entry_type == 'vehicle'" readonly="state != 'draft'"/>
+                                <label for="vehicle_number" string="Vehicle number · optional"/>
+                                <field name="vehicle_number" class="gd-plate" placeholder="GJ 05 XX 0000" readonly="state != 'draft'"/>
                             </div>
                             <div invisible="entry_type != 'material'">
                                 <div class="gd-field">
@@ -280,8 +279,8 @@
                                 </div>
                                 <div class="gd-grid2">
                                     <div class="gd-field">
-                                        <label for="material_slip_no" string="Challan / slip no."/>
-                                        <field name="material_slip_no" class="gd-mono" placeholder="CH-1042" readonly="state != 'draft'"/>
+                                        <label for="gate_pass_no" string="Gate pass no."/>
+                                        <field name="gate_pass_no" class="gd-mono" placeholder="Issued automatically" readonly="1"/>
                                     </div>
                                     <div class="gd-field">
                                         <label for="material_qty" string="Quantity"/>
@@ -297,10 +296,28 @@
                                 <field name="entry_photo" widget="gate_camera" nolabel="1" readonly="state != 'draft'"/>
                             </div>
                             <div class="gd-stack">
-                                <button name="action_confirm_entry" type="object" class="gd-btn gd-ok gd-lit gd-big" invisible="state != 'draft' or (entry_type != 'material' and not entry_photo)">
+                                <!-- Visitor: photo, then straight in -->
+                                <button name="action_confirm_entry" type="object" class="gd-btn gd-ok gd-lit gd-big" invisible="state != 'draft' or entry_type == 'material' or not entry_photo">
                                     <i class="fa fa-sign-in" title="sign in"/> Confirm Check-In
                                 </button>
                                 <p class="gd-hint" invisible="state != 'draft' or entry_type == 'material' or entry_photo">Take the photo to enable check-in</p>
+
+                                <!-- Material: the pass is issued first, the truck comes later -->
+                                <button name="action_issue_gate_pass" type="object" class="gd-btn gd-ok gd-lit gd-big" invisible="entry_type != 'material' or state != 'draft'">
+                                    <i class="fa fa-id-card-o" title="gate pass"/> Issue Gate Pass
+                                </button>
+                                <button name="action_print_gate_pass" type="object" class="gd-btn gd-big" invisible="entry_type != 'material' or not gate_pass_no">
+                                    <i class="fa fa-download" title="download"/> Download Gate Pass
+                                </button>
+                                <button name="action_open_share_wizard" type="object" class="gd-btn gd-big" invisible="entry_type != 'material' or not gate_pass_no">
+                                    <i class="fa fa-paper-plane" title="send"/> Send Pass to Driver
+                                </button>
+                                <button name="action_truck_arrived" type="object" class="gd-btn gd-ok gd-lit gd-big" invisible="entry_type != 'material' or state not in ['scheduled', 'otp_sent', 'verified', 'authorized']">
+                                    <i class="fa fa-truck" title="truck arrived"/> Truck Arrived
+                                </button>
+                                <p class="gd-hint" invisible="entry_type != 'material' or material_flow != 'inward' or state not in ['scheduled', 'otp_sent', 'verified', 'authorized']">Or scan the pass at the gate when the truck arrives</p>
+                                <p class="gd-hint" invisible="entry_type != 'material' or material_flow != 'outward' or state != 'entered'">Loaded? The guard scans the pass at the exit gate to check the truck out</p>
+
                                 <button name="action_exit" type="object" class="gd-btn gd-bad gd-lit gd-big" invisible="state != 'entered'">
                                     <i class="fa fa-sign-out" title="sign out"/> Confirm Check-Out
                                 </button>
