@@ -1,0 +1,25 @@
+/* Dark colour scheme (web.assets_web_dark, Enterprise): the Bootstrap utilities follow the dark
+   palette on their own, only the colours hard-coded in chat_monitor.css need a dark variant */
+.o_chat_monitor_thread {
+    background-color: #1b1d26 !important;
+}
+.cm-session-item:hover {
+    background-color: #2f3240 !important;
+}
+.cm-session-item.active {
+    background-color: #1e2a44 !important;
+    border-color: #3b82f6 !important;
+}
+.cm-message-bubble:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+.bg-purple-subtle {
+    background-color: #3b2a55 !important;
+}
+.text-purple {
+    color: #d8b4fe !important;
+}
+.cm-badge-archived {
+    background-color: #3a3a40 !important;
+    color: #d4d4d8 !important;
+}

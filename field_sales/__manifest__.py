@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Field Sales Activity & Tracking',
-    'version': '18.0.2.0.0',
+    'version': '18.0.2.0.1',
     'category': 'Sales/Sales',
     'summary': 'Kiosk Check-In, Geolocation Visit Tracking and Lead Capture for Field Sales',
     'description': """
@@ -38,13 +38,14 @@ Track what your field sales representatives do during the day:
 
     'assets': {
         'web.assets_backend': [
-            'field_sales/static/src/libs/leaflet/leaflet.css',
-            'field_sales/static/src/libs/leaflet/leaflet.js',
             'field_sales/static/src/scss/field_sales.scss',
             'field_sales/static/src/xml/session_route_map.xml',
             'field_sales/static/src/xml/field_sales_kiosk.xml',
             'field_sales/static/src/js/session_route_map.js',
             'field_sales/static/src/js/field_sales_kiosk.js',
+        ],
+        'web.assets_tests': [
+            'field_sales/static/tests/tours/**/*',
         ],
     },
 

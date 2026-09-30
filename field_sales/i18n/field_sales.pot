@@ -1,0 +1,1609 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* field_sales
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-30 15:06+0000\n"
+"PO-Revision-Date: 2026-09-30 15:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "%s (linked)"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.actions.report,print_report_name:field_sales.action_report_field_sales_session
+msgid "'Daily_Activity_Report_%s' % (object.name)"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "<span class=\"text-muted\" style=\"font-size: 10px;\">No photo</span>"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "<span class=\"text-muted\">No GPS</span>"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "<strong>Check-In GPS:</strong>"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "<strong>Check-In Time:</strong>"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "<strong>Check-Out GPS:</strong>"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "<strong>Check-Out Time:</strong>"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "<strong>Location Verification:</strong>"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Acc: ±"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__accuracy
+msgid "Accuracy (meters)"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_res_users__active_field_session_id
+msgid "Active Field Sales Session"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__session_id
+msgid "Active Session"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Active work session"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.ui.menu,name:field_sales.menu_field_sales_activities
+msgid "Activities"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_form
+msgid ""
+"Add details about lead progress, next visit dates, requirements, etc..."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Adds this client to Contacts, tagged \"Field Lead\" and assigned to you"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "An email address?"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Basic Information"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "CHECK IN"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "CHECK OUT & END DAY"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "CHECK OUT & SAVE VISIT"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "CHECK-IN"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "CHECK-OUT"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "COMPLETED CLIENT VISITS"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "CRM lead"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Capture photo"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Check out"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Check out & save visit"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_location_log__log_type__check_in
+msgid "Check-In"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "Check-In Date"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Check-In Details"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__check_in_latitude
+msgid "Check-In Latitude"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/session_route_map.js:0
+msgid "Check-In Location"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__check_in_map_link
+msgid "Check-In Location Link"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__check_in_longitude
+msgid "Check-In Longitude"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Check-In Selfie"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__check_in_time
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__check_in_time
+msgid "Check-In Time"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_location_log__log_type__check_out
+msgid "Check-Out"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Check-Out Client Visit"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Check-Out Details"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__check_out_latitude
+msgid "Check-Out Latitude"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/session_route_map.js:0
+msgid "Check-Out Location"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__check_out_map_link
+msgid "Check-Out Location Link"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__check_out_longitude
+msgid "Check-Out Longitude"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Check-Out Selfie"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__check_out_time
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__check_out_time
+msgid "Check-Out Time"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Check-in failed: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Check-in selfie"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Check-out failed: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Check-out selfie"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_session__state__checked_in
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_visit__state__in_progress
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_search
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "Checked In"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Checked in at"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Checked in at client site"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__checkout_selfie_image
+msgid "Checkout Selfie Verification"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Choose from phone"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Client"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/session_route_map.js:0
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_location_log__log_type__visit
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_form
+msgid "Client Visit"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/session_route_map.js:0
+msgid "Client Visit:"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.actions.act_window,name:field_sales.action_field_sales_visit
+#: model:ir.ui.menu,name:field_sales.menu_field_sales_visit
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "Client Visits"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Client Visits &amp; Outcomes"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_form
+msgid "Client details"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Client visit completed and checked out successfully!"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Client visit in progress"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Client visits completed today"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Close"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Close Session"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Close camera"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Close this work session without a check-out selfie or GPS position?"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Company / Contact"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__company_name
+msgid "Company Name"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Company or contact name"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Company or contact name is required."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Complete visit"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_session__state__completed
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_visit__state__completed
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_search
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "Completed"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+#: model:ir.model,name:field_sales.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "Contact Created"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_visit.py:0
+msgid ""
+"Contact Name or Company Name is required when 'Create Contact?' or 'Create "
+"Lead?' is checked."
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__contact_name
+msgid "Contact Person Name"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Contact person"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Contact search failed: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Continue"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Could not access the camera: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Could not read the photo: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Create \""
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__create_contact_bool
+msgid "Create Contact?"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__create_lead_bool
+msgid "Create Lead?"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Create contact"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Create lead"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__create_uid
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__create_uid
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_visit.py:0
+msgid ""
+"Created from Field Sales Visit by %(salesperson)s.\n"
+"Contact Person: %(contact)s\n"
+"Notes: %(notes)s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_visit.py:0
+msgid "Created from field sales visit session %s"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__create_date
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__create_date
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "DAILY FIELD ACTIVITY REPORT"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.actions.report,name:field_sales.action_report_field_sales_session
+msgid "Daily Activity Report"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__date
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_search
+msgid "Date"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__display_name
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__display_name
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__duration
+msgid "Duration (Minutes)"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__email
+msgid "Email"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "End your workday?"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__log_type
+msgid "Event Type"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Everything look right?"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Failed to capture photo: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Failed to check active session: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Failed to log visit: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Failed to start client visit: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Feedback, requirements, next steps..."
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_form
+msgid "Feedback/Notes"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.actions.client,name:field_sales.action_field_sales_kiosk_client_action
+msgid "Field Kiosk Dashboard"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_visit.py:0
+msgid "Field Lead"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.actions.act_window,name:field_sales.action_field_sales_leads
+msgid "Field Prospects"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.module.category,name:field_sales.module_category_field_sales
+#: model:ir.ui.menu,name:field_sales.menu_field_sales_root
+msgid "Field Sales"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model,name:field_sales.model_field_sales_visit
+msgid "Field Sales Client Visit"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model,name:field_sales.model_field_sales_location_log
+msgid "Field Sales Location Log"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model,name:field_sales.model_field_sales_session
+msgid "Field Sales Session"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_res_partner__field_sales_visit_ids
+#: model:ir.model.fields,field_description:field_sales.field_res_users__field_sales_visit_ids
+#: model_terms:ir.ui.view,arch_db:field_sales.view_partner_form_inherit_field_sales
+msgid "Field Sales Visits"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Field Sales Workday"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_visit.py:0
+msgid "Field Visit"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "GPS access denied. Location permission is required."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "GPS location unavailable."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "GPS request timed out."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid ""
+"GPS request timed out. Please ensure GPS is enabled and permissions are "
+"granted."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "GPS/Geolocation is not supported by this browser."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "How did the visit go?"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__id
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__id
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__id
+msgid "ID"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "In progress"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Initializing Field Sales Workspace..."
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_location_log__log_type__ping
+msgid "Interval Ping"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_res_partner__is_field_lead
+#: model:ir.model.fields,field_description:field_sales.field_res_users__is_field_lead
+#: model_terms:ir.ui.view,arch_db:field_sales.view_partner_form_inherit_field_sales
+msgid "Is Field Lead"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.ui.menu,name:field_sales.menu_field_sales_dashboard
+msgid "Kiosk Dashboard"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__write_uid
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__write_uid
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__write_date
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__write_date
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__latitude
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__latitude
+msgid "Latitude"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "Lead Generated"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_visit.py:0
+msgid "Lead from Visit: %s"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__lead_id
+msgid "Linked Lead/Opportunity"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__partner_id
+msgid "Linked Lead/Prospect"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Linked contact"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Linked to"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Loading..."
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Location (GPS)"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_session__location_verification__changed
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_search
+msgid "Location Changed"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__location_verification
+msgid "Location Verification"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Locking GPS checkout..."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Locking GPS coordinate..."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Log Client Visit"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__longitude
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__longitude
+msgid "Longitude"
+msgstr ""
+
+#. module: field_sales
+#: model:res.groups,name:field_sales.group_manager
+msgid "Manager"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_search
+msgid "My Sessions"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "My Visits"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_session__state__draft
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_visit__state__draft
+msgid "New"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "New contact"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "New contact will be created in Odoo"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Next"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/session_route_map.xml:0
+msgid "No GPS points recorded yet"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.actions.act_window,help:field_sales.action_field_sales_visit
+msgid "No client visits logged yet."
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "No client visits were logged during this session."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "No notes"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "No photo"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.actions.act_window,help:field_sales.action_field_sales_leads
+msgid "No prospects captured on the field yet."
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.actions.act_window,help:field_sales.action_field_sales_session
+msgid "No work sessions recorded yet."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "None"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Not completed"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Not provided"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Notes"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Notes / Outcomes"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,help:field_sales.field_field_sales_session__total_visits
+msgid "Number of completed client visits in this session."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Odoo records"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_session.py:0
+#: code:addons/field_sales/models/field_sales_visit.py:0
+msgid "Only a Field Sales manager can change: %s"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Opens a CRM lead with you as the salesperson"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Optional, but helps de-duplicate contacts."
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_session__location_verification__pending
+msgid "Pending Check-Out"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Phone"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__phone
+msgid "Phone Number"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_visit.py:0
+msgid ""
+"Phone Number or Email is required when 'Create Contact?' or 'Create Lead?' "
+"is checked."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Phone camera"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Phone number is required."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Photo captured"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Photograph the client site to verify your visit."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Please capture a photo before completing the client visit."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_session.py:0
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Please complete your current client visit before checking out."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Previous step"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.ui.menu,name:field_sales.menu_field_sales_leads
+msgid "Prospects"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Records"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Records are tagged with you as the salesperson."
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__name
+msgid "Reference"
+msgstr ""
+
+#. module: field_sales
+#: model:res.groups,name:field_sales.group_salesperson
+msgid "Representative"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Requirements, objections, next steps."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Retake"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Review"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Route Logs"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Route Map"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__location_log_ids
+msgid "Route Trajectory"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "START CLIENT VISIT (CHECK IN)"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "STEP"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.actions.act_window,help:field_sales.action_field_sales_session
+msgid "Sales representatives can check in from the Kiosk Dashboard."
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.actions.act_window,help:field_sales.action_field_sales_visit
+msgid ""
+"Sales representatives can log client visits during their active sessions."
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__user_id
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__user_id
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_search
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "Salesperson"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Salesperson:"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields.selection,name:field_sales.selection__field_sales_session__location_verification__same
+msgid "Same Location"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Saving visit..."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Search an existing contact or type a new company / contact name."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Searching contacts…"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__selfie_image
+msgid "Selfie Verification"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Selfie Verifications"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__session_id
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "Session"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Session Overview"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_session.py:0
+msgid "Session is not checked in."
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_session.py:0
+msgid "Session is not in New state."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Skip"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Skipped"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Start your day by checking in with your location and a quick selfie."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Starting camera…"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Starting client visit..."
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__state
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__state
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_search
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_search
+msgid "Status"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Stay checked in"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Successfully checked in for the day!"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Switch camera"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Take a photo at the client site"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Take a selfie to end your workday."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Take a selfie to start your workday."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Take visit photo"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Tap any step above to edit it before checking out."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid ""
+"The in-page camera is not available here (it needs HTTPS). Use your phone "
+"camera instead."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "The person you spoke with at the client."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Their phone number?"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "Time Range"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_location_log__timestamp
+msgid "Timestamp"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__total_visits
+msgid "Total Visits"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/session_route_map.js:0
+msgid "Trajectory Ping"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Unable to retrieve GPS coordinates."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Unlink contact"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Unsupported image file."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Use phone camera"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Used to find or create the contact and avoid duplicates."
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model,name:field_sales.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.module.category,description:field_sales.module_category_field_sales
+msgid "User access levels for field sales activity tracking."
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Verification & Selfies"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_form
+msgid "Verification Photo"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Verifies your presence at the location."
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "View Check-In on Google Maps"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "View Check-Out on Google Maps"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "View Map"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__notes
+msgid "Visit Notes"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_visit__visit_image
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_form
+msgid "Visit Photo"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_visit_form
+msgid "Visit Timings & Location"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_session.py:0
+msgid "Visit in progress"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Visit is linked to"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Visit log only"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Visit notes"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "Visit photo"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.model.fields,field_description:field_sales.field_field_sales_session__visit_ids
+msgid "Visits"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "What should Odoo create?"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.actions.act_window,help:field_sales.action_field_sales_leads
+msgid ""
+"When representatives log field visits, prospects will automatically appear "
+"here."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Who are you visiting?"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Who did you meet?"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_form
+msgid "Work Session"
+msgstr ""
+
+#. module: field_sales
+#: model:ir.actions.act_window,name:field_sales.action_field_sales_session
+#: model:ir.ui.menu,name:field_sales.menu_field_sales_session
+#: model_terms:ir.ui.view,arch_db:field_sales.view_field_sales_session_search
+msgid "Work Sessions"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "Workday ended. Checked out successfully!"
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_session.py:0
+msgid ""
+"You cannot start a new session because you already have an active check-in."
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_session.py:0
+msgid "You must be checked in to log a client visit."
+msgstr ""
+
+#. module: field_sales
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_session.py:0
+msgid "You must be checked in to start a client visit."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#. odoo-python
+#: code:addons/field_sales/models/field_sales_session.py:0
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid "You must log at least one client visit before checking out."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/js/field_sales_kiosk.js:0
+msgid ""
+"You will be asked for a check-out selfie and your GPS position will be "
+"recorded."
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "e.g. +91 98765 43210"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "e.g. Priya Sharma"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "e.g. priya@acme.com"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "in progress, not counted"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "m"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "min)"
+msgstr ""
+
+#. module: field_sales
+#: model_terms:ir.ui.view,arch_db:field_sales.report_session_template
+msgid "| Date:"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "· optional"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "· required"
+msgstr ""
+
+#. module: field_sales
+#. odoo-javascript
+#: code:addons/field_sales/static/src/xml/field_sales_kiosk.xml:0
+msgid "— no new contact needed."
+msgstr ""

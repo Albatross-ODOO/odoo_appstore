@@ -14,19 +14,27 @@ import { deserializeDateTime, formatDateTime } from "@web/core/l10n/dates";
  * Steps of the "Log Client Visit" form. Fields are revealed one at a time:
  * completed steps collapse into compact rows, the active step is expanded
  * and later steps stay hidden until the current one is done.
+ * Built when the kiosk starts so the texts are translated in the user's language.
  */
-const VISIT_STEPS = [
-    { key: "client",  label: "Client",         required: true,  question: "Who are you visiting?",             hint: "Search an existing contact or type a new company / contact name." },
-    { key: "contact", label: "Contact person", required: false, question: "Who did you meet?",                 hint: "The person you spoke with at the client." },
-    { key: "phone",   label: "Phone",          required: true,  question: "Their phone number?",               hint: "Used to find or create the contact and avoid duplicates." },
-    { key: "email",   label: "Email",          required: false, question: "An email address?",                 hint: "Optional, but helps de-duplicate contacts." },
-    { key: "records", label: "Odoo records",   required: false, question: "What should Odoo create?",          hint: "Records are tagged with you as the salesperson." },
-    { key: "notes",   label: "Visit notes",    required: false, question: "How did the visit go?",             hint: "Requirements, objections, next steps." },
-    { key: "photo",   label: "Visit photo",    required: true,  question: "Take a photo at the client site",   hint: "Verifies your presence at the location." },
-    { key: "review",  label: "Review",         required: true,  question: "Everything look right?",            hint: "Tap any step above to edit it before checking out." },
-];
+function getVisitSteps() {
+    return [
+        { key: "client",  label: _t("Client"),         required: true,  question: _t("Who are you visiting?"),           hint: _t("Search an existing contact or type a new company / contact name.") },
+        { key: "contact", label: _t("Contact person"), required: false, question: _t("Who did you meet?"),               hint: _t("The person you spoke with at the client.") },
+        { key: "phone",   label: _t("Phone"),          required: true,  question: _t("Their phone number?"),             hint: _t("Used to find or create the contact and avoid duplicates.") },
+        { key: "email",   label: _t("Email"),          required: false, question: _t("An email address?"),               hint: _t("Optional, but helps de-duplicate contacts.") },
+        { key: "records", label: _t("Odoo records"),   required: false, question: _t("What should Odoo create?"),        hint: _t("Records are tagged with you as the salesperson.") },
+        { key: "notes",   label: _t("Visit notes"),    required: false, question: _t("How did the visit go?"),           hint: _t("Requirements, objections, next steps.") },
+        { key: "photo",   label: _t("Visit photo"),    required: true,  question: _t("Take a photo at the client site"), hint: _t("Verifies your presence at the location.") },
+        { key: "review",  label: _t("Review"),         required: true,  question: _t("Everything look right?"),          hint: _t("Tap any step above to edit it before checking out.") },
+    ];
+}
 
 const PHOTO_MAX_SIDE = 1280;
+
+/** RPCError.message is the generic "Odoo Server Error"; the reason is in data.message */
+function errorText(err) {
+    return (err && err.data && err.data.message) || (err && err.message) || "";
+}
 const PHOTO_JPEG_QUALITY = 0.82;
 
 /**
@@ -65,7 +73,7 @@ async function fileToJpegBase64(file) {
         const img = await new Promise((resolve, reject) => {
             const image = new Image();
             image.onload = () => resolve(image);
-            image.onerror = () => reject(new Error("Unsupported image file."));
+            image.onerror = () => reject(new Error(_t("Unsupported image file.")));
             image.src = url;
         });
         return drawToJpegBase64(canvas, img, img.naturalWidth, img.naturalHeight);
@@ -79,7 +87,7 @@ export class FieldSalesKiosk extends Component {
     static props = { ...standardActionServiceProps };
 
     get visitSteps() {
-        return VISIT_STEPS;
+        return this._visitSteps;
     }
 
     formatCheckInTime(utcString) {
@@ -92,6 +100,7 @@ export class FieldSalesKiosk extends Component {
     }
 
     setup() {
+        this._visitSteps = getVisitSteps();
         this.orm = useService("orm");
         this.notification = useService("notification");
         this.dialog = useService("dialog");
@@ -158,7 +167,9 @@ export class FieldSalesKiosk extends Component {
         });
 
         onWillUnmount(() => {
+            this._unmounted = true;
             this.stopBackgroundTracking();
+            this.closeCameraStream(); // leaving the kiosk must switch the camera off
         });
     }
 
@@ -166,15 +177,15 @@ export class FieldSalesKiosk extends Component {
     // Progressive step form helpers
     // ------------------------------------------------------------------
     get visibleSteps() {
-        return VISIT_STEPS.slice(0, this.state.visitMaxStep + 1);
+        return this.visitSteps.slice(0, this.state.visitMaxStep + 1);
     }
 
     get activeStep() {
-        return VISIT_STEPS[this.state.visitStep];
+        return this.visitSteps[this.state.visitStep];
     }
 
     get progressPercent() {
-        return Math.round(((this.state.visitStep + 1) / VISIT_STEPS.length) * 100);
+        return Math.round(((this.state.visitStep + 1) / this.visitSteps.length) * 100);
     }
 
     stepValue(step) {
@@ -199,16 +210,16 @@ export class FieldSalesKiosk extends Component {
         const s = this.state;
         switch (step.key) {
             case "client":
-                return s.selectedPartnerId ? `${s.companyName} (linked)` : s.companyName || "";
+                return s.selectedPartnerId ? _t("%s (linked)", s.companyName) : s.companyName || "";
             case "records":
                 return this.recordsSummary;
             case "photo":
-                return s.visitPhoto ? "Photo captured" : "No photo";
+                return s.visitPhoto ? _t("Photo captured") : _t("No photo");
             case "notes":
-                return s.notes ? s.notes : "No notes";
+                return s.notes ? s.notes : _t("No notes");
             default: {
                 const v = this.stepValue(step);
-                return v || "Skipped";
+                return v || _t("Skipped");
             }
         }
     }
@@ -217,14 +228,14 @@ export class FieldSalesKiosk extends Component {
         const s = this.state;
         const parts = [];
         if (s.selectedPartnerId) {
-            parts.push("Linked contact");
+            parts.push(_t("Linked contact"));
         } else if (s.createContactBool) {
-            parts.push("New contact");
+            parts.push(_t("New contact"));
         }
         if (s.createLeadBool) {
-            parts.push("CRM lead");
+            parts.push(_t("CRM lead"));
         }
-        return parts.length ? parts.join(" + ") : "Visit log only";
+        return parts.length ? parts.join(" + ") : _t("Visit log only");
     }
 
     get canProceed() {
@@ -239,16 +250,16 @@ export class FieldSalesKiosk extends Component {
 
     get nextLabel() {
         const step = this.activeStep;
-        if (!step) return "Next";
+        if (!step) return _t("Next");
         if (!step.required && !this.stepHasValue(step)) {
-            return step.key === "records" ? "Continue" : "Skip";
+            return step.key === "records" ? _t("Continue") : _t("Skip");
         }
-        return "Next";
+        return _t("Next");
     }
 
     nextStep() {
         if (!this.canProceed) return;
-        if (this.state.visitStep >= VISIT_STEPS.length - 1) return;
+        if (this.state.visitStep >= this.visitSteps.length - 1) return;
         this.state.showPartnerDropdown = false;
         this.state.visitStep += 1;
         this.state.visitMaxStep = Math.max(this.state.visitMaxStep, this.state.visitStep);
@@ -358,13 +369,13 @@ export class FieldSalesKiosk extends Component {
             }
         }
         this.state.cameraStarting = false;
-        if (!this.state.showCamera) {
+        if (!this.state.showCamera || this._unmounted) {
             // closed while waiting for permission
             if (stream) stream.getTracks().forEach((t) => t.stop());
             return;
         }
         if (!stream) {
-            this.state.errorMsg = _t("Could not access the camera: ") + (lastError ? lastError.message : "");
+            this.state.errorMsg = _t("Could not access the camera: %s", lastError ? lastError.message : "");
             return;
         }
         this.stream = stream;
@@ -394,7 +405,7 @@ export class FieldSalesKiosk extends Component {
         try {
             base64Data = drawToJpegBase64(this.camCanvasRef.el, video, video.videoWidth || 640, video.videoHeight || 480);
         } catch (err) {
-            this.notification.add(_t("Failed to capture photo: ") + err.message, { type: "danger" });
+            this.notification.add(_t("Failed to capture photo: %s", err.message), { type: "danger" });
             return;
         }
         await this._usePhoto(base64Data);
@@ -408,7 +419,7 @@ export class FieldSalesKiosk extends Component {
         try {
             await this._usePhoto(await fileToJpegBase64(file));
         } catch (err) {
-            this.notification.add(_t("Could not read the photo: ") + err.message, { type: "danger" });
+            this.notification.add(_t("Could not read the photo: %s", err.message), { type: "danger" });
         }
     }
 
@@ -467,14 +478,14 @@ export class FieldSalesKiosk extends Component {
             const matches = await this.orm.searchRead(
                 "res.partner",
                 ["|", "|", ["name", "ilike", q], ["phone", "ilike", q], ["email", "ilike", q]],
-                ["id", "display_name", "name", "parent_id", "phone", "mobile", "email", "is_company"],
+                ["id", "display_name", "name", "parent_id", "phone", "mobile", "email", "is_company", "child_ids"],
                 { limit: 8, order: "is_company desc, name asc" }
             );
             if (seq === this._partnerSearchSeq) {
                 this.state.partnerMatches = matches;
             }
         } catch (err) {
-            console.warn("Contact search failed:", err.message);
+            this.notification.add(_t("Contact search failed: %s", errorText(err)), { type: "warning" });
             if (seq === this._partnerSearchSeq) {
                 this.state.partnerMatches = [];
             }
@@ -510,7 +521,7 @@ export class FieldSalesKiosk extends Component {
                 this.state.activeVisit = null;
             }
         } catch (err) {
-            this.notification.add("Failed to check active session: " + err.message, { type: "danger" });
+            this.notification.add(_t("Failed to check active session: %s", errorText(err)), { type: "danger" });
         } finally {
             this.state.loading = false;
         }
@@ -519,7 +530,7 @@ export class FieldSalesKiosk extends Component {
     getGPSCoordinates() {
         return new Promise((resolve, reject) => {
             if (!navigator.geolocation) {
-                reject(new Error("GPS/Geolocation is not supported by this browser."));
+                reject(new Error(_t("GPS/Geolocation is not supported by this browser.")));
                 return;
             }
 
@@ -537,7 +548,7 @@ export class FieldSalesKiosk extends Component {
                         accuracy: bestPosition.coords.accuracy,
                     });
                 } else {
-                    reject(new Error("GPS request timed out. Please ensure GPS is enabled and permissions are granted."));
+                    reject(new Error(_t("GPS request timed out. Please ensure GPS is enabled and permissions are granted.")));
                 }
             }, 7000);
 
@@ -567,13 +578,13 @@ export class FieldSalesKiosk extends Component {
                         if (watchId) {
                             navigator.geolocation.clearWatch(watchId);
                         }
-                        let msg = "Unable to retrieve GPS coordinates.";
+                        let msg = _t("Unable to retrieve GPS coordinates.");
                         if (error.code === error.PERMISSION_DENIED) {
-                            msg = "GPS access denied. Location permission is required.";
+                            msg = _t("GPS access denied. Location permission is required.");
                         } else if (error.code === error.POSITION_UNAVAILABLE) {
-                            msg = "GPS location unavailable.";
+                            msg = _t("GPS location unavailable.");
                         } else if (error.code === error.TIMEOUT) {
-                            msg = "GPS request timed out.";
+                            msg = _t("GPS request timed out.");
                         }
                         reject(new Error(msg));
                     }
@@ -608,7 +619,7 @@ export class FieldSalesKiosk extends Component {
                     this.state.longitude,
                     base64Data
                 ]);
-                this.notification.add("Successfully checked in for the day!", { type: "success" });
+                this.notification.add(_t("Successfully checked in for the day!"), { type: "success" });
             } else if (mode === "check_out") {
                 await this.orm.call("field.sales.session", "action_kiosk_check_out", [
                     this.state.session.id,
@@ -617,13 +628,15 @@ export class FieldSalesKiosk extends Component {
                     base64Data
                 ]);
                 this.state.session = null;
-                this.notification.add("Workday ended. Checked out successfully!", { type: "success" });
+                this.notification.add(_t("Workday ended. Checked out successfully!"), { type: "success" });
             }
 
             await this.checkActiveSession();
         } catch (err) {
-            const actionName = mode === "check_in" ? _t("Check-in") : _t("Check-out");
-            this.notification.add(`${actionName} ${_t("failed")}: ` + err.message, { type: "danger" });
+            const message = mode === "check_in"
+                ? _t("Check-in failed: %s", errorText(err))
+                : _t("Check-out failed: %s", errorText(err));
+            this.notification.add(message, { type: "danger" });
         } finally {
             this.state.submitting = false;
         }
@@ -651,10 +664,9 @@ export class FieldSalesKiosk extends Component {
                 id: res.visit_id,
                 check_in_time: res.check_in_time,
             };
-            this.notification.add("Client visit started! Checked in to client site.", { type: "success" });
             this.openVisitModal();
         } catch (err) {
-            this.notification.add("Failed to start client visit: " + err.message, { type: "danger" });
+            this.notification.add(_t("Failed to start client visit: %s", errorText(err)), { type: "danger" });
         } finally {
             this.state.submitting = false;
         }
@@ -697,7 +709,8 @@ export class FieldSalesKiosk extends Component {
     selectPartner(partner) {
         this.state.selectedPartnerId = partner.id;
         this.state.selectedPartnerDisplayName = partner.display_name || partner.name;
-        if (partner.is_company) {
+        // a top-level contact with children is a company too (the company contacts this module creates are not flagged is_company)
+        if (partner.is_company || (!partner.parent_id && partner.child_ids && partner.child_ids.length)) {
             this.state.companyName = partner.name || partner.display_name;
             this.state.contactName = "";
         } else if (partner.parent_id) {
@@ -744,7 +757,7 @@ export class FieldSalesKiosk extends Component {
             this.state.visitPhoto = await fileToJpegBase64(file);
             this.state.visitCameraError = "";
         } catch (err) {
-            this.notification.add(_t("Could not read the photo: ") + err.message, { type: "danger" });
+            this.notification.add(_t("Could not read the photo: %s", err.message), { type: "danger" });
         }
     }
 
@@ -791,18 +804,18 @@ export class FieldSalesKiosk extends Component {
 
     async submitVisit() {
         if (!this.state.companyName.trim()) {
-            this.notification.add("Company or contact name is required.", { type: "warning" });
+            this.notification.add(_t("Company or contact name is required."), { type: "warning" });
             this.goToStep(0);
             return;
         }
         if (!this.state.phone.trim()) {
-            this.notification.add("Phone number is required.", { type: "warning" });
-            this.goToStep(VISIT_STEPS.findIndex((s) => s.key === "phone"));
+            this.notification.add(_t("Phone number is required."), { type: "warning" });
+            this.goToStep(this.visitSteps.findIndex((s) => s.key === "phone"));
             return;
         }
         if (!this.state.visitPhoto) {
-            this.notification.add("Please capture a photo before completing the client visit.", { type: "warning" });
-            this.goToStep(VISIT_STEPS.findIndex((s) => s.key === "photo"));
+            this.notification.add(_t("Please capture a photo before completing the client visit."), { type: "warning" });
+            this.goToStep(this.visitSteps.findIndex((s) => s.key === "photo"));
             return;
         }
         this.state.submitting = true;
@@ -831,9 +844,9 @@ export class FieldSalesKiosk extends Component {
             this.state.activeVisit = null;
             this._draftVisitId = null;
             await this.checkActiveSession();
-            this.notification.add("Client visit completed and checked out successfully!", { type: "success" });
+            this.notification.add(_t("Client visit completed and checked out successfully!"), { type: "success" });
         } catch (err) {
-            this.notification.add("Failed to log visit: " + err.message, { type: "danger" });
+            this.notification.add(_t("Failed to log visit: %s", errorText(err)), { type: "danger" });
         } finally {
             this.state.submitting = false;
         }
@@ -854,6 +867,7 @@ export class FieldSalesKiosk extends Component {
             confirmLabel: _t("Check out"),
             cancelLabel: _t("Stay checked in"),
             confirm: () => this._doCheckOut(),
+            cancel: () => {}, // without it ConfirmationDialog hides the cancel button
         });
     }
 
@@ -883,8 +897,8 @@ export class FieldSalesKiosk extends Component {
                         longitude: coords.longitude,
                         log_type: "ping"
                     }]);
-                } catch (err) {
-                    console.warn("Background ping failed:", err.message);
+                } catch {
+                    // best effort: no GPS fix in the background (phone locked, tab hidden); the next ping retries
                 }
             }
         }, 15 * 60 * 1000);

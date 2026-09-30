@@ -25,8 +25,10 @@
   --gd-inset-sm: inset 3px 3px 6px var(--gd-sd), inset -3px -3px 6px var(--gd-sl);
   --gd-sans: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
   --gd-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-family: var(--gd-sans); color: var(--gd-ink) !important;
 }
+/* the view class sits on the whole view root (control panel included): keep ink/typeface off the breadcrumbs,
+   otherwise they turn dark-on-dark in Enterprise dark mode */
+.o_gate_kiosk .o_form_sheet_bg, .gd-app, .gd-kanban .o_kanban_renderer { font-family: var(--gd-sans); color: var(--gd-ink) !important; }
 
 /* ---------- ground + shell (one centred card at every width) ---------- */
 .o_form_view:has(.o_gate_kiosk), .o_form_view:has(.o_gate_kiosk) .o_content, .o_form_view:has(.o_gate_kiosk) .o_form_view_container,
@@ -181,6 +183,8 @@
 .gd-stack { display: grid; gap: 12px; }
 .gd-narrow { max-width: 420px; margin: 0 auto; }
 .gd-spread { display: flex; gap: 12px; flex-wrap: wrap; } .gd-spread .gd-btn { flex: 1 1 120px; }
+/* camera row: Capture is the main action, the cancel button stays square */
+.gd-spread .gd-btn.gd-capture { flex: 2 1 auto; } .gd-spread .gd-btn.gd-icon { flex: 0 0 56px; }
 .gd-hint { font-size: 13px; color: var(--gd-muted) !important; text-align: center; margin: 8px 0 0; }
 .gd-done { text-align: center; color: var(--gd-ok) !important; font-weight: 700; padding: 12px; }
 
@@ -272,6 +276,8 @@
 .o_gate_kiosk .gd-code .o_input, .o_gate_kiosk .gd-code span { color: var(--gd-accent-hi) !important; }
 .gd-pass-when { font-weight: 800; color: var(--gd-ink) !important; } .gd-pass-meta { color: var(--gd-muted) !important; font-size: 13px; }
 .o_gate_kiosk .gd-linkbox { width: 100%; }
+/* keep the long share link (and its copy button) inside the pass card */
+.gd-pass { grid-template-columns: minmax(0, 1fr); } .o_gate_kiosk .gd-linkbox, .o_gate_kiosk .gd-linkbox > * { min-width: 0; max-width: 100%; }
 .o_gate_kiosk .gd-linkbox .o_input, .o_gate_kiosk .gd-linkbox input { font-family: var(--gd-mono); font-size: 12px; color: var(--gd-muted) !important; }
 .o_gate_kiosk .gd-linkbox .o_clipboard_button { border-radius: 10px; }
 .gd-share { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 14px 0; }
@@ -333,3 +339,18 @@
 .gd-row-compact, .gd-rows .gd-row-compact { grid-template-columns: 46px 1fr auto; cursor: pointer; }
 .gd-row-compact .gd-acts { grid-column: auto; justify-content: flex-end; }
 .gd-row .gd-acts .gd-pill { flex: none; }
+
+/* home: workers inside, shown next to the visitor counter they are not part of */
+.gd-stat .gd-x { font-size: 11px; font-weight: 700; letter-spacing: .04em; margin-top: 3px; opacity: .72; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* camera: picture upload when there is no camera */
+.gd-cam-wrap .gd-upload { justify-self: stretch; }
+/* phone: the three worker tabs share the width instead of scrolling out of sight */
+@media (max-width: 575.98px) {
+  .gd-wk-tabs { overflow: visible; }
+  .gd-wk-tabs .gd-ftab { flex: 1 1 0; min-width: 0; justify-content: center; gap: 6px; padding: 0 6px; font-size: 12.5px; white-space: nowrap; }
+  .gd-wk-tabs .gd-ftab .gd-pill { display: none; }
+}
+/* other tab strips that still scroll on a phone: fade the right edge as a hint */
+@media (max-width: 767.98px) {
+  .gd-tabs:not(.gd-wk-tabs) { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); padding-right: 28px; }
+}

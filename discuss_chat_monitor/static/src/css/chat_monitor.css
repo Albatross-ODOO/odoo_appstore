@@ -5,6 +5,16 @@
     overflow: hidden;
 }
 
+.o_chat_monitor_sidebar {
+    width: 350px;
+    min-width: 320px;
+    flex-shrink: 0;
+}
+
+.o_chat_monitor_main {
+    min-width: 0;
+}
+
 .cm-session-item {
     transition: all 0.15s ease-in-out;
 }
@@ -53,4 +63,37 @@
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.cm-badge-archived {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+}
+
+/* Phones: stack the list above the transcript instead of squeezing the transcript off-screen */
+@media (max-width: 767.98px) {
+    .o_chat_monitor_container {
+        flex-direction: column !important;
+    }
+    .o_chat_monitor_sidebar {
+        width: 100%;
+        min-width: 0;
+        max-height: 45%;
+        border-right: none !important;
+        border-bottom: 1px solid var(--bs-border-color) !important;
+    }
+    .o_chat_monitor_main {
+        min-height: 0;
+    }
+    .o_chat_monitor_thread {
+        padding: 0.75rem !important;
+    }
+    .cm-bubble-body {
+        max-width: 100% !important;
+    }
+}
+
+/* "+N more" participant tag: the full list is in its tooltip */
+.cm-more-partners {
+    cursor: help;
 }

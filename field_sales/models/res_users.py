@@ -13,7 +13,7 @@ class ResUsers(models.Model):
 
     def _compute_active_session(self):
         for user in self:
-            active = self.env['field.sales.session'].search([
+            active = self.env['field.sales.session'].sudo().search([
                 ('user_id', '=', user.id),
                 ('state', '=', 'checked_in')
             ], limit=1)

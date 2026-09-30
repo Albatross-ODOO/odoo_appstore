@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError, ValidationError
+from odoo.osv import expression
+from odoo.tools import plaintext2html
+
+# GPS / timing / photo evidence written by the kiosk only
+PROTECTED_VISIT_FIELDS = frozenset({
+    'state', 'session_id', 'check_in_time', 'check_out_time', 'latitude', 'longitude', 'accuracy', 'visit_image',
+})
 
 class FieldSalesVisit(models.Model):
     _name = 'field.sales.visit'
     _description = 'Field Sales Client Visit'
     _order = 'check_in_time desc'
+    _rec_name = 'company_name'
 
     state = fields.Selection([
         ('draft', 'New'),
@@ -41,7 +49,8 @@ class FieldSalesVisit(models.Model):
     def _onchange_partner_id(self):
         if self.partner_id:
             partner = self.partner_id
-            if partner.is_company:
+            # a top-level contact with children is a company too (the company contacts this module creates are not flagged is_company)
+            if partner.is_company or (not partner.parent_id and partner.child_ids):
                 self.company_name = partner.name
                 self.contact_name = False
             elif partner.parent_id:
@@ -72,14 +81,28 @@ class FieldSalesVisit(models.Model):
             else:
                 record.duration = 0.0
 
+    def _check_protected_fields(self, fnames):
+        if self.env.su or self.env.user.has_group('field_sales.group_manager'):
+            return
+        forbidden = PROTECTED_VISIT_FIELDS.intersection(fnames)
+        if forbidden:
+            raise AccessError(_("Only a Field Sales manager can change: %s", ", ".join(sorted(forbidden))))
+
     @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            # own session (access domain) and the visit start time may be given on create
+            self._check_protected_fields({
+                fname for fname, value in vals.items()
+                if value and fname not in ('session_id', 'check_in_time') and not (fname == 'state' and value == 'draft')
+            })
         records = super().create(vals_list)
         for record in records:
             record._process_contact_and_lead_creation()
         return records
 
     def write(self, vals):
+        self._check_protected_fields(vals)
         res = super().write(vals)
         trigger_fields = {'create_contact_bool', 'create_lead_bool', 'company_name', 'contact_name', 'phone', 'email', 'notes'}
         if any(field in vals for field in trigger_fields):
@@ -89,7 +112,9 @@ class FieldSalesVisit(models.Model):
 
     def action_start_visit(self, latitude=False, longitude=False, accuracy=False):
         self.ensure_one()
-        self.write({
+        # the evidence fields are written with sudo (see _check_protected_fields): own visits only
+        self.check_access('write')
+        self.sudo().write({
             'state': 'in_progress',
             'check_in_time': fields.Datetime.now(),
             'latitude': latitude or 0.0,
@@ -107,6 +132,11 @@ class FieldSalesVisit(models.Model):
 
     def action_complete_visit(self, latitude=False, longitude=False, accuracy=False, visit_image=False, vals=False):
         self.ensure_one()
+        # the evidence fields are written with sudo (see _check_protected_fields): own visits only
+        self.check_access('write')
+        if vals and isinstance(vals, dict):
+            # client details typed in the kiosk: regular write, so protected fields stay protected
+            self.write(vals)
         update_dict = {
             'state': 'completed',
             'check_out_time': fields.Datetime.now(),
@@ -119,13 +149,11 @@ class FieldSalesVisit(models.Model):
             update_dict['accuracy'] = accuracy
         if visit_image:
             update_dict['visit_image'] = visit_image
-        if vals and isinstance(vals, dict):
-            update_dict.update(vals)
 
-        self.write(update_dict)
+        self.sudo().write(update_dict)
 
         if not self.check_in_time:
-            self.check_in_time = fields.Datetime.now()
+            self.sudo().check_in_time = fields.Datetime.now()
 
         # Process contact and lead creation according to boolean flags
         self._process_contact_and_lead_creation()
@@ -171,6 +199,12 @@ class FieldSalesVisit(models.Model):
         elif self.phone:
             domain = ['|', ('phone', '=', self.phone), ('mobile', '=', self.phone)]
 
+        if domain:
+            # only partners the rep's company may use, and never the companies' / employees' own contacts
+            domain = expression.AND([domain, Partner._check_company_domain(self.env.company), [
+                ('partner_share', '=', True),
+                ('id', 'not in', self.env['res.company'].sudo().search([]).partner_id.ids),
+            ]])
         existing_partner = Partner.search(domain, limit=1) if domain else Partner.browse()
 
         if existing_partner:
@@ -185,7 +219,7 @@ class FieldSalesVisit(models.Model):
             return existing_partner
         else:
             # Create a brand new partner
-            partner_name = self.company_name or self.contact_name or "Field Lead"
+            partner_name = self.company_name or self.contact_name or _("Field Lead")
             new_partner = Partner.create({
                 'name': partner_name,
                 'phone': self.phone,
@@ -193,7 +227,10 @@ class FieldSalesVisit(models.Model):
                 'user_id': salesperson_id,
                 'is_field_lead': True,
                 'category_id': [(4, tag.id)],
-                'comment': f"Created from Field Sales Visit by {self.session_id.user_id.name}.\nContact Person: {self.contact_name or ''}\nNotes: {self.notes or ''}",
+                'comment': plaintext2html(_(
+                    "Created from Field Sales Visit by %(salesperson)s.\nContact Person: %(contact)s\nNotes: %(notes)s",
+                    salesperson=self.session_id.user_id.name, contact=self.contact_name or '', notes=self.notes or '',
+                )),
             })
             # If contact name is given separately from company name, create child contact under company
             if self.contact_name and self.company_name and self.contact_name != self.company_name:
@@ -210,8 +247,8 @@ class FieldSalesVisit(models.Model):
     def _create_lead(self):
         self.ensure_one()
         CrmLead = self.env['crm.lead'].sudo()
-        subject_name = self.contact_name or self.company_name or self.phone or "Field Visit"
-        lead_name = f"Lead from Visit: {subject_name}"
+        subject_name = self.contact_name or self.company_name or self.phone or _("Field Visit")
+        lead_name = _("Lead from Visit: %s", subject_name)
 
         lead_vals = {
             'name': lead_name,
@@ -220,10 +257,13 @@ class FieldSalesVisit(models.Model):
             'phone': self.phone,
             'mobile': self.phone,
             'email_from': self.email,
-            'description': self.notes or f"Created from field sales visit session {self.session_id.name}",
+            'description': plaintext2html(self.notes or _("Created from field sales visit session %s", self.session_id.name)),
             'user_id': self._get_salesperson_id(),
         }
         if self.partner_id:
             lead_vals['partner_id'] = self.partner_id.id
+        CrmTag = self.env['crm.tag'].sudo()
+        tag = CrmTag.search([('name', '=', 'Field Lead')], limit=1) or CrmTag.create({'name': 'Field Lead'})
+        lead_vals['tag_ids'] = [(4, tag.id)]
 
         return CrmLead.create(lead_vals)

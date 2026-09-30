@@ -22,4 +22,4 @@ class GateShareWizard(models.TransientModel):
 
     def action_download_pdf(self):
         self.ensure_one()
-        return self.env.ref(self.entry_id._pass_report_xmlid()).report_action(self.entry_id)
+        return self.env.ref(self.entry_id._pass_report_xmlid()).report_action(self.entry_id, config=False)

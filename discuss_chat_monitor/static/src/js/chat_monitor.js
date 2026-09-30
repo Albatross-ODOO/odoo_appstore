@@ -1,8 +1,13 @@
 /** @odoo-module **/
 
-import { Component, useState, onWillStart, useRef, markup } from "@odoo/owl";
+import { Component, useState, onWillStart, onWillUnmount, useRef, markup } from "@odoo/owl";
 import { registry } from "@web/core/registry";
+import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
+
+const MESSAGE_PAGE = 300;
+// participant tags shown in the conversation header; the others are summed up in a "+N more" tag
+const MAX_HEADER_PARTNERS = 8;
 
 export class ChatMonitorView extends Component {
     static template = "discuss_chat_monitor.ChatMonitorView";
@@ -20,14 +25,42 @@ export class ChatMonitorView extends Component {
             dateFilter: "all",
             isLoadingSessions: true,
             isLoadingMessages: false,
+            messageLimit: MESSAGE_PAGE,
+            hasOlderMessages: false,
+            // the menu is hidden without the group, but the action can still be opened by its URL
+            hasAccess: true,
         });
 
+        // responses of superseded requests (typing, fast clicks) must not overwrite newer ones
+        this.sessionsRequest = 0;
+        this.messagesRequest = 0;
         onWillStart(async () => {
-            await this.loadSessions();
+            this.state.hasAccess = await user.hasGroup("discuss_chat_monitor.group_chat_monitor_admin");
+            if (this.state.hasAccess) {
+                await this.loadSessions();
+            }
         });
+        onWillUnmount(() => clearTimeout(this.searchTimer));
+    }
+
+    get headerPartners() {
+        return (this.state.selectedSession?.partners || []).slice(0, MAX_HEADER_PARTNERS);
+    }
+
+    get hiddenPartners() {
+        return (this.state.selectedSession?.partners || []).slice(MAX_HEADER_PARTNERS);
+    }
+
+    get hiddenPartnersTitle() {
+        return this.hiddenPartners.map((p) => p.name).join(", ");
+    }
+
+    get allPartnersTitle() {
+        return (this.state.selectedSession?.partners || []).map((p) => p.name).join(", ");
     }
 
     async loadSessions() {
+        const request = ++this.sessionsRequest;
         this.state.isLoadingSessions = true;
         try {
             const sessions = await this.orm.call("discuss.channel", "get_monitor_channels", [], {
@@ -35,6 +68,9 @@ export class ChatMonitorView extends Component {
                 filter_type: this.state.activeFilter,
                 date_filter: this.state.dateFilter,
             });
+            if (request !== this.sessionsRequest) {
+                return;
+            }
             this.state.sessions = sessions;
 
             if (this.state.selectedSession) {
@@ -54,30 +90,45 @@ export class ChatMonitorView extends Component {
         } catch (error) {
             console.error("Error loading chat sessions:", error);
         } finally {
-            this.state.isLoadingSessions = false;
+            if (request === this.sessionsRequest) {
+                this.state.isLoadingSessions = false;
+            }
         }
     }
 
-    async selectSession(session) {
+    async selectSession(session, { loadOlder = false } = {}) {
+        const request = ++this.messagesRequest;
+        if (!loadOlder && this.state.selectedSession?.id !== session.id) {
+            this.state.messageLimit = MESSAGE_PAGE;
+        }
         this.state.selectedSession = session;
         this.state.isLoadingMessages = true;
         try {
             const data = await this.orm.call("discuss.channel", "get_channel_messages", [session.id], {
                 date_filter: this.state.dateFilter,
+                limit: this.state.messageLimit,
             });
+            if (request !== this.messagesRequest) {
+                return;
+            }
             const messages = (data.messages || []).map((msg) => ({
                 ...msg,
                 body: markup(msg.body || ""),
             }));
             this.state.messages = messages;
+            this.state.hasOlderMessages = Boolean(data.channel && data.channel.message_count > messages.length);
             if (data.channel) {
                 this.state.selectedSession = { ...session, ...data.channel };
             }
-            this.scrollToBottom();
+            if (!loadOlder) {
+                this.scrollToBottom();
+            }
         } catch (error) {
             console.error("Error loading channel messages:", error);
         } finally {
-            this.state.isLoadingMessages = false;
+            if (request === this.messagesRequest) {
+                this.state.isLoadingMessages = false;
+            }
         }
     }
 
@@ -91,9 +142,15 @@ export class ChatMonitorView extends Component {
         await this.loadSessions();
     }
 
-    async onSearchInput(ev) {
+    onSearchInput(ev) {
         this.state.searchTerm = ev.target.value;
-        await this.loadSessions();
+        clearTimeout(this.searchTimer);
+        this.searchTimer = setTimeout(() => this.loadSessions(), 300);
+    }
+
+    async loadOlderMessages() {
+        this.state.messageLimit += MESSAGE_PAGE;
+        await this.selectSession(this.state.selectedSession, { loadOlder: true });
     }
 
     async refreshCurrentSession() {

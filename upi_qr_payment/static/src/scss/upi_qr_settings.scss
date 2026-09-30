@@ -42,3 +42,8 @@
     max-width: none !important;
     white-space: normal;
 }
+// the caption is a sentence: give it the rest of the row instead of the default 50% settings width
+.o_setting_right_pane .o_field_widget[name="upi_qr_caption"] {
+    flex: 1 1 0%;
+    width: auto;
+}

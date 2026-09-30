@@ -92,7 +92,13 @@ $upi-light: #ffffff;
 .upi_qr_row {
     font-size: 11px;
     line-height: 1.45;
-    white-space: nowrap;
+}
+.upi_qr_v {
+    // wrap to the next line instead of widening the card (portal preview on phones);
+    // "anywhere" also lets the cell shrink below a long UPI ID, engines without it keep break-word
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
 }
 .upi_qr_k {
     display: inline-block;

@@ -1,10 +1,13 @@
 import base64
+import io
 import logging
+import math
 import re
+import unicodedata
 import urllib.parse
 
 from odoo import _, api, fields, models
-from odoo.tools import format_amount, format_date
+from odoo.tools import format_amount, format_date, formatLang
 
 _logger = logging.getLogger(__name__)
 
@@ -71,8 +74,10 @@ class UpiQrMixin(models.AbstractModel):
 
     @api.model
     def _upi_qr_clean_payee(self, name):
-        """UPI apps only accept letters, digits and spaces in the payee name."""
-        cleaned = re.sub(r'[^A-Za-z0-9 ]+', ' ', name or '')
+        """UPI apps only accept letters, digits and spaces in the payee name.
+        Accented letters are transliterated (Café -> Cafe) instead of being cut out."""
+        ascii_name = unicodedata.normalize('NFKD', name or '').encode('ascii', 'ignore').decode()
+        cleaned = re.sub(r'[^A-Za-z0-9 ]+', ' ', ascii_name)
         return re.sub(r'\s+', ' ', cleaned).strip()[:99]
 
     @api.model
@@ -83,19 +88,40 @@ class UpiQrMixin(models.AbstractModel):
             ('am', '%.2f' % amount),
             ('cu', 'INR'),
         ]
+        note = re.sub(r'\s+', ' ', re.sub(r'[^A-Za-z0-9 /_.-]+', ' ', note or ''))[:80].strip()
+        reference = re.sub(r'[^A-Za-z0-9/_.-]+', '', reference or '')[:35]
         if note:
-            params.append(('tn', re.sub(r'[^A-Za-z0-9 /_.-]+', ' ', note).strip()[:80]))
+            params.append(('tn', note))
         if reference:
-            params.append(('tr', re.sub(r'[^A-Za-z0-9/_.-]+', '', reference)[:35]))
+            params.append(('tr', reference))
         return 'upi://pay?' + urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
 
     @api.model
     def _upi_qr_render(self, uri, size=600):
         """PNG QR as base64. Error-correction M and a 4-module quiet zone so a printed
-        card scans reliably (``quiet=False`` is what makes Odoo's helper keep the border)."""
-        png = self.env['ir.actions.report'].barcode(
-            'QR', uri, width=size, height=size, barLevel='M', quiet=False, barBorder=4)
+        card scans reliably (for QR, Odoo 18's helper drops ``barBorder`` when ``quiet=True``:
+        pass ``quiet=False``)."""
+        try:
+            png = self.env['ir.actions.report'].barcode(
+                'QR', uri, width=size, height=size, barLevel='M', quiet=False, barBorder=4)
+        except Exception:  # noqa: BLE001 - reportlab 4 without a renderPM backend
+            png = self._upi_qr_render_qrcode(uri, size)
         return base64.b64encode(png)
+
+    @api.model
+    def _upi_qr_render_qrcode(self, uri, size):
+        """Same QR drawn with the `qrcode` library (an Odoo requirement). Odoo's own helper needs
+        reportlab's renderPM backend, which pip installs of reportlab 4 on Linux do not ship."""
+        import qrcode  # noqa: PLC0415 - only needed on this fallback path
+        from qrcode.constants import ERROR_CORRECT_M  # noqa: PLC0415
+
+        qr = qrcode.QRCode(error_correction=ERROR_CORRECT_M, border=4)
+        qr.add_data(uri)
+        qr.make(fit=True)
+        qr.box_size = max(1, size // (qr.modules_count + 2 * qr.border))
+        buf = io.BytesIO()
+        qr.make_image(fill_color='black', back_color='white').save(buf, format='PNG')
+        return buf.getvalue()
 
     @api.model
     def _upi_qr_get_inr(self):
@@ -103,14 +129,15 @@ class UpiQrMixin(models.AbstractModel):
 
     @api.model
     def _upi_qr_has_rate(self, currency, company, date):
-        """Odoo silently uses 1.0 for a currency without rates; refuse that."""
+        """Odoo silently uses 1.0 for a currency without any rate; refuse that.
+        A document dated before the first rate is converted by Odoo with that first rate
+        (res.currency._get_rates fallback), so any rate of the company is enough."""
         if currency == company.currency_id:
             return True
         root = company.root_id if 'root_id' in company._fields else company
         return bool(self.env['res.currency.rate'].sudo().search_count([
             ('currency_id', '=', currency.id),
             ('company_id', 'in', (root.id, False)),
-            ('name', '<=', date),
         ]))
 
     @api.model
@@ -126,11 +153,16 @@ class UpiQrMixin(models.AbstractModel):
         inr_amount = currency._convert(amount, inr, company, date)
         if inr_amount <= 0:
             return 0.0, False
-        rate = inr_amount / amount
+        rate = currency._get_conversion_rate(currency, inr, company, date)
+        # 3 significant digits for small-unit currencies (1 VND = 0.00332 INR), 2 decimals otherwise
+        digits = 2 if rate >= 1 else min(8, 2 - math.floor(math.log10(rate)))
+        rate_str = formatLang(self.env, rate, digits=digits)
+        rate_str = '%s\N{NO-BREAK SPACE}%s' % (inr.symbol, rate_str) if inr.position == 'before' \
+            else '%s\N{NO-BREAK SPACE}%s' % (rate_str, inr.symbol)
         note = _("%(original)s converted at 1 %(currency)s = %(rate)s on %(date)s",
                  original=format_amount(self.env, amount, currency),
                  currency=currency.name,
-                 rate=format_amount(self.env, rate, inr),
+                 rate=rate_str,
                  date=format_date(self.env, date))
         return inr_amount, note
 

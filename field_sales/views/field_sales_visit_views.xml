@@ -6,17 +6,17 @@
         <field name="model">field.sales.visit</field>
         <field name="arch" type="xml">
             <list decoration-info="state == 'draft'" decoration-warning="state == 'in_progress'" decoration-success="state == 'completed'">
-                <field name="partner_id"/>
+                <field name="partner_id" optional="hide"/>
                 <field name="company_name"/>
-                <field name="contact_name"/>
+                <field name="contact_name" optional="show"/>
                 <field name="phone"/>
-                <field name="email"/>
+                <field name="email" optional="hide"/>
                 <field name="user_id" widget="many2one_avatar_user"/>
                 <field name="lead_id" optional="show"/>
                 <field name="session_id" optional="hide"/>
                 <field name="check_in_time"/>
                 <field name="check_out_time"/>
-                <field name="duration" widget="float_time"/>
+                <field name="duration" width="140px"/>
                 <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'in_progress'" decoration-success="state == 'completed'"/>
             </list>
         </field>
@@ -48,7 +48,7 @@
                             <field name="user_id" widget="many2one_avatar_user"/>
                             <field name="check_in_time"/>
                             <field name="check_out_time"/>
-                            <field name="duration" widget="float_time"/>
+                            <field name="duration"/>
                             <field name="latitude"/>
                             <field name="longitude"/>
                             <field name="accuracy"/>

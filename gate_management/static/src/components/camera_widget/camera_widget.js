@@ -36,6 +36,7 @@ export class GateCamera extends Component {
     setup() {
         this.videoRef = useRef("video");
         this.canvasRef = useRef("canvas");
+        this.fileRef = useRef("file");
         this.notification = useService("notification");
         this.action = useService("action");
         this.orm = useService("orm");
@@ -84,7 +85,7 @@ export class GateCamera extends Component {
 
     async startCamera() {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            this.notification.add(_t("This browser cannot access the camera. Use HTTPS and a recent browser."), { type: "danger" });
+            this.notification.add(_t("This browser cannot access the camera. Use “Upload photo”, or open Odoo over HTTPS."), { type: "danger" });
             return;
         }
         try {
@@ -100,7 +101,7 @@ export class GateCamera extends Component {
         } catch (err) {
             console.warn("Camera Error:", err);
             this.state.isCameraOpen = false;
-            this.notification.add(_t("Could not access the camera. Allow camera permission and use HTTPS."), { type: "danger" });
+            this.notification.add(_t("Could not access the camera. Use “Upload photo”, or allow camera permission and use HTTPS."), { type: "danger" });
         }
     }
 
@@ -129,6 +130,61 @@ export class GateCamera extends Component {
         canvas.height = video.videoHeight;
         canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
         const base64Data = canvas.toDataURL("image/jpeg", 0.8).split(",")[1];
+        await this._setPhoto(base64Data);
+    }
+
+    /** No camera (HTTP, a PC without webcam): pick a picture file, or take one with the phone's camera app. */
+    pickFile() {
+        this.fileRef.el?.click();
+    }
+
+    async onFileChange(ev) {
+        const file = ev.target.files && ev.target.files[0];
+        ev.target.value = "";
+        if (!file) {
+            return;
+        }
+        if (!(file.type || "").startsWith("image/")) {
+            this.notification.add(_t("Choose a picture file."), { type: "warning" });
+            return;
+        }
+        try {
+            await this._setPhoto(await this._fileToJpeg(file));
+        } catch (err) {
+            console.warn("Photo upload:", err);
+            this.notification.add(_t("This picture could not be read. Try another one."), { type: "danger" });
+        }
+    }
+
+    /** Scale the picture down to the camera size (1280 px) and store it as a JPEG like a capture. */
+    async _fileToJpeg(file) {
+        const dataUrl = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(reader.error);
+            reader.readAsDataURL(file);
+        });
+        let img;
+        try {
+            img = await new Promise((resolve, reject) => {
+                const i = new Image();
+                i.onload = () => resolve(i);
+                i.onerror = reject;
+                i.src = dataUrl;
+            });
+        } catch (e) {
+            // a format the browser cannot draw (e.g. HEIC on a PC): keep the file as it is
+            return dataUrl.split(",")[1];
+        }
+        const scale = Math.min(1, 1280 / Math.max(img.naturalWidth, img.naturalHeight, 1));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+        canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+        return canvas.toDataURL("image/jpeg", 0.8).split(",")[1];
+    }
+
+    async _setPhoto(base64Data) {
         await this.props.record.update({ [this.props.name]: base64Data });
         this.stopCamera();
 

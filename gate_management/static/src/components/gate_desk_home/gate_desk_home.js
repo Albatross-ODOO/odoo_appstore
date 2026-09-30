@@ -48,7 +48,8 @@ export class GateDeskHome extends Component {
     }
 
     openStat(which) {
-        return this.openEntries({ inside: "inside", expected: "scheduled", exited: "exited" }[which] || "all");
+        // each tile opens the Entries tab that lists exactly what it counts
+        return this.openEntries({ inside: "inside", expected: "expected", exited: "exited" }[which] || "all");
     }
 
     openEntry(row) {

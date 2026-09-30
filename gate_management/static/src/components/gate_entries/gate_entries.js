@@ -8,6 +8,7 @@ import { goHome, loadGateFonts } from "../utils";
 const FILTERS = [
     { key: "all", label: "All" },
     { key: "inside", label: "Inside" },
+    { key: "expected", label: "Expected today" },
     { key: "scheduled", label: "Scheduled" },
     { key: "exited", label: "Exited" },
     { key: "vehicle", label: "Vehicles" },

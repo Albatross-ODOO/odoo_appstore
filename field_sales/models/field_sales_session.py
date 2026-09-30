@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import math
+from datetime import datetime, timezone
 
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError, ValidationError
+
+# Verification data written by the kiosk only (reps have write access to their own sessions)
+PROTECTED_SESSION_FIELDS = frozenset({
+    'user_id', 'state', 'check_in_time', 'check_out_time', 'check_in_latitude', 'check_in_longitude',
+    'check_out_latitude', 'check_out_longitude', 'selfie_image', 'checkout_selfie_image',
+})
 
 class FieldSalesSession(models.Model):
     _name = 'field.sales.session'
@@ -89,7 +96,7 @@ class FieldSalesSession(models.Model):
             else:
                 record.check_out_map_link = False
 
-    @api.depends('user_id', 'date')
+    @api.depends('user_id', 'user_id.name', 'date')
     def _compute_name(self):
         for record in self:
             record.name = f"{record.user_id.name} - {record.date}"
@@ -98,6 +105,27 @@ class FieldSalesSession(models.Model):
     def _compute_metrics(self):
         for record in self:
             record.total_visits = len(record.visit_ids.filtered(lambda v: v.state == 'completed'))
+
+    def _check_protected_fields(self, fnames):
+        if self.env.su or self.env.user.has_group('field_sales.group_manager'):
+            return
+        forbidden = PROTECTED_SESSION_FIELDS.intersection(fnames)
+        if forbidden:
+            raise AccessError(_("Only a Field Sales manager can change: %s", ", ".join(sorted(forbidden))))
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            # the owner (enforced by the access domain) and a draft state may be given on create
+            self._check_protected_fields({
+                fname for fname, value in vals.items()
+                if value and fname != 'user_id' and not (fname == 'state' and value == 'draft')
+            })
+        return super().create(vals_list)
+
+    def write(self, vals):
+        self._check_protected_fields(vals)
+        return super().write(vals)
 
     @api.constrains('user_id', 'state')
     def _check_active_session(self):
@@ -113,10 +141,11 @@ class FieldSalesSession(models.Model):
 
     def action_check_in(self, latitude, longitude, selfie_image):
         self.ensure_one()
+        self.check_access('write')  # the kiosk writes the evidence fields with sudo: own sessions only
         if self.state != 'draft':
             raise ValidationError(_("Session is not in New state."))
         
-        self.write({
+        self.sudo().write({
             'state': 'checked_in',
             'check_in_time': fields.Datetime.now(),
             'check_in_latitude': latitude,
@@ -134,6 +163,7 @@ class FieldSalesSession(models.Model):
 
     def action_check_out(self, latitude, longitude, checkout_selfie_image=False):
         self.ensure_one()
+        self.check_access('write')  # the kiosk writes the evidence fields with sudo: own sessions only
         if self.state != 'checked_in':
             raise ValidationError(_("Session is not checked in."))
         if self.visit_ids.filtered(lambda v: v.state == 'in_progress'):
@@ -141,7 +171,7 @@ class FieldSalesSession(models.Model):
         if not self.visit_ids.filtered(lambda v: v.state == 'completed'):
             raise ValidationError(_("You must log at least one client visit before checking out."))
         
-        self.write({
+        self.sudo().write({
             'state': 'completed',
             'check_out_time': fields.Datetime.now(),
             'check_out_latitude': latitude,
@@ -177,6 +207,7 @@ class FieldSalesSession(models.Model):
 
     def action_kiosk_start_visit(self, latitude, longitude, accuracy):
         self.ensure_one()
+        self.check_access('write')  # the visit is created with sudo: own sessions only
         if self.state != 'checked_in':
             raise ValidationError(_("You must be checked in to start a client visit."))
         # Idempotent: a session can only have one client visit in progress
@@ -186,10 +217,11 @@ class FieldSalesSession(models.Model):
                 'visit_id': visit.id,
                 'check_in_time': fields.Datetime.to_string(visit.check_in_time) if visit.check_in_time else False,
             }
-        visit = self.env['field.sales.visit'].create({
+        visit = self.env['field.sales.visit'].sudo().create({
             'session_id': self.id,
-            'company_name': 'Pending Client Visit',
-            'phone': 'Pending',
+            # placeholders until the rep fills in the client in the kiosk (both fields are required)
+            'company_name': _("Visit in progress"),
+            'phone': '-',
             'state': 'in_progress',
             'check_in_time': fields.Datetime.now(),
             'latitude': latitude or 0.0,
@@ -208,8 +240,17 @@ class FieldSalesSession(models.Model):
             'check_in_time': fields.Datetime.to_string(visit.check_in_time) if visit.check_in_time else False,
         }
 
+    def action_manager_close(self):
+        """Close a session the rep forgot to check out (no check-out selfie / GPS)."""
+        for session in self.filtered(lambda s: s.state == 'checked_in'):
+            session.visit_ids.filtered(lambda v: v.state == 'in_progress').write({'state': 'draft'})
+            session.write({'state': 'completed', 'check_out_time': fields.Datetime.now()})
+        return True
+
     def action_log_visit(self, company_name, contact_name, phone, notes, latitude, longitude, accuracy, visit_image=False, check_in_time=False, email=False, create_contact_bool=False, create_lead_bool=False, partner_id=False, visit_id=False):
         self.ensure_one()
+        if self.state != 'checked_in':
+            raise ValidationError(_("You must be checked in to log a client visit."))
         vals = {
             'company_name': company_name,
             'contact_name': contact_name,
@@ -233,14 +274,12 @@ class FieldSalesSession(models.Model):
 
         vals['session_id'] = self.id
         if check_in_time:
-            # Browser sends an ISO string: '2026-07-10T12:00:00.000Z' -> '2026-07-10 12:00:00'
+            # Browser sends an ISO string: '2026-07-10T12:00:00.000Z' -> '2026-07-10 12:00:00' (UTC)
             try:
-                formatted_time = str(check_in_time).replace('T', ' ').replace('Z', '')
-                if '+' in formatted_time:
-                    formatted_time = formatted_time.split('+')[0]
-                if '.' in formatted_time:
-                    formatted_time = formatted_time.split('.')[0]
-                vals['check_in_time'] = fields.Datetime.to_datetime(formatted_time.strip())
+                check_in_dt = datetime.fromisoformat(str(check_in_time).strip())
+                if check_in_dt.tzinfo:
+                    check_in_dt = check_in_dt.astimezone(timezone.utc).replace(tzinfo=None)
+                vals['check_in_time'] = check_in_dt.replace(microsecond=0)
             except ValueError:
                 pass  # fall back to the default check-in time (now)
 

@@ -71,7 +71,8 @@
                     <button t-else="" type="button" class="gd-btn gd-brk gd-sm" t-on-click="askBreakAll" t-att-disabled="state.counts.inside === 0"><i class="fa fa-coffee"/> All on break</button>
                 </div>
                 <div t-if="state.confirm" class="gd-confirm">
-                    <span>Put <t t-esc="state.counts.inside"/> workers on break?</span>
+                    <span t-if="state.counts.inside === 1">Put 1 worker on break?</span>
+                    <span t-else="">Put <t t-esc="state.counts.inside"/> workers on break?</span>
                     <button type="button" class="gd-btn gd-warn gd-lit gd-sm" t-on-click="breakAll">Yes, break</button>
                     <button type="button" class="gd-btn gd-sm" t-on-click="() => state.confirm = false">No</button>
                 </div>

@@ -1,7 +1,11 @@
 import urllib.parse
+from datetime import timedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+
+
+EARLY_GRACE = timedelta(hours=2)  # a visitor may arrive a little before the pass opens
 
 
 class VerifyOtpWizard(models.TransientModel):
@@ -29,6 +33,9 @@ class VerifyOtpWizard(models.TransientModel):
     window_expired = fields.Boolean(compute='_compute_match_info')
     result_message = fields.Char(string='Result')
     result_time = fields.Char(string='Time')
+    # where the matched entry stood before the scan, so "Back" can put it back
+    entry_prev_state = fields.Char()
+    entry_prev_otp_verified = fields.Boolean()
 
     def _compute_display_name(self):
         for wiz in self:
@@ -40,7 +47,10 @@ class VerifyOtpWizard(models.TransientModel):
         for wiz in self:
             entry = wiz.entry_id
             wiz.purpose_label = entry._purpose_label() if entry else ''
-            wiz.window_expired = bool(entry and entry.scheduled_end and entry.scheduled_end < now)
+            # outside the validity window: too late, or more than EARLY_GRACE before the start
+            wiz.window_expired = bool(entry and (
+                (entry.scheduled_end and entry.scheduled_end < now)
+                or (entry.scheduled_start and entry.scheduled_start - EARLY_GRACE > now)))
 
     # ------------------------------------------------------------------
     @api.model
@@ -49,7 +59,9 @@ class VerifyOtpWizard(models.TransientModel):
         if not code:
             return self.env['gate.entry']
         Entry = self.env['gate.entry']
-        entry = Entry.search([('otp', '=', code), ('state', 'not in', ('exited', 'cancel'))], limit=1)
+        # a typed code only matches a live pass: never a draft walk-in (every entry gets a code at creation),
+        # nor a cancelled or used one
+        entry = Entry.search([('otp', '=', code), ('state', 'not in', ('draft', 'exited', 'cancel'))], limit=1)
         if not entry:
             entry = Entry.search([('gate_pass_no', '=', code), ('state', 'not in', ('cancel',))], limit=1)
         if not entry:
@@ -72,6 +84,10 @@ class VerifyOtpWizard(models.TransientModel):
             entry.action_authorize()
 
     def _reopen(self):
+        """Next step of the kiosk, shown in place of the current one (no breadcrumb per visitor)."""
+        return self.env['gate.entry']._gate_in_place(self._reopen_action())
+
+    def _reopen_action(self):
         self.ensure_one()
         return {
             'name': _('Verify Invitation'),
@@ -109,11 +125,12 @@ class VerifyOtpWizard(models.TransientModel):
             return self._notify(_('Already inside'), _('%s is already inside the premises.') % (entry.visitor_name or _('This visitor')), 'warning')
         if entry.state in ('exited', 'cancel'):
             return self._notify(_('Pass closed'), _('This pass has already been used or cancelled.'), 'warning')
+        prev = {'entry_prev_state': entry.state, 'entry_prev_otp_verified': entry.otp_verified}
         try:
             self._advance_entry(entry)
         except Exception as e:
             return self._notify(_('Verification error'), str(e), 'danger')
-        self.write({'entry_id': entry.id, 'state': 'photo', 'force_camera_open': True})
+        self.write(dict(prev, entry_id=entry.id, state='photo', force_camera_open=True))
         return self._reopen()
 
     def _handle_material_scan(self, entry):
@@ -131,13 +148,13 @@ class VerifyOtpWizard(models.TransientModel):
         try:
             if entry.state == 'entered':
                 entry.action_exit()
-                entry.message_post(body=_("Checked out at the gate by pass scan."))
+                entry._message_log(body=_("Checked out at the gate by pass scan."))
                 message = _('%s is out') % (entry.gate_pass_no or entry.name)
             else:
                 if entry.state != 'authorized':
                     entry.write({'state': 'authorized'})
                 entry.action_confirm_entry()
-                entry.message_post(body=_("Checked in at the gate by pass scan."))
+                entry._message_log(body=_("Checked in at the gate by pass scan."))
                 message = _('%s is in') % (entry.gate_pass_no or entry.name)
         except Exception as e:
             return self._notify(_('Verification error'), str(e), 'danger')
@@ -151,7 +168,12 @@ class VerifyOtpWizard(models.TransientModel):
 
     def action_back_to_scan(self):
         self.ensure_one()
-        self.write({'state': 'scan', 'otp_code': False, 'entry_id': False, 'photo': False, 'force_camera_open': False})
+        entry = self.entry_id
+        # the visitor did not come in: the invitation goes back to where it was before the scan
+        if self.state == 'photo' and entry.state == 'authorized' and self.entry_prev_state and self.entry_prev_state != 'authorized':
+            entry.write({'state': self.entry_prev_state, 'otp_verified': self.entry_prev_otp_verified})
+        self.write({'state': 'scan', 'otp_code': False, 'entry_id': False, 'photo': False, 'force_camera_open': False,
+                    'entry_prev_state': False, 'entry_prev_otp_verified': False})
         return self._reopen()
 
     def action_confirm_verification(self):
@@ -183,4 +205,5 @@ class VerifyOtpWizard(models.TransientModel):
 
     @api.model
     def action_open_kiosk(self):
-        return self.create({})._reopen()
+        # entering the kiosk from the Gate Desk keeps the breadcrumb back to it
+        return self.create({})._reopen_action()

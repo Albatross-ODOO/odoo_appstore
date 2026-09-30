@@ -184,6 +184,18 @@ class TestFieldSales(TransactionCase):
             self.Visit.create({'session_id': session.id, 'company_name': False, 'phone': '+911'})
 
     # ------------------------------------------------------------------
+    # Daily activity report
+    # ------------------------------------------------------------------
+    def test_session_report_renders(self):
+        session = self._check_in()
+        self._complete_visit(session)
+        session.action_kiosk_check_out(19.0761, 72.8778, False)
+        Report = self.env['ir.actions.report']
+        html = Report._render_qweb_html('field_sales.report_session_template', session.ids)[0]
+        self.assertIn(b'DAILY FIELD ACTIVITY REPORT', html)
+        self.assertIn(b'Acme Corporation', html)
+
+    # ------------------------------------------------------------------
     # Access rules
     # ------------------------------------------------------------------
     def test_salesperson_sees_only_own_sessions(self):
