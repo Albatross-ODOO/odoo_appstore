@@ -6,7 +6,6 @@
         <field name="model">field.sales.session</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">field_sales.report_session_template</field>
-        <field name="report_file">field_sales.report_session_template</field>
         <field name="print_report_name">'Daily_Activity_Report_%s' % (object.name)</field>
         <field name="binding_model_id" ref="model_field_sales_session"/>
         <field name="binding_type">report</field>
@@ -23,11 +22,11 @@
                             <div class="col-8">
                                 <h2 style="color: #1e3a8a; margin: 0; font-weight: bold; font-size: 26px;">DAILY FIELD ACTIVITY REPORT</h2>
                                 <p class="text-muted" style="margin: 5px 0 0 0; font-size: 14px;">
-                                    Salesperson: <strong><t t-esc="doc.user_id.name"/></strong> | Date: <strong><t t-esc="doc.date" t-options='{"widget": "date"}'/></strong>
+                                    Salesperson: <strong><t t-out="doc.user_id.name"/></strong> | Date: <strong><t t-out="doc.date" t-options='{"widget": "date"}'/></strong>
                                 </p>
                             </div>
-                            <div class="col-4 text-right align-self-end">
-                                <span class="badge badge-success" style="font-size: 14px; background-color: #10b981; padding: 6px 12px; border-radius: 20px; color: #ffffff;">Completed</span>
+                            <div class="col-4 text-end align-self-end">
+                                <span class="badge" t-attf-style="font-size: 14px; background-color: {{ '#10b981' if doc.state == 'completed' else '#f59e0b' }}; padding: 6px 12px; border-radius: 20px; color: #ffffff;" t-field="doc.state"/>
                             </div>
                         </div>
 
@@ -38,27 +37,33 @@
                                 <table class="table table-sm table-borderless" style="font-size: 13px;">
                                     <tr>
                                         <td style="width: 40%; padding: 4px 0;"><strong>Check-In Time:</strong></td>
-                                        <td style="padding: 4px 0;"><t t-esc="doc.check_in_time" t-options='{"widget": "datetime"}'/></td>
+                                        <td style="padding: 4px 0;"><t t-out="doc.check_in_time" t-options='{"widget": "datetime"}'/></td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 4px 0;"><strong>Check-Out Time:</strong></td>
-                                        <td style="padding: 4px 0;"><t t-esc="doc.check_out_time" t-options='{"widget": "datetime"}'/></td>
+                                        <td style="padding: 4px 0;"><t t-out="doc.check_out_time" t-options='{"widget": "datetime"}'/></td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 4px 0;"><strong>Check-In GPS:</strong></td>
                                         <td style="padding: 4px 0;">
-                                            <a t-att-href="'https://www.google.com/maps/search/?api=1&amp;query=%s,%s' % (doc.check_in_latitude, doc.check_in_longitude)" target="_blank" style="color: #3b82f6; text-decoration: none;">
-                                                <t t-esc="doc.check_in_latitude"/>, <t t-esc="doc.check_in_longitude"/>
+                                            <a t-if="doc.check_in_map_link" t-att-href="doc.check_in_map_link" target="_blank" style="color: #3b82f6; text-decoration: none;">
+                                                <t t-out="doc.check_in_latitude"/>, <t t-out="doc.check_in_longitude"/>
                                             </a>
+                                            <span t-else="" class="text-muted">-</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 4px 0;"><strong>Check-Out GPS:</strong></td>
                                         <td style="padding: 4px 0;">
-                                            <a t-att-href="'https://www.google.com/maps/search/?api=1&amp;query=%s,%s' % (doc.check_out_latitude, doc.check_out_longitude)" target="_blank" style="color: #3b82f6; text-decoration: none;">
-                                                <t t-esc="doc.check_out_latitude"/>, <t t-esc="doc.check_out_longitude"/>
+                                            <a t-if="doc.check_out_map_link" t-att-href="doc.check_out_map_link" target="_blank" style="color: #3b82f6; text-decoration: none;">
+                                                <t t-out="doc.check_out_latitude"/>, <t t-out="doc.check_out_longitude"/>
                                             </a>
+                                            <span t-else="" class="text-muted">-</span>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 4px 0;"><strong>Location Verification:</strong></td>
+                                        <td style="padding: 4px 0;"><span t-field="doc.location_verification"/></td>
                                     </tr>
                                 </table>
                             </div>
@@ -89,16 +94,12 @@
 
                         <!-- KPI Summary Cards -->
                         <div class="row mb-4 text-center">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
-                                    <h3 style="margin: 0; color: #3b82f6; font-weight: bold; font-size: 24px;"><t t-esc="doc.total_visits"/></h3>
-                                    <span style="font-size: 12px; color: #64748b; font-weight: bold;">TOTAL VISITS LOGGED</span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
-                                    <h3 style="margin: 0; color: #10b981; font-weight: bold; font-size: 24px;"><t t-esc="doc.productive_visits"/></h3>
-                                    <span style="font-size: 12px; color: #64748b; font-weight: bold;">PRODUCTIVE LEADS GENERATED</span>
+                                    <t t-set="open_visits" t-value="doc.visit_ids.filtered(lambda v: v.state == 'in_progress')"/>
+                                    <h3 style="margin: 0; color: #3b82f6; font-weight: bold; font-size: 24px;"><t t-out="doc.total_visits"/></h3>
+                                    <div style="font-size: 12px; color: #64748b; font-weight: bold;">COMPLETED CLIENT VISITS</div>
+                                    <div t-if="open_visits" class="fs_open_visits" style="font-size: 11px; color: #b45309; margin-top: 4px;">+ <t t-out="len(open_visits)"/> in progress, not counted</div>
                                 </div>
                             </div>
                         </div>
@@ -118,26 +119,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <t t-foreach="doc.visit_ids" t-as="visit">
-                                        <tr>
+                                    <!-- chronological: the day as it happened -->
+                                    <t t-foreach="doc.visit_ids.sorted(lambda v: v.check_in_time or v.create_date)" t-as="visit">
+                                        <tr t-att-style="'background-color: #fffbeb;' if visit.state != 'completed' else None">
                                             <td>
-                                                <t t-esc="visit.check_in_time" t-options='{"widget": "datetime", "time_only": true}'/> - 
-                                                <t t-esc="visit.check_out_time" t-options='{"widget": "datetime", "time_only": true}'/>
-                                                <br/>
-                                                <small class="text-muted">(<t t-esc="'%.1f' % visit.duration"/> min)</small>
+                                                <t t-out="visit.check_in_time" t-options='{"widget": "datetime", "time_only": true}'/> -
+                                                <t t-if="visit.state == 'completed'">
+                                                    <t t-out="visit.check_out_time" t-options='{"widget": "datetime", "time_only": true}'/>
+                                                    <br/>
+                                                    <small class="text-muted">(<t t-out="'%.1f' % visit.duration"/> min)</small>
+                                                </t>
+                                                <t t-else="">
+                                                    <br/>
+                                                    <span t-if="visit.state == 'in_progress'" class="badge fs_visit_open" style="background-color: #f59e0b; color: #ffffff; font-size: 10px;">In progress</span>
+                                                    <span t-else="" class="badge fs_visit_open" style="background-color: #94a3b8; color: #ffffff; font-size: 10px;">Not completed</span>
+                                                </t>
                                             </td>
                                             <td>
-                                                <strong><t t-esc="visit.company_name"/></strong>
-                                                <t t-if="visit.contact_name"><br/><span class="text-muted"><t t-esc="visit.contact_name"/></span></t>
+                                                <strong><t t-out="visit.company_name"/></strong>
+                                                <t t-if="visit.contact_name"><br/><span class="text-muted"><t t-out="visit.contact_name"/></span></t>
                                             </td>
-                                            <td><t t-esc="visit.phone"/></td>
+                                            <td><t t-out="visit.phone"/></td>
                                             <td>
                                                 <t t-if="visit.latitude">
                                                     <a t-att-href="'https://www.google.com/maps/search/?api=1&amp;query=%s,%s' % (visit.latitude, visit.longitude)" target="_blank" style="color: #3b82f6; text-decoration: none;">
                                                         View Map
                                                     </a>
                                                     <br/>
-                                                    <small class="text-muted">Acc: ±<t t-esc="'%.0f' % visit.accuracy"/>m</small>
+                                                    <small class="text-muted">Acc: ±<t t-out="'%.0f' % visit.accuracy"/>m</small>
                                                 </t>
                                                 <t t-else="">
                                                     <span class="text-muted">No GPS</span>
@@ -151,7 +160,7 @@
                                                     <span class="text-muted" style="font-size: 10px;">No photo</span>
                                                 </t>
                                             </td>
-                                            <td><t t-esc="visit.notes or '-'"/></td>
+                                            <td><t t-out="visit.notes or '-'"/></td>
                                         </tr>
                                     </t>
                                 </tbody>

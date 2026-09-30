@@ -32,13 +32,19 @@ registry.category("web_tour.tours").add("gate_desk_tour", {
         // ---- Walk-In: material entry (no photo needed)
         { trigger: ".gd-tile:contains('Walk-In Entry')", run: "click" },
         { trigger: ".o_gate_kiosk .gd-title:contains('Walk-In Entry')" },
-        { trigger: ".gd-chip:contains('Vehicle')", run: "click" },
-        { trigger: ".gd-chip[aria-pressed='true']:contains('Vehicle')" },
+        // the Walk-In form offers Visitor and Material only (options.exclude = worker, vehicle); Visitor is the default
+        { trigger: ".gd-chip[aria-pressed='true']:contains('Visitor')" },
         { trigger: ".gd-chip:contains('Material')", run: "click" },
+        { trigger: ".gd-chip[aria-pressed='true']:contains('Material')" },
         { trigger: ".o_field_widget[name='material_name'] input", run: "edit 40 bags cement" },
-        { trigger: ".gd-seg button:contains('Inward')" },
-        { trigger: ".gd-btn:contains('Confirm Check-In')", run: "click" },
-        { trigger: ".o_gate_kiosk .o_field_badge:contains('Draft')" },
+        // material flow of the shipped form: flow + vendor, Issue Gate Pass (scheduled), Truck Arrived (inside)
+        { trigger: ".o_field_widget[name='material_flow'] .gd-seg button:contains('Inward')", run: "click" },
+        { trigger: ".o_field_widget[name='material_flow'] .gd-seg button[aria-pressed='true']:contains('Inward')" },
+        { trigger: ".o_field_widget[name='vendor_id'] input", run: "edit Gate Tour Vendor" },
+        { trigger: ".o_field_widget[name='vendor_id'] .o-autocomplete--dropdown-item .dropdown-item:contains('Gate Tour Vendor')", run: "click" },
+        { trigger: ".gd-btn:contains('Issue Gate Pass')", run: "click" },
+        { trigger: ".gd-btn:contains('Truck Arrived')", run: "click" },
+        { trigger: ".gd-btn:contains('Confirm Check-Out')" },
         ...homeFromForm(),
         { trigger: ".gd-rows .gd-row:contains('40 bags cement')" },
 

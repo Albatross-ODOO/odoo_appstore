@@ -1,99 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="field_sales.FieldSalesKiosk">
-        <div class="field-sales-kiosk-container">
+        <div class="field-sales-kiosk-container" t-ref="this.rootRef" t-att-class="{ 'nm-kb-open': this.state.keyboardOpen }">
             <!-- Loading Screen -->
-            <t t-if="state.loading">
+            <t t-if="this.state.loading">
                 <div class="kiosk-loading-overlay">
                     <div class="spinner-border text-primary" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
-                    <p class="mt-2 text-muted fw-bold">Initializing Field Sales Workspace...</p>
+                    <p class="m-0 fw-bold">Initializing Field Sales Workspace...</p>
                 </div>
             </t>
 
             <!-- Main Work Loop -->
             <t t-else="">
                 <!-- NOT CHECKED IN STATE -->
-                <t t-if="!state.session">
-                    <div class="kiosk-welcome-card shadow-lg border rounded-3 p-4 text-center">
-                        <div class="kiosk-header mb-4">
-                            <div class="kiosk-logo-wrap mb-3">
-                                <i class="fa fa-map-marker fs-1 text-primary animate-bounce"></i>
-                            </div>
-                            <h2 class="fw-extrabold text-dark-blue">Field Sales Workday</h2>
-                            <p class="text-muted">Start your day by checking in with your location and photo verification.</p>
+                <t t-if="!this.state.session">
+                    <div class="nm-card text-center">
+                        <div class="nm-icon-orb">
+                            <i class="oi oi-fw" data-icon="location_on"></i>
                         </div>
+                        <h2 class="nm-title">Field Sales Workday</h2>
+                        <p class="nm-subtitle mb-4">Start your day by checking in with your location and a quick selfie.</p>
 
-                        <div class="kiosk-actions">
-                            <button class="btn btn-primary btn-lg w-100 py-3 shadow d-flex align-items-center justify-content-center gap-2 checkin-btn"
-                                    t-att-disabled="state.submitting"
-                                    t-on-click="onStartCheckIn">
-                                <t t-if="state.submitting">
-                                    <div class="spinner-border spinner-border-sm" role="status"></div>
-                                    <span>Locking GPS Coordinate...</span>
-                                </t>
-                                <t t-else="">
-                                    <i class="fa fa-sign-in fs-4"></i>
-                                    <span class="fw-bold">CHECK IN </span>
-                                </t>
-                            </button>
-                        </div>
+                        <button type="button" class="nm-btn nm-btn--primary"
+                                t-att-disabled="this.state.submitting"
+                                t-on-click="this.onStartCheckIn">
+                            <t t-if="this.state.submitting">
+                                <div class="spinner-border spinner-border-sm" role="status"></div>
+                                <span>Locking GPS coordinate...</span>
+                            </t>
+                            <t t-else="">
+                                <i class="oi oi-fw" data-icon="login"></i>
+                                <span>CHECK IN</span>
+                            </t>
+                        </button>
                     </div>
                 </t>
 
                 <!-- CHECKED IN STATE (ACTIVE DAY) -->
                 <t t-else="">
-                    <div class="kiosk-active-card shadow-lg border rounded-3 p-4">
-                        <!-- Active Header -->
-                        <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+                    <div class="nm-card">
+                        <div class="nm-session-head">
                             <div>
-                                <span class="badge bg-success-light text-success fw-bold px-3 py-2 rounded-pill mb-1 d-inline-block">
-                                    <i class="fa fa-dot-circle-o me-1"></i> ACTIVE WORK SESSION
-                                </span>
-                                <h3 class="fw-extrabold text-dark-blue m-0 mt-1"><t t-esc="state.session.name"/></h3>
+                                <span class="nm-chip nm-chip--live"><span class="nm-dot"></span> Active work session</span>
+                                <h3 class="nm-session-name"><t t-out="this.state.session.name"/></h3>
                             </div>
-                            <div class="text-end">
-                                <small class="text-muted d-block">Checked in at</small>
-                                <span class="fw-bold text-dark"><t t-esc="formatCheckInTime(state.session.check_in_time)"/></span>
+                            <div class="nm-session-time">
+                                <small>Checked in at</small>
+                                <span><t t-out="this.formatCheckInTime(this.state.session.check_in_time)"/></span>
                             </div>
                         </div>
 
-                        <!-- KPI Dashboard -->
-                        <div class="row g-3 mb-4">
-                            <div class="col-6">
-                                <div class="kpi-box text-center p-3 border rounded">
-                                    <h2 class="fw-bold text-primary m-0"><t t-esc="state.session.total_visits"/></h2>
-                                    <span class="text-muted small fw-bold">Total Visits Logged</span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="kpi-box text-center p-3 border rounded">
-                                    <h2 class="fw-bold text-success m-0"><t t-esc="state.session.productive_visits"/></h2>
-                                    <span class="text-muted small fw-bold">Productive Visits</span>
-                                </div>
-                            </div>
+                        <!-- KPI -->
+                        <div class="nm-kpi mb-4">
+                            <div class="nm-kpi-value"><t t-out="this.state.session.total_visits"/></div>
+                            <span class="nm-kpi-label">Client visits completed today</span>
                         </div>
+
+                        <!-- Active client visit banner -->
+                        <t t-if="this.state.activeVisit">
+                            <div class="nm-active-visit">
+                                <span class="nm-active-visit-icon"><i class="oi oi-fw" data-icon="location_on"></i></span>
+                                <div>
+                                    <strong>Client visit in progress</strong>
+                                    <small>Checked in at client site <t t-out="this.formatCheckInTime(this.state.activeVisit.check_in_time)"/></small>
+                                </div>
+                            </div>
+                        </t>
 
                         <!-- Action Buttons -->
-                        <div class="d-flex flex-column gap-3">
-                            <button class="btn btn-primary btn-lg w-100 py-3 shadow d-flex align-items-center justify-content-center gap-2 visit-btn"
-                                    t-att-disabled="state.submitting"
-                                    t-on-click="openVisitModal">
-                                <i class="fa fa-plus-circle fs-4"></i>
-                                <span class="fw-bold">LOG CLIENT VISIT</span>
-                            </button>
+                        <div class="nm-actions">
+                            <t t-if="!this.state.activeVisit">
+                                <button type="button" class="nm-btn nm-btn--primary"
+                                        t-att-disabled="this.state.submitting"
+                                        t-on-click="this.onStartClientVisit">
+                                    <t t-if="this.state.submitting">
+                                        <div class="spinner-border spinner-border-sm" role="status"></div>
+                                        <span>Starting client visit...</span>
+                                    </t>
+                                    <t t-else="">
+                                        <i class="oi oi-fw" data-icon="location_on"></i>
+                                        <span>START CLIENT VISIT (CHECK IN)</span>
+                                    </t>
+                                </button>
+                            </t>
+                            <t t-else="">
+                                <button type="button" class="nm-btn nm-btn--success"
+                                        t-att-disabled="this.state.submitting"
+                                        t-on-click="this.openVisitModal">
+                                    <i class="oi oi-fw" data-icon="check_box"></i>
+                                    <span>CHECK OUT &amp; SAVE VISIT</span>
+                                </button>
+                            </t>
 
-                            <button class="btn btn-outline-danger btn-lg w-100 py-3 d-flex align-items-center justify-content-center gap-2 checkout-btn"
-                                    t-att-disabled="state.submitting"
-                                    t-on-click="onCheckOut">
-                                <t t-if="state.submitting">
+                            <button type="button" class="nm-btn nm-btn--danger"
+                                    t-att-disabled="this.state.submitting || this.state.activeVisit"
+                                    t-on-click="this.onCheckOut">
+                                <t t-if="this.state.submitting">
                                     <div class="spinner-border spinner-border-sm" role="status"></div>
-                                    <span>Locking GPS Checkout...</span>
+                                    <span>Locking GPS checkout...</span>
                                 </t>
                                 <t t-else="">
-                                    <i class="fa fa-sign-out fs-4"></i>
-                                    <span class="fw-bold">CHECK OUT &amp; END DAY</span>
+                                    <i class="oi oi-fw" data-icon="logout"></i>
+                                    <span>CHECK OUT &amp; END DAY</span>
                                 </t>
                             </button>
                         </div>
@@ -101,106 +111,285 @@
                 </t>
             </t>
 
-            <!-- CAMERA SELFIE MODAL -->
-            <t t-if="state.showCamera">
+            <!-- LOG CLIENT VISIT — progressive step form -->
+            <t t-if="this.state.showVisitModal">
                 <div class="kiosk-modal-overlay">
-                    <div class="kiosk-modal-card p-4 border shadow rounded-3">
-                        <div class="kiosk-modal-header d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="m-0 fw-bold">Camera Verification</h4>
-                            <button type="button" class="btn-close" t-on-click="closeCamera"></button>
+                    <div class="kiosk-modal-card">
+                        <div class="kiosk-modal-header">
+                            <h4>
+                                <t t-if="this.state.activeVisit">Check-Out Client Visit</t>
+                                <t t-else="">Log Client Visit</t>
+                            </h4>
+                            <button type="button" class="nm-btn nm-btn--icon" aria-label="Close" t-on-click="this.closeVisitModal"><i class="oi oi-fw" data-icon="close"></i></button>
                         </div>
-                        <div class="kiosk-modal-body text-center mb-4">
-                            <p class="text-muted">Take a selfie to complete your workday <t t-esc="state.cameraMode === 'check_in' ? 'check-in' : 'check-out'"/>.</p>
-                            <div class="video-container border rounded bg-dark position-relative overflow-hidden mb-3">
-                                <video t-ref="video" autoplay="true" playsinline="true" style="width: 100%; display: block; transform: scaleX(-1);"></video>
-                                <canvas t-ref="canvas" style="display: none;"></canvas>
+
+                        <div class="kiosk-modal-body">
+                            <!-- Progress -->
+                            <div class="nm-progress">
+                                <div class="nm-progress-track">
+                                    <div class="nm-progress-fill" t-attf-style="width: {{ this.progressPercent }}%"></div>
+                                </div>
+                                <span class="nm-progress-text">STEP <t t-out="this.state.visitStep + 1"/> / <t t-out="this.visitSteps.length"/></span>
                             </div>
-                            <t t-if="state.errorMsg">
-                                <div class="alert alert-danger mb-0"><t t-esc="state.errorMsg"/></div>
-                            </t>
+
+                            <div class="nm-steps">
+                                <t t-foreach="this.visibleSteps" t-as="step" t-key="step.key">
+
+                                    <!-- Completed / earlier step: compact row -->
+                                    <t t-if="step_index !== this.state.visitStep">
+                                        <button type="button" class="nm-step-done" t-on-click="() => this.goToStep(step_index)">
+                                            <span class="nm-step-check" t-att-class="{ 'is-skipped': !this.stepHasValue(step) }">
+                                                <i class="oi oi-fw" t-att-data-icon="this.stepHasValue(step) ? 'check' : 'remove'"></i>
+                                            </span>
+                                            <span class="nm-step-text">
+                                                <small><t t-out="step.label"/></small>
+                                                <span t-att-class="{ 'is-empty': !this.stepHasValue(step) }"><t t-out="this.stepSummary(step)"/></span>
+                                            </span>
+                                            <span class="nm-step-edit"><i class="oi oi-fw" data-icon="edit"></i></span>
+                                        </button>
+                                    </t>
+
+                                    <!-- Active step: expanded -->
+                                    <t t-else="">
+                                        <div class="nm-step-active">
+                                            <div class="nm-step-kicker">
+                                                <span><t t-out="step.label"/></span>
+                                                <t t-if="step.required"><span>· required</span></t>
+                                                <t t-else=""><span>· optional</span></t>
+                                            </div>
+                                            <h5 class="nm-step-question"><t t-out="step.question"/></h5>
+                                            <p class="nm-step-hint"><t t-out="step.hint"/></p>
+
+                                            <div class="nm-step-body">
+                                                <!-- 1. Client -->
+                                                <t t-if="step.key === 'client'">
+                                                    <div class="nm-input-row">
+                                                        <input type="text" class="nm-input" data-autofocus="1" autocomplete="off"
+                                                               placeholder="Company or contact name"
+                                                               t-att-value="this.state.companyName"
+                                                               t-on-input="this.onCompanyNameInput"
+                                                               t-on-focus="this.onCompanyNameFocus"
+                                                               t-on-keydown="this.onStepKeydown"/>
+                                                        <t t-if="this.state.selectedPartnerId">
+                                                            <button type="button" class="nm-btn nm-btn--icon nm-btn--danger" title="Unlink contact" t-on-click="this.clearSelectedPartner"><i class="oi oi-fw" data-icon="link_off"></i></button>
+                                                        </t>
+                                                    </div>
+                                                    <t t-if="this.state.selectedPartnerId">
+                                                        <div class="nm-linked">
+                                                            <i class="oi oi-fw" data-icon="check_circle"></i>
+                                                            <span>Linked to <t t-out="this.state.selectedPartnerDisplayName"/></span>
+                                                        </div>
+                                                    </t>
+                                                    <t t-if="this.state.showPartnerDropdown and this.state.companyName and this.state.companyName.trim().length > 0 and !this.state.selectedPartnerId">
+                                                        <div class="nm-suggest">
+                                                            <t t-if="this.state.partnerSearching">
+                                                                <div class="nm-suggest-status"><span class="spinner-border spinner-border-sm" role="status"></span> Searching contacts…</div>
+                                                            </t>
+                                                            <button type="button" class="nm-suggest-item nm-suggest-item--create" t-on-click="this.selectCreateNewPartner">
+                                                                <span class="nm-suggest-avatar"><i class="oi oi-fw" data-icon="add"></i></span>
+                                                                <span class="nm-suggest-text">
+                                                                    <strong>Create "<t t-out="this.state.companyName"/>"</strong>
+                                                                    <small>New contact will be created in Odoo</small>
+                                                                </span>
+                                                            </button>
+                                                            <t t-foreach="this.filteredPartners" t-as="p" t-key="p.id">
+                                                                <button type="button" class="nm-suggest-item" t-on-click="() => this.selectPartner(p)">
+                                                                    <span class="nm-suggest-avatar"><t t-out="this.partnerInitials(p)"/></span>
+                                                                    <span class="nm-suggest-text">
+                                                                        <strong><t t-out="p.display_name"/></strong>
+                                                                        <small>
+                                                                            <t t-if="p.phone"><t t-out="p.phone"/></t>
+                                                                            <t t-if="p.phone and p.email"> · </t>
+                                                                            <t t-if="p.email"><t t-out="p.email"/></t>
+                                                                        </small>
+                                                                    </span>
+                                                                </button>
+                                                            </t>
+                                                        </div>
+                                                    </t>
+                                                </t>
+
+                                                <!-- 2. Contact person -->
+                                                <t t-if="step.key === 'contact'">
+                                                    <input type="text" class="nm-input" data-autofocus="1" autocomplete="off"
+                                                           placeholder="e.g. Priya Sharma"
+                                                           t-att-value="this.state.contactName"
+                                                           t-on-input="this.onContactNameInput"
+                                                           t-on-keydown="this.onStepKeydown"/>
+                                                </t>
+
+                                                <!-- 3. Phone -->
+                                                <t t-if="step.key === 'phone'">
+                                                    <input type="tel" class="nm-input" data-autofocus="1" autocomplete="off" inputmode="tel"
+                                                           placeholder="e.g. +91 98765 43210"
+                                                           t-att-value="this.state.phone"
+                                                           t-on-input="this.onPhoneInput"
+                                                           t-on-keydown="this.onStepKeydown"/>
+                                                </t>
+
+                                                <!-- 4. Email -->
+                                                <t t-if="step.key === 'email'">
+                                                    <input type="email" class="nm-input" data-autofocus="1" autocomplete="off" inputmode="email"
+                                                           placeholder="e.g. priya@acme.com"
+                                                           t-att-value="this.state.email"
+                                                           t-on-input="this.onEmailInput"
+                                                           t-on-keydown="this.onStepKeydown"/>
+                                                </t>
+
+                                                <!-- 5. Odoo records -->
+                                                <t t-if="step.key === 'records'">
+                                                    <t t-if="this.state.selectedPartnerId">
+                                                        <div class="nm-linked">
+                                                            <i class="oi oi-fw" data-icon="link"></i>
+                                                            <span>Visit is linked to <t t-out="this.state.selectedPartnerDisplayName"/> — no new contact needed.</span>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <label class="nm-toggle" for="fs_createContactCheck">
+                                                            <span class="nm-toggle-text">
+                                                                <strong>Create contact</strong>
+                                                                <small>Adds this client to Contacts, tagged "Field Lead" and assigned to you</small>
+                                                            </span>
+                                                            <input type="checkbox" id="fs_createContactCheck" t-att-checked="this.state.createContactBool" t-on-change="this.onCreateContactChange"/>
+                                                            <span class="nm-toggle-track"></span>
+                                                        </label>
+                                                    </t>
+                                                    <label class="nm-toggle" for="fs_createLeadCheck">
+                                                        <span class="nm-toggle-text">
+                                                            <strong>Create lead</strong>
+                                                            <small>Opens a CRM lead with you as the salesperson</small>
+                                                        </span>
+                                                        <input type="checkbox" id="fs_createLeadCheck" t-att-checked="this.state.createLeadBool" t-on-change="this.onCreateLeadChange"/>
+                                                        <span class="nm-toggle-track"></span>
+                                                    </label>
+                                                </t>
+
+                                                <!-- 6. Notes -->
+                                                <t t-if="step.key === 'notes'">
+                                                    <textarea class="nm-textarea" data-autofocus="1" rows="3"
+                                                              placeholder="Feedback, requirements, next steps..."
+                                                              t-att-value="this.state.notes"
+                                                              t-on-input="this.onNotesInput"></textarea>
+                                                </t>
+
+                                                <!-- 7. Photo -->
+                                                <t t-if="step.key === 'photo'">
+                                                    <div class="nm-photo-frame">
+                                                        <t t-if="this.state.visitPhoto">
+                                                            <img t-att-src="'data:image/jpeg;base64,' + this.state.visitPhoto" alt="Visit photo"/>
+                                                            <div class="nm-photo-tools">
+                                                                <button type="button" class="nm-btn nm-btn--sm nm-btn--auto" t-on-click="this.startVisitCamera"><i class="oi oi-fw" data-icon="photo_camera"></i> Retake</button>
+                                                                <label class="nm-btn nm-btn--sm nm-btn--auto nm-btn--ghost nm-file-btn">
+                                                                    <i class="oi oi-fw" data-icon="smartphone"></i> Phone camera
+                                                                    <input type="file" accept="image/*" capture="environment" t-on-change="this.onVisitPhotoFile"/>
+                                                                </label>
+                                                            </div>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <div class="nm-photo-empty">
+                                                                <i class="oi oi-fw" data-icon="photo_camera"></i>
+                                                                <t t-if="this.state.visitCameraError">
+                                                                    <div class="nm-alert mb-3 text-start"><t t-out="this.state.visitCameraError"/></div>
+                                                                </t>
+                                                                <div class="nm-photo-tools">
+                                                                    <button type="button" class="nm-btn nm-btn--sm nm-btn--auto nm-btn--primary" t-on-click="this.startVisitCamera"><i class="oi oi-fw" data-icon="photo_camera"></i> Take visit photo</button>
+                                                                    <label class="nm-btn nm-btn--sm nm-btn--auto nm-btn--ghost nm-file-btn">
+                                                                        <i class="oi oi-fw" data-icon="smartphone"></i> Phone camera
+                                                                        <input type="file" accept="image/*" capture="environment" t-on-change="this.onVisitPhotoFile"/>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </t>
+                                                    </div>
+                                                </t>
+
+                                                <!-- 8. Review -->
+                                                <t t-if="step.key === 'review'">
+                                                    <div class="nm-review">
+                                                        <div class="nm-review-row"><small>Client</small><span><t t-out="this.state.companyName"/></span></div>
+                                                        <div class="nm-review-row"><small>Contact</small><span t-att-class="{ 'is-empty': !this.state.contactName }"><t t-if="this.state.contactName" t-out="this.state.contactName"/><t t-else="">Not provided</t></span></div>
+                                                        <div class="nm-review-row"><small>Phone</small><span><t t-out="this.state.phone"/></span></div>
+                                                        <div class="nm-review-row"><small>Email</small><span t-att-class="{ 'is-empty': !this.state.email }"><t t-if="this.state.email" t-out="this.state.email"/><t t-else="">Not provided</t></span></div>
+                                                        <div class="nm-review-row"><small>Records</small><span><t t-out="this.recordsSummary"/></span></div>
+                                                        <div class="nm-review-row"><small>Notes</small><span t-att-class="{ 'is-empty': !this.state.notes }"><t t-if="this.state.notes" t-out="this.state.notes"/><t t-else="">None</t></span></div>
+                                                    </div>
+                                                    <t t-if="this.state.visitPhoto">
+                                                        <div class="nm-review-photo"><img t-att-src="'data:image/jpeg;base64,' + this.state.visitPhoto" alt="Visit photo"/></div>
+                                                    </t>
+                                                </t>
+                                            </div>
+
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
                         </div>
-                        <div class="kiosk-modal-footer d-flex gap-3">
-                            <button class="btn btn-secondary w-50" t-on-click="closeCamera">Cancel</button>
-                            <button class="btn btn-primary w-50 fw-bold" t-on-click="capturePhoto" t-att-disabled="state.errorMsg !== ''">Capture &amp; Verify</button>
+
+                        <!-- Step navigation: pinned below the scroll area so it is always reachable -->
+                        <div class="kiosk-modal-footer nm-step-nav">
+                            <t t-if="this.state.visitStep > 0">
+                                <button type="button" class="nm-btn nm-btn--ghost nm-btn--auto" aria-label="Previous step" t-on-click="this.prevStep"><i class="oi oi-fw" data-icon="arrow_back"></i></button>
+                            </t>
+                            <t t-if="this.activeStep.key === 'review'">
+                                <button type="button" class="nm-btn nm-btn--success" t-on-click="this.submitVisit" t-att-disabled="this.state.submitting">
+                                    <t t-if="this.state.submitting">
+                                        <div class="spinner-border spinner-border-sm" role="status"></div>
+                                        <span>Saving visit...</span>
+                                    </t>
+                                    <t t-else="">
+                                        <i class="oi oi-fw" data-icon="check"></i>
+                                        <span><t t-if="this.state.activeVisit">Check out &amp; save visit</t><t t-else="">Complete visit</t></span>
+                                    </t>
+                                </button>
+                            </t>
+                            <t t-else="">
+                                <button type="button" class="nm-btn nm-btn--primary" t-on-click="this.nextStep" t-att-disabled="!this.canProceed">
+                                    <span><t t-out="this.nextLabel"/></span>
+                                    <i class="oi oi-fw" data-icon="arrow_forward"></i>
+                                </button>
+                            </t>
                         </div>
                     </div>
                 </div>
             </t>
 
-            <!-- LOG VISIT MODAL -->
-            <t t-if="state.showVisitModal">
-                <div class="kiosk-modal-overlay">
-                    <div class="kiosk-modal-card p-4 border shadow rounded-3">
-                        <div class="kiosk-modal-header d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="m-0 fw-bold text-dark-blue">Log Client Visit</h4>
-                            <button type="button" class="btn-close" t-on-click="closeVisitModal"></button>
-                        </div>
-                        <div class="kiosk-modal-body mb-4">
-                            <p class="text-muted small mb-3">Entering details will create/update a Prospect category contact in Odoo.</p>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Company Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" placeholder="e.g. Acme Corporation" t-att-value="state.companyName" t-on-input="onCompanyNameInput"/>
+            <!-- FULL-SCREEN CAMERA VIEWFINDER (selfie verification + visit photo) -->
+            <t t-if="this.state.showCamera">
+                <div class="nm-camera" role="dialog" aria-modal="true" t-att-aria-label="this.cameraTitle">
+                    <div class="nm-camera-top">
+                        <button type="button" class="nm-camera-btn" aria-label="Close camera" t-on-click="this.closeCamera"><i class="oi oi-fw" data-icon="close"></i></button>
+                        <span class="nm-camera-title"><t t-out="this.cameraTitle"/></span>
+                        <button type="button" class="nm-camera-btn" aria-label="Switch camera" t-on-click="this.flipCamera" t-att-disabled="this.state.cameraStarting"><i class="oi oi-fw" data-icon="refresh"></i></button>
+                    </div>
+                    <div class="nm-camera-stage" t-att-class="{ 'is-mirror': this.state.cameraFacing === 'user' }">
+                        <video t-ref="this.camVideoRef" autoplay="true" playsinline="true" muted="true"></video>
+                        <canvas t-ref="this.camCanvasRef" style="display: none;"></canvas>
+                        <t t-if="this.state.cameraMode !== 'visit' and !this.state.errorMsg">
+                            <div class="nm-camera-guide" aria-hidden="true"></div>
+                        </t>
+                        <t t-if="this.state.cameraStarting">
+                            <div class="nm-camera-status"><span class="spinner-border spinner-border-sm" role="status"></span> Starting camera…</div>
+                        </t>
+                        <t t-if="this.state.errorMsg">
+                            <div class="nm-camera-error">
+                                <i class="oi oi-fw" data-icon="error"></i>
+                                <p><t t-out="this.state.errorMsg"/></p>
+                                <label class="nm-btn nm-btn--sm nm-btn--auto nm-btn--primary nm-file-btn">
+                                    <i class="oi oi-fw" data-icon="smartphone"></i> Use phone camera
+                                    <input type="file" accept="image/*" t-att-capture="this.state.cameraMode === 'visit' ? 'environment' : 'user'" t-on-change="this.onCameraFile"/>
+                                </label>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Contact Person Name</label>
-                                <input type="text" class="form-control" placeholder="e.g. John Doe" t-att-value="state.contactName" t-on-input="onContactNameInput"/>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
-                                <input type="tel" class="form-control" placeholder="e.g. +1234567890" t-att-value="state.phone" t-on-input="onPhoneInput"/>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Visit Notes</label>
-                                <textarea class="form-control" rows="3" placeholder="Enter feedback, client requirements, or context..." t-att-value="state.notes" t-on-input="onNotesInput"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Visit Photo <span class="text-danger">*</span></label>
-                                <div class="visit-photo-container border rounded bg-light p-3 text-center position-relative">
-                                    <t t-if="state.visitPhoto">
-                                        <img t-att-src="'data:image/jpeg;base64,' + state.visitPhoto" class="img-fluid rounded mb-2" style="max-height: 150px;"/>
-                                        <div>
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" t-on-click="startVisitCamera">
-                                                <i class="fa fa-refresh me-1"></i> Retake Photo
-                                            </button>
-                                        </div>
-                                    </t>
-                                    <t t-else="">
-                                        <t t-if="state.showVisitCamera">
-                                            <div class="video-container border rounded bg-dark position-relative overflow-hidden mb-2" style="max-height: 200px;">
-                                                <video t-ref="visitVideo" autoplay="true" playsinline="true" style="width: 100%; display: block; transform: scaleX(-1);"></video>
-                                                <canvas t-ref="visitCanvas" style="display: none;"></canvas>
-                                            </div>
-                                            <div class="d-flex gap-2 justify-content-center">
-                                                <button type="button" class="btn btn-primary btn-sm" t-on-click="captureVisitPhoto">
-                                                    <i class="fa fa-camera me-1"></i> Capture Photo
-                                                </button>
-                                                <button type="button" class="btn btn-outline-secondary btn-sm" t-on-click="stopVisitCamera">
-                                                    Cancel
-                                                </button>
-                                            </div>
-                                        </t>
-                                        <t t-else="">
-                                            <div class="py-4 text-muted">
-                                                <i class="fa fa-camera fs-2 mb-2 d-block text-secondary"></i>
-                                                <button type="button" class="btn btn-primary btn-sm" t-on-click="startVisitCamera">
-                                                    <i class="fa fa-camera me-1"></i> Take Visit Photo
-                                                </button>
-                                            </div>
-                                        </t>
-                                    </t>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kiosk-modal-footer d-flex gap-3">
-                            <button class="btn btn-secondary w-50" t-on-click="closeVisitModal">Cancel</button>
-                            <button class="btn btn-primary w-50 fw-bold" t-on-click="submitVisit" t-att-disabled="state.submitting">
-                                <t t-if="state.submitting">
-                                    <div class="spinner-border spinner-border-sm" role="status"></div>
-                                </t>
-                                <t t-else="">
-                                    Complete Visit
-                                </t>
-                            </button>
+                        </t>
+                    </div>
+                    <div class="nm-camera-bottom">
+                        <p class="nm-camera-hint"><t t-out="this.cameraHint"/></p>
+                        <div class="nm-camera-controls">
+                            <label class="nm-camera-btn nm-file-btn" title="Choose from phone">
+                                <i class="oi oi-fw" data-icon="image"></i>
+                                <input type="file" accept="image/*" t-att-capture="this.state.cameraMode === 'visit' ? 'environment' : 'user'" t-on-change="this.onCameraFile"/>
+                            </label>
+                            <button type="button" class="nm-shutter" aria-label="Capture photo" t-on-click="this.captureFromCamera" t-att-disabled="this.state.errorMsg !== '' or this.state.cameraStarting"><span></span></button>
+                            <span class="nm-camera-spacer"></span>
                         </div>
                     </div>
                 </div>

@@ -1,19 +1,21 @@
 /** @odoo-module */
 
-import { Component } from "@odoo/owl";
+import { Component, t, useProps } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 
-/** Selection field drawn as large tappable chips (or a segmented control with options.segment). */
+/** Selection field drawn as large tappable chips (or a segmented control with options.segment).
+ *  options.icons maps a value to a Material Symbols name (Odoo 20 icon set), e.g. {'visitor': 'person'}. */
 export class GateChips extends Component {
     static template = "gate_management.GateChips";
-    static props = {
+    // Owl 3: props are declared through useProps (static props is ignored)
+    props = useProps({
         ...standardFieldProps,
-        exclude: { type: Array, optional: true },
-        icons: { type: Object, optional: true },
-        labels: { type: Object, optional: true },
-        segment: { type: Boolean, optional: true },
-    };
+        exclude: t.array().optional(),
+        icons: t.object().optional(),
+        labels: t.object().optional(),
+        segment: t.boolean().optional(),
+    });
 
     get choices() {
         const selection = this.props.record.fields[this.props.name].selection || [];

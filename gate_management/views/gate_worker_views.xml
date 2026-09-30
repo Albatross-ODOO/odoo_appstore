@@ -64,19 +64,19 @@
                         <div t-attf-class="gd-card gd-card-worker-#{record.current_state.raw_value}">
                             <div class="gd-card-av gd-av-worker">
                                 <img t-if="record.photo.raw_value" t-attf-src="/web/image/gate.worker/#{record.id.raw_value}/photo" alt="Photo"/>
-                                <t t-else=""><t t-esc="(record.name.raw_value || '?').charAt(0).toUpperCase()"/></t>
+                                <t t-else=""><t t-out="(record.name.raw_value || '?').charAt(0).toUpperCase()"/></t>
                             </div>
                             <div class="gd-card-body">
-                                <div class="gd-card-title"><t t-esc="record.name.value"/></div>
-                                <div class="gd-card-sub"><span class="gd-mono"><t t-esc="record.worker_code.value"/></span> · <t t-esc="record.worker_type.value"/><t t-if="record.mobile.raw_value"> · <t t-esc="record.mobile.value"/></t></div>
+                                <div class="gd-card-title"><t t-out="record.name.value"/></div>
+                                <div class="gd-card-sub"><span class="gd-mono"><t t-out="record.worker_code.value"/></span> · <t t-out="record.worker_type.value"/><t t-if="record.mobile.raw_value"> · <t t-out="record.mobile.value"/></t></div>
                             </div>
                             <div class="gd-card-side">
                                 <field name="current_state" widget="badge" decoration-success="current_state == 'inside'" decoration-warning="current_state == 'break'" decoration-muted="current_state == 'outside'"/>
                                 <t t-if="record.status.raw_value == 'active'">
-                                    <button t-if="record.current_state.raw_value == 'outside'" name="action_check_in" type="object" class="gd-btn gd-green gd-lit gd-sm"><i class="fa fa-sign-in" title="sign in"/> Check-In</button>
-                                    <button t-if="record.current_state.raw_value == 'inside'" name="action_start_break" type="object" class="gd-btn gd-brk gd-sm"><i class="fa fa-coffee" title="coffee"/> Break</button>
-                                    <button t-if="record.current_state.raw_value == 'break'" name="action_end_break" type="object" class="gd-btn gd-amber gd-lit gd-sm"><i class="fa fa-play" title="play"/> Break over</button>
-                                    <button t-if="record.current_state.raw_value != 'outside'" name="action_check_out" type="object" class="gd-btn gd-rosy gd-lit gd-sm"><i class="fa fa-sign-out" title="sign out"/> Check-Out</button>
+                                    <button t-if="record.current_state.raw_value == 'outside'" name="action_check_in" type="object" class="gd-btn gd-green gd-lit gd-sm"><i class="oi" data-icon="login" title="sign in"/> Check-In</button>
+                                    <button t-if="record.current_state.raw_value == 'inside'" name="action_start_break" type="object" class="gd-btn gd-brk gd-sm"><i class="oi" data-icon="coffee" title="coffee"/> Break</button>
+                                    <button t-if="record.current_state.raw_value == 'break'" name="action_end_break" type="object" class="gd-btn gd-amber gd-lit gd-sm"><i class="oi" data-icon="play_arrow" title="play"/> Break over</button>
+                                    <button t-if="record.current_state.raw_value != 'outside'" name="action_check_out" type="object" class="gd-btn gd-rosy gd-lit gd-sm"><i class="oi" data-icon="logout" title="sign out"/> Check-Out</button>
                                 </t>
                             </div>
                         </div>

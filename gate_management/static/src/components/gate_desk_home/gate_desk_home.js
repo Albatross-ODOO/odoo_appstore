@@ -1,9 +1,10 @@
 /** @odoo-module */
 
-import { Component, onMounted, onWillStart, onWillUnmount, useState } from "@odoo/owl";
+import { Component, onMounted, onWillStart, onWillUnmount, proxy, useProps } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
+import { standardActionServiceProps } from "@web/webclient/actions/action_plugin";
 import { gateToast, loadGateFonts, nowHM } from "../utils";
 
 const PAGES = {
@@ -17,12 +18,13 @@ const PAGES = {
 /** Gate Desk — the guard's home page. One client action, no menu hunting. */
 export class GateDeskHome extends Component {
     static template = "gate_management.GateDeskHome";
-    static props = ["*"];
+    // Owl 3: client-action props are the action service's standard props (static props = ["*"] is ignored)
+    props = useProps({ ...standardActionServiceProps });
 
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
-        this.state = useState({ loading: true, data: null, gone: {} });
+        this.state = proxy({ loading: true, data: null, gone: {} });
         loadGateFonts();
         onWillStart(() => this.load());
         onMounted(() => {
@@ -48,7 +50,8 @@ export class GateDeskHome extends Component {
     }
 
     openStat(which) {
-        return this.openEntries({ inside: "inside", expected: "scheduled", exited: "exited" }[which] || "all");
+        // each tile opens the Entries tab that lists exactly what it counts
+        return this.openEntries({ inside: "inside", expected: "expected", exited: "exited" }[which] || "all");
     }
 
     openEntry(row) {

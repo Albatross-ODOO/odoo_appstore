@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="discuss_chat_monitor.ChatMonitorView">
+        <div t-if="!this.state.hasAccess" class="o_chat_monitor_container o_chat_monitor_no_access d-flex flex-column align-items-center justify-content-center w-100 h-100 p-4 cm-empty-state">
+            <div class="cm-empty-icon p-4 rounded-circle mb-3">
+                <i class="oi" data-icon="forum" style="font-size: 4em;"/>
+            </div>
+            <h4 class="fw-bold mb-2">Chat Monitor</h4>
+            <p class="text-center" style="max-width: 420px;">
+                You do not have access to the Chat Monitor. Ask an administrator to add you to the "Chat Monitor Manager" group.
+            </p>
+        </div>
+        <div t-else="" class="o_chat_monitor_container d-flex w-100 h-100">
+            <!-- Left Sidebar -->
+            <div class="o_chat_monitor_sidebar d-flex flex-column">
+                <!-- Sidebar Header -->
+                <div class="cm-sidebar-header p-3 border-bottom">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="oi cm-icon-primary fs-4" data-icon="forum"/>
+                            <h5 class="mb-0 fw-bold cm-title-text">Chat Monitor</h5>
+                        </div>
+                        <button class="btn btn-sm cm-btn-icon" t-on-click="this.loadSessions" title="Refresh Sessions">
+                            <i class="oi" data-icon="refresh"/>
+                        </button>
+                    </div>
+
+                    <!-- Search Box -->
+                    <div class="input-group input-group-sm mb-2">
+                        <span class="input-group-text cm-search-icon">
+                            <i class="oi" data-icon="search"/>
+                        </span>
+                        <input type="text" class="form-control cm-search-input" placeholder="Search sessions or participants..." t-att-value="this.state.searchTerm" t-on-input="this.onSearchInput"/>
+                    </div>
+
+                    <!-- Type Filter Pills -->
+                    <div class="d-flex gap-1 overflow-auto py-1 mb-2">
+                        <button t-attf-class="btn btn-xs cm-pill-btn #{this.state.activeFilter == 'all' ? 'active' : ''}" t-on-click="() => this.onFilterChange('all')">
+                            All Types
+                        </button>
+                        <button t-attf-class="btn btn-xs cm-pill-btn #{this.state.activeFilter == 'chat' ? 'active' : ''}" t-on-click="() => this.onFilterChange('chat')">
+                            Direct
+                        </button>
+                        <button t-attf-class="btn btn-xs cm-pill-btn #{this.state.activeFilter == 'group' ? 'active' : ''}" t-on-click="() => this.onFilterChange('group')">
+                            Group
+                        </button>
+                        <button t-attf-class="btn btn-xs cm-pill-btn #{this.state.activeFilter == 'channel' ? 'active' : ''}" t-on-click="() => this.onFilterChange('channel')">
+                            Channels
+                        </button>
+                    </div>
+
+                    <!-- Date Filter Bar -->
+                    <div class="d-flex align-items-center justify-content-between pt-2 border-top">
+                        <span class="small cm-label-text fw-bold">
+                            <i class="oi me-1" data-icon="calendar_today"/> Date:
+                        </span>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button t-attf-class="btn btn-xs cm-date-btn #{this.state.dateFilter == 'today' ? 'active' : ''}" t-on-click="() => this.onDateFilterChange('today')" title="Today's sessions">
+                                Today
+                            </button>
+                            <button t-attf-class="btn btn-xs cm-date-btn #{this.state.dateFilter == 'yesterday' ? 'active' : ''}" t-on-click="() => this.onDateFilterChange('yesterday')" title="Yesterday's sessions">
+                                Yesterday
+                            </button>
+                            <button t-attf-class="btn btn-xs cm-date-btn #{this.state.dateFilter == 'this_week' ? 'active' : ''}" t-on-click="() => this.onDateFilterChange('this_week')" title="Last 7 Days">
+                                7 Days
+                            </button>
+                            <button t-attf-class="btn btn-xs cm-date-btn #{this.state.dateFilter == 'all' ? 'active' : ''}" t-on-click="() => this.onDateFilterChange('all')" title="All past sessions">
+                                All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session List -->
+                <div class="o_chat_monitor_sidebar_list flex-grow-1 overflow-auto p-2">
+                    <t t-if="this.state.isLoadingSessions">
+                        <div class="text-center py-5 cm-muted-text">
+                            <span class="spinner-border mb-2" role="status"/>
+                            <div>Loading sessions...</div>
+                        </div>
+                    </t>
+                    <t t-elif="this.state.sessions.length == 0">
+                        <div class="text-center py-5 cm-muted-text px-3">
+                            <i class="oi d-block mb-2 opacity-50" data-icon="forum" style="font-size: 3em;"/>
+                            <h6 class="fw-bold">No chat sessions found</h6>
+                            <p t-if="this.state.dateFilter != 'all'" class="small cm-empty-hint">No active sessions found for <strong t-if="this.state.dateFilter == 'today'">Today</strong><strong t-elif="this.state.dateFilter == 'yesterday'">Yesterday</strong><strong t-else="">Last 7 Days</strong>. Try selecting 'All' in the date filter.</p>
+                            <p t-elif="this.state.searchTerm or this.state.activeFilter != 'all'" class="small cm-empty-hint">No conversation matches the search or the type filter.</p>
+                            <p t-else="" class="small cm-empty-hint">No conversations yet.</p>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="this.state.sessions" t-as="session" t-key="session.id">
+                            <div t-attf-class="cm-session-card p-3 mb-2 rounded-3 cursor-pointer d-flex align-items-center gap-3 #{this.state.selectedSession and this.state.selectedSession.id == session.id ? 'active' : ''}" t-on-click="() => this.selectSession(session)">
+                                <!-- Avatar Stack -->
+                                <div class="position-relative flex-shrink-0" style="width: 44px; height: 44px;">
+                                    <t t-if="session.partners and session.partners.length > 0">
+                                        <img t-att-src="session.partners[0].avatar" class="rounded-circle shadow-sm" style="width: 44px; height: 44px; object-fit: cover;" t-att-title="session.partners[0].name"/>
+                                        <t t-if="session.partners.length > 1">
+                                            <img t-att-src="session.partners[1].avatar" class="rounded-circle shadow-sm position-absolute bottom-0 end-0 border border-2 border-white" style="width: 24px; height: 24px; object-fit: cover;" t-att-title="session.partners[1].name"/>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <div class="cm-avatar-placeholder rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 44px; height: 44px;">
+                                            <i class="oi" data-icon="tag"/>
+                                        </div>
+                                    </t>
+                                </div>
+
+                                <!-- Session Metadata -->
+                                <div class="flex-grow-1 min-w-0">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <h6 class="mb-0 text-truncate cm-card-title" style="max-width: 140px;" t-out="session.name"/>
+                                        <span class="cm-card-time" t-out="session.last_message_time or ''"/>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <p class="mb-0 text-truncate cm-card-preview" style="max-width: 150px;"><t t-if="session.last_message_preview" t-out="session.last_message_preview"/><t t-else="">No messages</t></p>
+                                        <span class="d-flex gap-1 flex-shrink-0">
+                                            <span t-if="session.archived" class="cm-type-badge cm-badge-archived">Archived</span>
+                                            <span t-attf-class="cm-type-badge #{session.channel_type == 'chat' ? 'badge-direct' : 'badge-group'}" t-out="session.channel_type_label"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </div>
+            </div>
+
+            <!-- Right Main Chat Pane -->
+            <div class="o_chat_monitor_main flex-grow-1 d-flex flex-column h-100">
+                <t t-if="this.state.selectedSession">
+                    <!-- Session Chat Header -->
+                    <div class="cm-main-header p-3 border-bottom d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-3 min-w-0">
+                            <div class="cm-header-icon rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+                                <i class="oi" data-icon="forum"/>
+                            </div>
+                            <div class="min-w-0">
+                                <h5 class="mb-0 fw-bold cm-header-title text-truncate" t-out="this.state.selectedSession.name" t-att-title="this.state.selectedSession.name"/>
+                                <div class="d-flex align-items-center gap-2 cm-header-meta">
+                                    <span class="cm-message-count text-nowrap"><t t-out="this.state.selectedSession.message_count"/><t t-if="this.state.selectedSession.message_count == 1"> message</t><t t-else=""> messages</t></span>
+                                    <t t-if="this.headerPartners.length">
+                                        <span>•</span>
+                                        <div class="d-none d-md-flex gap-1 align-items-center flex-wrap min-w-0">
+                                            <t t-foreach="this.headerPartners" t-as="p" t-key="p.id">
+                                                <span class="cm-partner-tag" t-out="p.name"/>
+                                            </t>
+                                            <span t-if="this.hiddenPartners.length" class="cm-partner-tag cm-more-partners" t-att-title="this.hiddenPartnersTitle">+<t t-out="this.hiddenPartners.length"/> more</span>
+                                        </div>
+                                        <span class="cm-partner-tag cm-partner-count d-md-none text-nowrap" t-att-title="this.allPartnersTitle"><t t-out="this.state.selectedSession.partners.length"/><t t-if="this.state.selectedSession.partners.length == 1"> participant</t><t t-else=""> participants</t></span>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 flex-shrink-0 ms-2">
+                            <button class="btn btn-sm cm-refresh-btn d-flex align-items-center gap-1 text-nowrap" title="Refresh Stream" t-on-click="this.refreshCurrentSession">
+                                <i class="oi" data-icon="refresh"/><span class="d-none d-md-inline"> Refresh Stream</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Message Stream -->
+                    <div class="o_chat_monitor_thread flex-grow-1 overflow-auto p-4" t-ref="this.threadRef">
+                        <t t-if="this.state.isLoadingMessages">
+                            <div class="text-center py-5 cm-muted-text">
+                                <span class="spinner-border mb-2" role="status"/>
+                                <div>Loading conversation history...</div>
+                            </div>
+                        </t>
+                        <t t-elif="this.state.messages.length == 0">
+                            <div class="text-center py-5 cm-muted-text">
+                                <i class="oi d-block mb-3 opacity-50" data-icon="forum" style="font-size: 3em;"/>
+                                <h5>No messages recorded for this session yet.</h5>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="d-flex flex-column gap-3">
+                                <div t-if="this.state.hasOlderMessages" class="text-center">
+                                    <button class="btn btn-sm cm-refresh-btn cm-load-older" t-on-click="this.loadOlderMessages">
+                                        Load older messages (showing <t t-out="this.state.messages.length"/> of <t t-out="this.state.selectedSession.message_count"/>)
+                                    </button>
+                                </div>
+                                <t t-foreach="this.state.messages" t-as="msg" t-key="msg.id">
+                                    <div class="cm-message-bubble d-flex gap-3 align-items-start p-2 rounded-3">
+                                        <img t-att-src="msg.author_avatar" class="rounded-circle shadow-sm flex-shrink-0" style="width: 40px; height: 40px; object-fit: cover;" t-att-alt="msg.author_name"/>
+                                        <div class="cm-bubble-body p-3 rounded-3 flex-grow-1" style="max-width: 85%;">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <strong class="cm-author-name me-2" t-out="msg.author_name"/>
+                                                <small class="cm-msg-date" t-out="msg.date"/>
+                                            </div>
+                                            <div class="cm-message-content text-break mb-0" t-out="msg.body"/>
+
+                                            <t t-if="msg.attachments and msg.attachments.length > 0">
+                                                <div class="mt-2 pt-2 border-top d-flex flex-wrap gap-2">
+                                                    <t t-foreach="msg.attachments" t-as="att" t-key="att.id">
+                                                        <a t-att-href="att.url" target="_blank" class="cm-attachment-pill">
+                                                            <i class="oi me-1" data-icon="attach_file"/> <t t-out="att.name"/>
+                                                        </a>
+                                                    </t>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+                <t t-else="">
+                    <!-- Empty State View -->
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100 p-4 cm-empty-state">
+                        <div class="cm-empty-icon p-4 rounded-circle mb-3">
+                            <i class="oi" data-icon="forum" style="font-size: 4em;"/>
+                        </div>
+                        <h4 class="fw-bold mb-2">Discuss Chat Monitor</h4>
+                        <p class="text-center" style="max-width: 420px;">
+                            Select a chat session from the left sidebar to view the full conversation history.
+                        </p>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

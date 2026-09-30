@@ -12,7 +12,6 @@
                 <field name="check_in_time"/>
                 <field name="check_out_time"/>
                 <field name="total_visits"/>
-                <field name="productive_visits"/>
                 <field name="location_verification" widget="badge" decoration-success="location_verification == 'same'" decoration-danger="location_verification == 'changed'" decoration-warning="location_verification == 'pending'"/>
                 <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'checked_in'" decoration-muted="state == 'completed'"/>
             </list>
@@ -26,6 +25,9 @@
         <field name="arch" type="xml">
             <form string="Work Session">
                 <header>
+                    <button name="action_manager_close" type="object" string="Close Session"
+                            invisible="state != 'checked_in'" groups="field_sales.group_manager"
+                            confirm="Close this work session without a check-out selfie or GPS position?"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,checked_in,completed"/>
                 </header>
                 <sheet>
@@ -49,13 +51,13 @@
                             <field name="check_in_time"/>
                             <field name="check_in_latitude"/>
                             <field name="check_in_longitude"/>
-                            <field name="check_in_map_link" widget="url" text="View Check-In on Google Maps" options="{'icon': 'fa fa-map-marker'}" readonly="1"/>
+                            <field name="check_in_map_link" widget="url" text="View Check-In on Google Maps" readonly="1" invisible="not check_in_map_link"/>
                         </group>
                         <group string="Check-Out Details">
                             <field name="check_out_time"/>
                             <field name="check_out_latitude"/>
                             <field name="check_out_longitude"/>
-                            <field name="check_out_map_link" widget="url" text="View Check-Out on Google Maps" options="{'icon': 'fa fa-map-marker'}" readonly="1"/>
+                            <field name="check_out_map_link" widget="url" text="View Check-Out on Google Maps" readonly="1" invisible="not check_out_map_link"/>
                             <field name="location_verification" widget="badge" decoration-success="location_verification == 'same'" decoration-danger="location_verification == 'changed'" decoration-warning="location_verification == 'pending'" readonly="1"/>
                         </group>
                     </group>
@@ -68,10 +70,11 @@
                                     <field name="phone"/>
                                     <field name="check_in_time"/>
                                     <field name="check_out_time"/>
-                                    <field name="duration" widget="float_time"/>
+                                    <field name="duration"/>
                                     <field name="partner_id"/>
                                     <field name="latitude" column_invisible="True"/>
                                     <field name="longitude" column_invisible="True"/>
+                                    <field name="notes" column_invisible="True"/>
                                 </list>
                             </field>
                         </page>
@@ -93,6 +96,30 @@
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_field_sales_session_search" model="ir.ui.view">
+        <field name="name">field.sales.session.search</field>
+        <field name="model">field.sales.session</field>
+        <field name="arch" type="xml">
+            <search string="Work Sessions">
+                <field name="name"/>
+                <field name="user_id"/>
+                <filter string="My Sessions" name="my_sessions" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter string="Checked In" name="checked_in" domain="[('state', '=', 'checked_in')]"/>
+                <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                <separator/>
+                <filter string="Location Changed" name="location_changed" domain="[('location_verification', '=', 'changed')]"/>
+                <filter string="Date" name="filter_date" date="date"/>
+                <group>
+                    <filter string="Salesperson" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
         </field>
     </record>
 

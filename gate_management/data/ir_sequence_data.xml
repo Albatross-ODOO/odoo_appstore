@@ -18,5 +18,13 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+        <!-- Material gate pass number printed on the pass: MGP-001, MGP-002, ... -->
+        <record id="seq_gate_material_pass" model="ir.sequence">
+            <field name="name">Material Gate Pass</field>
+            <field name="code">gate.material.pass</field>
+            <field name="prefix">MGP-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
     </data>
 </odoo>

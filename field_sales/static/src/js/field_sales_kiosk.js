@@ -1,15 +1,94 @@
 /** @odoo-module **/
 
-import { Component, useState, useRef, onWillStart, onWillUnmount } from "@odoo/owl";
+import { Component, onMounted, onPatched, onWillStart, onWillUnmount, proxy, signal, useListener, useProps } from "@odoo/owl";
+import { debounce } from "@web/core/utils/timing";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-import { standardActionServiceProps } from "@web/webclient/actions/action_service";
+import { standardActionServiceProps } from "@web/webclient/actions/action_plugin";
 import { user } from "@web/core/user";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { _t } from "@web/core/l10n/translation";
 import { deserializeDateTime, formatDateTime } from "@web/core/l10n/dates";
+
+/**
+ * Steps of the "Log Client Visit" form. Fields are revealed one at a time:
+ * completed steps collapse into compact rows, the active step is expanded
+ * and later steps stay hidden until the current one is done.
+ * Built when the kiosk starts so the texts are translated in the user's language.
+ */
+function getVisitSteps() {
+    return [
+        { key: "client",  label: _t("Client"),         required: true,  question: _t("Who are you visiting?"),           hint: _t("Search an existing contact or type a new company / contact name.") },
+        { key: "contact", label: _t("Contact person"), required: false, question: _t("Who did you meet?"),               hint: _t("The person you spoke with at the client.") },
+        { key: "phone",   label: _t("Phone"),          required: true,  question: _t("Their phone number?"),             hint: _t("Used to find or create the contact and avoid duplicates.") },
+        { key: "email",   label: _t("Email"),          required: false, question: _t("An email address?"),               hint: _t("Optional, but helps de-duplicate contacts.") },
+        { key: "records", label: _t("Odoo records"),   required: false, question: _t("What should Odoo create?"),        hint: _t("Records are tagged with you as the salesperson.") },
+        { key: "notes",   label: _t("Visit notes"),    required: false, question: _t("How did the visit go?"),           hint: _t("Requirements, objections, next steps.") },
+        { key: "photo",   label: _t("Visit photo"),    required: true,  question: _t("Take a photo at the client site"), hint: _t("Verifies your presence at the location.") },
+        { key: "review",  label: _t("Review"),         required: true,  question: _t("Everything look right?"),          hint: _t("Tap any step above to edit it before checking out.") },
+    ];
+}
+
+const PHOTO_MAX_SIDE = 1280;
+
+/** RPCError.message is the generic "Odoo Server Error"; the reason is in data.message */
+function errorText(err) {
+    return (err && err.data && err.data.message) || (err && err.message) || "";
+}
+const PHOTO_JPEG_QUALITY = 0.82;
+
+/**
+ * Downscale an image source (video frame, bitmap or <img>) onto a canvas and
+ * return JPEG base64 (without the data: prefix). Keeps uploads small on 4G.
+ */
+function drawToJpegBase64(canvas, source, width, height) {
+    let w = width, h = height;
+    if (Math.max(w, h) > PHOTO_MAX_SIDE) {
+        const ratio = PHOTO_MAX_SIDE / Math.max(w, h);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
+    }
+    canvas.width = w;
+    canvas.height = h;
+    canvas.getContext("2d").drawImage(source, 0, 0, w, h);
+    return canvas.toDataURL("image/jpeg", PHOTO_JPEG_QUALITY).split(",")[1];
+}
+
+/**
+ * Read a File picked from the device camera / gallery into JPEG base64.
+ * createImageBitmap honours EXIF orientation so phone photos are not rotated.
+ */
+async function fileToJpegBase64(file) {
+    const canvas = document.createElement("canvas");
+    if (window.createImageBitmap) {
+        const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+        try {
+            return drawToJpegBase64(canvas, bitmap, bitmap.width, bitmap.height);
+        } finally {
+            bitmap.close();
+        }
+    }
+    const url = URL.createObjectURL(file);
+    try {
+        const img = await new Promise((resolve, reject) => {
+            const image = new Image();
+            image.onload = () => resolve(image);
+            image.onerror = () => reject(new Error(_t("Unsupported image file.")));
+            image.src = url;
+        });
+        return drawToJpegBase64(canvas, img, img.naturalWidth, img.naturalHeight);
+    } finally {
+        URL.revokeObjectURL(url);
+    }
+}
 
 export class FieldSalesKiosk extends Component {
     static template = "field_sales.FieldSalesKiosk";
-    static props = { ...standardActionServiceProps };
+    props = useProps(standardActionServiceProps);
+
+    get visitSteps() {
+        return this._visitSteps;
+    }
 
     formatCheckInTime(utcString) {
         if (!utcString) return "";
@@ -21,17 +100,29 @@ export class FieldSalesKiosk extends Component {
     }
 
     setup() {
+        this._visitSteps = getVisitSteps();
         this.orm = useService("orm");
         this.notification = useService("notification");
+        this.dialog = useService("dialog");
         this.pingInterval = null;
 
-        this.state = useState({
+        this.state = proxy({
             loading: true,
             session: null,
+            activeVisit: null,
+            partnerMatches: [],
+            partnerSearching: false,
+            selectedPartnerId: false,
+            selectedPartnerDisplayName: "",
+            showPartnerDropdown: false,
+            // Full-screen camera viewfinder (check-in / check-out selfie, visit photo)
             showCamera: false,
-            showVisitModal: false,
+            cameraMode: "",          // "check_in" | "check_out" | "visit"
+            cameraFacing: "user",    // "user" | "environment"
+            cameraStarting: false,
             errorMsg: "",
-            cameraMode: "",
+            keyboardOpen: false,
+            showVisitModal: false,
             // Geolocation cache for check-in
             latitude: null,
             longitude: null,
@@ -39,17 +130,36 @@ export class FieldSalesKiosk extends Component {
             companyName: "",
             contactName: "",
             phone: "",
+            email: "",
             notes: "",
+            createContactBool: false,
+            createLeadBool: false,
             visitPhoto: null,
-            showVisitCamera: false,
+            visitCameraError: "",
             submitting: false,
+            // Progressive step form
+            visitStep: 0,
+            visitMaxStep: 0,
         });
 
-        this.videoRef = useRef("video");
-        this.canvasRef = useRef("canvas");
-        this.visitVideoRef = useRef("visitVideo");
-        this.visitCanvasRef = useRef("visitCanvas");
+        this.rootRef = signal.ref();
+        this.camVideoRef = signal.ref();
+        this.camCanvasRef = signal.ref();
         this.stream = null;
+        this._focusedStep = null;
+        this._draftVisitId = null;
+        this._partnerSearchSeq = 0;
+        this._searchPartnersDebounced = debounce((q) => this._searchPartners(q), 250);
+
+        onPatched(() => this._focusActiveStep());
+        useListener(window, "keydown", (ev) => this._onWindowKeydown(ev));
+        // On phones the on-screen keyboard shrinks the *visual* viewport but not the layout
+        // viewport; size the modal from the visual viewport so the footer stays reachable.
+        if (window.visualViewport) {
+            useListener(window.visualViewport, "resize", () => this._syncViewportHeight());
+            useListener(window.visualViewport, "scroll", () => this._syncViewportHeight());
+            onMounted(() => this._syncViewportHeight());
+        }
 
         onWillStart(async () => {
             await this.checkActiveSession();
@@ -57,8 +167,334 @@ export class FieldSalesKiosk extends Component {
         });
 
         onWillUnmount(() => {
+            this._unmounted = true;
             this.stopBackgroundTracking();
+            this.closeCameraStream(); // leaving the kiosk must switch the camera off
         });
+    }
+
+    // ------------------------------------------------------------------
+    // Progressive step form helpers
+    // ------------------------------------------------------------------
+    get visibleSteps() {
+        return this.visitSteps.slice(0, this.state.visitMaxStep + 1);
+    }
+
+    get activeStep() {
+        return this.visitSteps[this.state.visitStep];
+    }
+
+    get progressPercent() {
+        return Math.round(((this.state.visitStep + 1) / this.visitSteps.length) * 100);
+    }
+
+    stepValue(step) {
+        const s = this.state;
+        switch (step.key) {
+            case "client":  return (s.companyName || "").trim();
+            case "contact": return (s.contactName || "").trim();
+            case "phone":   return (s.phone || "").trim();
+            case "email":   return (s.email || "").trim();
+            case "records": return s.selectedPartnerId || s.createContactBool || s.createLeadBool ? "x" : "";
+            case "notes":   return (s.notes || "").trim();
+            case "photo":   return s.visitPhoto || "";
+            default:        return "x";
+        }
+    }
+
+    stepHasValue(step) {
+        return !!this.stepValue(step);
+    }
+
+    stepSummary(step) {
+        const s = this.state;
+        switch (step.key) {
+            case "client":
+                return s.selectedPartnerId ? _t("%s (linked)", s.companyName) : s.companyName || "";
+            case "records":
+                return this.recordsSummary;
+            case "photo":
+                return s.visitPhoto ? _t("Photo captured") : _t("No photo");
+            case "notes":
+                return s.notes ? s.notes : _t("No notes");
+            default: {
+                const v = this.stepValue(step);
+                return v || _t("Skipped");
+            }
+        }
+    }
+
+    get recordsSummary() {
+        const s = this.state;
+        const parts = [];
+        if (s.selectedPartnerId) {
+            parts.push(_t("Linked contact"));
+        } else if (s.createContactBool) {
+            parts.push(_t("New contact"));
+        }
+        if (s.createLeadBool) {
+            parts.push(_t("CRM lead"));
+        }
+        return parts.length ? parts.join(" + ") : _t("Visit log only");
+    }
+
+    get canProceed() {
+        const step = this.activeStep;
+        if (!step) return false;
+        if (step.key === "email") {
+            const v = (this.state.email || "").trim();
+            return !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        }
+        return step.required ? this.stepHasValue(step) : true;
+    }
+
+    get nextLabel() {
+        const step = this.activeStep;
+        if (!step) return _t("Next");
+        if (!step.required && !this.stepHasValue(step)) {
+            return step.key === "records" ? _t("Continue") : _t("Skip");
+        }
+        return _t("Next");
+    }
+
+    nextStep() {
+        if (!this.canProceed) return;
+        if (this.state.visitStep >= this.visitSteps.length - 1) return;
+        this.state.showPartnerDropdown = false;
+        this.state.visitStep += 1;
+        this.state.visitMaxStep = Math.max(this.state.visitMaxStep, this.state.visitStep);
+    }
+
+    prevStep() {
+        if (this.state.visitStep > 0) {
+            this.state.showPartnerDropdown = false;
+            this.state.visitStep -= 1;
+        }
+    }
+
+    goToStep(index) {
+        if (index >= 0 && index <= this.state.visitMaxStep) {
+            this.state.showPartnerDropdown = false;
+            this.state.visitStep = index;
+        }
+    }
+
+    onStepKeydown(ev) {
+        if (ev.key === "Enter" && this.activeStep && this.activeStep.key !== "review") {
+            ev.preventDefault();
+            this.nextStep();
+        }
+    }
+
+    _focusActiveStep() {
+        if (!this.state.showVisitModal) {
+            this._focusedStep = null;
+            return;
+        }
+        if (this._focusedStep === this.state.visitStep) return;
+        const root = this.rootRef();
+        const panel = root && root.querySelector(".nm-step-active");
+        if (!panel) return;
+        this._focusedStep = this.state.visitStep;
+        const el = panel.querySelector("[data-autofocus]");
+        if (el) {
+            el.focus({ preventScroll: true });
+        }
+        panel.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+
+    _syncViewportHeight() {
+        const root = this.rootRef();
+        const vv = window.visualViewport;
+        if (!root || !vv) return;
+        root.style.setProperty("--kiosk-vh", `${Math.round(vv.height)}px`);
+        root.style.setProperty("--kiosk-vt", `${Math.round(vv.offsetTop)}px`);
+        // iOS keeps the layout viewport as-is while the keyboard is up: detect it from the gap
+        const keyboardOpen = window.innerHeight - vv.height > 140;
+        if (keyboardOpen !== this.state.keyboardOpen) {
+            this.state.keyboardOpen = keyboardOpen;
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Camera viewfinder (shared by selfie verification and visit photo)
+    // ------------------------------------------------------------------
+    get cameraTitle() {
+        switch (this.state.cameraMode) {
+            case "check_in":  return _t("Check-in selfie");
+            case "check_out": return _t("Check-out selfie");
+            default:          return _t("Visit photo");
+        }
+    }
+
+    get cameraHint() {
+        switch (this.state.cameraMode) {
+            case "check_in":  return _t("Take a selfie to start your workday.");
+            case "check_out": return _t("Take a selfie to end your workday.");
+            default:          return _t("Photograph the client site to verify your visit.");
+        }
+    }
+
+    async openCamera(mode) {
+        this.closeCameraStream();
+        this.state.cameraMode = mode;
+        this.state.cameraFacing = mode === "visit" ? "environment" : "user";
+        this.state.errorMsg = "";
+        this.state.showCamera = true;
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            this.state.errorMsg = _t("The in-page camera is not available here (it needs HTTPS). Use your phone camera instead.");
+            return;
+        }
+        await new Promise((r) => setTimeout(r, 150)); // let the <video> render
+        await this._startCameraStream();
+    }
+
+    async _startCameraStream() {
+        this.closeCameraStream();
+        this.state.cameraStarting = true;
+        const facing = this.state.cameraFacing;
+        const attempts = [
+            { video: { facingMode: { exact: facing }, width: { ideal: 1280 }, height: { ideal: 960 } } },
+            { video: { facingMode: facing } },
+            { video: true },
+        ];
+        let stream = null;
+        let lastError = null;
+        for (const constraints of attempts) {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
+                break;
+            } catch (err) {
+                lastError = err;
+            }
+        }
+        this.state.cameraStarting = false;
+        if (!this.state.showCamera || this._unmounted) {
+            // closed while waiting for permission
+            if (stream) stream.getTracks().forEach((t) => t.stop());
+            return;
+        }
+        if (!stream) {
+            this.state.errorMsg = _t("Could not access the camera: %s", lastError ? lastError.message : "");
+            return;
+        }
+        this.stream = stream;
+        const video = this.camVideoRef();
+        if (video) {
+            video.srcObject = stream;
+            try {
+                await video.play();
+            } catch (err) {
+                // some mobile browsers refuse autoplay; the frame still renders on user gesture
+            }
+        }
+    }
+
+    flipCamera() {
+        this.state.cameraFacing = this.state.cameraFacing === "user" ? "environment" : "user";
+        this.state.errorMsg = "";
+        this._startCameraStream();
+    }
+
+    async captureFromCamera() {
+        const video = this.camVideoRef();
+        const canvas = this.camCanvasRef();
+        if (!this.stream || !video || !canvas) {
+            return;
+        }
+        let base64Data;
+        try {
+            base64Data = drawToJpegBase64(canvas, video, video.videoWidth || 640, video.videoHeight || 480);
+        } catch (err) {
+            this.notification.add(_t("Failed to capture photo: %s", err.message), { type: "danger" });
+            return;
+        }
+        await this._usePhoto(base64Data);
+    }
+
+    /** Fallback inside the viewfinder: native camera app / gallery. */
+    async onCameraFile(ev) {
+        const file = ev.target.files && ev.target.files[0];
+        ev.target.value = "";
+        if (!file) return;
+        try {
+            await this._usePhoto(await fileToJpegBase64(file));
+        } catch (err) {
+            this.notification.add(_t("Could not read the photo: %s", err.message), { type: "danger" });
+        }
+    }
+
+    async _usePhoto(base64Data) {
+        const mode = this.state.cameraMode;
+        this.closeCameraStream();
+        this.state.showCamera = false;
+        this.state.cameraMode = "";
+        if (mode === "visit") {
+            this.state.visitPhoto = base64Data;
+            this.state.visitCameraError = "";
+            return;
+        }
+        await this._submitSelfie(mode, base64Data);
+    }
+
+    closeCamera() {
+        const mode = this.state.cameraMode;
+        this.closeCameraStream();
+        this.state.showCamera = false;
+        this.state.cameraMode = "";
+        this.state.errorMsg = "";
+        if (mode !== "visit") {
+            this.state.submitting = false; // selfie cancelled: release the check-in/out button
+        }
+    }
+
+    _onWindowKeydown(ev) {
+        if (ev.key !== "Escape") return;
+        if (this.state.showCamera) {
+            this.closeCamera();
+        } else if (this.state.showVisitModal) {
+            this.closeVisitModal();
+        }
+    }
+
+    partnerInitials(p) {
+        const name = (p.name || p.display_name || "").trim();
+        return name.split(/\s+/).slice(0, 2).map((w) => w[0] || "").join("").toUpperCase() || "?";
+    }
+
+    get filteredPartners() {
+        return this.state.partnerMatches;
+    }
+
+    async _searchPartners(query) {
+        const q = (query || "").trim();
+        const seq = ++this._partnerSearchSeq;
+        if (q.length < 2) {
+            this.state.partnerMatches = [];
+            this.state.partnerSearching = false;
+            return;
+        }
+        this.state.partnerSearching = true;
+        try {
+            const matches = await this.orm.searchRead(
+                "res.partner",
+                ["|", "|", ["name", "ilike", q], ["phone", "ilike", q], ["email", "ilike", q]],
+                ["id", "display_name", "name", "parent_id", "phone", "email", "is_company", "child_ids"],
+                { limit: 8, order: "is_company desc, name asc" }
+            );
+            if (seq === this._partnerSearchSeq) {
+                this.state.partnerMatches = matches;
+            }
+        } catch (err) {
+            this.notification.add(_t("Contact search failed: %s", errorText(err)), { type: "warning" });
+            if (seq === this._partnerSearchSeq) {
+                this.state.partnerMatches = [];
+            }
+        } finally {
+            if (seq === this._partnerSearchSeq) {
+                this.state.partnerSearching = false;
+            }
+        }
     }
 
     async checkActiveSession() {
@@ -67,15 +503,26 @@ export class FieldSalesKiosk extends Component {
             const sessions = await this.orm.searchRead(
                 "field.sales.session",
                 [["user_id", "=", user.userId], ["state", "=", "checked_in"]],
-                ["id", "name", "check_in_time", "total_visits", "productive_visits"]
+                ["id", "name", "check_in_time", "total_visits"]
             );
             if (sessions.length > 0) {
                 this.state.session = sessions[0];
+                const activeVisits = await this.orm.searchRead(
+                    "field.sales.visit",
+                    [["session_id", "=", sessions[0].id], ["state", "=", "in_progress"]],
+                    ["id", "check_in_time", "partner_id", "company_name", "contact_name", "phone", "email"]
+                );
+                if (activeVisits.length > 0) {
+                    this.state.activeVisit = activeVisits[0];
+                } else {
+                    this.state.activeVisit = null;
+                }
             } else {
                 this.state.session = null;
+                this.state.activeVisit = null;
             }
         } catch (err) {
-            this.notification.add("Failed to check active session: " + err.message, { type: "danger" });
+            this.notification.add(_t("Failed to check active session: %s", errorText(err)), { type: "danger" });
         } finally {
             this.state.loading = false;
         }
@@ -84,7 +531,7 @@ export class FieldSalesKiosk extends Component {
     getGPSCoordinates() {
         return new Promise((resolve, reject) => {
             if (!navigator.geolocation) {
-                reject(new Error("GPS/Geolocation is not supported by this browser."));
+                reject(new Error(_t("GPS/Geolocation is not supported by this browser.")));
                 return;
             }
 
@@ -102,13 +549,12 @@ export class FieldSalesKiosk extends Component {
                         accuracy: bestPosition.coords.accuracy,
                     });
                 } else {
-                    reject(new Error("GPS request timed out. Please ensure GPS is enabled and permissions are granted."));
+                    reject(new Error(_t("GPS request timed out. Please ensure GPS is enabled and permissions are granted.")));
                 }
             }, 7000);
 
             watchId = navigator.geolocation.watchPosition(
                 (position) => {
-                    // Filter out stale/cached coordinates (older than 10 seconds)
                     const age = Date.now() - position.timestamp;
                     if (age > 10000) {
                         return;
@@ -133,13 +579,13 @@ export class FieldSalesKiosk extends Component {
                         if (watchId) {
                             navigator.geolocation.clearWatch(watchId);
                         }
-                        let msg = "Unable to retrieve GPS coordinates.";
+                        let msg = _t("Unable to retrieve GPS coordinates.");
                         if (error.code === error.PERMISSION_DENIED) {
-                            msg = "GPS access denied. Location permission is required.";
+                            msg = _t("GPS access denied. Location permission is required.");
                         } else if (error.code === error.POSITION_UNAVAILABLE) {
-                            msg = "GPS location unavailable.";
+                            msg = _t("GPS location unavailable.");
                         } else if (error.code === error.TIMEOUT) {
-                            msg = "GPS request timed out.";
+                            msg = _t("GPS request timed out.");
                         }
                         reject(new Error(msg));
                     }
@@ -155,61 +601,27 @@ export class FieldSalesKiosk extends Component {
 
     async onStartCheckIn() {
         this.state.submitting = true;
-        this.state.errorMsg = "";
         try {
             const coords = await this.getGPSCoordinates();
             this.state.latitude = coords.latitude;
             this.state.longitude = coords.longitude;
-
-            this.state.showCamera = true;
-            this.state.cameraMode = "check_in";
-            setTimeout(async () => {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode: "user" }
-                    });
-                    this.stream = stream;
-                    if (this.videoRef.el) {
-                        this.videoRef.el.srcObject = stream;
-                        this.videoRef.el.play();
-                    }
-                } catch (err) {
-                    this.state.errorMsg = "Could not access front camera: " + err.message;
-                    this.state.submitting = false;
-                }
-            }, 150);
+            await this.openCamera("check_in");
         } catch (err) {
             this.notification.add(err.message, { type: "danger" });
             this.state.submitting = false;
         }
     }
 
-    async capturePhoto() {
-        if (!this.stream || !this.videoRef.el || !this.canvasRef.el) {
-            return;
-        }
+    async _submitSelfie(mode, base64Data) {
         try {
-            const video = this.videoRef.el;
-            const canvas = this.canvasRef.el;
-            canvas.width = video.videoWidth || 640;
-            canvas.height = video.videoHeight || 480;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            const dataUrl = canvas.toDataURL("image/jpeg");
-            const base64Data = dataUrl.split(",")[1];
-
-            this.closeCameraStream();
-            this.state.showCamera = false;
-
-            if (this.state.cameraMode === "check_in") {
+            if (mode === "check_in") {
                 await this.orm.call("field.sales.session", "action_kiosk_check_in", [
                     this.state.latitude,
                     this.state.longitude,
                     base64Data
                 ]);
-                this.notification.add("Successfully checked in for the day!", { type: "success" });
-            } else if (this.state.cameraMode === "check_out") {
+                this.notification.add(_t("Successfully checked in for the day!"), { type: "success" });
+            } else if (mode === "check_out") {
                 await this.orm.call("field.sales.session", "action_kiosk_check_out", [
                     this.state.session.id,
                     this.state.latitude,
@@ -217,23 +629,18 @@ export class FieldSalesKiosk extends Component {
                     base64Data
                 ]);
                 this.state.session = null;
-                this.notification.add("Workday ended. Checked out successfully!", { type: "success" });
+                this.notification.add(_t("Workday ended. Checked out successfully!"), { type: "success" });
             }
 
             await this.checkActiveSession();
         } catch (err) {
-            const actionName = this.state.cameraMode === "check_in" ? "Check-in" : "Check-out";
-            this.notification.add(`${actionName} failed: ` + err.message, { type: "danger" });
+            const message = mode === "check_in"
+                ? _t("Check-in failed: %s", errorText(err))
+                : _t("Check-out failed: %s", errorText(err));
+            this.notification.add(message, { type: "danger" });
         } finally {
             this.state.submitting = false;
-            this.state.cameraMode = "";
         }
-    }
-
-    closeCamera() {
-        this.closeCameraStream();
-        this.state.showCamera = false;
-        this.state.submitting = false;
     }
 
     closeCameraStream() {
@@ -243,73 +650,133 @@ export class FieldSalesKiosk extends Component {
         }
     }
 
+    async onStartClientVisit() {
+        if (!this.state.session) return;
+        this.state.submitting = true;
+        try {
+            const coords = await this.getGPSCoordinates();
+            const res = await this.orm.call("field.sales.session", "action_kiosk_start_visit", [
+                this.state.session.id,
+                coords.latitude,
+                coords.longitude,
+                coords.accuracy,
+            ]);
+            this.state.activeVisit = {
+                id: res.visit_id,
+                check_in_time: res.check_in_time,
+            };
+            this.openVisitModal();
+        } catch (err) {
+            this.notification.add(_t("Failed to start client visit: %s", errorText(err)), { type: "danger" });
+        } finally {
+            this.state.submitting = false;
+        }
+    }
+
     openVisitModal() {
+        const visitId = this.state.activeVisit ? this.state.activeVisit.id : null;
+        if (visitId && this._draftVisitId === visitId) {
+            // Re-opening the form for the same client visit: keep what was typed
+            this._focusedStep = null;
+            this.state.showVisitModal = true;
+            return;
+        }
+        this._draftVisitId = visitId;
+        this.state.partnerMatches = [];
+        this.state.selectedPartnerId = false;
+        this.state.selectedPartnerDisplayName = "";
+        this.state.showPartnerDropdown = false;
         this.state.companyName = "";
         this.state.contactName = "";
         this.state.phone = "";
+        this.state.email = "";
         this.state.notes = "";
+        this.state.createContactBool = false;
+        this.state.createLeadBool = false;
         this.state.visitPhoto = null;
-        this.state.showVisitCamera = false;
+        this.state.visitCameraError = "";
         this.state.visitCheckInTime = new Date().toISOString();
+        this.state.visitStep = 0;
+        this.state.visitMaxStep = 0;
+        this._focusedStep = null;
         this.state.showVisitModal = true;
     }
 
     closeVisitModal() {
-        this.closeCameraStream();
+        this.state.showPartnerDropdown = false;
         this.state.showVisitModal = false;
     }
 
-    async startVisitCamera() {
-        this.state.showVisitCamera = true;
-        this.state.errorMsg = "";
-        setTimeout(async () => {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "user" }
-                });
-                this.stream = stream;
-                if (this.visitVideoRef.el) {
-                    this.visitVideoRef.el.srcObject = stream;
-                    this.visitVideoRef.el.play();
-                }
-            } catch (err) {
-                this.state.errorMsg = "Could not access camera: " + err.message;
-                this.state.showVisitCamera = false;
-                this.notification.add(this.state.errorMsg, { type: "danger" });
-            }
-        }, 150);
+    selectPartner(partner) {
+        this.state.selectedPartnerId = partner.id;
+        this.state.selectedPartnerDisplayName = partner.display_name || partner.name;
+        // v20: is_company requires a VAT; a top-level contact with children is a company too
+        if (partner.is_company || (!partner.parent_id && partner.child_ids && partner.child_ids.length)) {
+            this.state.companyName = partner.name || partner.display_name;
+            this.state.contactName = "";
+        } else if (partner.parent_id) {
+            this.state.companyName = partner.parent_id[1];
+            this.state.contactName = partner.name;
+        } else {
+            this.state.companyName = partner.name;
+            this.state.contactName = partner.name;
+        }
+        this.state.phone = partner.phone || "";
+        this.state.email = partner.email || "";
+        this.state.showPartnerDropdown = false;
+        this.state.createContactBool = false;
     }
 
-    captureVisitPhoto() {
-        if (!this.stream || !this.visitVideoRef.el || !this.visitCanvasRef.el) {
-            return;
-        }
+    selectCreateNewPartner() {
+        this.state.selectedPartnerId = false;
+        this.state.selectedPartnerDisplayName = "";
+        this.state.showPartnerDropdown = false;
+        this.state.createContactBool = true;
+    }
+
+    clearSelectedPartner() {
+        this.state.selectedPartnerId = false;
+        this.state.selectedPartnerDisplayName = "";
+        this.state.companyName = "";
+        this.state.contactName = "";
+        this.state.phone = "";
+        this.state.email = "";
+        this.state.showPartnerDropdown = false;
+    }
+
+    startVisitCamera() {
+        this.state.visitCameraError = "";
+        return this.openCamera("visit");
+    }
+
+    /** "Phone camera" button on the photo step: native camera app / gallery. */
+    async onVisitPhotoFile(ev) {
+        const file = ev.target.files && ev.target.files[0];
+        ev.target.value = "";
+        if (!file) return;
         try {
-            const video = this.visitVideoRef.el;
-            const canvas = this.visitCanvasRef.el;
-            canvas.width = video.videoWidth || 640;
-            canvas.height = video.videoHeight || 480;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            const dataUrl = canvas.toDataURL("image/jpeg");
-            this.state.visitPhoto = dataUrl.split(",")[1];
-
-            this.closeCameraStream();
-            this.state.showVisitCamera = false;
+            this.state.visitPhoto = await fileToJpegBase64(file);
+            this.state.visitCameraError = "";
         } catch (err) {
-            this.notification.add("Failed to capture photo: " + err.message, { type: "danger" });
+            this.notification.add(_t("Could not read the photo: %s", err.message), { type: "danger" });
         }
-    }
-
-    stopVisitCamera() {
-        this.closeCameraStream();
-        this.state.showVisitCamera = false;
     }
 
     // Input handlers
     onCompanyNameInput(ev) {
         this.state.companyName = ev.target.value;
+        this.state.showPartnerDropdown = true;
+        if (this.state.selectedPartnerId) {
+            this.state.selectedPartnerId = false;
+            this.state.selectedPartnerDisplayName = "";
+        }
+        this._searchPartnersDebounced(this.state.companyName);
+    }
+
+    onCompanyNameFocus() {
+        if (this.state.companyName && this.state.companyName.trim().length > 0) {
+            this.state.showPartnerDropdown = true;
+        }
     }
 
     onContactNameInput(ev) {
@@ -320,17 +787,36 @@ export class FieldSalesKiosk extends Component {
         this.state.phone = ev.target.value;
     }
 
+    onEmailInput(ev) {
+        this.state.email = ev.target.value;
+    }
+
     onNotesInput(ev) {
         this.state.notes = ev.target.value;
     }
 
+    onCreateContactChange(ev) {
+        this.state.createContactBool = ev.target.checked;
+    }
+
+    onCreateLeadChange(ev) {
+        this.state.createLeadBool = ev.target.checked;
+    }
+
     async submitVisit() {
-        if (!this.state.companyName || !this.state.phone) {
-            this.notification.add("Company Name and Phone Number are required.", { type: "warning" });
+        if (!this.state.companyName.trim()) {
+            this.notification.add(_t("Company or contact name is required."), { type: "warning" });
+            this.goToStep(0);
+            return;
+        }
+        if (!this.state.phone.trim()) {
+            this.notification.add(_t("Phone number is required."), { type: "warning" });
+            this.goToStep(this.visitSteps.findIndex((s) => s.key === "phone"));
             return;
         }
         if (!this.state.visitPhoto) {
-            this.notification.add("Please capture a photo before saving the client visit.", { type: "warning" });
+            this.notification.add(_t("Please capture a photo before completing the client visit."), { type: "warning" });
+            this.goToStep(this.visitSteps.findIndex((s) => s.key === "photo"));
             return;
         }
         this.state.submitting = true;
@@ -347,51 +833,52 @@ export class FieldSalesKiosk extends Component {
                 coords.longitude,
                 coords.accuracy,
                 this.state.visitPhoto,
-                this.state.visitCheckInTime
+                this.state.visitCheckInTime,
+                this.state.email,
+                this.state.createContactBool,
+                this.state.createLeadBool,
+                this.state.selectedPartnerId || false,
+                this.state.activeVisit ? this.state.activeVisit.id : false,
             ]);
 
             this.state.showVisitModal = false;
+            this.state.activeVisit = null;
+            this._draftVisitId = null;
             await this.checkActiveSession();
-            this.notification.add("Client visit logged successfully!", { type: "success" });
+            this.notification.add(_t("Client visit completed and checked out successfully!"), { type: "success" });
         } catch (err) {
-            this.notification.add("Failed to log visit: " + err.message, { type: "danger" });
+            this.notification.add(_t("Failed to log visit: %s", errorText(err)), { type: "danger" });
         } finally {
             this.state.submitting = false;
         }
     }
 
-    async onCheckOut() {
+    onCheckOut() {
         if (!this.state.session || !this.state.session.total_visits || this.state.session.total_visits <= 0) {
-            this.notification.add("You must log at least one client visit before checking out.", { type: "warning" });
+            this.notification.add(_t("You must log at least one client visit before checking out."), { type: "warning" });
             return;
         }
-        if (!confirm("Are you sure you want to check out and end your workday?")) {
+        if (this.state.activeVisit) {
+            this.notification.add(_t("Please complete your current client visit before checking out."), { type: "warning" });
             return;
         }
+        this.dialog.add(ConfirmationDialog, {
+            title: _t("End your workday?"),
+            body: _t("You will be asked for a check-out selfie and your GPS position will be recorded."),
+            confirmLabel: _t("Check out"),
+            cancelLabel: _t("Stay checked in"),
+            confirm: () => this._doCheckOut(),
+            cancel: () => {}, // without it ConfirmationDialog hides the cancel button
+        });
+    }
+
+    async _doCheckOut() {
         this.state.submitting = true;
-        this.state.errorMsg = "";
         try {
             const coords = await this.getGPSCoordinates();
             this.state.latitude = coords.latitude;
             this.state.longitude = coords.longitude;
-
-            this.state.showCamera = true;
-            this.state.cameraMode = "check_out";
-            setTimeout(async () => {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode: "user" }
-                    });
-                    this.stream = stream;
-                    if (this.videoRef.el) {
-                        this.videoRef.el.srcObject = stream;
-                        this.videoRef.el.play();
-                    }
-                } catch (err) {
-                    this.state.errorMsg = "Could not access front camera: " + err.message;
-                    this.state.submitting = false;
-                }
-            }, 150);
+            await this.openCamera("check_out");
         } catch (err) {
             this.notification.add(err.message, { type: "danger" });
             this.state.submitting = false;
@@ -411,8 +898,8 @@ export class FieldSalesKiosk extends Component {
                         longitude: coords.longitude,
                         log_type: "ping"
                     }]);
-                } catch (err) {
-                    console.warn("Background ping failed:", err.message);
+                } catch {
+                    // best effort: no GPS fix in the background (phone locked, tab hidden); the next ping retries
                 }
             }
         }, 15 * 60 * 1000);

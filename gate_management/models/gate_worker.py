@@ -38,7 +38,8 @@ class GateWorker(models.Model):
 
     _rec_names_search = ['name', 'worker_code', 'mobile', 'employeename', 'employee_phone_number', 'srno']
 
-    _worker_code_uniq = models.Constraint('unique(worker_code)', 'The Worker Code must be unique!')
+    # each site numbers its own workforce: the code is unique within a company
+    _worker_code_uniq = models.Constraint('UNIQUE(worker_code, company_id)', 'The Worker Code must be unique within the company!')
 
     # ------------------------------------------------------------------
     # Display / search
@@ -92,13 +93,41 @@ class GateWorker(models.Model):
         digits = re.sub(r'[^\d+]', '', mobile.strip())
         return digits if digits else mobile
 
+    @api.model
+    def _normalize_phone_vals(self, vals):
+        for key in ('mobile', 'employee_phone_number'):
+            if vals.get(key):
+                vals[key] = self._normalize_mobile(vals[key])
+        return vals
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             self._sync_alias_vals(vals)
-            if vals.get('mobile'):
-                vals['mobile'] = self._normalize_mobile(vals['mobile'])
+            self._normalize_phone_vals(vals)
         return super().create(vals_list)
+
+    def copy_data(self, default=None):
+        """A duplicate gets a free worker code (CODE-COPY, CODE-COPY2, ...) instead of failing on the unique code."""
+        default = dict(default or {})
+        vals_list = super().copy_data(default=default)
+        for worker, vals in zip(self, vals_list):
+            if 'worker_code' not in default:
+                vals['worker_code'] = worker._free_copy_code(vals.get('company_id', worker.company_id.id))
+            vals['srno'] = vals['worker_code']
+            if 'name' not in default:
+                vals['name'] = _("%s (copy)", worker.name)
+                vals['employeename'] = vals['name']
+        return vals_list
+
+    def _free_copy_code(self, company_id):
+        self.ensure_one()
+        base = '%s-COPY' % (self.worker_code or self.srno or 'WORKER')
+        code, n = base, 1
+        while self.with_context(active_test=False).sudo().search_count([('worker_code', '=', code), ('company_id', '=', company_id)]):
+            n += 1
+            code = '%s%d' % (base, n)
+        return code
 
     def write(self, vals):
         pairs = (('srno', 'worker_code'), ('employeename', 'name'), ('employee_phone_number', 'mobile'))
@@ -107,8 +136,7 @@ class GateWorker(models.Model):
                 vals[real] = vals[alias]
             if real in vals and alias not in vals:
                 vals[alias] = vals[real]
-        if vals.get('mobile'):
-            vals['mobile'] = self._normalize_mobile(vals['mobile'])
+        self._normalize_phone_vals(vals)
         return super().write(vals)
 
     # ------------------------------------------------------------------

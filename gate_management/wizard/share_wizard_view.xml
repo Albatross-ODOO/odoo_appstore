@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <form string="Share Invitation">
                 <sheet>
+                    <field name="entry_id" invisible="1"/>
                     <field name="whatsapp_available" invisible="1"/>
                     <div class="alert alert-info" role="alert">Share this link with the visitor: it opens the digital pass with the QR code and entry code.</div>
                     <group>
@@ -13,9 +14,9 @@
                         <field name="mobile" placeholder="e.g. 919876543210" string="WhatsApp Number" invisible="not whatsapp_available"/>
                     </group>
                     <footer>
-                        <button name="action_share_whatsapp" string="Send on WhatsApp" type="object" class="btn-success" icon="fa-whatsapp" invisible="not whatsapp_available"/>
-                        <button name="action_download_pdf" string="Download PDF" type="object" class="btn-info" icon="fa-download"/>
-                        <button name="action_send_email" string="Send Email" type="object" class="btn-primary" icon="fa-envelope"/>
+                        <button name="action_share_whatsapp" string="Send on WhatsApp" type="object" class="btn-success" icon="oi_whatsapp" invisible="not whatsapp_available"/>
+                        <button name="action_download_pdf" string="Download PDF" type="object" class="btn-info" icon="download"/>
+                        <button name="action_send_email" string="Send Email" type="object" class="btn-primary" icon="mail"/>
                         <button string="Close" class="btn-secondary" special="cancel"/>
                     </footer>
                 </sheet>

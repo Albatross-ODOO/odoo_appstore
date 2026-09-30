@@ -1,9 +1,11 @@
 /** @odoo-module */
 
-import { Component, onWillStart, onWillUnmount, useState } from "@odoo/owl";
+import { Component, onWillStart, onWillUnmount, proxy, useProps } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
+import { sprintf } from "@web/core/utils/strings";
+import { standardActionServiceProps } from "@web/webclient/actions/action_plugin";
 import { gateToast, goHome, loadGateFonts, nowHM } from "../utils";
 
 const ACTIONS = {
@@ -16,12 +18,13 @@ const ACTIONS = {
 /** Worker Attendance — Inside / On break / Outside, per-row actions and a common break. */
 export class WorkerKiosk extends Component {
     static template = "gate_management.WorkerKiosk";
-    static props = ["*"];
+    // Owl 3: client-action props are the action service's standard props (static props = ["*"] is ignored)
+    props = useProps({ ...standardActionServiceProps });
 
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
-        this.state = useState({
+        this.state = proxy({
             term: "", tab: "inside", rows: [], counts: { inside: 0, break: 0, outside: 0 },
             loading: true, confirm: false, busy: false, morph: {}, gone: {}, clock: nowHM(),
         });
@@ -94,7 +97,8 @@ export class WorkerKiosk extends Component {
             row.break_since = now;
         }
         this.state.morph[row.id] = true;
-        gateToast(_t(spec.msg, row.name, now));
+        // spec.msg is already a (lazy) translated string: _t() on a non-literal returns it unformatted
+        gateToast(sprintf(String(spec.msg), row.name, now));
         this.state.busy = false;
         await this.refreshCounts();
         clearTimeout(this.moveTimer);
@@ -111,14 +115,14 @@ export class WorkerKiosk extends Component {
     async breakAll() {
         this.state.confirm = false;
         const n = await this.orm.call("gate.worker", "action_break_all", []);
-        gateToast(_t("%s workers on break · %s", n, nowHM()));
+        gateToast(n === 1 ? _t("1 worker on break · %s", nowHM()) : _t("%s workers on break · %s", n, nowHM()));
         this.state.tab = "break";
         await this.load();
     }
 
     async breakOverAll() {
         const n = await this.orm.call("gate.worker", "action_break_over_all", []);
-        gateToast(_t("Break over · %s workers back inside", n));
+        gateToast(n === 1 ? _t("Break over · 1 worker back inside") : _t("Break over · %s workers back inside", n));
         this.state.tab = "inside";
         await this.load();
     }

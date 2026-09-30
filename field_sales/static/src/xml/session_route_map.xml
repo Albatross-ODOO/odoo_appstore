@@ -2,8 +2,9 @@
 <templates xml:space="preserve">
 
     <t t-name="field_sales.SessionRouteMap">
-        <div class="o_field_widget o_session_route_map d-block w-100">
-            <div t-ref="mapContainer" class="route-map-container" style="height: 600px; width: 100%;"/>
+        <div class="o_field_widget o_session_route_map d-block w-100 position-relative">
+            <div t-ref="this.mapContainerRef" class="route-map-container" style="height: 600px; width: 100%;"/>
+            <div t-if="!this.hasGpsPoints" class="o_fs_map_empty">No GPS points recorded yet</div>
         </div>
     </t>
 

@@ -3,36 +3,38 @@
     <t t-name="gate_management.GateCamera">
         <div class="gd-cam-wrap o_gate_camera_widget">
             <!-- captured -->
-            <t t-if="imageUrl and !state.isCameraOpen">
-                <div class="gd-shot"><img t-att-src="imageUrl" alt="Captured photo"/></div>
-                <button t-if="!props.readonly" type="button" class="gd-btn" t-on-click.prevent="retake"><i class="fa fa-camera"/> Retake photo</button>
+            <t t-if="this.imageUrl and !this.state.isCameraOpen">
+                <div class="gd-shot"><img t-att-src="this.imageUrl" alt="Captured photo"/></div>
+                <button t-if="!this.props.readonly" type="button" class="gd-btn" t-on-click.prevent="this.retake"><i class="oi" data-icon="photo_camera"/> Retake photo</button>
             </t>
             <!-- live -->
-            <t t-if="state.isCameraOpen">
-                <div class="gd-view" t-att-class="{ 'gd-mirror': state.facingMode === 'user' }">
-                    <video t-ref="video" autoplay="autoplay" playsinline="playsinline" muted="muted"/>
+            <t t-if="this.state.isCameraOpen">
+                <div class="gd-view" t-att-class="{ 'gd-mirror': this.state.facingMode === 'user' }">
+                    <video t-ref="this.videoRef" autoplay="autoplay" playsinline="playsinline" muted="muted"/>
                     <div class="gd-corner"/>
-                    <span class="gd-cam-tag"><i class="fa fa-video-camera"/> <t t-esc="facingLabel"/></span>
+                    <span class="gd-cam-tag"><i class="oi" data-icon="videocam"/> <t t-out="this.facingLabel"/></span>
                 </div>
                 <div class="gd-spread">
-                    <button type="button" class="gd-btn gd-primary" style="flex:2" t-on-click.prevent="capture" t-att-disabled="state.busy"><i class="fa fa-camera"/> Capture</button>
-                    <button type="button" class="gd-btn" t-on-click.prevent="switchCamera" title="Switch between back and front camera"><i class="fa fa-refresh"/> Flip · <t t-esc="otherFacingLabel"/></button>
-                    <button type="button" class="gd-btn gd-bad gd-icon" t-on-click.prevent="stopCamera" title="Cancel" aria-label="Cancel"><i class="fa fa-times"/></button>
+                    <button type="button" class="gd-btn gd-primary gd-capture" t-on-click.prevent="this.capture" t-att-disabled="this.state.busy"><i class="oi" data-icon="photo_camera"/> Capture</button>
+                    <button type="button" class="gd-btn" t-on-click.prevent="this.switchCamera" title="Switch between back and front camera"><i class="oi" data-icon="refresh"/> Flip · <t t-out="this.otherFacingLabel"/></button>
+                    <button type="button" class="gd-btn gd-bad gd-icon" t-on-click.prevent="this.stopCamera" title="Cancel" aria-label="Cancel"><i class="oi" data-icon="close"/></button>
                 </div>
             </t>
             <!-- idle: pick the camera -->
-            <t t-if="!imageUrl and !state.isCameraOpen">
-                <t t-if="!props.readonly">
+            <t t-if="!this.imageUrl and !this.state.isCameraOpen">
+                <t t-if="!this.props.readonly">
                     <button type="button" class="gd-cam" t-on-click.prevent="() => this.openWith('environment')">
-                        <span class="gd-lens"><i class="fa fa-camera"/></span>
+                        <span class="gd-lens"><i class="oi" data-icon="photo_camera"/></span>
                         <b>Tap to open back camera</b>
                         <span>Best for visitors, vehicles and documents</span>
                     </button>
-                    <button type="button" class="gd-btn gd-sm" t-on-click.prevent="() => this.openWith('user')"><i class="fa fa-user-circle-o"/> Use front camera (selfie)</button>
+                    <button type="button" class="gd-btn gd-sm" t-on-click.prevent="() => this.openWith('user')"><i class="oi" data-icon="account_circle"/> Use front camera (selfie)</button>
+                    <button type="button" class="gd-btn gd-sm gd-upload" t-on-click.prevent="this.pickFile"><i class="oi" data-icon="upload"/> Upload photo</button>
+                    <input type="file" accept="image/*" capture="environment" class="d-none gd-file" t-ref="this.fileRef" t-on-change="this.onFileChange"/>
                 </t>
                 <div t-else="" class="gd-empty">No photo</div>
             </t>
-            <canvas t-ref="canvas" class="d-none"/>
+            <canvas t-ref="this.canvasRef" class="d-none"/>
         </div>
     </t>
 </templates>

@@ -1,13 +1,15 @@
 /** @odoo-module */
 
-import { Component, onWillStart, onWillUnmount, useRef, useState } from "@odoo/owl";
+import { Component, onWillStart, onWillUnmount, proxy, signal, useProps } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
+import { standardActionServiceProps } from "@web/webclient/actions/action_plugin";
 import { goHome, loadGateFonts } from "../utils";
 
 const FILTERS = [
     { key: "all", label: "All" },
     { key: "inside", label: "Inside" },
+    { key: "expected", label: "Expected today" },
     { key: "scheduled", label: "Scheduled" },
     { key: "exited", label: "Exited" },
     { key: "vehicle", label: "Vehicles" },
@@ -17,15 +19,16 @@ const FILTERS = [
 /** Entries — today's gate movements as Gate Desk rows; a row opens the native Odoo form (the audit surface). */
 export class GateEntries extends Component {
     static template = "gate_management.GateEntries";
-    static props = ["*"];
+    // Owl 3: client-action props are the action service's standard props (static props = ["*"] is ignored)
+    props = useProps({ ...standardActionServiceProps });
+    searchRef = signal.ref();
 
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
         this.filters = FILTERS;
-        this.searchRef = useRef("search");
         const ctx = (this.props.action && this.props.action.context) || {};
-        this.state = useState({
+        this.state = proxy({
             filter: FILTERS.some((f) => f.key === ctx.gd_filter) ? ctx.gd_filter : "all",
             term: "", showSearch: false, rows: [], counts: {}, gate: "", loading: true,
         });
@@ -57,7 +60,7 @@ export class GateEntries extends Component {
             this.state.term = "";
             this.load();
         } else if (this.state.showSearch) {
-            setTimeout(() => this.searchRef.el && this.searchRef.el.focus(), 50);
+            setTimeout(() => this.searchRef() && this.searchRef().focus(), 50);
         }
     }
 

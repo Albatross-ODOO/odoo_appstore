@@ -36,11 +36,13 @@ class TestGate(TransactionCase):
         entry = self.env['gate.entry'].create({'entry_type': 'visitor', 'visitor_name': 'Anita Shah', 'mobile_number': '9825041172'})
         with self.assertRaises(ValidationError):
             entry.action_confirm_entry()
-        entry.entry_photo = b'aGVsbG8='
-        action = entry.action_confirm_entry()
+        entry.entry_photo = 'aGVsbG8='
+        action = entry.with_context(gate_kiosk=True).action_confirm_entry()
         self.assertEqual(entry.state, 'entered')
         self.assertTrue(entry.check_in_time)
-        self.assertEqual(action['res_model'], 'gate.entry')  # lands on a fresh walk-in form
+        # lands on a fresh walk-in form, opened in place of the current one (no breadcrumb per visitor)
+        self.assertEqual(action['tag'], 'gate_management.in_place')
+        self.assertEqual(action['params']['action']['res_model'], 'gate.entry')
         entry.action_exit()
         self.assertEqual(entry.state, 'exited')
         self.assertTrue(entry.check_out_time)
@@ -52,9 +54,9 @@ class TestGate(TransactionCase):
 
     def test_duplicate_vehicle_inside_blocked(self):
         Entry = self.env['gate.entry']
-        first = Entry.create({'entry_type': 'vehicle', 'vehicle_number': 'GJ 01 AA 1111', 'entry_photo': b'aGVsbG8='})
+        first = Entry.create({'entry_type': 'vehicle', 'vehicle_number': 'GJ 01 AA 1111', 'entry_photo': 'aGVsbG8='})
         first.action_confirm_entry()
-        second = Entry.create({'entry_type': 'vehicle', 'vehicle_number': 'gj 01 aa 1111', 'entry_photo': b'aGVsbG8='})
+        second = Entry.create({'entry_type': 'vehicle', 'vehicle_number': 'gj 01 aa 1111', 'entry_photo': 'aGVsbG8='})
         with self.assertRaises(ValidationError):
             second.action_confirm_entry()
 
@@ -83,12 +85,12 @@ class TestGate(TransactionCase):
 
         wizard = self.env['gate.verify.otp.wizard'].create({'otp_code': entry.otp})
         result = wizard.action_verify()
-        self.assertEqual(result.get('res_model'), 'gate.verify.otp.wizard')
+        self.assertEqual(result['params']['action']['res_model'], 'gate.verify.otp.wizard')
         self.assertEqual(wizard.state, 'photo')
         self.assertEqual(wizard.entry_id, entry)
         self.assertEqual(entry.state, 'authorized')
         self.assertFalse(wizard.window_expired)
-        wizard.photo = b'aGVsbG8='
+        wizard.photo = 'aGVsbG8='
         wizard.action_confirm_verification()
         self.assertEqual(wizard.state, 'done')
         self.assertEqual(entry.state, 'entered')
@@ -108,14 +110,14 @@ class TestGate(TransactionCase):
 
     def test_cron_auto_exit(self):
         past = fields.Datetime.now() - timedelta(hours=3)
-        entry = self.env['gate.entry'].create({'entry_type': 'visitor', 'visitor_name': 'Late Visitor', 'entry_photo': b'aGVsbG8=', 'scheduled_start': past, 'scheduled_end': past + timedelta(hours=1)})
+        entry = self.env['gate.entry'].create({'entry_type': 'visitor', 'visitor_name': 'Late Visitor', 'entry_photo': 'aGVsbG8=', 'scheduled_start': past, 'scheduled_end': past + timedelta(hours=1)})
         entry.action_confirm_entry()
         self.assertTrue(entry.is_overdue)
         self.env['gate.entry']._cron_auto_exit()
         self.assertEqual(entry.state, 'exited')
 
     def test_gate_desk_data(self):
-        entry = self.env['gate.entry'].create({'entry_type': 'visitor', 'visitor_name': 'Anita Shah', 'entry_photo': b'aGVsbG8='})
+        entry = self.env['gate.entry'].create({'entry_type': 'visitor', 'visitor_name': 'Anita Shah', 'entry_photo': 'aGVsbG8='})
         entry.action_confirm_entry()
         data = self.env['gate.entry'].with_user(self.guard).gate_desk_data()
         self.assertGreaterEqual(data['counts']['inside'], 1)
@@ -124,7 +126,7 @@ class TestGate(TransactionCase):
 
     def test_gate_entries_data(self):
         Entry = self.env['gate.entry']
-        v = Entry.create({'entry_type': 'vehicle', 'vehicle_number': 'GJ 09 QQ 1234', 'entry_photo': b'aGVsbG8='}); v.action_confirm_entry()
+        v = Entry.create({'entry_type': 'vehicle', 'vehicle_number': 'GJ 09 QQ 1234', 'entry_photo': 'aGVsbG8='}); v.action_confirm_entry()
         m = Entry.create({'entry_type': 'material', 'material_name': 'Steel rods', 'material_slip_no': 'CH-77'}); m.action_confirm_entry()
         m.action_exit()
         data = Entry.with_user(self.guard).gate_entries_data('all', '')
@@ -210,7 +212,7 @@ class TestGate(TransactionCase):
         worker.action_start_break()
         worker.action_check_out()
         self.assertEqual(self.worker.current_state, 'outside')
-        entry = self.env['gate.entry'].with_user(self.guard).create({'entry_type': 'visitor', 'visitor_name': 'Guard Made', 'entry_photo': b'aGVsbG8='})
+        entry = self.env['gate.entry'].with_user(self.guard).create({'entry_type': 'visitor', 'visitor_name': 'Guard Made', 'entry_photo': 'aGVsbG8='})
         entry.action_confirm_entry()
         with self.assertRaises(AccessError):
             entry.unlink()
@@ -223,3 +225,15 @@ class TestGate(TransactionCase):
     def test_whatsapp_hidden_without_enterprise_app(self):
         entry = self.env['gate.entry'].create({'entry_type': 'visitor', 'visitor_name': 'X'})
         self.assertEqual(entry.whatsapp_available, 'whatsapp.composer' in self.env)
+
+    def test_duplicate_worker_and_entry(self):
+        copy = self.worker.copy()
+        self.assertEqual(copy.worker_code, 'WRK042-COPY')
+        self.assertEqual(self.worker.copy().worker_code, 'WRK042-COPY2')
+        entry = self.env['gate.entry'].create({'entry_type': 'visitor', 'visitor_name': 'Anita Shah', 'entry_photo': 'aGVsbG8='})
+        entry.action_confirm_entry()
+        entry.action_exit()
+        dup = entry.copy()
+        self.assertEqual(dup.state, 'draft')
+        self.assertFalse(dup.check_in_time or dup.check_out_time or dup.entry_time or dup.exit_time)
+        self.assertNotEqual(dup.otp, entry.otp)

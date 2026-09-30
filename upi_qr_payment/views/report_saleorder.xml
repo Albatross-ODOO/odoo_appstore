@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_upi_qr" inherit_id="sale.report_saleorder_document">
+        <!-- Directly under the totals; `doc` is already the sale order in this template. -->
+        <xpath expr="//div[@name='so_total_summary']" position="after">
+            <t t-call="upi_qr_payment.upi_qr_card"/>
+        </xpath>
+    </template>
+</odoo>

@@ -14,6 +14,7 @@ class TestGateDeskUI(HttpCase):
             'group_ids': [(6, 0, [self.env.ref('base.group_user').id, self.env.ref('gate_management.group_gate_guard').id])],
         })
         self.env['gate.worker'].create({'name': 'Rakesh Patel', 'worker_code': 'TOUR042', 'mobile': '9879022314'})
+        self.env['res.partner'].create({'name': 'Gate Tour Vendor'})  # demo DBs rename 'My Company'
         start = fields.Datetime.now() + timedelta(hours=1)
         entry = self.env['gate.entry'].create({
             'entry_type': 'visitor', 'visitor_name': 'Meera Joshi', 'mobile_number': '9824177390',

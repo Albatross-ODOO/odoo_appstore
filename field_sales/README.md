@@ -1,15 +1,16 @@
 # Field Sales Activity & Tracking
 
 ## Overview
-Field Sales Activity & Tracking is a comprehensive Odoo 18 module designed specifically for field sales representatives and managers. It allows representatives to manage their daily routes by seamlessly checking in and checking out using geolocation and selfies. Managers can easily visualize real-time routes, track durations, and convert activities into direct prospects/leads.
+Field Sales Activity & Tracking is a comprehensive Odoo 20 module designed specifically for field sales representatives and managers. It allows representatives to manage their daily routes by seamlessly checking in and checking out using geolocation and selfies. Managers can easily visualize real-time routes, track durations, and convert activities into direct prospects/leads.
 
 ## Key Features
 *   **Kiosk Mode:** Mobile-friendly kiosk for sales representatives to start and end their sessions.
 *   **Geolocation & Tracking:** Tracks Check-In and Check-Out coordinates with interactive route visualization using Leaflet Maps.
 *   **Selfie Verification:** Ensures the physical presence of representatives during check-in and check-out.
-*   **Client Visit Logging:** Seamlessly capture company and contact details, and automatically create leads within the Odoo Contacts base.
+*   **Client Visit Logging:** A step-by-step form (one field at a time, mobile friendly) captures company, contact, phone, email, notes and a site photo.
+*   **Salesperson Attribution:** Every contact and CRM lead generated from the field is assigned to the salesperson who logged the visit.
 *   **Automated Lead Generation:** Logs all new prospects under a unique 'Field Lead' category for straightforward filtering and marketing follow-ups.
-*   **Performance Metrics & Dashboard:** Track the number of productive visits and durations effortlessly.
+*   **Performance Metrics & Dashboard:** Track the number of visits and durations effortlessly.
 *   **End-of-Day PDF Reports:** Automatically generate comprehensive session reports.
 
 ## Installation
@@ -20,8 +21,8 @@ Field Sales Activity & Tracking is a comprehensive Odoo 18 module designed speci
 ## Configuration
 1. Make sure Google Maps or a compatible Maps tool can read standard coordinates if required for external mapping.
 2. The module automatically configures two groups: 
-   * **Field Sales / User:** Can check-in/out and create client visits.
-   * **Field Sales / Administrator:** Can review all users' logs, route maps, and visit history.
+   * **Field Sales / Representative:** Can check-in/out and create client visits.
+   * **Field Sales / Manager:** Can review all users' logs, route maps, and visit history.
 
 ## Usage
 ### For Sales Representatives:
@@ -38,6 +39,7 @@ Field Sales Activity & Tracking is a comprehensive Odoo 18 module designed speci
 ## Dependencies
 *   `base` (Standard Odoo)
 *   `web` (Standard Odoo)
+*   `crm` (Standard Odoo)
 
 ## Support & Feedback
 For support, bug reporting, or feature requests, please contact Albatross.

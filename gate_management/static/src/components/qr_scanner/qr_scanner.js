@@ -1,6 +1,6 @@
 /** @odoo-module */
 
-import { Component, onWillDestroy, useRef, useState } from "@odoo/owl";
+import { Component, onWillDestroy, proxy, signal, t, useProps } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
@@ -11,19 +11,20 @@ import { loadFacing, saveFacing } from "../camera_widget/camera_widget";
  *  and a text box for handheld barcode scanners. Verifies automatically. */
 export class GateQrScanner extends Component {
     static template = "gate_management.GateQrScanner";
-    static props = {
+    // Owl 3: props through useProps, refs as signal.ref() read with this.videoRef(), state as proxy()
+    props = useProps({
         ...standardFieldProps,
-        verifyMethod: { type: String, optional: true },
-    };
+        verifyMethod: t.string().optional(),
+    });
+    videoRef = signal.ref();
+    canvasRef = signal.ref();
+    wedgeRef = signal.ref();
 
     setup() {
-        this.videoRef = useRef("video");
-        this.canvasRef = useRef("canvas");
-        this.wedgeRef = useRef("wedge");
         this.notification = useService("notification");
         this.action = useService("action");
         this.orm = useService("orm");
-        this.state = useState({ code: "", isScanning: false, busy: false, facingMode: loadFacing("gd_scanner_facing") });
+        this.state = proxy({ code: "", isScanning: false, busy: false, facingMode: loadFacing("gd_scanner_facing") });
         this.stream = null;
         this.scanInterval = null;
         onWillDestroy(() => this.stopScanner());
@@ -103,9 +104,10 @@ export class GateQrScanner extends Component {
                 video: { facingMode: { ideal: this.state.facingMode }, width: { ideal: 640 }, height: { ideal: 480 } },
             });
             await new Promise((resolve) => requestAnimationFrame(resolve));
-            if (this.videoRef.el) {
-                this.videoRef.el.srcObject = this.stream;
-                await this.videoRef.el.play();
+            const video = this.videoRef();
+            if (video) {
+                video.srcObject = this.stream;
+                await video.play();
                 this.startDecodingLoop();
             }
         } catch (err) {
@@ -141,8 +143,8 @@ export class GateQrScanner extends Component {
     startDecodingLoop() {
         const detector = "BarcodeDetector" in window ? new window.BarcodeDetector({ formats: ["qr_code"] }) : null;
         this.scanInterval = setInterval(async () => {
-            const video = this.videoRef.el;
-            const canvas = this.canvasRef.el;
+            const video = this.videoRef();
+            const canvas = this.canvasRef();
             if (!video || !canvas || video.readyState !== video.HAVE_ENOUGH_DATA) {
                 return;
             }

@@ -1,6 +1,6 @@
 {
     'name': 'Gate Management',
-    'version': '19.0.2.0.0',
+    'version': '20.0.2.1.0',
     'summary': 'Gate Desk: visitor, vehicle, material and workforce gate control built for the security guard',
     'description': """
 Gate Desk: gate management for warehouses, plants and offices
@@ -28,11 +28,13 @@ the WhatsApp option appears automatically and sends passes through an approved M
     'category': 'Services/Gate Management',
     'author': 'Albatross',
     'website': 'https://www.odoo.com/apps',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
+    'price': 25.00,
+    'currency': 'EUR',
     'depends': ['base', 'mail', 'web'],
     'data': [
         'security/security_groups.xml',
-        'security/ir.model.access.csv',
+        'security/ir.access.csv',
         'data/ir_sequence_data.xml',
         'data/cron.xml',
         'wizard/verify_otp_view.xml',
@@ -40,8 +42,10 @@ the WhatsApp option appears automatically and sends passes through an approved M
         'views/gate_entry_views.xml',
         'views/gate_worker_views.xml',
         'views/report_gate_pass.xml',
+        'views/report_material_gate_pass.xml',
         'views/invitation_landing_page.xml',
         'views/menus.xml',
+        'views/gate_settings_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

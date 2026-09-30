@@ -1,6 +1,6 @@
 /** @odoo-module */
 
-import { Component } from "@odoo/owl";
+import { Component, useProps } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
@@ -9,7 +9,7 @@ import { goHome, loadGateFonts } from "../utils";
 /** <widget name="gate_home"/> — the Home button on every Gate Desk page. Never saves the form. */
 export class GateHomeButton extends Component {
     static template = "gate_management.GateHomeButton";
-    static props = { ...standardWidgetProps };
+    props = useProps({ ...standardWidgetProps });
 
     setup() {
         this.action = useService("action");

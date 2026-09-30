@@ -1,8 +1,12 @@
 import base64
+import logging
 
 from odoo import http
 from odoo.http import request
+from odoo.http.stream import content_disposition
+from odoo.tools.misc import consteq
 
+_logger = logging.getLogger(__name__)
 
 class GateInvitation(http.Controller):
 
@@ -12,34 +16,51 @@ class GateInvitation(http.Controller):
         except (TypeError, ValueError):
             return None
         entry = request.env['gate.entry'].sudo().browse(entry_id)
-        if not entry.exists() or not entry.access_token or entry.access_token != token:
+        if not entry.exists() or not entry.access_token or not consteq(entry.access_token.encode(), (token or '').encode()):
             return None
-        return entry
+        # the visitor has no Odoo time zone: render the pass in the site's time zone
+        request.update_context(tz=entry._pass_tz_name())
+        return entry.with_context(tz=entry._pass_tz_name())
+
+    def _render_pass_page(self, entry):
+        """The digital pass; a cancelled or used pass only says so (no code, no QR) and answers 410 Gone."""
+        closed = entry._pass_closed_reason()
+        values = {
+            'gate_entry': entry,
+            'closed': closed,
+            'is_material': entry.entry_type == 'material',
+            'download_url': f"{entry._base_url()}/gate/invitation/download?id={entry.id}&token={entry.access_token}&db={request.env.cr.dbname}",
+            'qr_base64': '',
+        }
+        if not closed:
+            png = entry._qr_png(entry.otp) if entry.otp else False
+            values['qr_base64'] = base64.b64encode(png).decode() if png else ''
+        return request.render('gate_management.invitation_landing_page', values, status=410 if closed else 200)
 
     @http.route('/gate/invitation/share', type='http', auth='public', website=False)
     def share_invitation(self, id=None, token=None, **kwargs):
         entry = self._get_entry(id, token)
         if not entry:
-            return request.not_found()
-        download_url = f"{entry._base_url()}/gate/invitation/download?id={entry.id}&token={entry.access_token}&db={request.env.cr.dbname}"
-        png = entry._qr_png(entry.otp) if entry.otp else False
-        return request.render('gate_management.invitation_landing_page', {
-            'gate_entry': entry,
-            'download_url': download_url,
-            'qr_base64': base64.b64encode(png).decode() if png else '',
-        })
+            raise request.not_found()
+        return self._render_pass_page(entry)
 
     @http.route('/gate/invitation/download', type='http', auth='public', website=False)
     def download_invitation(self, id=None, token=None, **kwargs):
         entry = self._get_entry(id, token)
         if not entry:
-            return request.not_found()
+            raise request.not_found()
+        if entry._pass_closed_reason():
+            return self._render_pass_page(entry)
         try:
-            pdf_content, _ = request.env['ir.actions.report'].sudo()._render_qweb_pdf('gate_management.report_gate_invitation_template', [entry.id])
-        except Exception as e:
-            return request.make_response(f"Error creating PDF: {e}", headers=[('Content-Type', 'text/plain')])
+            report_xmlid = entry._pass_report_xmlid()
+            pdf_content, _ = request.env['ir.actions.report'].sudo().with_context(tz=entry.env.context.get('tz'))._render_qweb_pdf(report_xmlid, [entry.id])
+        except Exception:
+            # details go to the server log, not to the anonymous visitor
+            _logger.exception("Gate pass PDF could not be generated for %s", entry)
+            return request.make_response("The gate pass PDF could not be generated. Please contact the site.",
+                                         headers=[('Content-Type', 'text/plain')], status=500)
         return request.make_response(pdf_content, headers=[
             ('Content-Type', 'application/pdf'),
             ('Content-Length', len(pdf_content)),
-            ('Content-Disposition', f'inline; filename="Invitation-{entry.name}.pdf"'),
+            ('Content-Disposition', content_disposition('%s-%s.pdf' % (entry.entry_type == 'material' and 'GatePass' or 'Invitation', (entry.gate_pass_no or entry.name).replace('/', '-')), disposition_type='inline')),
         ])

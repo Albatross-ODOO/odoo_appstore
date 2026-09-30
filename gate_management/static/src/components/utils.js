@@ -1,5 +1,7 @@
 /** @odoo-module */
 
+import { registry } from "@web/core/registry";
+
 const FONT_URL = "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap";
 
 /** Load the Gate Desk typefaces once; silently falls back to system fonts when offline. */
@@ -28,7 +30,7 @@ export function gateToast(message) {
         el = document.createElement("div");
         el.id = "gd-toast";
         el.className = "gd-toast";
-        el.innerHTML = '<i class="fa fa-check"></i><span></span>';
+        el.innerHTML = '<i class="oi" data-icon="check"></i><span></span>';
         document.body.appendChild(el);
     }
     el.querySelector("span").textContent = message;
@@ -40,3 +42,12 @@ export function gateToast(message) {
 export function nowHM() {
     return new Date().toTimeString().slice(0, 5);
 }
+
+/**
+ * Server-side kiosk steps (next walk-in, verify steps, schedule another) return this client action:
+ * the next page replaces the current one, so the breadcrumbs do not grow with every visitor.
+ */
+registry.category("actions").add("gate_management.in_place", (env, action, options) => {
+    options.stackPosition = "replaceCurrentAction";
+    return action.params.action;
+});

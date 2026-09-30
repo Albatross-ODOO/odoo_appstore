@@ -11,6 +11,7 @@
     <menuitem id="menu_field_sales_root"
               name="Field Sales"
               web_icon="field_sales,static/description/icon.png"
+              groups="field_sales.group_salesperson"
               sequence="25"/>
 
     <!-- Submenus -->
