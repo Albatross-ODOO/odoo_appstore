@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL). -->
+<odoo>
+    <!-- This is the user that will be used to run the demo app -->
+    <record
+        id="my_demo_app_user"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">My Demo Endpoint User</field>
+        <field name="login">my_demo_app_user</field>
+        <field name="groups_id" eval="[Command.set([])]" />
+    </record>
+
+    <!-- This is the group that will be used to run the demo app
+  This group will only depend on the "group_fastapi_endpoint_runner" group
+  that provides the minimal access rights to retrieve the user running the
+  endpoint handlers and performs authentication.
+  -->
+    <record id="my_demo_app_group" model="res.groups">
+        <field name="name">My Demo Endpoint Group</field>
+        <field name="users" eval="[Command.link(ref('my_demo_app_user'))]" />
+        <field
+            name="implied_ids"
+            eval="[Command.link(ref('group_fastapi_endpoint_runner'))]"
+        />
+    </record>
+
+    <!-- This is the endpoint that will be used to run the demo app
+  This endpoint will be registered on the "/fastapi_demo" path
+  -->
+
+    <record model="fastapi.endpoint" id="fastapi_endpoint_demo">
+        <field name="name">FastAPI Demo Endpoint</field>
+        <field
+            name="description"
+        ><![CDATA[
+# FastAPI demo
+
+This endpoint comes from the demo data of the `fast_api` module. It was made by
+inheriting `fastapi.endpoint`, adding a value to the `app` selection field and
+implementing `_get_fastapi_routers`. Sign in with your Odoo login and password
+(HTTP Basic) to try the authenticated routes.
+]]></field>
+        <field name="app">demo</field>
+        <field name="root_path">/fastapi_demo</field>
+        <field name="demo_auth_method">http_basic</field>
+        <field name="user_id" ref="my_demo_app_user" />
+    </record>
+
+    <record id="fastapi_endpoint_multislash_demo" model="fastapi.endpoint">
+        <field name="name">FastAPI Multi-Slash Demo Endpoint</field>
+        <field name="description">The same demo app, mounted on a root path with several segments.</field>
+        <field name="app">demo</field>
+        <field name="root_path">/fastapi/demo-multi</field>
+        <field name="demo_auth_method">http_basic</field>
+        <field name="user_id" ref="my_demo_app_user" />
+    </record>
+
+    <!-- Publish both demo endpoints so they answer right after install. -->
+    <function
+        model="fastapi.endpoint"
+        name="action_sync_registry"
+        eval="[[ref('fastapi_endpoint_demo'), ref('fastapi_endpoint_multislash_demo')]]"
+    />
+</odoo>

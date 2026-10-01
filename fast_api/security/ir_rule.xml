@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL). -->
+<odoo>
+    <!-- The user running an endpoint only sees its own user record. -->
+    <record id="res_user_fastapi_running_user_rule" model="ir.rule">
+        <field name="name">FastAPI: running user sees itself</field>
+        <field name="model_id" ref="base.model_res_users" />
+        <field name="domain_force">[('id', '=', user.id)]</field>
+        <field name="groups" eval="[Command.link(ref('group_fastapi_endpoint_runner'))]" />
+    </record>
+
+    <!-- ... its own partner and the partner authenticated by the API. -->
+    <record id="res_partner_fastapi_running_user_rule" model="ir.rule">
+        <field name="name">FastAPI: running user sees its partner and the authenticated one</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="domain_force">['|', ('user_ids', '=', user.id), ('id', '=', authenticated_partner_id)]</field>
+        <field name="groups" eval="[Command.link(ref('group_fastapi_endpoint_runner'))]" />
+    </record>
+
+    <!-- ... and only the endpoints it runs. -->
+    <record id="fastapi_endpoint_fastapi_running_user_rule" model="ir.rule">
+        <field name="name">FastAPI: running user sees its endpoints</field>
+        <field name="model_id" ref="model_fastapi_endpoint" />
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="groups" eval="[Command.link(ref('group_fastapi_endpoint_runner'))]" />
+    </record>
+</odoo>
