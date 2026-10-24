@@ -11,3 +11,4 @@ from . import test_stock_summary
 from . import test_purchase_summary
 from . import test_mrp_summary
 from . import test_task_visit
+from . import test_lock

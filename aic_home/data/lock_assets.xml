@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sold with a look: while no look is installed this rule takes Home and Focus out of the web client
+         (aic_theme switches it: ir_asset.py); the Home menu and landing page follow (ir_ui_menu.py, ir_http.py). -->
+    <record id="lock_assets_backend" model="ir.asset">
+        <field name="name">aic_lock: Home and Focus need a look (web client)</field>
+        <field name="bundle">web.assets_backend</field>
+        <field name="directive">remove</field>
+        <field name="path">aic_home/static/src/**/*</field>
+        <field name="sequence">99</field>
+    </record>
+</odoo>

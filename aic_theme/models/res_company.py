@@ -174,6 +174,12 @@ class ResCompany(models.Model):
         return {"enabled": enabled, "skin": self._aic_effective_skin() or "" if enabled else "",
                 "css": self.aic_palette_for("light") if enabled else ""}
 
+    @api.model
+    def _aic_look_installed(self):
+        """True when at least one look (a skin module: EOD, ...) is installed. The shared modules only switch on
+        with a look: see ir_asset.py (their web client files) and aic_home (its menu and landing page)."""
+        return bool(self._fields["aic_skin"].selection)
+
     def _aic_effective_skin(self):
         """The skin to render for this company: its own choice when that skin is installed, else the
         last skin installed (aic_theme.default_skin), else any installed skin; False when none is."""

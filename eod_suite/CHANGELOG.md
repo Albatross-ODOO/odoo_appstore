@@ -3,6 +3,13 @@
 Versions are per module: theme `web_theme_eod`, engine `aic_theme`, workspace `aic_workspace`,
 Home `aic_home`, WhatsApp `aic_send`, bundle `eod_suite`.
 
+## One purchase (2026-10-24): web_theme_eod 19.0.3.1.0, eod_suite 19.0.2.1.0, aic_theme 19.0.1.3.0, aic_workspace 19.0.1.1.0, aic_home 19.0.1.2.0
+- EOD - Backend Theme is the one module to buy and install: it now requires the engine, Workspace, Home and Focus
+  and Share on WhatsApp, and EOD Suite installs itself with it. One purchase, one install, everything set up.
+- Workspace and Home and Focus are sold with a look: without one installed they add nothing to the web client and
+  the Home menu and landing page stay hidden. They switch on by themselves when a look is installed, and off again
+  when it is removed. Share on WhatsApp keeps working on its own.
+
 ## Glass is now EOD (2026-10-16): web_theme_eod 19.0.3.0.0, eod_suite 19.0.2.0.0
 - The look and the suite have a new name: EOD, for End Of Day. Modules `web_theme_glass` -> `web_theme_eod`,
   `glass_suite` -> `eod_suite`; Settings > Backend theme > Look shows "EOD". Nothing changes on screen.
