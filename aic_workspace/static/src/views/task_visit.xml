@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="aic_workspace.TaskVisit">
+        <section t-if="state.visit" class="o_aic_visit" aria-label="Visit">
+            <div class="o_aic_visit_main">
+                <b class="o_aic_visit_who" t-out="state.visit.customer"/>
+                <span t-if="state.visit.address" class="o_aic_visit_where" t-out="state.visit.address"/>
+                <span class="o_aic_visit_meta">
+                    <t t-if="deadline"><span t-att-class="{ o_aic_visit_late: late }" t-out="deadline"/></t>
+                    <t t-if="subtasks"><span t-out="subtasks"/></t>
+                </span>
+            </div>
+            <div class="o_aic_visit_keys">
+                <a t-if="state.visit.tel" class="btn btn-secondary" t-att-href="state.visit.tel"><i class="fa fa-phone" aria-hidden="true"/> Call</a>
+                <a t-if="state.visit.map" class="btn btn-secondary" t-att-href="state.visit.map" target="_blank" rel="noopener noreferrer"><i class="fa fa-map-o" aria-hidden="true"/> Directions</a>
+            </div>
+        </section>
+    </t>
+</templates>

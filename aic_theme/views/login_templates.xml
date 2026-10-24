@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sign-in, sign-up and password reset (web.login_layout) in the Core look while it is on: the scope
+         classes on <body> and the company's colours; static/src/scss/login.scss does the rest.
+         Odoo 19 sets the body class with t-sets inside the frontend_layout call, and Enterprise appends its
+         own (o_home_menu_background) at the end: this view runs after it (priority) and adds to the class.
+         With Website installed, website.login_layout (priority 20) has already replaced that call with a bare
+         website.layout call: match either, and add the class inside the call (its last child), or the view does
+         not install. -->
+    <template id="login_layout_aic" inherit_id="web.login_layout" name="Core sign-in pages" priority="99">
+        <xpath expr="//t[@t-call='web.frontend_layout' or @t-call='website.layout']" position="before">
+            <t t-set="aic_login" t-value="res_company.sudo().aic_login_theme()"/>
+            <t t-set="head">
+                <t t-out="head"/>
+                <style t-if="aic_login['css']" id="o_aic_palette" t-out="aic_login['css']"/>
+            </t>
+        </xpath>
+        <xpath expr="//t[@t-call='web.frontend_layout' or @t-call='website.layout']" position="inside">
+            <t t-set="body_classname" t-value="(body_classname or '') + ((' o_aic_theme o_aic_login o_aic_skin_' + aic_login['skin']) if aic_login['enabled'] else '')"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,26 @@
+// Workspace on Odoo 19: the Material Symbols names of the 20.0 code, drawn with Font Awesome 4.7.
+// Odoo 20 draws `<i class="oi" data-icon="name"/>` with Material Symbols ligatures; Odoo 19 has no Material
+// Symbols and never uses `data-icon`, so every Core icon (static or chosen at run time) maps here, and the
+// templates stay the same as on 20.0.
+$aic-icons: (
+    account_circle: "\f2bd", add: "\f067", add_circle: "\f055", anchor: "\f13d", apps: "\f00a",
+    arrow_back: "\f060", arrow_forward: "\f061", bar_chart: "\f080", build: "\f0ad", calendar_add_on: "\f271",
+    calendar_today: "\f073", chat_bubble: "\f232", check: "\f00c", chevron_left: "\f053", chevron_right: "\f054",
+    close: "\f00d", close_fullscreen: "\f066", description: "\f15c", expand_content: "\f065", folder: "\f07b",
+    format_list_bulleted: "\f0ca", forum: "\f086", grid_view: "\f00a", group: "\f0c0", height: "\f07d",
+    home: "\f015", inventory_2: "\f187", keyboard_arrow_down: "\f107", keyboard_arrow_up: "\f106",
+    local_shipping: "\f0d1", login: "\f090", menu: "\f0c9", open_in_new: "\f08e", phone: "\f095", public: "\f0ac",
+    push_pin: "\f08d", remove: "\f068", remove_circle: "\f056", schedule: "\f017", sell: "\f02b", settings: "\f013",
+    speed: "\f0e4", star: "\f005", task_alt: "\f046", tune: "\f1de", view_column: "\f0db",
+    radio_button_unchecked: "\f10c",
+);
+.oi[data-icon] {
+    font-family: 'FontAwesome' !important;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+@each $name, $glyph in $aic-icons {
+    .oi[data-icon="#{$name}"]::before { content: $glyph; }
+}

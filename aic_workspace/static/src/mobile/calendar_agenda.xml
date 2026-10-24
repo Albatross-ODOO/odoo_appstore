@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="aic_workspace.CalendarController.agenda" t-inherit="web.CalendarController" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_calendar_header')]" position="inside">
+            <button t-if="env.isSmall and model.scale !== 'year'" type="button"
+                    class="btn btn-sm btn-light o_aic_agenda_toggle order-2" t-on-click="() => this.aicToggleAgenda()"
+                    t-att-aria-pressed="aicAgendaOn ? 'true' : 'false'">
+                <t t-if="aicAgendaOn">Grid</t><t t-else="">Agenda</t>
+            </button>
+        </xpath>
+        <xpath expr="//t[@t-component='props.Renderer']" position="attributes">
+            <attribute name="t-if">showCalendar and !aicAgendaOn</attribute>
+        </xpath>
+        <xpath expr="//t[@t-component='props.Renderer']" position="before">
+            <div t-if="showCalendar and aicAgendaOn" class="o_aic_agenda" role="list">
+                <t t-set="aicDays" t-value="aicAgendaDays"/>
+                <p t-if="!aicDays.length" class="o_aic_agenda_empty">Nothing planned in this period.</p>
+                <section t-foreach="aicDays" t-as="day" t-key="day.key" class="o_aic_agenda_day" t-att-class="{ o_today: day.isToday }">
+                    <h6 class="o_aic_agenda_date"><t t-out="day.label"/><span t-if="day.isToday" class="o_aic_agenda_today">Today</span></h6>
+                    <button t-foreach="day.items" t-as="it" t-key="it.id" type="button" role="listitem"
+                            class="o_aic_agenda_item" t-att-class="'o_calendar_color_' + (it.color or 0)"
+                            t-on-click="() => this.aicOpenAgendaItem(it)">
+                        <span class="o_aic_agenda_time" t-out="it.time"/>
+                        <span class="o_aic_agenda_title" t-out="it.title"/>
+                    </button>
+                </section>
+            </div>
+        </xpath>
+    </t>
+</templates>

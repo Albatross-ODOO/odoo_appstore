@@ -1,0 +1,44 @@
+// Workspace — swipe actions on phone cards (design M2): the card slides left, the keys sit just
+// past its right edge and come into view with it.
+@media (max-width: 767.98px) {
+    .o_kanban_renderer .o_kanban_record {
+        touch-action: pan-y;                     // the browser keeps vertical scrolling, we get sideways moves
+        transition: transform .22s var(--nm-ease-enter, ease-out);
+        &.o_aic_swiping { transition: none; }
+        &:has(> .o_aic_swipe_tray) { z-index: 3; }
+    }
+    .o_kanban_renderer .o_kanban_group, .o_kanban_renderer { overflow-x: clip; }
+    .o_aic_swipe_tray {
+        position: absolute; top: 0; bottom: 0; left: calc(100% + 8px);
+        display: flex; border-radius: var(--nm-radius, 18px); overflow: hidden;
+        box-shadow: var(--nm-raised, none);
+    }
+    .o_aic_swipe_key {
+        width: 72px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+        border: 0; padding: 0; font-size: 12px; font-weight: 800; text-decoration: none !important;
+        .oi { display: inline-block; width: 24px; height: 24px; font-size: 22px; line-height: 24px; text-align: center; }
+        &.o_tone_plum { background: var(--nm-plum, #2a1633); color: #fff !important; }
+        &.o_tone_plum-soft { background: var(--nm-plum-muted, #d9cbe3); color: #2a1633 !important; }   // light in both schemes
+        &.o_tone_well { background: var(--nm-well-bg, #f6f5f8); color: var(--nm-ink, #2a1633) !important; }
+        &.o_tone_brand { background: var(--nm-brand, #ff6a2b); color: var(--nm-brand-contrast, #1e1410) !important; }
+        &:focus-visible { outline: 2px solid var(--nm-action, #c2410c); outline-offset: -4px; }
+    }
+}
+@media (max-width: 767.98px) {
+    // list rows: same keys; the row (a table row) slides, the tray is a cell taken out of the table layout
+    .o_list_renderer {
+        overflow-x: clip;
+        .o_data_row { position: relative; touch-action: pan-y; transition: transform .22s var(--nm-ease-enter, ease-out), box-shadow .15s !important;
+            &.o_aic_swiping { transition: none !important; } }
+    }
+    // the theme draws phone list rows as cards and makes every cell a block: the tray must win that
+    body.o_aic_theme .o_view_controller.o_list_view .o_list_table tbody tr > td.o_aic_row_tray {
+        display: flex !important; position: absolute !important; top: 0; bottom: 0; left: calc(100% + 8px);
+        width: auto !important; height: auto !important; padding: 0 !important; margin: 0 !important; border: 0 !important;
+        background: transparent !important;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .o_list_renderer .o_data_row { transition: none; }
+    .o_kanban_renderer .o_kanban_record { transition: none; }
+}

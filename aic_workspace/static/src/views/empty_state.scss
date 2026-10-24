@@ -1,0 +1,18 @@
+// "Nothing yet": one card — a sentence, a muted line, one action (empty_state.js)
+.o_aic_theme .o_view_nocontent .o_nocontent_help {
+    max-width: #{"min(460px, calc(100vw - 32px))"}; padding: 24px 28px; border-radius: var(--nm-radius-lg, 16px);
+    background: var(--nm-surface-high); box-shadow: var(--nm-raised, 0 4px 16px rgba(0, 0, 0, .1)); color: var(--nm-text-muted);
+    pointer-events: auto;
+    // no illustration: the first paragraph (whatever its illustration class) is the headline
+    > p:first-child, > [class*="o_view_nocontent_"] {
+        margin: 0 0 6px; font-size: 18px; font-weight: 600; line-height: 1.35; color: var(--nm-text) !important;
+        &::before, &::after { display: none !important; }
+    }
+    > p:not(:first-child) { margin: 0 0 4px; font-size: 14px; line-height: 1.5; }
+    // further help paragraphs (some apps write three or four) stay available but folded to one line each
+    > p:nth-child(n + 3) { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+    .o_aic_empty_new { margin-top: 14px; }
+}
+// no New button in this view (a report, a read-only list, a dialog): no key either
+.o_view_controller:not(:has(.o_list_button_add, .o-kanban-button-new)) .o_aic_empty_new,
+.o_view_nocontent .o_aic_empty_new:only-child { display: none; }

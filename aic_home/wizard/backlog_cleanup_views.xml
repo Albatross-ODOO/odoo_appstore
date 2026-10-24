@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="aic_backlog_cleanup_view_form" model="ir.ui.view">
+        <field name="name">aic.backlog.cleanup.form</field>
+        <field name="model">aic.backlog.cleanup</field>
+        <field name="arch" type="xml">
+            <form string="Clean up the backlog">
+                <p class="text-muted">
+                    Old records that will never be finished make every count on Home look worse than it is.
+                    Pick what to clean up, check the list, then confirm.
+                </p>
+                <group>
+                    <group>
+                        <field name="kind" widget="radio"/>
+                        <field name="older_than_days"/>
+                    </group>
+                    <group>
+                        <field name="operation" widget="radio" invisible="kind == 'quotations'"/>
+                        <field name="new_date" invisible="kind == 'quotations' or operation != 'reschedule'"
+                               required="kind != 'quotations' and operation == 'reschedule'"/>
+                    </group>
+                </group>
+                <field name="match_count" invisible="1"/>
+                <field name="preview_html" nolabel="1"/>
+                <div invisible="not match_count">
+                    <field name="confirm"/>
+                    <label for="confirm"/>
+                </div>
+                <footer>
+                    <button name="action_apply" type="object" string="Apply" class="btn-primary"
+                            invisible="not match_count" data-hotkey="q"/>
+                    <button name="action_open_list" type="object" string="Review the list first"
+                            invisible="not match_count"/>
+                    <button string="Close" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_aic_backlog_cleanup" model="ir.actions.act_window">
+        <field name="name">Clean up the backlog</field>
+        <field name="res_model">aic.backlog.cleanup</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_control_panel_main')]" position="after">
+            <div t-if="this.aicFavorites.length" class="o_aic_fav_chips d-print-none" role="group" aria-label="Saved searches">
+                <t t-foreach="this.aicFavorites" t-as="fav" t-key="fav.id">
+                    <button type="button" class="o_aic_fav_chip" t-att-class="{ o_active: fav.isActive }"
+                            t-att-aria-pressed="fav.isActive ? 'true' : 'false'" t-att-title="fav.description"
+                            t-on-click="() => this.aicToggleFavorite(fav)">
+                        <i class="oi" data-icon="star" aria-hidden="true"/>
+                        <span t-out="fav.description"/>
+                    </button>
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>

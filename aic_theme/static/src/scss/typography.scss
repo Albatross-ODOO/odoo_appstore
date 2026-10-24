@@ -1,0 +1,86 @@
+// =============================================================================
+// Core — typography (v4, 2026-10-08)
+//
+// Two typefaces, shipped with the module (both SIL OFL, licences in static/src/fonts/), so the
+// backend renders the same on every platform and makes no outside request:
+//   * Plus Jakarta Sans (variable 200–800) for the interface and all running text;
+//   * Bricolage Grotesque (variable, optical size 12–96, weight 200–800, width fixed at 100)
+//     for big titles only: record titles, page headings.
+// One scale of seven sizes (11 · 12 · 13 · 14 · 16 · 20 · 28) and three weights (400 · 500 · 600)
+// for the interface; titles may go to 800. Phones read at 15 px with 16 px inputs (iOS zooms
+// into anything smaller).
+// =============================================================================
+
+@font-face {
+    font-family: "Plus Jakarta Sans";
+    src: url("/aic_theme/static/src/fonts/PlusJakartaSans-Variable.woff2") format("woff2");
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Plus Jakarta Sans";
+    src: url("/aic_theme/static/src/fonts/PlusJakartaSans-Variable-Italic.woff2") format("woff2");
+    font-weight: 200 800;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Bricolage Grotesque";
+    src: url("/aic_theme/static/src/fonts/BricolageGrotesque-Variable.woff2") format("woff2");
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+body.o_aic_theme {
+    font-family: var(--aic-font);
+    font-size: 14px;
+    --font-sans-serif: var(--aic-font);           // Bootstrap 5.3 body-font variables (Odoo uses an empty prefix)
+    --body-font-family: var(--aic-font);
+}
+// Figures line up in columns (amounts, quantities, totals)
+.o_aic_theme :is(.o_list_number, .o_field_monetary, .o_field_float, .o_field_integer, .oe_subtotal_footer, .o_kanban_counter, .o_pager_value, .o_stat_value) {
+    font-variant-numeric: tabular-nums;
+}
+
+.o_aic_theme {
+    // ---- weights: three, no more (Bootstrap's .fw-bold is !important) --------------------
+    :is(h1, h2, h3, h4, h5, h6, strong, b, .fw-bold, .fw-bolder, .o_aic_m_sheet_head, .o_aic_crumb_name, .o_aic_pane_name) { font-weight: 600 !important; }
+    .oe_title h1, .oe_title h1 .o_input, .o_form_sheet h1 > .o_task_name, .o_form_sheet h1 > .o_task_name .o_input { font-family: var(--aic-font-display); font-size: 30px; font-weight: 700 !important; letter-spacing: -.02em; }   // titles: the display face, bolder than the interface's 600 cap
+    // a secondary field the form puts in a <small> inside the title (a revision, a reference): body size, not a
+    // second 30px headline (v4.41)
+    .oe_title h1 small, .oe_title h1 small .o_input, .o_form_sheet h1.o_outlined small .o_input { font-family: inherit; font-size: 15px; font-weight: 500 !important; letter-spacing: 0; }
+    // v4: titles carry the plum ink (a company palette re-points --nm-ink)
+    .oe_title h1, .oe_title h1 .o_input, .o_form_sheet h1 > .o_task_name .o_input, .o_breadcrumb .active, .o_last_breadcrumb_item, .o_form_view h1, .o_form_view h2 { color: var(--nm-ink); }
+    h2, .h2 { font-size: 20px; }
+    h3, .h3, h4, .h4 { font-size: 16px; }
+
+    // ---- reading text --------------------------------------------------------------------
+    .o_form_label { font-size: 13px; font-weight: 500; }
+    .o_form_sheet, .o_kanban_record, .o-mail-Message, .o_setting_box { line-height: 1.45; }
+    .o_list_table thead th { font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }   // column headers only (4.3: group names keep their case)
+
+    // ---- micro labels: sentence case, 12–13 px ------------------------------------------
+    .o_horizontal_separator, .dropdown-header, .o_search_panel .o_search_panel_section_header, .o_aic_pane .o_aic_pane_label,
+    .o_aic_crumb_head, .o_aic_fly_title, .o_calendar_widget .fc-col-header-cell, .o_calendar_widget .fc-day-header {
+        text-transform: none !important; letter-spacing: 0 !important; font-size: 13px !important; font-weight: 600 !important;
+    }
+
+    // ---- figures line up ---------------------------------------------------------------
+    .o_field_date, .o_field_datetime, .o_pager_counter, .o_kanban_counter_side, .o_stat_value { font-variant-numeric: tabular-nums; }
+
+    // ---- phone: 15 px body, 16 px inputs ------------------------------------------------
+    @media (max-width: 767.98px) {
+        &, &.o_web_client { font-size: 15px; }
+        .o_input, .form-select, .form-control, .o_field_widget input, textarea.o_input { font-size: 16px; }
+        .o_form_view .o_form_label { font-size: 13px; }
+        .o_kanban_record { font-size: 15px; }
+        .o_kanban_record :is(strong, .o_kanban_record_title, .fw-bold, .fw-bolder) { font-size: 16px; font-weight: 600; }
+        .o_navbar_breadcrumbs .o_last_breadcrumb_item, .o_fallback_breadcrumbs .o_last_breadcrumb_item, .o_main_navbar .o_menu_brand { font-size: 17px; font-weight: 600; }
+        td.o_data_cell[data-aic-label]::before { font-size: 11px !important; text-transform: none !important; letter-spacing: 0 !important; font-weight: 500 !important; }
+        tr.o_group_header .o_group_name { text-transform: none; letter-spacing: 0; font-size: 14px; }
+        .o_aic_m_tab { font-size: 11px !important; font-weight: 500 !important; letter-spacing: 0; }
+        .o_aic_m_tab.o_active { font-weight: 600 !important; }
+    }
+}

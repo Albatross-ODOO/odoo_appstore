@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="aic_home.Focus">
+    <div class="o_action o_aic_focus_queue">
+        <div class="o_aic_fq_wrap">
+
+            <!-- header: progress and filters -->
+            <header class="o_aic_fq_head">
+                <div class="o_aic_fq_title">
+                    <h1>Focus queue</h1>
+                    <span class="o_aic_fq_count">
+                        <t t-out="this.countLabel"/>
+                    </span>
+                </div>
+                <div class="o_aic_fq_bar" role="progressbar" aria-label="Done today" t-att-aria-valuenow="this.progress" aria-valuemin="0" aria-valuemax="100">
+                    <span t-att-style="this.progressStyle"/>
+                </div>
+                <div t-if="this.state.models.length > 1" class="o_aic_fq_filters" role="group" aria-label="Filter by type">
+                    <button type="button" class="o_aic_fq_filter" t-att-class="{ o_active: !this.state.resModel }"
+                            t-on-click="() => this.filter(false)">All · <t t-out="this.state.due"/></button>
+                    <t t-foreach="this.state.models" t-as="m" t-key="m.model">
+                        <button type="button" class="o_aic_fq_filter" t-att-class="{ o_active: this.state.resModel === m.model }"
+                                t-on-click="() => this.filter(m.model)"><t t-out="m.label"/> · <t t-out="m.count"/></button>
+                    </t>
+                </div>
+            </header>
+
+            <div t-if="this.state.loading" class="o_aic_fq_empty">Loading your queue…</div>
+
+            <!-- queue clear -->
+            <div t-elif="!this.state.card" class="o_aic_fq_empty o_aic_fq_clear">
+                <span class="o_aic_fq_clear_mark" aria-hidden="true"><i class="fa fa-check"/></span>
+                <h2>Queue clear</h2>
+                <p t-out="this.clearLabel"/>
+                <button t-if="this.state.resModel" type="button" class="btn btn-secondary" t-on-click="() => this.filter(false)">Show everything</button>
+            </div>
+
+            <!-- the card -->
+            <article t-else="" class="o_aic_fq_card">
+                <div class="o_aic_fq_activity">
+                    <span class="o_aic_fq_icon"><i t-attf-class="fa {{ this.state.card.activity.icon }}"/></span>
+                    <div class="o_aic_fq_activity_main">
+                        <span class="o_aic_fq_type" t-out="this.state.card.activity.type"/>
+                        <h2 t-out="this.state.card.activity.title"/>
+                    </div>
+                    <span class="o_aic_fq_when" t-att-class="this.lateClass" t-out="this.state.card.activity.when"/>
+                </div>
+                <p t-if="this.state.card.activity.note" class="o_aic_fq_note" t-out="this.state.card.activity.note"/>
+
+                <div t-if="this.state.card.record.model" class="o_aic_fq_record">
+                    <div class="o_aic_fq_record_head">
+                        <span class="o_aic_fq_model" t-out="this.state.card.record.model_label"/>
+                        <button type="button" class="o_aic_fq_record_name" t-on-click="() => this.openRecord()" title="Open the record (O)">
+                            <t t-out="this.state.card.record.name"/>
+                        </button>
+                        <span t-if="this.state.card.other_activities" class="o_aic_fq_more">
+                            <t t-out="this.otherLabel"/>
+                        </span>
+                    </div>
+                    <div t-if="this.state.card.contact.name or this.state.card.contact.phone or this.state.card.contact.email" class="o_aic_fq_contact">
+                        <span class="o_aic_fq_contact_name" t-out="this.state.card.contact.name"/>
+                        <a t-if="this.state.card.contact.tel" class="btn btn-secondary btn-sm" t-att-href="this.state.card.contact.tel">
+                            <i class="fa fa-phone"/> <t t-out="this.state.card.contact.phone"/>
+                        </a>
+                        <a t-if="this.state.card.contact.whatsapp" class="btn btn-secondary btn-sm" t-att-href="this.state.card.contact.whatsapp" target="_blank" rel="noopener">
+                            <i class="fa fa-whatsapp"/> WhatsApp
+                        </a>
+                        <a t-if="this.state.card.contact.email" class="btn btn-secondary btn-sm" t-att-href="'mailto:' + this.state.card.contact.email">
+                            <i class="fa fa-envelope"/> <t t-out="this.state.card.contact.email"/>
+                        </a>
+                    </div>
+                    <dl t-if="this.state.card.facts.length" class="o_aic_fq_facts">
+                        <t t-foreach="this.state.card.facts" t-as="f" t-key="f.label">
+                            <div><dt t-out="f.label"/><dd t-out="f.value"/></div>
+                        </t>
+                    </dl>
+                </div>
+
+                <div t-if="this.state.card.messages.length" class="o_aic_fq_messages">
+                    <h3>Latest</h3>
+                    <t t-foreach="this.state.card.messages" t-as="msg" t-key="msg.id">
+                        <div class="o_aic_fq_msg" t-att-class="{ o_note: msg.note }">
+                            <span class="o_aic_fq_msg_meta"><b t-out="msg.author"/> · <t t-out="msg.date"/><t t-if="msg.note"> · note</t></span>
+                            <span t-out="msg.text"/>
+                        </div>
+                    </t>
+                </div>
+
+                <label class="o_aic_fq_feedback">
+                    <span>What happened? <small>(logged on the record when you mark it done)</small></span>
+                    <textarea rows="2" placeholder="e.g. Called, they want the revised quote by Friday"
+                              t-att-value="this.state.feedback" t-on-input="(ev) => this.onFeedback(ev)"/>
+                </label>
+
+                <div class="o_aic_fq_actions" role="toolbar" aria-label="Activity actions">
+                    <button type="button" class="btn btn-primary" t-att-disabled="this.state.busy" t-on-click="() => this.done()">
+                        Done <kbd>D</kbd>
+                    </button>
+                    <button type="button" class="btn btn-secondary" t-att-disabled="this.state.busy" t-on-click="() => this.done(2)">
+                        Done, follow up in 2 days <kbd>F</kbd>
+                    </button>
+                    <button type="button" class="btn btn-secondary" t-att-disabled="this.state.busy" t-on-click="() => this.doneAndPlan()">
+                        Done, plan next… <kbd>P</kbd>
+                    </button>
+                    <span class="flex-grow-1"/>
+                    <button type="button" class="btn btn-light" t-att-disabled="this.state.busy" t-on-click="() => this.snooze(1)">
+                        Tomorrow <kbd>S</kbd>
+                    </button>
+                    <button type="button" class="btn btn-light" t-att-disabled="this.state.busy" t-on-click="() => this.snooze(7)">
+                        Next week <kbd>W</kbd>
+                    </button>
+                    <button type="button" class="btn btn-link" t-att-disabled="this.state.busy" t-on-click="() => this.skip(1)">
+                        Skip <kbd>→</kbd>
+                    </button>
+                </div>
+            </article>
+
+            <p class="o_aic_fq_keys">Keys: D done · F follow up in 2 days · P plan next · S tomorrow · W next week · → skip · ← back · O open record · Ctrl+Enter in the note = done</p>
+        </div>
+    </div>
+</t>
+
+</templates>

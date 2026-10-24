@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Before the apps-menu t-call of web.NavBar, like the workspace's pane toggle: Community keeps the
+         t-call (its apps dropdown), Enterprise's primary copy replaces it with the home-menu toggle, so the
+         Home key lands just before Odoo's apps control in both. PREPENDED in the bundle so it is applied
+         before web_enterprise makes its copy. -->
+    <t t-name="aic_home.NavBarHomeKey" t-inherit="web.NavBar" t-inherit-mode="extension">
+        <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="before">
+            <a t-if="this.aicHomeKeyVisible" href="/odoo/home" class="o_aic_home_key btn"
+               t-att-class="{ o_active: this.aicHomeActive }" title="Home" aria-label="Home"
+               t-on-click.prevent="this.aicGoHome">
+                <i class="fa fa-home"/>
+            </a>
+        </xpath>
+    </t>
+</templates>

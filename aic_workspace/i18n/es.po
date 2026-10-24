@@ -1,0 +1,1420 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-08 09:20+0000\n"
+"PO-Revision-Date: 2026-10-08 09:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aic_workspace
+#: model:ir.module.module,description:base.module_aic_workspace
+msgid ""
+"\n"
+"Workspace\n"
+"===============\n"
+"Adds the behaviours the Core theme cannot do with CSS alone. Everything is a per-user\n"
+"preference (My Preferences → Workspace) and defaults to stock Odoo behaviour:\n"
+"\n"
+"* **Split Form View** — with the switch on, opening a record from a list or kanban shows its\n"
+"  form in a panel beside the list instead of navigating away. The panel *is* Odoo's own form\n"
+"  view (header buttons, statusbar, sheet, chatter); nothing is redrawn.\n"
+"* **Left pane** — optional application pane (full or icons) next to the untouched top bar.\n"
+"* **Mobile shell** — a bottom tab bar on phones (Apps · Menu · Activity · Account) that opens\n"
+"  Odoo's own app drawer, activity menu and account menu (restyled by the theme), a stage picker\n"
+"  for grouped kanbans, a settings-section picker, \"Show more\" per stacked stage, previous / next\n"
+"  and a month picker in the calendar, and a vertical gantt.\n"
+"* **Floating chatter** — on the desktop split view the chatter pops out into a movable,\n"
+"  resizable window that follows the selected record; on phones a button in the form, on\n"
+"  kanban cards and list rows opens the record's chatter in a small window, full screen or a\n"
+"  bubble. It is Odoo's own chatter — any model with mail.thread, custom modules included.\n"
+msgstr ""
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/nav/crumbs.js:0
+msgid "%s of %s"
+msgstr "%s de %s"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/mobile_shell.xml:0
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/gantt_phone.js:0
+#: code:addons/aic_workspace/static/src/mobile/kanban_stage_chips.xml:0
+msgid "All"
+msgstr "Todo"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/mobile_shell.xml:0
+msgid "All stages"
+msgstr "Todas las etapas"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Always there"
+msgstr "Siempre visible"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Appearance"
+msgstr "Apariencia"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/mobile_shell.xml:0
+#: code:addons/aic_workspace/static/src/pane/left_pane.xml:0
+msgid "Apps"
+msgstr "Aplicaciones"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Apps · Menu · Activity · Account while a record's form is open."
+msgstr ""
+"Aplicaciones · Menú · Actividad · Cuenta mientras un formulario está "
+"abierto."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Below form"
+msgstr "Bajo el formulario"
+
+#. module: aic_workspace
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_chatter__bottom
+msgid "Below the form"
+msgstr "Bajo el formulario"
+
+#. module: aic_workspace
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_split_side__bottom
+msgid "Below the list"
+msgstr "Bajo la lista"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/swipe_actions.js:0
+msgid "Call"
+msgstr "Llamar"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/swipe_actions.xml:0
+msgid "Card actions"
+msgstr "Acciones de la tarjeta"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/chatter/chatter_window.xml:0
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Chatter"
+msgstr "Chatter"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__aic_split_chatter
+msgid "Chatter in the split view"
+msgstr "Chatter en la vista dividida"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid "Chatter is floating"
+msgstr "El chatter está flotando"
+
+#. module: aic_workspace
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__aic_chatter
+msgid "Chatter position"
+msgstr "Posición del chatter"
+
+#. module: aic_workspace
+#: model_terms:ir.ui.view,arch_db:aic_workspace.webclient_offline_aic
+msgid ""
+"Check your network connection and come back here. Odoo will load as soon as "
+"you're back online."
+msgstr ""
+"Compruebe su conexión de red y vuelva aquí. Odoo se cargará en cuanto vuelva"
+" a estar en línea."
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/controllers/webmanifest.py:0
+msgid ""
+"Check your network connection. %(app)s opens again as soon as you are back "
+"online."
+msgstr ""
+"Compruebe su conexión de red. %(app)s se abrirá de nuevo en cuanto vuelva a "
+"estar en línea."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/chatter/chatter_window.xml:0
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: aic_workspace
+#: model:ir.model,name:aic_workspace.model_res_company
+msgid "Company"
+msgstr "Empresa"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_swipe.py:0
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/mobile_shell.xml:0
+msgid "Create"
+msgstr "Crear"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Dark"
+msgstr "Oscuro"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/user_menu_items.js:0
+msgid "Dark mode"
+msgstr "Modo oscuro"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/user_menu_items.js:0
+msgid "Developer mode"
+msgstr "Modo desarrollador"
+
+#. module: aic_workspace
+#: model:ir.model.fields,field_description:aic_workspace.field_ir_http__display_name
+#: model:ir.model.fields,field_description:aic_workspace.field_res_company__display_name
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__display_name
+#: model:ir.model.fields,field_description:aic_workspace.field_aic_swipe__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/chatter/chatter_window.xml:0
+msgid "Dock back into the form"
+msgstr "Volver a anclar en el formulario"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid "Dock here"
+msgstr "Anclar aquí"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_split_chatter__docked
+msgid "Docked below the form"
+msgstr "Anclado bajo el formulario"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid ""
+"Floating: the chatter pops out into a movable, resizable window that follows"
+" the selected record. Docked: it stays below the form in the panel."
+msgstr ""
+"Flotante: el chatter se abre en una ventana movible y redimensionable que "
+"sigue al registro seleccionado. Anclado: permanece bajo el formulario, en el"
+" panel."
+
+#. module: aic_workspace
+#: model:ir.model.fields,help:aic_workspace.field_res_users__aic_split_chatter
+msgid ""
+"Floating: when a record opens in the split panel its chatter pops out into a"
+" movable, resizable window that follows the selected record. Docked: the "
+"chatter stays below the form inside the panel (it can still be floated with "
+"a click)."
+msgstr ""
+"Flotante: cuando un registro se abre en el panel dividido, su chatter se "
+"abre en una ventana movible y redimensionable que sigue al registro "
+"seleccionado. Anclado: el chatter permanece bajo el formulario dentro del "
+"panel (aún puede hacerse flotar con un clic)."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_split_chatter__float
+msgid "Floats automatically"
+msgstr "Flota automáticamente"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/controllers/webmanifest.py:0
+msgid "Focus queue"
+msgstr "Cola de enfoque"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/chatter/chatter_window.xml:0
+msgid "Follows the record selected in the list"
+msgstr "Sigue al registro seleccionado en la lista"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Form below"
+msgstr "Formulario debajo"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Form on the right"
+msgstr "Formulario a la derecha"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/calendar_nav.xml:0
+msgid "Go to month"
+msgstr "Ir al mes"
+
+#. module: aic_workspace
+#: model:ir.model,name:aic_workspace.model_ir_http
+msgid "HTTP Routing"
+msgstr "Enrutamiento HTTP"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Hidden"
+msgstr "Oculto"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_m_tabbar__hide
+msgid "Hidden while a record is open"
+msgstr "Oculta mientras un registro está abierto"
+
+#. module: aic_workspace
+#. odoo-javascript
+#. odoo-python
+#: code:addons/aic_workspace/controllers/webmanifest.py:0
+#: code:addons/aic_workspace/static/src/mobile/mobile_shell.xml:0
+msgid "Home"
+msgstr "Inicio"
+
+#. module: aic_workspace
+#: model:ir.model.fields,field_description:aic_workspace.field_ir_http__id
+#: model:ir.model.fields,field_description:aic_workspace.field_res_company__id
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__id
+#: model:ir.model.fields,field_description:aic_workspace.field_aic_swipe__id
+msgid "ID"
+msgstr "ID"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid ""
+"It follows the record selected in the list · drag it anywhere, resize from "
+"any edge"
+msgstr ""
+"Sigue al registro seleccionado en la lista · arrástrelo a cualquier lugar, "
+"cambie su tamaño desde cualquier borde"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Keep pane expanded"
+msgstr "Mantener el panel desplegado"
+
+#. module: aic_workspace
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_m_tabbar__keep
+msgid "Kept under the record's actions"
+msgstr "Se mantiene bajo las acciones del registro"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Left pane (add-on)"
+msgstr "Panel izquierdo (complemento)"
+
+#. module: aic_workspace
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_nav__side
+msgid "Left pane, expanded"
+msgstr "Panel izquierdo, desplegado"
+
+#. module: aic_workspace
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_nav__mini
+msgid "Left pane, icons"
+msgstr "Panel izquierdo, iconos"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Light"
+msgstr "Claro"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/mobile_shell.xml:0
+msgid "Me"
+msgstr "Yo"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/chatter/chatter_window.xml:0
+msgid "Minimise to a bubble"
+msgstr "Minimizar en burbuja"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Mode"
+msgstr "Modo"
+
+#. module: aic_workspace
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__aic_nav
+msgid "Navigation"
+msgstr "Navegación"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/nav/crumbs.xml:0
+msgid "Navigation path"
+msgstr "Ruta de navegación"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/calendar_nav.xml:0
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid "Next"
+msgstr "Siguiente"
+
+#. module: aic_workspace
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_nav__top
+msgid "Odoo top bar only"
+msgstr "Solo la barra superior de Odoo"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Off: pane shrinks to icons and expands on hover"
+msgstr ""
+"Desactivado: el panel se reduce a iconos y se despliega al pasar el ratón"
+
+#. module: aic_workspace
+#: model:ir.model.fields,help:aic_workspace.field_res_users__aic_m_tabbar
+msgid ""
+"On a phone, a record's form has its own bar of actions at the bottom. Keep "
+"the app tab bar under it (two bars), or hide the tab bar while a record is "
+"open — the Back key returns to the list, like a mail app."
+msgstr ""
+"En un teléfono, el formulario de un registro tiene su propia barra de "
+"acciones abajo. Mantenga la barra de pestañas debajo (dos barras) u ocúltela"
+" mientras un registro está abierto: la tecla Atrás vuelve a la lista, como "
+"en una aplicación de correo."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid ""
+"On: clicking a record in a list or kanban opens its form beside the list. "
+"Off: stock Odoo behaviour."
+msgstr ""
+"Activado: al hacer clic en un registro de una lista o kanban, su formulario "
+"se abre junto a la lista. Desactivado: comportamiento estándar de Odoo."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/pane/left_pane.xml:0
+msgid "Open"
+msgstr "Abrir"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/mobile_shell.xml:0
+msgid "Open a stage"
+msgstr "Abrir una etapa"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid "Open full form"
+msgstr "Abrir el formulario completo"
+
+#. module: aic_workspace
+#: model:ir.model.fields,help:aic_workspace.field_res_users__aic_split
+msgid ""
+"Open records from a list or kanban in a panel beside the list instead of "
+"navigating to the form."
+msgstr ""
+"Abrir los registros de una lista o kanban en un panel junto a la lista en "
+"lugar de ir al formulario."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/chatter/chatter_window.xml:0
+msgid "Open the chatter"
+msgstr "Abrir el chatter"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Open, full"
+msgstr "Abierto, completo"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Open, icons"
+msgstr "Abierto, iconos"
+
+#. module: aic_workspace
+#: model:ir.module.module,summary:base.module_aic_workspace
+msgid ""
+"Per-user navigation preference (Odoo top bar or a left pane), Split Form "
+"View beside list & kanban, floating chatter and an app-like phone shell — "
+"built on the Core theme."
+msgstr ""
+"Preferencia de navegación por usuario (barra superior de Odoo o panel "
+"izquierdo), vista de formulario dividida junto a listas y kanban, chatter "
+"flotante y una interfaz móvil como una aplicación, basada en el tema Core."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Phone"
+msgstr "Teléfono"
+
+#. module: aic_workspace
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__aic_m_tabbar
+msgid "Phone: tab bar on a record"
+msgstr "Teléfono: barra de pestañas en un registro"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid "Pinned to"
+msgstr "Fijado a"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/swipe_actions.js:0
+msgid "Plan"
+msgstr "Planificar"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/calendar_nav.xml:0
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid "Previous"
+msgstr "Anterior"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Right of form"
+msgstr "A la derecha del formulario"
+
+#. module: aic_workspace
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_chatter__right
+msgid "Right of the form"
+msgstr "A la derecha del formulario"
+
+#. module: aic_workspace
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_split_side__right
+msgid "Right of the list"
+msgstr "A la derecha de la lista"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/swipe_actions.xml:0
+msgid "Row actions"
+msgstr "Acciones de la fila"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/favorites/favorite_chips.xml:0
+msgid "Saved searches"
+msgstr "Búsquedas guardadas"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/kanban_more.xml:0
+msgid "Show more"
+msgstr "Mostrar más"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/search_sheet.xml:0
+msgid "Show results"
+msgstr "Mostrar resultados"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/pane/navbar_toggle.xml:0
+msgid "Show/hide the left pane"
+msgstr "Mostrar/ocultar el panel izquierdo"
+
+#. module: aic_workspace
+#: model:ir.module.module,shortdesc:base.module_aic_workspace
+msgid "Workspace - Split View, Left Pane, Mobile Shell"
+msgstr "Workspace - Vista dividida, panel izquierdo, interfaz móvil"
+
+#. module: aic_workspace
+#: model:ir.model,name:aic_workspace.model_aic_swipe
+msgid "Core phone swipe actions"
+msgstr "Acciones de deslizamiento de Core en el teléfono"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__aic_split
+msgid "Split Form View"
+msgstr "Vista de formulario dividida"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid "Split form view"
+msgstr "Vista de formulario dividida"
+
+#. module: aic_workspace
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__aic_split_side
+msgid "Split panel position"
+msgstr "Posición del panel dividido"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/kanban_stage_chips.xml:0
+msgid "Stages"
+msgstr "Etapas"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Switch apps from any record"
+msgstr "Cambiar de aplicación desde cualquier registro"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "System"
+msgstr "Sistema"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Tab bar on a record"
+msgstr "Barra de pestañas en un registro"
+
+#. module: aic_workspace
+#: model:ir.model.fields,help:aic_workspace.field_res_users__aic_nav
+msgid ""
+"The Odoo top bar is always there. A left pane can be shown next to it, "
+"expanded or collapsed to icons; the ☰ button in the top bar toggles it at "
+"any time."
+msgstr ""
+"La barra superior de Odoo siempre está presente. Se puede mostrar un panel "
+"izquierdo a su lado, desplegado o reducido a iconos; el botón ☰ de la barra "
+"superior lo alterna en cualquier momento."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "The form gets the whole screen; Back returns to the list"
+msgstr "El formulario ocupa toda la pantalla; Atrás vuelve a la lista"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid ""
+"The stock Odoo top bar always stays. The ☰ button at its left shows or hides"
+" the pane; choose what happens by default."
+msgstr ""
+"La barra superior estándar de Odoo siempre se mantiene. El botón ☰ a su "
+"izquierda muestra u oculta el panel; elija qué ocurre por defecto."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: code:addons/aic_workspace/static/src/prefs/user_menu_items.js:0
+msgid "Theme preferences"
+msgstr "Preferencias del tema"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/controllers/webmanifest.py:0
+msgid "Today's agenda and your apps"
+msgstr "La agenda de hoy y sus aplicaciones"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/nav/crumbs.js:0
+msgid "Unnamed"
+msgstr "Sin nombre"
+
+#. module: aic_workspace
+#: model:ir.model,name:aic_workspace.model_res_users
+msgid "User"
+msgstr "Usuario"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/swipe_actions.js:0
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/nav/crumbs.xml:0
+msgid "Where you are"
+msgstr "Dónde está"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_swipe.py:0
+msgid "Won"
+msgstr "Ganada"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/controllers/webmanifest.py:0
+msgid "Work through your due activities"
+msgstr "Trabaje sus actividades pendientes"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/chatter/chatter_window.xml:0
+msgid "pinned"
+msgstr "fijado"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/split/split_panel.xml:0
+msgid "· the list can move on"
+msgstr "· la lista puede avanzar"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Credit note"
+msgstr "Factura rectificativa"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Lead"
+msgstr "Lead"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Opportunity"
+msgstr "Oportunidad"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Product"
+msgstr "Producto"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Purchase order"
+msgstr "Orden de compra"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Quotation"
+msgstr "Presupuesto"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/search/record_commands.js:0
+msgid "Records"
+msgstr "Registros"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Request for quotation"
+msgstr "Solicitud de presupuesto"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Sales order"
+msgstr "Pedido de venta"
+
+#. module: aic_workspace
+#: model:ir.model,name:aic_workspace.model_aic_search
+msgid "Core record search (command palette)"
+msgstr "Búsqueda de registros Core (paleta de comandos)"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Task"
+msgstr "Tarea"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Ticket"
+msgstr "Ticket"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Transfer"
+msgstr "Transferencia"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Vendor bill"
+msgstr "Factura de proveedor"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/aic_search.py:0
+msgid "Vendor refund"
+msgstr "Reembolso de proveedor"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/activity/date_picks.js:0
+msgid "In 2 weeks"
+msgstr "En 2 semanas"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/activity/date_picks.js:0
+msgid "Next week"
+msgstr "La próxima semana"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/activity/date_picks.xml:0
+msgid "Quick due dates"
+msgstr "Vencimientos rápidos"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/activity/date_picks.js:0
+msgid "Today"
+msgstr "Hoy"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/activity/date_picks.js:0
+msgid "Tomorrow"
+msgstr "Mañana"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__aic_header_compact
+msgid "Compact record header"
+msgstr "Encabezado de registro compacto"
+
+#. module: aic_workspace
+#: model:ir.model.fields,help:aic_workspace.field_res_users__aic_header_compact
+msgid "When a record has more than four buttons in its header, show the main ones and put the rest under ⋯. Off: every button stays in the header, as in stock Odoo."
+msgstr "Cuando el encabezado de un registro tiene más de cuatro botones, mostrar los principales y poner el resto bajo ⋯. Desactivado: todos los botones permanecen en el encabezado, como en Odoo estándar."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "On: past four buttons, the main ones stay and the rest go under ⋯. Off: every button stays in the header."
+msgstr "Activado: a partir de cuatro botones, los principales se quedan y el resto pasa a ⋯. Desactivado: todos los botones permanecen en el encabezado."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/form/header_overflow.xml:0
+msgid "More actions"
+msgstr "Más acciones"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/no_match.xml:0
+msgid "Check the spelling, or clear the search to see the other records."
+msgstr "Revise la ortografía o borre la búsqueda para ver los demás registros."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/no_match.xml:0
+msgid "Clear search"
+msgstr "Borrar la búsqueda"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/no_match.xml:0
+msgid "Nothing matches your search"
+msgstr "Nada coincide con su búsqueda"
+
+#. module: aic_workspace
+#: model:ir.model.fields,field_description:aic_workspace.field_res_partner__aic_duplicate_ids
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__aic_duplicate_ids
+msgid "Possible duplicates"
+msgstr "Posibles duplicados"
+
+#. module: aic_workspace
+#: model:ir.model.fields,help:aic_workspace.field_res_partner__aic_duplicate_ids
+#: model:ir.model.fields,help:aic_workspace.field_res_users__aic_duplicate_ids
+msgid "Other contacts with the same e-mail address or phone number."
+msgstr "Otros contactos con la misma dirección de correo o el mismo número de teléfono."
+
+#. module: aic_workspace
+#: model_terms:ir.ui.view,arch_db:aic_workspace.view_partner_form_aic_duplicates
+msgid "Possible duplicate, same e-mail or phone:"
+msgstr "Posible duplicado, mismo correo o teléfono:"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/user_menu_items.js:0
+msgid "My profile"
+msgstr "Mi perfil"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/res_partner.py:0
+msgid "Open quotations"
+msgstr "Presupuestos abiertos"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/res_partner.py:0
+msgid "Unpaid invoices"
+msgstr "Facturas impagadas"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/res_partner.py:0
+msgid "Open tickets"
+msgstr "Tickets abiertos"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/res_partner.py:0
+msgid "Last delivery"
+msgstr "Última entrega"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/res_partner.py:0
+msgid "Next activity"
+msgstr "Próxima actividad"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/res_partner.py:0
+msgid "%(amount)s · %(late)s overdue"
+msgstr "%(amount)s · %(late)s vencidas"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/res_partner.py:0
+msgid "%(late)s overdue"
+msgstr "%(late)s vencidas"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/customer_overview.xml:0
+msgid "At a glance"
+msgstr "De un vistazo"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/pivot_chart.xml:0
+msgid "Chart"
+msgstr "Gráfico"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/calendar_agenda.xml:0
+msgid "Grid"
+msgstr "Cuadrícula"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/calendar_agenda.xml:0
+msgid "Agenda"
+msgstr "Agenda"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/calendar_agenda.js:0
+msgid "All day"
+msgstr "Todo el día"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/mobile/calendar_agenda.xml:0
+msgid "Nothing planned in this period."
+msgstr "Nada previsto en este periodo."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/lost_one_tap.js:0
+#, python-format
+msgid "Marked as lost: %(reason)s"
+msgstr "Marcado como perdido: %(reason)s"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/lost_one_tap.js:0
+msgid "Marked as lost"
+msgstr "Marcado como perdido"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/gantt_legend.js:0
+#, python-format
+msgid "Not %(label)s"
+msgstr "No: %(label)s"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/gantt_legend.js:0
+#, python-format
+msgid "%(field)s passed"
+msgstr "%(field)s vencida"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/gantt_legend.xml:0
+msgid "Legend"
+msgstr "Leyenda"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/last_message.xml:0
+msgid "Last from the customer"
+msgstr "Último mensaje del cliente"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/last_message.xml:0
+msgid "Answered"
+msgstr "Respondido"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/last_message.xml:0
+msgid "Waiting for a reply"
+msgstr "Esperando respuesta"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/last_message.xml:0
+msgid "Reply"
+msgstr "Responder"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/last_message.xml:0
+msgid "Customer's last message"
+msgstr "Último mensaje del cliente"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Keyboard shortcuts"
+msgstr "Atajos de teclado"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Anywhere"
+msgstr "En cualquier lugar"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Search apps, menus and records"
+msgstr "Buscar aplicaciones, menús y registros"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "This list of shortcuts"
+msgstr "Esta lista de atajos"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Hold to see the letter of every button"
+msgstr "Mantener para ver la letra de cada botón"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Close a dialog or a panel"
+msgstr "Cerrar un diálogo o un panel"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Lists and kanbans"
+msgstr "Listas y kanbans"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Next row or card"
+msgstr "Fila o tarjeta siguiente"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Previous row or card"
+msgstr "Fila o tarjeta anterior"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Open it"
+msgstr "Abrirlo"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "New record"
+msgstr "Nuevo registro"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "A record"
+msgstr "Un registro"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Next record"
+msgstr "Registro siguiente"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Previous record"
+msgstr "Registro anterior"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Save"
+msgstr "Guardar"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/keys/aic_keys.js:0
+msgid "Discard changes"
+msgstr "Descartar cambios"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Messages on records you follow"
+msgstr "Mensajes en los registros que sigue"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Where Odoo tells you about new messages and mentions."
+msgstr "Dónde Odoo le avisa de mensajes y menciones nuevos."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "In Odoo"
+msgstr "En Odoo"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "The messaging menu and Discuss inbox"
+msgstr "El menú de mensajes y la bandeja de entrada de Conversaciones"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "By email"
+msgstr "Por correo electrónico"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "A copy in your mailbox"
+msgstr "Una copia en su buzón"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: model:ir.model.fields,field_description:aic_workspace.field_res_users__aic_density
+msgid "Density"
+msgstr "Densidad"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+msgid "Compact fits more rows and fields on a computer screen; phones keep touch-sized rows."
+msgstr "Compacto muestra más filas y campos en una pantalla de ordenador; los teléfonos mantienen filas táctiles."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_density__comfortable
+msgid "Comfortable"
+msgstr "Cómodo"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:aic_workspace.selection__res_users__aic_density__compact
+msgid "Compact"
+msgstr "Compacto"
+
+#. module: aic_workspace
+#: model:ir.model.fields,help:aic_workspace.field_res_users__aic_density
+msgid "Compact fits more rows and fields on a desktop screen. Phones keep their touch-sized rows."
+msgstr "Compacto muestra más filas y campos en una pantalla de escritorio. Los teléfonos mantienen filas táctiles."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/archive_undo.js:0
+msgid "Archived."
+msgstr "Archivado."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/archive_undo.js:0
+#, python-format
+msgid "%(n)s records archived."
+msgstr "%(n)s registros archivados."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/archive_undo.js:0
+msgid "Undo"
+msgstr "Deshacer"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/stock_summary.js:0
+msgid "Still missing"
+msgstr "Todavía falta"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/stock_summary.js:0
+#, python-format
+msgid "%(missing)s of %(demand)s %(uom)s not available yet"
+msgstr "%(missing)s de %(demand)s %(uom)s aún no disponibles"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/stock_summary.js:0
+#, python-format
+msgid "expected %(date)s"
+msgstr "previsto el %(date)s"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/stock_summary.js:0
+#, python-format
+msgid " and %(n)s more"
+msgstr " y %(n)s más"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/stock_summary.js:0
+#, python-format
+msgid "Still missing: %(items)s%(more)s."
+msgstr "Todavía falta: %(items)s%(more)s."
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/stock_summary.js:0
+msgid "Create a backorder to send them later, or close the delivery without them?"
+msgstr "¿Crear un pedido pendiente para enviarlos más tarde o cerrar la entrega sin ellos?"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/stock_summary.js:0
+msgid "Create a backorder to process them later, or close the transfer without them?"
+msgstr "¿Crear un pedido pendiente para procesarlos más tarde o cerrar la transferencia sin ellos?"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+msgid "On hand"
+msgstr "A mano"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+msgid "To deliver"
+msgstr "Por entregar"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+msgid "Incoming"
+msgstr "Entrante"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+msgid "Forecast"
+msgstr "Previsión"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+msgid "Minimum"
+msgstr "Mínimo"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+msgid "Stock"
+msgstr "Existencias"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/purchase_summary.js:0
+msgid "Late from the vendor"
+msgstr "Retrasado por el proveedor"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/purchase_summary.js:0
+msgid "Chase vendor"
+msgstr "Reclamar al proveedor"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/purchase_summary.js:0
+#, python-format
+msgid "%(left)s of %(ordered)s %(uom)s still to receive"
+msgstr "%(left)s de %(ordered)s %(uom)s aún por recibir"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/purchase_summary.js:0
+#, python-format
+msgid "%(n)s days late"
+msgstr "%(n)s días de retraso"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/purchase_summary.js:0
+msgid "due today"
+msgstr "vence hoy"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/purchase_summary.js:0
+msgid "Holds up"
+msgstr "Retiene"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/purchase_summary.js:0
+msgid "1 day late"
+msgstr "1 día de retraso"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+msgid "Steps"
+msgstr "Pasos"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+#, python-format
+msgid "%(done)s of %(total)s steps done"
+msgstr "%(done)s de %(total)s pasos hechos"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+msgid "Can make"
+msgstr "Se puede fabricar"
+
+#. module: aic_workspace
+#. odoo-python
+#: code:addons/aic_workspace/models/stock_summary.py:0
+msgid "with the components in stock"
+msgstr "con los componentes en stock"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/task_visit.js:0
+#, python-format
+msgid "Due %(date)s"
+msgstr "Vence %(date)s"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/task_visit.js:0
+#, python-format
+msgid "%(done)s of %(total)s sub-tasks done"
+msgstr "%(done)s de %(total)s subtareas hechas"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/task_visit.js:0
+msgid "Visit"
+msgstr "Visita"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/task_visit.js:0
+msgid "Directions"
+msgstr "Cómo llegar"
+
+#. module: aic_workspace
+#. odoo-javascript
+#: code:addons/aic_workspace/static/src/views/task_visit.js:0
+#, python-format
+msgid "Overdue since %(date)s"
+msgstr "Vencida desde %(date)s"

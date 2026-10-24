@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="aic_workspace.PivotButtonsChart" t-inherit="web.PivotView.Buttons" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_pivot_buttons')]" position="inside">
+            <button t-if="aicCanChart" type="button" class="btn btn-secondary o_aic_pivot_chart ms-auto"
+                    t-on-click="() => this.aicShowChart()">Chart</button>
+        </xpath>
+    </t>
+</templates>
