@@ -16,15 +16,16 @@ day with nothing left open:
 
 Works on Odoo Community and Enterprise. Nothing is sent to outside services.
     """,
-    "version": "20.0.2.0.0",
+    "version": "20.0.2.1.0",
     "category": "Themes/Backend",
     "author": "Albatross",
     "website": "https://albatross.work/",
     "license": "OPL-1",
-    "depends": ["web_theme_eod", "aic_workspace", "aic_home", "aic_send"],
+    "depends": ["web_theme_eod"],
+    # installs itself with the EOD look, which brings the rest of the package
+    "auto_install": True,
     "data": [],
     "images": ["static/description/banner.png"],
     "installable": True,
     "application": True,
-    "auto_install": False,
 }

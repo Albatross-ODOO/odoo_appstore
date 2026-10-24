@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": 'EOD - Backend Theme',
-    "summary": 'EOD (End Of Day) makes Odoo 20.0 calm and clear: frosted panes in your colours, an app-like phone layout, line app icons, readable in light and dark, Community and Enterprise.',
+    "summary": 'EOD (End Of Day): a calm, app-like Odoo 20 in your colours, with split view, floating chatter, a Home for every role, Start my queue, a mobile app experience and Share on WhatsApp. One purchase installs everything, Community and Enterprise.',
     "description": """
 EOD Backend Theme
 =================
@@ -19,17 +19,18 @@ says "act here" and a pale one for "you are here".
 * Point of Sale and the sign-in page in EOD, light and dark.
 * Bundled Geist font (SIL Open Font License); nothing is loaded from outside services.
 
-EOD is a look for the Backend Theme Engine (``aic_theme``), which it installs. Installing it on a database
-that has the earlier Glass look moves every setting across automatically.
+One purchase, everything included: installing EOD also installs the Backend Theme Engine (``aic_theme``),
+Workspace (``aic_workspace``), Home and Focus (``aic_home``), Share on WhatsApp (``aic_send``) and EOD Suite
+(``eod_suite``). Installing it on a database that has the earlier Glass look moves every setting across automatically.
     """,
-    "version": "20.0.3.0.0",
+    "version": "20.0.3.1.0",
     "category": "Themes/Backend",
     "author": "Albatross",
     "website": "https://albatross.work/",
     "license": "OPL-1",
-    "price": 120.0,
+    "price": 190.0,
     "currency": "EUR",
-    "depends": ["aic_theme"],
+    "depends": ["aic_theme", "aic_workspace", "aic_home", "aic_send"],
     "data": [
         "views/res_config_settings_views.xml",
     ],

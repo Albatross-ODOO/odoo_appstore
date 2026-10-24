@@ -15,10 +15,16 @@ class IrHttp(models.AbstractModel):
         (Preferences → Home Action) always wins.
         """
         info = super().session_info()
-        user = self.env.user
-        if (info.get("uid") and not info.get("home_action_id") and user._is_internal()
-                and self.env["ir.config_parameter"].sudo().get_bool(START_PARAM, True)):
-            action = self.env.ref("aic_home.action_aic_home", raise_if_not_found=False)
+        if info.get("uid") and not info.get("home_action_id"):
+            action = self._aic_home_start_action()
             if action:
                 info["home_action_id"] = action.id
         return info
+
+    def _aic_home_start_action(self):
+        """Home, for an internal user, when it is the landing page (Settings) and a look is installed (Home is
+        sold with a look: see ir_ui_menu.py); otherwise nothing."""
+        if (self.env.user._is_internal() and self.env["res.company"]._aic_look_installed()
+                and self.env["ir.config_parameter"].sudo().get_bool(START_PARAM, True)):
+            return self.env.ref("aic_home.action_aic_home", raise_if_not_found=False)
+        return False

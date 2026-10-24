@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sold with a look: while no look is installed these rules take Workspace's own files out of the web client
+         (aic_theme switches them: ir_asset.py). Sequence after every manifest, so prepended templates go too. -->
+    <record id="lock_assets_backend" model="ir.asset">
+        <field name="name">aic_lock: Workspace needs a look (web client)</field>
+        <field name="bundle">web.assets_backend</field>
+        <field name="directive">remove</field>
+        <field name="path">aic_workspace/static/src/**/*</field>
+        <field name="sequence">99</field>
+    </record>
+    <record id="lock_assets_backend_lazy" model="ir.asset">
+        <field name="name">aic_lock: Workspace needs a look (lazy views)</field>
+        <field name="bundle">web.assets_backend_lazy</field>
+        <field name="directive">remove</field>
+        <field name="path">aic_workspace/static/src/**/*</field>
+        <field name="sequence">99</field>
+    </record>
+</odoo>

@@ -16,17 +16,16 @@ Replaces the app menu as the first screen after login (users who have their own 
   preview, so Home counts stay meaningful.
 * One server call per visit; no extra cost on other screens.
     """,
-    "version": "20.0.1.1.2",
+    "version": "20.0.1.2.0",
     "category": "Productivity",
     "author": "Albatross",
     "website": "https://albatross.work/",
     "license": "OPL-1",
-    "price": 30.0,
-    "currency": "EUR",
     "depends": ["web", "mail", "base_setup", "aic_theme"],
     "data": [
         "security/ir.access.csv",
         "data/home_action.xml",
+        "data/lock_assets.xml",
         "views/res_users_views.xml",
         "views/res_config_settings_views.xml",
         "wizard/backlog_cleanup_views.xml",

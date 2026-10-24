@@ -22,18 +22,18 @@ preference (My Preferences → Workspace) and defaults to stock Odoo behaviour:
   kanban cards and list rows opens the record's chatter in a small window, full screen or a
   bubble. It is Odoo's own chatter — any model with mail.thread, custom modules included.
     """,
-    "version": "20.0.1.0.2",
+    "version": "20.0.1.1.0",
     "category": "Themes/Backend",
     "author": "Albatross",
     "website": "https://albatross.work/",
     "license": "OPL-1",
-    "price": 40.0,
-    "currency": "EUR",
     "depends": ["web", "mail", "aic_theme"],
     # Preferences live entirely in the slide-out panel + session_info, so we never touch Odoo's own
     # user/settings views (keeps stock Odoo forms exactly as shipped). The one template brands the
     # installed app (window colour, iOS icon) in the page head.
-    "data": ["views/webclient_templates.xml", "views/mail_activity_views.xml", "views/res_partner_views.xml"],
+    "data": [
+        "data/lock_assets.xml",
+        "views/webclient_templates.xml", "views/mail_activity_views.xml", "views/res_partner_views.xml"],
     "assets": {
         # the pivot and graph views are lazy-loaded with this bundle
         "web.assets_backend_lazy": [

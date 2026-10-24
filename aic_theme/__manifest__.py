@@ -18,7 +18,7 @@ look such as EOD (``web_theme_eod``) and the whole backend is restyled in it.
 * Enable / disable at any time from *Settings > General Settings > Backend theme*. When more than
   one look is installed, each company picks its own there.
     """,
-    "version": "20.0.1.2.1",
+    "version": "20.0.1.3.0",
     "category": "Themes/Backend",
     "author": "Albatross",
     "website": "https://albatross.work/",
