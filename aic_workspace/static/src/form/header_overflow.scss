@@ -1,0 +1,9 @@
+// The header's "⋯" menu: the buttons it holds read as menu rows, not raised keys inside rows
+.o_aic_header_more_menu .o-dropdown-item-unstyled-button {
+    padding: 0 !important;
+    > .btn {
+        display: block; width: 100%; text-align: start; padding: 8px 16px !important; margin: 0 !important;
+        border: 0 !important; border-radius: 0 !important; box-shadow: none !important; background: transparent !important;
+        color: inherit !important; font-weight: 400 !important; transform: none !important;
+    }
+}

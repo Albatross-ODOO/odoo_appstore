@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+access_aic_backlog_cleanup_user,aic.backlog.cleanup user,aic.backlog.cleanup,base.group_user,crud,

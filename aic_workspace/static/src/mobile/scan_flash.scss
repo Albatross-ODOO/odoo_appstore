@@ -1,0 +1,25 @@
+// Barcode scans answer on the whole screen (scan_flash.js)
+.o_aic_scan_flash {
+    position: fixed; inset: 0; z-index: 2000; pointer-events: none;
+    box-shadow: inset 0 0 0 10px var(--o-aic-scan, #16a34a);
+    background: #{"color-mix(in srgb, var(--o-aic-scan, #16a34a) 18%, transparent)"};
+    animation: o_aic_scan .5s ease-out forwards;
+    &.o_ok { --o-aic-scan: var(--nm-success, #16a34a); }
+    &.o_error { --o-aic-scan: var(--nm-danger, #dc2626); }
+}
+@keyframes o_aic_scan { from { opacity: 1; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .o_aic_scan_flash { animation: none; } }
+
+// Barcode app on phones: keys sized for gloves (48px, they were 42px)
+@media (max-width: 767.98px) {
+    .o_barcode_client_action {
+        .btn:not(.o_line_button.px-0), .o_line_button { min-height: 48px; min-width: 48px; }
+        .o_barcode_line .o_line_buttons { gap: 6px; }
+    }
+}
+
+// Shop Floor (Manufacturing, Enterprise) is a touch-first tablet screen: its keys are at least 44px (39px before)
+.o_mrp_display {
+    .btn:not(.o_btn_icon.p-0):not(.o_searchview .btn) { min-height: 44px; }
+    .o_btn_icon { min-width: 44px; }
+}

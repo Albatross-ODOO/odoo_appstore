@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_aic" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.aic_theme</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='integration']" position="before">
+                <block title="Backend theme" name="theme_aic_block">
+                    <setting id="aic_theme_setting" string="Backend theme"
+                             help="Restyles the whole backend in the installed look, with dark mode. Turn it off to get the standard Odoo look back without uninstalling. Reload the page after changing.">
+                        <field name="aic_theme_enabled"/>
+                    </setting>
+                    <setting id="aic_skin_setting" string="Look" company_dependent="1"
+                             help="More than one look is installed: choose the one this company's users see. Reload the page after saving."
+                             invisible="not aic_theme_enabled or aic_skin_count &lt; 2">
+                        <field name="aic_skin_count" invisible="1"/>
+                        <field name="aic_skin" widget="radio"/>
+                    </setting>
+                    <setting id="aic_palette_setting" string="Theme colours" company_dependent="1"
+                             help="Use the theme's colours, take them from the company logo, or pick your own. Every colour is adjusted until its text is readable, in light and dark mode."
+                             invisible="not aic_theme_enabled">
+                        <field name="aic_palette_mode" widget="radio"/>
+                        <div class="mt-2" invisible="aic_palette_mode != 'preset'">
+                            <field name="aic_palette_preset" widget="radio" required="aic_palette_mode == 'preset'"/>
+                        </div>
+                        <div class="mt-2" invisible="aic_palette_mode != 'custom'">
+                            <div class="d-flex align-items-center gap-2 mb-1"><label for="aic_color_action" class="o_light_label" style="min-width:8rem"/><field name="aic_color_action" widget="color" placeholder="#FF6A2B"/></div>
+                            <div class="d-flex align-items-center gap-2 mb-1"><label for="aic_color_highlight" class="o_light_label" style="min-width:8rem"/><field name="aic_color_highlight" widget="color" placeholder="#FFE47A"/></div>
+                            <div class="d-flex align-items-center gap-2 mb-1"><label for="aic_color_ink" class="o_light_label" style="min-width:8rem"/><field name="aic_color_ink" widget="color" placeholder="#2A1633"/></div>
+                        </div>
+                        <div class="mt-2" invisible="aic_palette_mode == 'house'">
+                            <field name="aic_keep_house_highlight"/>
+                            <label for="aic_keep_house_highlight" class="o_light_label"/>
+                        </div>
+                        <div class="mt-3">
+                            <field name="aic_palette_preview" nolabel="1"/>
+                        </div>
+                        <div class="text-muted small mt-1">Reload the page after saving to see the new colours.</div>
+                        <div class="mt-2">
+                            <button name="action_aic_apply_document_colors" type="object" class="btn btn-link p-0" icon="oi-arrow-right"
+                                    string="Use on documents and e-mails"/>
+                            <div class="text-muted small">Printed documents take the ink for titles and the action colour, darkened to read on paper, for labels (Document Layout); e-mail buttons take the action colour. These are Odoo's own settings: change them there any time.</div>
+                        </div>
+                    </setting>
+                    <setting id="aic_app_icons_setting" string="App icons" company_dependent="1"
+                             help="Line icons in the action colour, on light tiles, or the colourful icons apps ship with. Reload the page after saving."
+                             invisible="not aic_theme_enabled">
+                        <field name="aic_app_icons" widget="radio"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

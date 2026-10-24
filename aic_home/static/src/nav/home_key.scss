@@ -1,0 +1,12 @@
+// the Home key: the same key as the apps toggle beside it, pressed while Home is open
+.o_main_navbar .o_aic_home_key.btn {
+    align-self: center; flex: 0 0 auto;
+    width: 34px; height: 34px; margin: 0 8px 0 0; padding: 0;
+    display: grid; place-items: center;
+    border-radius: 10px; color: var(--nm-ink, inherit);
+    background-color: var(--gl-pane-hi, var(--nm-surface, transparent));
+    box-shadow: var(--nm-raised-sm, none);
+    i { font-size: 20px; }
+    &:hover, &:focus-visible { color: var(--nm-action, inherit); }
+    &.o_active { color: var(--nm-action, inherit); box-shadow: var(--nm-inset-sm, none); }
+}

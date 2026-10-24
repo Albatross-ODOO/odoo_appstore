@@ -1,0 +1,2103 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-08 09:22+0000\n"
+"PO-Revision-Date: 2026-10-08 09:22+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aic_home
+#: model:ir.module.module,description:base.module_aic_home
+msgid ""
+"\n"
+"Home\n"
+"==========\n"
+"Replaces the app menu as the first screen after login (users who have their own home action keep it).\n"
+"\n"
+"* Missed and Today: overdue activities with one-click Done, today's activities and meetings.\n"
+"* A Home role per user (Sales, Warehouse, Purchase, Accounts, Service, Owner), chosen by an administrator or\n"
+"  suggested from what the person actually works on. Each role gets its own KPI tiles and panels, built only\n"
+"  for the apps that are installed and only from records the user can see.\n"
+"* Backlog clean-up: a guided way to cancel old quotations and reschedule or cancel long-late transfers, with a\n"
+"  preview, so Home counts stay meaningful.\n"
+"* One server call per visit; no extra cost on other screens.\n"
+msgstr ""
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(amount)s open"
+msgstr "%(amount)s مفتوحة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(count)s orders"
+msgstr "%(count)s أوامر"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(days)s days late"
+msgstr "متأخر %(days)s أيام"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.js:0
+msgid "%(done)s done today · %(due)s still due"
+msgstr "%(done)s منجزة اليوم · %(due)s ما زالت مستحقة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "%(greeting)s, %(name)s"
+msgstr "%(greeting)s، %(name)s"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s invoices"
+msgstr "%(n)s فواتير"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s near their deadline"
+msgstr "%(n)s قريبة من موعدها النهائي"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s of your hot deals need attention."
+msgstr "%(n)s من صفقاتك الساخنة تحتاج إلى انتباه."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s of your tasks are due or overdue."
+msgstr "%(n)s من مهامك مستحقة أو متأخرة."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s opportunities"
+msgstr "%(n)s فرص"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s opportunities have no next step."
+msgstr "%(n)s فرص بلا خطوة تالية."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s orders"
+msgstr "%(n)s أوامر"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid ""
+"%(n)s quotations older than 60 days are still open. Clearing them keeps "
+"these numbers meaningful."
+msgstr ""
+"%(n)s عروض أسعار أقدم من 60 يومًا ما زالت مفتوحة. تنظيفها يُبقي هذه الأرقام "
+"ذات معنى."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s ready"
+msgstr "%(n)s جاهزة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s receipts are late from vendors."
+msgstr "%(n)s استلامات من الموردين متأخرة."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "%(n)s records cancelled."
+msgstr "تم إلغاء %(n)s سجلات."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "%(n)s records match."
+msgstr "%(n)s سجلات مطابقة."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid ""
+"%(n)s transfers are more than 30 days past their date. They are left out of "
+"the counts above."
+msgstr ""
+"%(n)s تحويلات تجاوزت موعدها بأكثر من 30 يومًا. وهي غير محسوبة في الأعداد "
+"أعلاه."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "%(n)s transfers moved to %(date)s."
+msgstr "تم نقل %(n)s تحويلات إلى %(date)s."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(r)s receipts and %(d)s dispatches are planned today."
+msgstr "%(r)s استلامات و%(d)s شحنات مخطط لها اليوم."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(today)s things are on your list today."
+msgstr "%(today)s أمور على قائمتك اليوم."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "%s activities moved to today"
+msgstr "تم نقل %s أنشطة إلى اليوم"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "(logged on the record when you mark it done)"
+msgstr "(يُسجَّل في السجل عند تعليمه كمنجز)"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "(suggested)"
+msgstr "(مقترح)"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.js:0
+msgid "+%s other activities"
+msgstr "+%s أنشطة أخرى"
+
+#. module: aic_home
+#: model:ir.module.module,summary:base.module_aic_home
+msgid ""
+"A role-aware start screen: what you missed, what is due today, the work that"
+" needs you, and your apps on one screen. Community and Enterprise."
+msgstr ""
+"شاشة بداية حسب الدور: ما فاتك، وما يستحق اليوم، والعمل الذي يحتاجك، "
+"وتطبيقاتك في شاشة واحدة. لإصداري Community وEnterprise."
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role__accounts
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role_suggested__accounts
+msgid "Accounts"
+msgstr "الحسابات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Across the team"
+msgstr "على مستوى الفريق"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Activity"
+msgstr "النشاط"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Activity actions"
+msgstr "إجراءات النشاط"
+
+#. module: aic_home
+#: model_terms:ir.ui.view,arch_db:aic_home.res_config_settings_view_form_aic_home
+msgid ""
+"After login, people see what they missed, what is due today and the work "
+"that needs them. Each person's Home role is set on their user form "
+"(Preferences). Someone with their own home action keeps it."
+msgstr ""
+"بعد تسجيل الدخول يرى كل شخص ما فاته وما يستحق اليوم والعمل الذي يحتاجه. "
+"يُحدَّد دور الشاشة الرئيسية لكل شخص في نموذج المستخدم (التفضيلات). ومن لديه "
+"إجراء رئيسي خاص يحتفظ به."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "All day"
+msgstr "طوال اليوم"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "All dispatches"
+msgstr "كل الشحنات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "All receipts"
+msgstr "كل الاستلامات"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "All ·"
+msgstr "الكل ·"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Amount due"
+msgstr "المبلغ المستحق"
+
+#. module: aic_home
+#: model_terms:ir.ui.view,arch_db:aic_home.aic_backlog_cleanup_view_form
+msgid "Apply"
+msgstr "تطبيق"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "Backlog cleaned up"
+msgstr "تم تنظيف المتأخرات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Bank lines to reconcile"
+msgstr "بنود بنكية للتسوية"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Below minimum"
+msgstr "دون الحد الأدنى"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Bills due"
+msgstr "فواتير موردين مستحقة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Bills due this week"
+msgstr "فواتير الموردين المستحقة هذا الأسبوع"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Bills to post"
+msgstr "فواتير موردين للترحيل"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__aic_backlog_cleanup__operation__cancel
+msgid "Cancel them"
+msgstr "إلغاؤها"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Chase"
+msgstr "متابعة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "Choose the new date."
+msgstr "اختر التاريخ الجديد."
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__kind
+msgid "Clean up"
+msgstr "تنظيف"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Clean up late transfers"
+msgstr "تنظيف التحويلات المتأخرة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Clean up old quotations"
+msgstr "تنظيف عروض الأسعار القديمة"
+
+#. module: aic_home
+#: model:ir.actions.act_window,name:aic_home.action_aic_backlog_cleanup
+#: model_terms:ir.ui.view,arch_db:aic_home.aic_backlog_cleanup_view_form
+msgid "Clean up the backlog"
+msgstr "تنظيف المتأخرات"
+
+#. module: aic_home
+#: model_terms:ir.ui.view,arch_db:aic_home.aic_backlog_cleanup_view_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: aic_home
+#: model:ir.model,name:aic_home.model_res_config_settings
+msgid "Config Settings"
+msgstr "إعدادات التهيئة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Confirmed this month"
+msgstr "مؤكدة هذا الشهر"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Customise"
+msgstr "تخصيص"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Customise home"
+msgstr "تخصيص الشاشة الرئيسية"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "D"
+msgstr ""
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Deadline"
+msgstr "الموعد النهائي"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Deadline %(time)s"
+msgstr "الموعد النهائي %(time)s"
+
+#. module: aic_home
+#: model:ir.model.fields,help:aic_home.field_res_users__aic_home_role
+msgid ""
+"Decides which panels the Home shows first. \"Suggest from activity\" "
+"picks the role from what the person worked on in the last 90 days. This "
+"never changes access rights."
+msgstr ""
+"يحدد اللوحات التي تعرضها Home أولًا. «اقتراح حسب النشاط» يختار الدور "
+"حسب ما عمل عليه الشخص في آخر 90 يومًا. ولا يغيّر صلاحيات الوصول أبدًا."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Delayed receipts"
+msgstr "استلامات متأخرة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Deliveries"
+msgstr "التسليمات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Dispatches today"
+msgstr "شحنات اليوم"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_ir_http__display_name
+#: model:ir.model.fields,field_description:aic_home.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:aic_home.field_res_users__display_name
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__display_name
+#: model:ir.model.fields,field_description:aic_home.field_aic_focus__display_name
+#: model:ir.model.fields,field_description:aic_home.field_aic_home__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Done"
+msgstr "تم"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Done today"
+msgstr "منجزة اليوم"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Done, follow up in 2 days"
+msgstr "تم، متابعة بعد يومين"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Done, plan next…"
+msgstr "تم، خطط للخطوة التالية…"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.js:0
+msgid "Done."
+msgstr "تم."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.js:0
+msgid "Done. Follow-up planned in %s days."
+msgstr "تم. المتابعة مخطط لها بعد %s أيام."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Drafts"
+msgstr "مسودات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Due"
+msgstr "الاستحقاق"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Due or overdue"
+msgstr "مستحقة أو متأخرة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Due today"
+msgstr "مستحقة اليوم"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Every panel is hidden. Use Customise to bring them back."
+msgstr "كل اللوحات مخفية. استخدم «تخصيص» لإعادتها."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Expected"
+msgstr "المتوقع"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Expected date has passed"
+msgstr "تجاوز التاريخ المتوقع"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Expires"
+msgstr "ينتهي"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Expires %(date)s"
+msgstr "ينتهي في %(date)s"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "F"
+msgstr ""
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Filter by type"
+msgstr "تصفية حسب النوع"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+#: model:ir.actions.client,name:aic_home.action_aic_focus
+msgid "Focus queue"
+msgstr "قائمة التركيز"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Follow up or extend before they lapse"
+msgstr "تابعها أو مدّدها قبل انتهائها"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "For your %s home. Only you see this."
+msgstr "لشاشتك الرئيسية الخاصة بدور %s. أنت وحدك ترى هذا."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Good afternoon"
+msgstr "مساء الخير"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Good evening"
+msgstr "مساء الخير"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Good morning"
+msgstr "صباح الخير"
+
+#. module: aic_home
+#: model:ir.model,name:aic_home.model_ir_http
+msgid "HTTP Routing"
+msgstr "توجيه HTTP"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "High priority, still open"
+msgstr "أولوية عالية، ما زالت مفتوحة"
+
+#. module: aic_home
+#: model:ir.actions.client,name:aic_home.action_aic_home
+#: model:ir.ui.menu,name:aic_home.menu_aic_home_root
+msgid "Home"
+msgstr "الرئيسية"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "Home is back to the %s layout."
+msgstr "عادت الشاشة الرئيسية إلى تخطيط %s."
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_res_users__aic_home_layout
+msgid "Home layout"
+msgstr "تخطيط الشاشة الرئيسية"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_res_users__aic_home_role
+msgid "Home role"
+msgstr "دور الشاشة الرئيسية"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Hot deals"
+msgstr "صفقات ساخنة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Hot opportunities"
+msgstr "فرص ساخنة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Hot opportunities (all)"
+msgstr "الفرص الساخنة (الكل)"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__confirm
+msgid "I have checked the list and want to go ahead"
+msgstr "راجعت القائمة وأريد المتابعة"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_ir_http__id
+#: model:ir.model.fields,field_description:aic_home.field_res_config_settings__id
+#: model:ir.model.fields,field_description:aic_home.field_res_users__id
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__id
+#: model:ir.model.fields,field_description:aic_home.field_aic_focus__id
+#: model:ir.model.fields,field_description:aic_home.field_aic_home__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "In the next 7 days"
+msgstr "خلال الأيام السبعة القادمة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Incoming"
+msgstr "وارد"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid ""
+"Keys: D done · F follow up in 2 days · P plan next · S tomorrow · W next "
+"week · → skip · ← back · O open record · Ctrl+Enter in the note = done"
+msgstr ""
+"المفاتيح: D تم · F متابعة بعد يومين · P خطط للتالي · S غدًا · W الأسبوع "
+"القادم · → تخطٍّ · ← رجوع · O فتح السجل · Ctrl+Enter في الملاحظة = تم"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Largest first"
+msgstr "الأكبر أولًا"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Last 30 days"
+msgstr "آخر 30 يومًا"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__aic_backlog_cleanup__kind__deliveries
+msgid "Late deliveries"
+msgstr "تسليمات متأخرة"
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__aic_backlog_cleanup__kind__receipts
+msgid "Late receipts"
+msgstr "استلامات متأخرة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Late transfers"
+msgstr "تحويلات متأخرة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Latest"
+msgstr "الأحدث"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Loading your day…"
+msgstr "جارٍ تحميل يومك…"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Loading your queue…"
+msgstr "جارٍ تحميل قائمتك…"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Mark as done"
+msgstr "تعليم كمنجز"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "Marked as done"
+msgstr "تم التعليم كمنجز"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__match_count
+msgid "Match Count"
+msgstr "عدد المطابقات"
+
+#. module: aic_home
+#. odoo-javascript
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Missed"
+msgstr "فائت"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "Move %s down"
+msgstr "تحريك %s للأسفل"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "Move %s up"
+msgstr "تحريك %s للأعلى"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Move all to today"
+msgstr "نقل الكل إلى اليوم"
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__aic_backlog_cleanup__operation__reschedule
+msgid "Move them to a new date"
+msgstr "نقلها إلى تاريخ جديد"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.js:0
+msgid "Moved %s days ahead."
+msgstr "تم التأجيل %s أيام."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.js:0
+msgid "Moved to tomorrow."
+msgstr "تم النقل إلى الغد."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "My open tasks"
+msgstr "مهامي المفتوحة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "My open tickets"
+msgstr "تذاكري المفتوحة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "My overdue activities"
+msgstr "أنشطتي المتأخرة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "My pipeline"
+msgstr "مسار مبيعاتي"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "My tasks: due and overdue"
+msgstr "مهامي: المستحقة والمتأخرة"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__new_date
+msgid "New date"
+msgstr "تاريخ جديد"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Next week"
+msgstr "الأسبوع القادم"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Next: %(date)s"
+msgstr "التالي: %(date)s"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "No next step"
+msgstr "بلا خطوة تالية"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid ""
+"No panels for this role yet: the apps it uses are not installed, or there is nothing to show.\n"
+"                    An administrator can change the Home role on the user form."
+msgstr ""
+"لا توجد لوحات لهذا الدور بعد: التطبيقات التي يستخدمها غير مثبتة، أو لا يوجد ما يُعرض.\n"
+"                    يمكن للمسؤول تغيير دور الشاشة الرئيسية في نموذج المستخدم."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.js:0
+msgid "Nothing is due or overdue for this type. %s done today."
+msgstr "لا شيء مستحق أو متأخر لهذا النوع. %s منجزة اليوم."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.js:0
+msgid "Nothing is due or overdue. %s done today."
+msgstr "لا شيء مستحق أو متأخر. %s منجزة اليوم."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Nothing is overdue and nothing is due today."
+msgstr "لا شيء متأخر ولا شيء مستحق اليوم."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "Nothing matches any more; there is nothing to clean up."
+msgstr "لم يعد هناك ما يطابق؛ لا يوجد ما يُنظَّف."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Nothing scheduled for today."
+msgstr "لا شيء مجدول لليوم."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+#: model:ir.model.fields.selection,name:aic_home.selection__aic_backlog_cleanup__kind__quotations
+msgid "Old quotations"
+msgstr "عروض أسعار قديمة"
+
+#. module: aic_home
+#: model_terms:ir.ui.view,arch_db:aic_home.aic_backlog_cleanup_view_form
+msgid ""
+"Old records that will never be finished make every count on Home look worse than it is.\n"
+"                    Pick what to clean up, check the list, then confirm."
+msgstr ""
+"السجلات القديمة التي لن تكتمل أبدًا تجعل كل رقم في الشاشة الرئيسية يبدو أسوأ مما هو عليه.\n"
+"                    اختر ما تريد تنظيفه، وراجع القائمة، ثم أكّد."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Older backlog"
+msgstr "متأخرات أقدم"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__older_than_days
+msgid "Older than (days)"
+msgstr "أقدم من (أيام)"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "Only managers of this area can run this clean-up."
+msgstr "لا يمكن إلا لمديري هذا القسم تشغيل هذا التنظيف."
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_res_config_settings__aic_home_start_screen
+msgid "Open Home after login"
+msgstr "فتح Home بعد تسجيل الدخول"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Open opportunities with nothing scheduled"
+msgstr "فرص مفتوحة بلا شيء مجدول"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Open pipeline"
+msgstr "مسار المبيعات المفتوح"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Open the pipeline"
+msgstr "فتح مسار المبيعات"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Open the record (O)"
+msgstr "فتح السجل (O)"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Order %(qty)s"
+msgstr "اطلب %(qty)s"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Ordered for your role. Badges count what needs you."
+msgstr "مرتبة حسب دورك. تعدّ الشارات ما يحتاجك."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Outgoing"
+msgstr "صادر"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Overdue activities"
+msgstr "أنشطة متأخرة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Overdue receivables"
+msgstr "مستحقات متأخرة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Overdue receivables stand at %(amount)s."
+msgstr "تبلغ المستحقات المتأخرة %(amount)s."
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role__owner
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role_suggested__owner
+msgid "Owner / manager"
+msgstr "المالك / المدير"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "P"
+msgstr ""
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "Panels"
+msgstr "اللوحات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Past the expected date"
+msgstr "بعد التاريخ المتوقع"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Past their scheduled date in the last 30 days"
+msgstr "تجاوزت موعدها المجدول خلال آخر 30 يومًا"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Plan an activity"
+msgstr "خطط لنشاط"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__preview_html
+msgid "Preview Html"
+msgstr "معاينة HTML"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Probability"
+msgstr "الاحتمالية"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Project"
+msgstr "المشروع"
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role__purchase
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role_suggested__purchase
+msgid "Purchase"
+msgstr "المشتريات"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Queue clear"
+msgstr "القائمة فارغة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Quiet %(days)s days"
+msgstr "هادئة منذ %(days)s أيام"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "Quotations can only be cancelled here."
+msgstr "يمكن إلغاء عروض الأسعار هنا فقط."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Quotations expiring"
+msgstr "عروض أسعار تنتهي"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Quotations expiring this week"
+msgstr "عروض أسعار تنتهي هذا الأسبوع"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "RFQs awaiting reply"
+msgstr "طلبات عروض أسعار بانتظار الرد"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "RFQs sent, no answer yet"
+msgstr "طلبات مرسلة بلا رد بعد"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Ready"
+msgstr "جاهز"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Receipts today"
+msgstr "استلامات اليوم"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Refresh"
+msgstr "تحديث"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Reorder alerts"
+msgstr "تنبيهات إعادة الطلب"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Reorder suggestions"
+msgstr "اقتراحات إعادة الطلب"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Replenishment"
+msgstr "إعادة التزويد"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#. module: aic_home
+#: model_terms:ir.ui.view,arch_db:aic_home.aic_backlog_cleanup_view_form
+msgid "Review the list first"
+msgstr "راجع القائمة أولًا"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "S"
+msgstr ""
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role__sales
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role_suggested__sales
+msgid "Sales"
+msgstr "المبيعات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Sales this month"
+msgstr "مبيعات هذا الشهر"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "Sections"
+msgstr "الأقسام"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "See all"
+msgstr "عرض الكل"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Sent %(days)s days ago"
+msgstr "أُرسل قبل %(days)s أيام"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Sent over 3 days ago"
+msgstr "أُرسلت قبل أكثر من 3 أيام"
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role__service
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role_suggested__service
+msgid "Service"
+msgstr "الخدمة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Show everything"
+msgstr "عرض كل شيء"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Skip"
+msgstr "تخطٍّ"
+
+#. module: aic_home
+#: model:ir.module.module,shortdesc:base.module_aic_home
+msgid "Home and Focus"
+msgstr "Core - الرئيسية"
+
+#. module: aic_home
+#: model:ir.model,name:aic_home.model_aic_home
+msgid "Home"
+msgstr "Home"
+
+#. module: aic_home
+#: model:ir.model,name:aic_home.model_aic_backlog_cleanup
+msgid "Core backlog clean-up"
+msgstr "تنظيف متأخرات Core"
+
+#. module: aic_home
+#: model:ir.model,name:aic_home.model_aic_focus
+msgid "Core focus queue"
+msgstr "قائمة تركيز Core"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Stage"
+msgstr "المرحلة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "Start my queue · %s"
+msgstr "ابدأ قائمتي · %s"
+
+#. module: aic_home
+#: model_terms:ir.ui.view,arch_db:aic_home.res_config_settings_view_form_aic_home
+msgid "Start on Home"
+msgstr "البدء من Home"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Status"
+msgstr "الحالة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Stock below its minimum rule"
+msgstr "مخزون دون قاعدة الحد الأدنى"
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role__auto
+msgid "Suggest from activity"
+msgstr "اقتراح حسب النشاط"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_res_users__aic_home_role_suggested
+msgid "Suggested role"
+msgstr "الدور المقترح"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Tags"
+msgstr "الوسوم"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Tasks"
+msgstr "المهام"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Tasks due"
+msgstr "مهام مستحقة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Team"
+msgstr "الفريق"
+
+#. module: aic_home
+#: model:ir.model.fields,help:aic_home.field_res_users__aic_home_role_suggested
+msgid "The role \"Suggest from activity\" would pick today."
+msgstr "الدور الذي سيختاره «اقتراح حسب النشاط» اليوم."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "This activity is no longer in your queue."
+msgstr "لم يعد هذا النشاط في قائمتك."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "This clean-up needs an app that is not installed."
+msgstr "يحتاج هذا التنظيف إلى تطبيق غير مثبت."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "This week or overdue"
+msgstr "هذا الأسبوع أو متأخرة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "Tick the box to confirm you have checked the list."
+msgstr "ضع علامة في المربع لتأكيد أنك راجعت القائمة."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Tickets waiting on me"
+msgstr "تذاكر بانتظاري"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "Tiles"
+msgstr "البطاقات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "To approve"
+msgstr "بانتظار الموافقة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "To do"
+msgstr "للتنفيذ"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "To-do"
+msgstr "مهمة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "To-dos"
+msgstr "المهام"
+
+#. module: aic_home
+#. odoo-javascript
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Today"
+msgstr "اليوم"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "Tomorrow"
+msgstr "غدًا"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Total"
+msgstr "الإجمالي"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Unpaid vendor bills"
+msgstr "فواتير موردين غير مدفوعة"
+
+#. module: aic_home
+#: model:ir.model,name:aic_home.model_res_users
+msgid "User"
+msgstr "المستخدم"
+
+#. module: aic_home
+#: model:ir.model.fields,help:aic_home.field_res_config_settings__aic_home_start_screen
+msgid ""
+"Users without their own home action land on Home instead of the app "
+"menu."
+msgstr ""
+"المستخدمون الذين ليس لديهم إجراء رئيسي خاص يصلون إلى Home بدل قائمة "
+"التطبيقات."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "W"
+msgstr ""
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Waiting"
+msgstr "قيد الانتظار"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Waiting for stock"
+msgstr "بانتظار المخزون"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Waiting on vendors"
+msgstr "بانتظار الموردين"
+
+#. module: aic_home
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role__warehouse
+#: model:ir.model.fields.selection,name:aic_home.selection__res_users__aic_home_role_suggested__warehouse
+msgid "Warehouse"
+msgstr "المستودع"
+
+#. module: aic_home
+#: model:ir.model.fields,help:aic_home.field_res_users__aic_home_layout
+msgid ""
+"What each person chose in Customise home, per role: {role: {hidden: [keys], "
+"order: [keys]}}. Written only through aic.home.save_layout / reset_layout,"
+" for the current user."
+msgstr ""
+"ما اختاره كل شخص في «تخصيص الشاشة الرئيسية» لكل دور: {role: {hidden: [keys],"
+" order: [keys]}}. يُكتب فقط عبر aic.home.save_layout / reset_layout "
+"للمستخدم الحالي."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "What happened?"
+msgstr "ماذا حدث؟"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_aic_backlog_cleanup__operation
+msgid "What to do"
+msgstr "ما العمل"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "WhatsApp"
+msgstr "واتساب"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_focus.py:0
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Yesterday"
+msgstr "أمس"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "You have %(missed)s missed and %(today)s due today."
+msgstr "لديك %(missed)s فائتة و%(today)s مستحقة اليوم."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "You have %(missed)s missed to catch up on."
+msgstr "لديك %(missed)s فائتة لتداركها."
+
+#. module: aic_home
+#. odoo-javascript
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Your apps"
+msgstr "تطبيقاتك"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Yours"
+msgstr "الخاصة بك"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "apps"
+msgstr "تطبيقات"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "e.g. Called, they want the revised quote by Friday"
+msgstr "مثال: اتصلت، يريدون العرض المعدل بحلول الجمعة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "today"
+msgstr "اليوم"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "user_id"
+msgstr ""
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/focus/focus.xml:0
+msgid "· note"
+msgstr "· ملاحظة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/wizard/backlog_cleanup.py:0
+msgid "…and %(n)s more"
+msgstr "…و%(n)s أخرى"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "%(channel)s to %(who)s"
+msgstr "%(channel)s إلى %(who)s"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "%(n)s min ago"
+msgstr "منذ %(n)s دقيقة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "%(n)s of your sends did not go out."
+msgstr "لم يُرسَل %(n)s من رسائلك."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "%(n)s sends"
+msgstr "%(n)s رسائل"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "%(n)s sends queued again."
+msgstr "أُعيد %(n)s رسائل إلى قائمة الإرسال."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "%(n)sd ago"
+msgstr "منذ %(n)s يوم"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "%(n)sh ago"
+msgstr "منذ %(n)s ساعة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "Dismiss"
+msgstr "تجاهل"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "Dismissed."
+msgstr "تم التجاهل."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "Failed"
+msgstr "فشل"
+
+#. module: aic_home
+#: model:ir.model.fields,field_description:aic_home.field_res_users__aic_home_failed_seen
+msgid "Failed sends dismissed until"
+msgstr "الرسائل الفاشلة متجاهلة حتى"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "Failed to send"
+msgstr "فشل الإرسال"
+
+#. module: aic_home
+#: model:ir.model.fields,help:aic_home.field_res_users__aic_home_failed_seen
+msgid ""
+"Home's \"Failed to send\" panel shows no WhatsApp failure older than this "
+"(Dismiss). E-mail and text-message failures are dismissed the Odoo way "
+"instead. Written only by aic.home."
+msgstr ""
+"لا تعرض لوحة «فشل الإرسال» في الصفحة الرئيسية أي فشل في واتساب أقدم من هذا "
+"التاريخ (تجاهل). يُتجاهل فشل البريد والرسائل النصية بطريقة Odoo. لا يكتبه "
+"إلا aic.home."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid ""
+"Nothing to retry: these failed for a reason a retry cannot fix (a bounce or "
+"a missing address). Open the document and correct the contact."
+msgstr ""
+"لا شيء لإعادة المحاولة: فشلت هذه الرسائل لسبب لا تحله إعادة المحاولة (ارتداد"
+" أو عنوان مفقود). افتح المستند وصحّح جهة الاتصال."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "Retry"
+msgstr "إعادة المحاولة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "Your own sends, last %(days)s days"
+msgstr "رسائلك أنت، آخر %(days)s يومًا"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "%(day)s %(date)s: %(done)s done, %(due)s still due"
+msgstr "%(day)s %(date)s: %(done)s منجزة، %(due)s ما زالت مستحقة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "%(n)s are overdue."
+msgstr "%(n)s متأخرة."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "%(n)s are still due before the week ends."
+msgstr "%(n)s ما زالت مستحقة قبل نهاية الأسبوع."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "%(start)s – %(end)s"
+msgstr "%(start)s – %(end)s"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "%s last week"
+msgstr "%s الأسبوع الماضي"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "And %s more."
+msgstr "و%s آخرون."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Due that day, still open"
+msgstr "مستحقة في ذلك اليوم، ما زالت مفتوحة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Home view"
+msgstr "عرض الصفحة الرئيسية"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Invoices posted"
+msgstr "فواتير مرحّلة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Loading your week…"
+msgstr "جارٍ تحميل أسبوعك…"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "My week"
+msgstr "أسبوعي"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "New opportunities"
+msgstr "فرص جديدة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Opportunities won"
+msgstr "فرص مكسوبة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Orders confirmed"
+msgstr "طلبات مؤكدة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Overdue"
+msgstr "متأخرة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Person"
+msgstr "الشخص"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Purchase orders confirmed"
+msgstr "أوامر شراء مؤكدة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Quotations created"
+msgstr "عروض أسعار منشأة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Still due"
+msgstr "ما زالت مستحقة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Still due this week"
+msgstr "ما زالت مستحقة هذا الأسبوع"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Tasks closed"
+msgstr "مهام مغلقة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "This week · last week"
+msgstr "هذا الأسبوع · الأسبوع الماضي"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Tickets closed"
+msgstr "تذاكر مغلقة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "Transfers done"
+msgstr "عمليات نقل منجزة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Who may need a hand. Alphabetical, not a ranking."
+msgstr "من قد يحتاج إلى مساعدة. بالترتيب الأبجدي، وليس تصنيفًا."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Work moved"
+msgstr "العمل المنجز"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "You completed %(n)s activities this week (%(prev)s last week)."
+msgstr "أنجزت %(n)s أنشطة هذا الأسبوع (%(prev)s الأسبوع الماضي)."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Your team"
+msgstr "فريقك"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "done this week"
+msgstr "منجزة هذا الأسبوع"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "last week"
+msgstr "الأسبوع الماضي"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "overdue"
+msgstr "متأخرة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "still due this week"
+msgstr "ما زالت مستحقة هذا الأسبوع"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "You completed 1 activity this week (%(prev)s last week)."
+msgstr "أنجزت نشاطًا واحدًا هذا الأسبوع (%(prev)s الأسبوع الماضي)."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "1 is still due before the week ends."
+msgstr "نشاط واحد ما زال مستحقًا قبل نهاية الأسبوع."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_week.py:0
+msgid "1 is overdue."
+msgstr "نشاط واحد متأخر."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "Waiting for you"
+msgstr "بانتظارك"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "Waiting for your approval"
+msgstr "بانتظار موافقتك"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "%(n)s waiting for your approval."
+msgstr "%(n)s بانتظار موافقتك."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "%(name)s approved"
+msgstr "تمت الموافقة على %(name)s"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "This record no longer waits for your approval."
+msgstr "لم يعد هذا السجل بانتظار موافقتك."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "%(days)s days"
+msgstr "%(days)s أيام"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Approve"
+msgstr "موافقة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Refuse"
+msgstr "رفض"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Reason"
+msgstr "السبب"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Why is it refused?"
+msgstr "لماذا تم الرفض؟"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "Refused: %(reason)s"
+msgstr "مرفوض: %(reason)s"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "%(name)s refused"
+msgstr "تم رفض %(name)s"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "Give a reason to refuse."
+msgstr "اذكر سبب الرفض."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_approvals.py:0
+msgid "This record cannot be refused from Home."
+msgstr "لا يمكن رفض هذا السجل من الصفحة الرئيسية."
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+#, python-format
+msgid "See all %(count)s"
+msgstr "عرض الكل (%(count)s)"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+#, python-format
+msgid "Team: %(count)s overdue"
+msgstr "الفريق: %(count)s متأخرة"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.xml:0
+msgid "Nothing missed on your side."
+msgstr "لا شيء فائت من جهتك."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "My team's overdue activities"
+msgstr "الأنشطة المتأخرة لفريقي"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+#, python-format
+msgid "More apps (%s)"
+msgstr "تطبيقات أخرى (%s)"
+
+#. module: aic_home
+#. odoo-javascript
+#: code:addons/aic_home/static/src/home/home.js:0
+msgid "Apps"
+msgstr "التطبيقات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+#, python-format
+msgid "Everyone's failed sends (%(n)s)"
+msgstr "الإرسالات الفاشلة للجميع (%(n)s)"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+msgid "Failed sends"
+msgstr "الإرسالات الفاشلة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_failed.py:0
+#, python-format
+msgid "None of yours. Across the company, last %(days)s days:"
+msgstr "لا شيء من إرسالاتك. على مستوى الشركة، آخر %(days)s يوماً:"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_for_you.py:0
+msgid "For you"
+msgstr "لك"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_for_you.py:0
+msgid "Mentions, your inbox and unread chats"
+msgstr "الإشارات وصندوق الوارد والمحادثات غير المقروءة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_for_you.py:0
+msgid "Open Discuss"
+msgstr "فتح المناقشة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_for_you.py:0
+msgid "Chat"
+msgstr "محادثة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_for_you.py:0
+#, python-format
+msgid "%(n)s unread"
+msgstr "%(n)s غير مقروءة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_for_you.py:0
+msgid "Message"
+msgstr "رسالة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_for_you.py:0
+#, python-format
+msgid "%(n)s messages are waiting for you."
+msgstr "%(n)s رسائل بانتظارك."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Late manufacturing"
+msgstr "تصنيع متأخر"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Should have started"
+msgstr "كان يجب أن يبدأ"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Late manufacturing orders"
+msgstr "أوامر تصنيع متأخرة"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Should have started by now"
+msgstr "كان يجب أن تبدأ الآن"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Waiting for components"
+msgstr "بانتظار المكونات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Confirmed orders short of components"
+msgstr "أوامر مؤكدة تنقصها مكونات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Today's visits"
+msgstr "زيارات اليوم"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "In visit order"
+msgstr "بترتيب الزيارات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "Cash and bank"
+msgstr "النقد والبنوك"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+#, python-format
+msgid "%(n)s accounts"
+msgstr "%(n)s حسابات"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "1 account"
+msgstr "حساب واحد"
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "1 opportunity has no next step."
+msgstr "فرصة واحدة بلا خطوة تالية."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "1 receipt is late from its vendor."
+msgstr "استلام واحد متأخر من مورده."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "1 message is waiting for you."
+msgstr "رسالة واحدة بانتظارك."
+
+#. module: aic_home
+#. odoo-python
+#: code:addons/aic_home/models/aic_home.py:0
+msgid "1 thing is on your list today."
+msgstr "أمر واحد على قائمتك اليوم."

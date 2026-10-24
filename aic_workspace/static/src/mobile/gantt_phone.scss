@@ -1,0 +1,98 @@
+// =============================================================================
+// Workspace — vertical gantt for phones (gantt_phone.js / .xml)
+// Inside the same < 768px query as the rest of the mobile shell and scoped to .o_aic_theme.
+// Pill colours come from Odoo (.o_gantt_view .o_gantt_cells .o_gantt_pill.o_gantt_color_N).
+// =============================================================================
+
+@media (max-width: 767.98px) {
+  .o_aic_theme .o_gantt_view .o_aic_gantt_v {
+    --aic-gantt-slot: 48px;
+    --aic-gantt-head: 44px;
+    display: flex; flex-direction: column;
+
+    .o_aic_gantt_v_scroller { overflow: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+    // no record in the period: Odoo's help text in its own block under the controls (Odoo's
+    // .o_view_nocontent is absolutely positioned — it fills this block, not the screen)
+    .o_aic_gantt_v_nocontent {
+      flex: 0 0 auto; margin: 4px 8px 8px;
+      border-radius: var(--nm-radius); background: var(--nm-surface); box-shadow: var(--nm-inset-sm);
+      // in the flow (Odoo positions it absolutely over its grid): the block grows with the text
+      .o_view_nocontent { position: static; inset: auto; height: auto; margin: 0; padding: 16px; }
+      .o_nocontent_help { max-width: 100%; }
+    }
+    .o_aic_gantt_v_grid {
+      display: grid;
+      grid-auto-rows: var(--aic-gantt-slot);
+      grid-template-rows: var(--aic-gantt-head);
+      position: relative;
+      min-width: 100%;
+      width: max-content;
+    }
+
+    // header row
+    .o_aic_gantt_v_corner { position: sticky; left: 0; top: 0; z-index: 4; background: var(--nm-surface); border-bottom: 1px solid var(--nm-hairline); }
+    .o_aic_gantt_v_head {
+      position: sticky; top: 0; z-index: 3;
+      display: flex; align-items: center; padding: 0 10px;
+      background: var(--nm-surface); border-bottom: 1px solid var(--nm-hairline); border-left: 1px solid var(--nm-hairline);
+      font-size: 12.5px; font-weight: 600; color: var(--nm-text); gap: 8px; cursor: pointer;
+      span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      i { color: var(--nm-text-faint); font-size: 11px; }
+      &.o_focused { color: var(--nm-action); i { color: var(--nm-action); } }
+    }
+
+    // time axis
+    .o_aic_gantt_v_time {
+      position: sticky; left: 0; z-index: 2;
+      display: flex; flex-direction: column; justify-content: flex-start; gap: 1px;
+      padding: 4px 6px 0 8px; box-sizing: border-box;
+      background: var(--nm-surface); border-top: 1px solid var(--nm-hairline);
+      color: var(--nm-text-muted); font-size: 12px; line-height: 1.15; font-variant-numeric: tabular-nums;
+      .o_aic_gantt_v_time_lbl { font-weight: 600; color: var(--nm-text); }
+      .o_aic_gantt_v_time_sub { font-size: 10px; color: var(--nm-text-faint); white-space: nowrap; }
+      &.o_period { border-top: 2px solid var(--nm-text-faint); }
+      &.o_today { background: var(--nm-active-tint); .o_aic_gantt_v_time_lbl { color: var(--nm-action); } }
+    }
+
+    // one column per gantt row
+    .o_aic_gantt_v_col {
+      position: relative; border-left: 1px solid var(--nm-hairline);
+      .o_aic_gantt_v_cell {
+        height: var(--aic-gantt-slot); box-sizing: border-box; border-top: 1px solid var(--nm-hairline);
+        &.o_period { border-top: 2px solid var(--nm-text-faint); }
+        &.o_today { background: var(--nm-active-tint); }
+        &:active { background: var(--nm-active-tint); }
+      }
+    }
+
+    // pills: placed by time, lanes side by side when records overlap. Flat cards on the sheet, as the calendar
+    // agenda: a bar in the record's gantt colour, the name and its time; a rule Odoo marks (a conflict, a delay)
+    // rings the card in its colour, named in the legend above (v3.21)
+    .o_aic_gantt_v_pill {
+      position: absolute; z-index: 1; box-sizing: border-box;
+      padding: 5px 8px 5px 13px; border-radius: 10px !important; overflow: hidden; cursor: pointer;
+      background: var(--nm-surface-high) !important; color: var(--nm-text) !important;
+      border: 1px solid var(--nm-hairline); box-shadow: var(--nm-raised-sm) !important;
+      font-size: 12px; line-height: 1.25;
+      --aic-pill-bar: var(--nm-action);
+      &::before { content: ""; position: absolute; left: 4px; top: 5px; bottom: 5px; width: 4px; border-radius: 2px; background: var(--aic-pill-bar); }
+      @for $i from 1 through length($o-colors-complete) {
+        &.o_gantt_color_#{$i - 1} { --aic-pill-bar: #{nth($o-colors-complete, $i)}; }
+      }
+      @each $color, $value in map-merge($theme-colors, ("secondary": $gray-300)) {
+        &.decoration-#{$color} { border-color: $value; box-shadow: inset 0 0 0 1px $value, var(--nm-raised-sm) !important; }
+      }
+      .o_gantt_pill_title { display: block; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: none; color: var(--nm-text); }
+      .o_aic_gantt_v_pill_time { display: block; font-size: 11px; color: var(--nm-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      // a finished / cancelled record (decoration-secondary) was faded as a whole, its text under AA: it stays
+      // readable, set back by a grey bar and muted ink instead
+      &.decoration-secondary { opacity: 1 !important; --aic-pill-bar: #{$gray-500}; .o_gantt_pill_title { color: var(--nm-text-muted); font-weight: 500; } }
+      &:active { background: var(--nm-active-tint) !important; }
+    }
+    .o_aic_gantt_legend { margin: 0 0 6px; padding: 0 12px; }
+  }
+  // the controller's own copy of the "no content" helper is placed for Odoo's renderer (an
+  // absolute overlay under its header rows) — when the phone renderer is on screen it draws the
+  // help text itself, so the controller's copy stays out of the way
+  .o_aic_theme .o_gantt_view .o_content:has(> .o_aic_gantt_v) > .o_view_nocontent { display: none; }
+}

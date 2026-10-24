@@ -1,0 +1,9 @@
+// Gantt legend: one key per corner marker shown on the pills, in the marker's own colour (as web_gantt paints it)
+.o_aic_gantt_legend {
+    gap: 6px 16px; margin: -6px 0 10px; padding: 0 4px; font-size: 13px; color: var(--nm-text-muted, #5b4e46);
+    .o_aic_gantt_key { display: inline-flex; align-items: center; gap: 6px; }
+    .o_aic_gantt_key_mark { flex: none; width: 10px; height: 10px; border-radius: 2px; transform: rotate(45deg); }
+    @each $color, $value in map-merge($theme-colors, ("secondary": $gray-300)) {
+        .decoration-#{$color} .o_aic_gantt_key_mark { background: $value; }
+    }
+}

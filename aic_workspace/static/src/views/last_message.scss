@@ -1,0 +1,20 @@
+// Ticket form: the customer's last message, first
+.o_aic_last_message {
+    position: relative; margin: 0 0 16px; padding: 12px 16px 12px 20px; border-radius: var(--nm-radius, 12px);
+    background: var(--nm-surface-high, #fff); box-shadow: var(--nm-raised-sm, 0 1px 3px rgba(0,0,0,.12));
+    &::before { content: ""; position: absolute; left: 8px; top: 12px; bottom: 12px; width: 4px; border-radius: 2px; background: var(--nm-action, #c2410c); }
+    .o_aic_last_message_head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: 13px; }
+    .o_aic_last_message_label { font-weight: 700; color: var(--nm-text, inherit); }
+    .o_aic_last_message_who { color: var(--nm-text-muted, #5b4e46); }
+    .o_aic_last_message_state {
+        padding: 1px 10px; border-radius: var(--nm-radius-pill, 999px); font-size: 12px; font-weight: 600;
+        &.o_waiting { background: #{"color-mix(in srgb, var(--nm-warning) 16%, var(--nm-surface-high))"}; color: #{"color-mix(in srgb, var(--nm-warning) 45%, var(--nm-text))"}; }
+        &.o_answered { background: #{"color-mix(in srgb, var(--nm-success) 14%, var(--nm-surface-high))"}; color: #{"color-mix(in srgb, var(--nm-success) 50%, var(--nm-text))"}; }
+    }
+    .o_aic_last_message_text {
+        margin: 8px 0 10px; padding: 0; border: 0; font-style: normal; font-size: 14px; line-height: 1.45; color: var(--nm-text, inherit); white-space: pre-line;
+        display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+    }
+}
+// an archived / won ticket's ribbon sits in the sheet's top-right corner: start the card below it
+.o_form_sheet:has(.o_widget_web_ribbon .ribbon) .o_aic_last_message { margin-top: 36px; }

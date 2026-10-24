@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Quick due dates (Today, Tomorrow, Next week, In 2 weeks) under the due date of Schedule Activity and of
+         the activity form (static/src/activity/date_picks.js). -->
+    <record id="mail_activity_schedule_view_form_aic_picks" model="ir.ui.view">
+        <field name="name">mail.activity.schedule.form (Core quick dates)</field>
+        <field name="model">mail.activity.schedule</field>
+        <field name="inherit_id" ref="mail.mail_activity_schedule_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[field[@name='date_deadline']]" position="after">
+                <widget name="aic_date_picks" field="date_deadline"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="mail_activity_view_form_popup_aic_picks" model="ir.ui.view">
+        <field name="name">mail.activity.form.popup (Core quick dates)</field>
+        <field name="model">mail.activity</field>
+        <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[field[@name='date_deadline']]" position="after">
+                <widget name="aic_date_picks" field="date_deadline"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
