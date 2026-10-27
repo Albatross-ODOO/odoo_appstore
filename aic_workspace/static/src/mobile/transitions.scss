@@ -1,7 +1,0 @@
-// Phones: screens slide in (transitions.js decides the direction)
-@media (max-width: 767.98px) and (prefers-reduced-motion: no-preference) {
-    body.o_aic_theme.o_aic_nav_ready .o_action_manager > .o_action { animation: o_aic_push .22s cubic-bezier(.2, .7, .3, 1); }
-    body.o_aic_theme.o_aic_nav_ready.o_aic_nav_back .o_action_manager > .o_action { animation-name: o_aic_pop; }
-}
-@keyframes o_aic_push { from { transform: translateX(22%); opacity: .35; } to { transform: none; opacity: 1; } }
-@keyframes o_aic_pop { from { transform: translateX(-22%); opacity: .35; } to { transform: none; opacity: 1; } }

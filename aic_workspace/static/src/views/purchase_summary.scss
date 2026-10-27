@@ -1,6 +1,0 @@
-// Purchase order: late from the vendor (purchase_summary.js); the card is the "Still missing" card of transfers
-.o_aic_po_late {
-    .o_aic_po_chase { flex: none; margin-top: -4px; }
-    .o_aic_po_days { font-weight: 600; color: #{"color-mix(in srgb, var(--nm-danger, #dc2626) #{if($o-webclient-color-scheme == dark, 50%, 80%)}, var(--nm-text, #222))"}; }
-    .o_aic_po_sales { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 8px 0 0; font-size: 13px; color: var(--nm-text-muted); }
-}
