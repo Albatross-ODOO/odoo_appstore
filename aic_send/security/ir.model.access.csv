@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_aic_whatsapp_share_user,aic.whatsapp.share user,model_aic_whatsapp_share,base.group_user,1,1,1,1
