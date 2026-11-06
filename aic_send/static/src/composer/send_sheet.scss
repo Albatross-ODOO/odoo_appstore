@@ -1,0 +1,15 @@
+// One send sheet: the channel switch at the top of the composer
+.o_aic_send_channel {
+    display: flex; align-items: center; gap: 12px; margin: 4px 0 14px;
+    .o_aic_send_channel_lbl { font-size: 12px; font-weight: 500; color: var(--nm-text-muted, #6c757d); }
+    .o_aic_send_seg {
+        display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: var(--nm-surface, #f3f3f3);
+        box-shadow: var(--nm-inset-sm, inset 0 1px 2px rgba(0, 0, 0, .08));
+        button {
+            display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border: 0; border-radius: 999px;
+            background: transparent; color: var(--nm-text-muted, #555); font-weight: 500;
+            &.o_on { background: var(--nm-surface-high, #fff); color: var(--nm-text, #222); box-shadow: var(--nm-raised-sm, 0 1px 3px rgba(0, 0, 0, .12)); }
+            &:focus-visible { outline: 2px solid var(--nm-action, #c2410c); outline-offset: 1px; }
+        }
+    }
+}

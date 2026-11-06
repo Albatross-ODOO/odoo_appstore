@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- Every view renders through Layout; inject the panel here so list/kanban subclasses
+         (CRM, Project, …) are covered too. The panel and its classes only activate when a
+         controller has put `env.aicSplit` in scope AND a record is selected. -->
+    <t t-name="aic_workspace.Layout" t-inherit="web.Layout" t-inherit-mode="extension">
+        <xpath expr="//main[hasclass('o_content')]" position="attributes">
+            <attribute name="t-att-class">{
+                'o_component_with_search_panel': this.props.display.searchPanel,
+                'o_aic_split_open': this.env.aicSplit and this.env.aicSplit.open,
+                'o_aic_split_bottom': this.env.aicSplit and this.env.aicSplit.open and this.env.aicSplit.bottom,
+                'o_aic_split_right': this.env.aicSplit and this.env.aicSplit.open and !this.env.aicSplit.bottom,
+                'o_aic_split_collapsed': this.env.aicSplit and this.env.aicSplit.open and this.env.aicSplit.collapsed,
+            }</attribute>
+            <attribute name="t-attf-style">{{ this.env.aicSplit and this.env.aicSplit.open ? this.env.aicSplit.style : '' }}</attribute>
+        </xpath>
+        <xpath expr="//t[@t-call-slot='default']" position="after">
+            <t t-if="this.env.aicSplit and this.env.aicSplit.open" t-component="this.aicSplitPanel" t-props="this.env.aicSplit.props"/>
+        </xpath>
+    </t>
+
+</templates>

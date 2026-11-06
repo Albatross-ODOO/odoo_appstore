@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_aic_home" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.aic_home</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="aic_theme.res_config_settings_view_form_aic"/>
+        <field name="arch" type="xml">
+            <block name="theme_aic_block" position="inside">
+                <setting id="aic_home_setting" string="Start on Home"
+                         help="After login, people see what they missed, what is due today and the work that needs them. Each person's Home role is set on their user form (Preferences). Someone with their own home action keeps it.">
+                    <field name="aic_home_start_screen"/>
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>

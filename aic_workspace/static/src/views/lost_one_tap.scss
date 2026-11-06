@@ -1,0 +1,6 @@
+// CRM "Mark Lost" dialog: the closing note first, then the reasons (a tap on a reason applies it)
+.o_form_renderer:has(> .o_field_widget[name=lost_reason_id]) {
+    display: flex !important; flex-direction: column;
+    > .o_inner_group, > .o_group { order: -1; margin-bottom: 12px; }
+    > .o_field_widget[name=lost_reason_id] .o_selection_badge { min-height: 40px; display: inline-flex; align-items: center; }
+}

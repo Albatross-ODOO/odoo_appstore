@@ -1,0 +1,127 @@
+// =============================================================================
+// EOD — design tokens (Lagoon, 2026-10-14)
+//
+// The engine (aic_theme/static/src/scss/tokens.scss) composes every component from a few
+// custom properties: surfaces, wells, edges, shadows and the colour roles. EOD keeps the
+// NAMES and changes the VALUES, scoped to `body.o_aic_skin_eod`:
+//
+//   pane   --nm-surface       translucent white (charcoal glass in dark mode) over the field
+//   float  --nm-surface-high  nearly opaque: dropdowns, dialogs, popovers stay legible over anything
+//   seat   --nm-well-bg       a faint ink wash: inputs, search, segmented controls, lanes
+//   edge   --nm-edge          a bright 1 px inner hairline: what makes a pane read as glass
+//
+// Colours (Lagoon): one calm blue for actions (#0060D6, 5.6:1 with white, 5.2:1 as text on a
+// pane), a pale blue for "you are here", near-black ink. A company palette (preset, logo,
+// custom) re-declares the colour roles and the three field blobs in a <style> in the page head
+// (models/eod_palette.py); surfaces, edges and shadows always stay glass.
+//
+// Same file, both schemes: web.assets_web_dark recompiles the bundle with the dark variables.
+// =============================================================================
+
+$-gl-dark: $o-webclient-color-scheme == dark;
+$-gl-ink: #111318;
+
+$gl-ground:  if($-gl-dark, #0A0C12, #EEF2F8);
+$gl-blob-a:  if($-gl-dark, #0E2E5E, #C7DEFF);
+$gl-blob-b:  if($-gl-dark, #2B2160, #E4DCFF);
+$gl-blob-c:  if($-gl-dark, #0D3C38, #CDEFE8);
+
+$gl-brand:          if($-gl-dark, #4C93FF, #0060D6);
+$gl-brand-contrast: if($-gl-dark, #04122B, #FFFFFF);
+$gl-action:         if($-gl-dark, #7DB2FF, #0060D6);
+$gl-current:        if($-gl-dark, #1F3F73, #D6E7FF);
+$gl-current-ink:    if($-gl-dark, #D6E7FF, #003C88);
+
+@font-face {
+    font-family: "Geist";
+    src: url("/web_theme_eod/static/src/fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+// The blur behind a pane. Applied deliberately, never through a generic mixin: every blurred
+// element is a compositing layer of its own, so containers blur (navbar, form panes, lanes, the
+// chatter, overlays) and the many things inside them (list rows, kanban cards) never do.
+@mixin gl-blur($amount: var(--gl-blur)) {
+    -webkit-backdrop-filter: blur($amount) saturate(1.8);
+    backdrop-filter: blur($amount) saturate(1.8);
+}
+
+.o_aic_theme.o_aic_skin_eod {
+    // --- the colour field ------------------------------------------------------
+    --gl-ground: #{$gl-ground};
+    --gl-blob-a: #{$gl-blob-a};
+    --gl-blob-b: #{$gl-blob-b};
+    --gl-blob-c: #{$gl-blob-c};
+    --gl-blur: 24px;
+    --gl-blur-sm: 12px;
+    --gl-pane-hi: #{if($-gl-dark, rgba(#343743, .62), rgba(#FFF, .86))};    // a pane inside a pane
+    --gl-edge-top: #{if($-gl-dark, rgba(#FFF, .08), rgba(#FFF, 1))};
+
+    // --- surfaces --------------------------------------------------------------
+    --nm-surface: #{if($-gl-dark, rgba(#1C1E24, .58), rgba(#FFF, .66))};
+    --nm-surface-high: #{if($-gl-dark, rgba(#24262E, .92), rgba(#FFF, .90))};
+    --nm-well-bg: #{if($-gl-dark, rgba(#FFF, .06), rgba($-gl-ink, .045))};
+
+    // --- edges and shadows (the engine composes --nm-raised / --nm-floating from these) ----
+    --nm-shadow-soft: #{if($-gl-dark, rgba(#000, .25), rgba(#101828, .04))};
+    --nm-shadow-dark: #{if($-gl-dark, rgba(#000, .45), rgba(#101828, .10))};
+    --nm-shadow-deep: #{if($-gl-dark, rgba(#000, .60), rgba(#101828, .18))};
+    --nm-shadow-light: transparent;
+    --nm-inset-dark: #{if($-gl-dark, rgba(#000, .30), rgba($-gl-ink, .05))};
+    --nm-inset-light: transparent;
+    --nm-edge: #{if($-gl-dark, rgba(#FFF, .10), rgba(#FFF, .85))};
+    --nm-top-edge: var(--gl-edge-top);
+    --nm-hairline: #{if($-gl-dark, rgba(#FFF, .10), rgba($-gl-ink, .08))};
+    --nm-raised-sm: 0 1px 2px var(--nm-shadow-soft), 0 4px 12px -4px var(--nm-shadow-dark), inset 0 0 0 1px var(--nm-edge);
+    --nm-raised:    0 1px 2px var(--nm-shadow-soft), 0 16px 40px -12px var(--nm-shadow-dark), inset 0 1px 0 var(--nm-top-edge), inset 0 0 0 1px var(--nm-edge);
+    --nm-raised-lg: 0 2px 4px var(--nm-shadow-soft), 0 24px 48px -14px var(--nm-shadow-dark), inset 0 0 0 1px var(--nm-edge);
+    --nm-inset-sm:  inset 0 0 0 1px var(--nm-hairline);
+    --nm-inset:     inset 0 0 0 1px var(--nm-hairline);
+    --nm-well:      inset 0 0 0 1px var(--nm-edge);
+
+    // --- inks: AA on a light pane over the field (≈ #F2F5FA): text 17:1, muted 5.9:1, faint 4.8:1
+    --nm-text: #{if($-gl-dark, #F2F3F5, $-gl-ink)};
+    --nm-text-muted: #{if($-gl-dark, #ADB3BE, #5A606C)};     // dark: AA on the lighter header strips too (#404148)
+    --nm-text-faint: #{if($-gl-dark, #969DAA, #636A77)};
+    // state inks that sit on the lighter panes: Odoo's green was 4.46:1 on a list row
+    --gl-success-text: #{if($-gl-dark, #4ACB6B, #12772F)};
+    --gl-danger-text: #{if($-gl-dark, #FF8A8A, #B42318)};
+    --gl-info-text: #{if($-gl-dark, #6FC3E0, #00708F)};         // Odoo's info cyan was 4.0:1 on the field
+    --nm-ink: #{if($-gl-dark, #FFFFFF, $-gl-ink)};
+    // the one strong surface (Home's focus card): the action colour, white text on it
+    --nm-plum: #{if($-gl-dark, #1C3D73, #0060D6)};
+    --nm-plum-muted: #{if($-gl-dark, #C8DAF5, #FFFFFF)};     // white on the blue card: a tint of it fell under AA
+
+    // --- colour roles: Lagoon ------------------------------------------------------
+    --nm-brand: #{$gl-brand};
+    --nm-brand-rgb: #{red($gl-brand)}, #{green($gl-brand)}, #{blue($gl-brand)};
+    --nm-brand-hover: #{if($-gl-dark, lighten($gl-brand, 6%), darken($gl-brand, 6%))};
+    --nm-brand-contrast: #{$gl-brand-contrast};
+    --nm-brand-shadow: #{rgba($gl-brand, if($-gl-dark, .45, .30))};
+    --nm-action: #{$gl-action};
+    --nm-action-hover: #{if($-gl-dark, lighten($gl-action, 8%), darken($gl-action, 10%))};
+    --nm-action-contrast: #{if($-gl-dark, #04122B, #FFFFFF)};
+    --nm-action-shadow: #{rgba($gl-action, .3)};
+    --nm-current: #{$gl-current};
+    --nm-current-ink: #{$gl-current-ink};
+    --nm-current-glow: #{rgba($gl-brand, if($-gl-dark, .30, .20))};
+    --nm-active-tint: #{if($-gl-dark, rgba(#4C93FF, .16), rgba(#0060D6, .09))};
+    --nm-current-soft-ink: #{if($-gl-dark, #BBD6FF, #00408F)};
+    --nm-dot: transparent;
+    --nm-glow-brand: transparent;
+    --nm-glow-action: transparent;
+    --nm-current-key: 0 4px 12px -4px var(--nm-current-glow), inset 0 0 0 1px #{if($-gl-dark, rgba(#FFF, .10), rgba(#FFF, .7))};
+
+    // --- geometry: iOS-like rounder corners ----------------------------------------
+    --nm-radius-sm: 10px;
+    --nm-radius: 16px;
+    --nm-radius-lg: 22px;
+
+    // --- type: Geist for everything; tight display titles ---------------------------
+    --aic-font: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --aic-font-display: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --nm-scroll-thumb: #{if($-gl-dark, rgba(#FFF, .22), rgba($-gl-ink, .22))};
+    --nm-icon-hover: #{if($-gl-dark, unquote("invert(1) sepia(1) saturate(30) hue-rotate(185deg) brightness(1.05) contrast(.7)"), unquote("sepia(.6) saturate(8) hue-rotate(175deg) brightness(.85) contrast(1.1)"))};
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="aic_workspace.MobileShell">
+        <t t-if="this.active">
+
+            <!-- scrim behind any open sheet -->
+            <div t-if="this.state.overlay" class="o_aic_m_scrim" t-on-click="this.closeOverlay"/>
+
+            <!-- ============ STAGE picker (grouped kanban) ============ -->
+            <div t-if="this.state.overlay === 'stages'" class="o_aic_m_sheet o_aic_m_stages">
+                <div class="o_aic_m_grab"/>
+                <div class="o_aic_m_sheet_head">Open a stage</div>
+                <div class="o_aic_m_seclist">
+                    <button class="o_aic_m_sec" t-att-class="{ o_active: !this.isStageFiltered }"
+                            t-on-click="() => this.selectStage(undefined)">
+                        <span class="o_aic_m_stage_name">All stages</span>
+                        <i t-if="!this.isStageFiltered" class="oi" data-icon="check"/>
+                    </button>
+                    <t t-foreach="this.stages" t-as="st" t-key="st.value">
+                        <button class="o_aic_m_sec" t-att-class="{ o_active: this.isStageSelected(st.value) }"
+                                t-on-click="() => this.selectStage(st.value)">
+                            <span class="o_aic_m_stage_name" t-out="st.label"/>
+                            <span class="o_aic_m_stage_count" t-out="st.count"/>
+                        </button>
+                    </t>
+                </div>
+            </div>
+
+            <!-- ============ STAGE picker floating button (only on a grouped kanban) ====== -->
+            <button t-if="this.showStagePicker and !this.state.overlay"
+                    class="o_aic_m_stagefab" t-att-class="{ o_filtered: this.isStageFiltered }"
+                    t-on-click="() => this.openOverlay('stages')">
+                <i class="oi" data-icon="view_column"/>
+                <span t-out="this.currentStageLabel"/>
+            </button>
+
+            <!-- ============ BOTTOM TAB BAR ============ -->
+            <nav class="o_aic_m_tabbar">
+                <button class="o_aic_m_tab" t-att-class="{ o_active: this.state.screen === 'home' }"
+                        t-att-aria-current="this.state.screen === 'home' ? 'page' : 'false'"
+                        t-on-click="() => this.openHome()" data-available-offline="">
+                    <i class="oi" data-icon="home"/><span>Home</span>
+                </button>
+                <button class="o_aic_m_tab o_aic_m_tab_app" t-att-class="{ o_active: this.state.screen === 'app' }"
+                        t-att-aria-current="this.state.screen === 'app' ? 'page' : 'false'"
+                        t-on-click="() => this.onAppTab()" data-available-offline="">
+                    <img t-if="this.currentApp and this.currentApp.webIconData" class="o_aic_m_tab_appicon" t-att-src="this.currentApp.webIconData" alt=""/>
+                    <i t-else="" class="oi" t-att-data-icon="this.currentApp ? 'menu' : 'apps'"/>
+                    <span t-if="this.currentApp" t-out="this.currentApp.name"/>
+                    <span t-else="">Apps</span>
+                </button>
+                <button class="o_aic_m_tab o_aic_m_create" t-att-disabled="!this.state.canCreate"
+                        aria-label="Create" title="Create" t-on-click="() => this.onCreate()">
+                    <i class="oi" data-icon="add"/>
+                </button>
+                <button class="o_aic_m_tab" t-att-class="{ o_active: this.state.screen === 'focus' }"
+                        t-att-aria-current="this.state.screen === 'focus' ? 'page' : 'false'"
+                        t-on-click="() => this.openActivities()">
+                    <span class="o_aic_m_tab_iconwrap">
+                        <i class="oi" data-icon="schedule"/>
+                        <span t-if="this.activityCount" class="o_aic_m_tab_badge" t-out="this.activityCount"/>
+                    </span>
+                    <span>Activities</span>
+                </button>
+                <button class="o_aic_m_tab" t-on-click="this.openAccount" data-available-offline="">
+                    <i class="oi" data-icon="account_circle"/><span>Me</span>
+                </button>
+            </nav>
+
+        </t>
+    </t>
+
+</templates>

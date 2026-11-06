@@ -1,0 +1,326 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-08 09:20+0000\n"
+"PO-Revision-Date: 2026-10-08 09:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aic_send
+#: model:ir.module.module,description:base.module_aic_send
+msgid ""
+"\n"
+"Core Share on WhatsApp\n"
+"=======================\n"
+"A \"WhatsApp\" button in the chatter of every record. It opens a short sheet with the contact's number (in\n"
+"international form) and a message written for the document (quotation, order, invoice, purchase order or any\n"
+"record), including a secure customer-portal link when the record has one. \"Open WhatsApp\" opens WhatsApp Web or\n"
+"the app with the message filled in; the share is logged on the record, and a draft quotation is marked as sent,\n"
+"the same as sending it by email.\n"
+"\n"
+"Works on Community and Enterprise and needs no WhatsApp Business account. Can be turned off in Settings.\n"
+msgstr ""
+
+#. module: aic_send
+#: model_terms:ir.ui.view,arch_db:aic_send.res_config_settings_view_form_aic_send
+msgid ""
+"A WhatsApp button in the chatter of every record: the contact's number, a "
+"ready message and, for quotations, invoices and purchase orders, a secure "
+"link to the document. Reload the page after changing."
+msgstr ""
+"Un bouton WhatsApp dans la discussion de chaque enregistrement : le numéro "
+"du contact, un message prêt et, pour les devis, factures et bons de "
+"commande, un lien sécurisé vers le document. Rechargez la page après "
+"modification."
+
+#. module: aic_send
+#: model:ir.model.fields,help:aic_send.field_aic_whatsapp_share__link
+msgid "A secure link the customer can open without logging in."
+msgstr "Un lien sécurisé que le client peut ouvrir sans se connecter."
+
+#. module: aic_send
+#: model_terms:ir.ui.view,arch_db:aic_send.aic_whatsapp_share_view_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: aic_send
+#: model:ir.model,name:aic_send.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de configuration"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_ir_http__display_name
+#: model:ir.model.fields,field_description:aic_send.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__link
+msgid "Document link"
+msgstr "Lien du document"
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid ""
+"Enter the WhatsApp number in international form, for example +91 98250 "
+"12345."
+msgstr ""
+"Saisissez le numéro WhatsApp au format international, par exemple +91 98250 "
+"12345."
+
+#. module: aic_send
+#: model:ir.model,name:aic_send.model_ir_http
+msgid "HTTP Routing"
+msgstr "Routage HTTP"
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "Hello %(name)s,"
+msgstr "Bonjour %(name)s,"
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "Hello,"
+msgstr "Bonjour,"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_ir_http__id
+#: model:ir.model.fields,field_description:aic_send.field_res_config_settings__id
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__id
+msgid "ID"
+msgstr "ID"
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "It is due on %(date)s."
+msgstr "Elle est à régler pour le %(date)s."
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "It is valid until %(date)s."
+msgstr "Il est valable jusqu'au %(date)s."
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__write_uid
+msgid "Last Updated by"
+msgstr "Dernière modification par"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__write_date
+msgid "Last Updated on"
+msgstr "Dernière modification le"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__message
+msgid "Message"
+msgstr "Message"
+
+#. module: aic_send
+#: model_terms:ir.ui.view,arch_db:aic_send.aic_whatsapp_share_view_form
+msgid "Open WhatsApp"
+msgstr "Ouvrir WhatsApp"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__record_name
+msgid "Record"
+msgstr "Enregistrement"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__res_id
+msgid "Res"
+msgstr "Réf."
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__res_model
+msgid "Res Model"
+msgstr "Modèle"
+
+#. module: aic_send
+#: model:ir.model,name:aic_send.model_aic_whatsapp_share
+msgid "Share a record on WhatsApp"
+msgstr "Partager un enregistrement sur WhatsApp"
+
+#. module: aic_send
+#: model:ir.module.module,summary:base.module_aic_send
+msgid ""
+"Share any record on WhatsApp from its chatter: the contact's number, a ready"
+" message and, for quotations, invoices and purchase orders, a secure link to"
+" the document. No WhatsApp API needed."
+msgstr ""
+"Partagez n'importe quel enregistrement sur WhatsApp depuis sa discussion : "
+"le numéro du contact, un message prêt et, pour les devis, factures et bons "
+"de commande, un lien sécurisé vers le document. Aucune API WhatsApp "
+"nécessaire."
+
+#. module: aic_send
+#: model:ir.model.fields,help:aic_send.field_res_config_settings__aic_whatsapp_share
+msgid ""
+"Share any record on WhatsApp with a ready message and, for documents with a "
+"customer portal, a secure link."
+msgstr ""
+"Partagez n'importe quel enregistrement sur WhatsApp avec un message prêt et,"
+" pour les documents disponibles sur le portail client, un lien sécurisé."
+
+#. module: aic_send
+#. odoo-javascript
+#: code:addons/aic_send/static/src/chatter/chatter_patch.xml:0
+#: model:ir.actions.act_window,name:aic_send.action_whatsapp_share
+#: model_terms:ir.ui.view,arch_db:aic_send.res_config_settings_view_form_aic_send
+#: model_terms:ir.ui.view,arch_db:aic_send.aic_whatsapp_share_view_form
+msgid "Share on WhatsApp"
+msgstr "Partager sur WhatsApp"
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "Shared on WhatsApp with %(phone)s:"
+msgstr "Partagé sur WhatsApp avec %(phone)s :"
+
+#. module: aic_send
+#: model:ir.module.module,shortdesc:base.module_aic_send
+msgid "Share on WhatsApp"
+msgstr "Core - Partager sur WhatsApp"
+
+#. module: aic_send
+#: model_terms:ir.ui.view,arch_db:aic_send.aic_whatsapp_share_view_form
+msgid ""
+"The message includes a secure link: the customer can open the document "
+"without logging in."
+msgstr ""
+"Le message contient un lien sécurisé : le client peut ouvrir le document "
+"sans se connecter."
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "This record no longer exists."
+msgstr "Cet enregistrement n'existe plus."
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__partner_id
+msgid "To"
+msgstr "À"
+
+#. module: aic_send
+#: model:ir.model.fields,help:aic_send.field_aic_whatsapp_share__phone
+msgid "Use the international form, for example +91 98250 12345."
+msgstr "Utilisez le format international, par exemple +91 98250 12345."
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "We expect delivery by %(date)s."
+msgstr "Nous attendons la livraison d'ici le %(date)s."
+
+#. module: aic_send
+#. odoo-javascript
+#: code:addons/aic_send/static/src/chatter/chatter_patch.xml:0
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_res_config_settings__aic_whatsapp_share
+msgid "WhatsApp button in the chatter"
+msgstr "Bouton WhatsApp dans la discussion"
+
+#. module: aic_send
+#: model:ir.model.fields,field_description:aic_send.field_aic_whatsapp_share__phone
+msgid "WhatsApp number"
+msgstr "Numéro WhatsApp"
+
+#. module: aic_send
+#: model_terms:ir.ui.view,arch_db:aic_send.aic_whatsapp_share_view_form
+msgid ""
+"WhatsApp opens in a new tab with this message ready; press Send there. The "
+"share is logged on the record."
+msgstr ""
+"WhatsApp s'ouvre dans un nouvel onglet avec ce message prêt ; appuyez sur "
+"Envoyer. Le partage est consigné sur l'enregistrement."
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "You can view it here: %(link)s"
+msgstr "Vous pouvez le consulter ici : %(link)s"
+
+#. module: aic_send
+#: model_terms:ir.ui.view,arch_db:aic_send.aic_whatsapp_share_view_form
+msgid "Your message"
+msgstr "Votre message"
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "about %(record)s."
+msgstr "au sujet de %(record)s."
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "about your bill %(ref)s for %(amount)s."
+msgstr "au sujet de votre facture %(ref)s de %(amount)s."
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "here is invoice %(ref)s for %(amount)s."
+msgstr "voici la facture %(ref)s d'un montant de %(amount)s."
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "here is our purchase order %(ref)s."
+msgstr "voici notre bon de commande %(ref)s."
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "here is your order %(ref)s for %(amount)s."
+msgstr "voici votre commande %(ref)s d'un montant de %(amount)s."
+
+#. module: aic_send
+#. odoo-python
+#: code:addons/aic_send/wizard/whatsapp_share.py:0
+msgid "here is your quotation %(ref)s for %(amount)s."
+msgstr "voici votre devis %(ref)s d'un montant de %(amount)s."
+
+#. module: aic_send
+#. odoo-javascript
+#: code:addons/aic_send/static/src/composer/send_sheet.xml:0
+msgid "Send by"
+msgstr "Envoyer par"
+
+#. module: aic_send
+#. odoo-javascript
+#: code:addons/aic_send/static/src/composer/send_sheet.xml:0
+msgid "Email"
+msgstr "E-mail"
+
+#. module: aic_send
+#. odoo-javascript
+#: code:addons/aic_send/static/src/composer/send_sheet.xml:0
+msgid "Preview"
+msgstr "Aperçu"
