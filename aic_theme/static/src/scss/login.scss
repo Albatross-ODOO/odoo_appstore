@@ -1,0 +1,54 @@
+// =============================================================================
+// Core — sign-in pages (phase 54): login, sign-up, password reset (web.login_layout)
+// Only on body.o_aic_login (set by views/login_templates.xml while the look is on). The frontend bundle has no
+// Core tokens, so the house roles are declared here; a company palette (<style id="o_aic_palette">) re-declares
+// them on body.o_aic_theme afterwards.
+// =============================================================================
+@font-face { font-family: "Plus Jakarta Sans"; src: url("/aic_theme/static/src/fonts/PlusJakartaSans-Variable.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Bricolage Grotesque"; src: url("/aic_theme/static/src/fonts/BricolageGrotesque-Variable.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+
+body.o_aic_login {
+    --nm-brand: #FF6A2B; --nm-brand-contrast: #1E1410; --nm-action: #C2410C; --nm-ink: #2A1633;
+    --nm-text: #1E1410; --nm-text-muted: #5B4E46; --nm-surface: #FFFFFF; --nm-well-bg: #F6F5F8; --nm-hairline: rgba(42, 22, 51, .10);
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--nm-text);
+    background: var(--nm-well-bg) !important;
+    background-image: radial-gradient(circle at 20% 0%, rgba(255, 106, 43, .08), transparent 45%), radial-gradient(circle at 90% 100%, rgba(42, 22, 51, .07), transparent 50%) !important;
+    min-height: 100%;
+
+    .o_database_list {
+        max-width: 380px !important; margin-top: 6vh;
+        background: var(--nm-surface) !important; border-radius: 22px !important;
+        box-shadow: 0 1px 2px rgba(42, 22, 51, .05), 0 24px 48px -16px rgba(42, 22, 51, .22) !important;
+        > .card-body { padding: 32px 30px 24px; background: transparent !important; border-radius: 0 !important; }
+        .border-bottom, .border-top { border-color: var(--nm-hairline) !important; }
+    }
+    h1, h2, h3, .h3 { font-family: "Bricolage Grotesque", "Plus Jakarta Sans", sans-serif; color: var(--nm-ink); }
+    label, .form-label { font-weight: 600; font-size: 13px; color: var(--nm-text); }
+    .form-control {
+        height: 44px; border: 0 !important; border-radius: 12px; background: var(--nm-well-bg); color: var(--nm-text);
+        box-shadow: inset 0 2px 5px rgba(42, 22, 51, .09), inset 0 0 0 1px rgba(42, 22, 51, .05) !important;
+        &:focus { box-shadow: inset 0 2px 5px rgba(42, 22, 51, .09), 0 0 0 2px var(--nm-action) !important; }
+        &::placeholder { color: #8A7E77; }
+    }
+    .input-group > .form-control { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+    .input-group > .btn, .o_show_password { border: 0 !important; border-radius: 0 12px 12px 0 !important; background: var(--nm-well-bg) !important;
+        box-shadow: inset 0 2px 5px rgba(42, 22, 51, .09) !important; color: var(--nm-text-muted); }
+    .btn-primary {
+        height: 46px; border: 0 !important; border-radius: 13px; font-weight: 700;
+        background: var(--nm-brand) !important; color: var(--nm-brand-contrast) !important;
+        box-shadow: 0 8px 18px -6px rgba(255, 106, 43, .5);
+        &:hover { filter: brightness(.96); }
+        &:focus-visible { outline: 2px solid var(--nm-action); outline-offset: 2px; }
+    }
+    .btn-secondary, .btn-light, .btn-outline-secondary, .o_login_auth .btn, .btn:not(.btn-primary):not(.btn-link) {
+        border: 0 !important; border-radius: 13px; background: var(--nm-surface) !important; color: var(--nm-text) !important;
+        box-shadow: 0 1px 2px rgba(42, 22, 51, .07), 0 5px 12px -5px rgba(42, 22, 51, .14), inset 0 0 0 1px rgba(42, 22, 51, .06) !important;
+    }
+    .o_login_auth .btn, .btn.border, .btn[class*='btn-outline'] { border: 0 !important; }
+    a, .btn-link { color: var(--nm-action) !important; font-weight: 600; text-decoration: none; &:hover { text-decoration: underline; } }
+    .small a, .small { color: var(--nm-text-muted); }
+    .alert-danger { border: 0; border-radius: 12px; background: #FDECEC; color: #8C1D18; }
+    .alert-success, .alert-info { border: 0; border-radius: 12px; }
+    hr, .o_login_auth .text-muted { color: var(--nm-text-muted) !important; }
+}

@@ -1,0 +1,21 @@
+// Stage chips on phone kanbans (design M4). Sticky at the top of the scrolling board.
+.o_aic_stage_chips {
+    position: sticky; top: 0; z-index: 3;
+    order: -1;          // above Odoo's "Add stage" column, which the phone layout also puts first
+    display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+    margin: 0 -2px 6px; padding: 6px 12px 10px;
+    background: var(--nm-surface, #fff);
+    &::-webkit-scrollbar { display: none; }
+}
+// one stage picked: the other stages come back empty from the server; don't draw them
+.o_kanban_renderer:has(.o_aic_stage_chip.o_active:not(:first-child)) .o_kanban_group:not(:has(.o_kanban_record:not(.o_kanban_ghost))) {
+    display: none !important;
+}
+.o_aic_stage_chip {
+    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; height: 38px; padding: 0 14px;
+    border: 0; border-radius: 12px; font-size: 13px; font-weight: 700; white-space: nowrap; cursor: pointer;
+    background: var(--nm-surface-high, #fff); color: var(--nm-text, #1e1410); box-shadow: var(--nm-raised-sm, 0 1px 2px rgba(0, 0, 0, .1));
+    .o_aic_stage_chip_count { font-size: 11px; font-weight: 700; opacity: .75; font-variant-numeric: tabular-nums; }
+    &.o_active { background: var(--nm-current, #ffe47a); color: var(--nm-current-ink, #3d3000); box-shadow: var(--nm-current-key, none); }
+    &:focus-visible { outline: 2px solid var(--nm-action, #c2410c); outline-offset: 2px; }
+}

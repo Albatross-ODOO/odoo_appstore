@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="aic_workspace.DatePicks">
+        <div t-if="!this.props.readonly" class="o_aic_date_picks d-flex flex-wrap gap-2 mb-3" role="group" aria-label="Quick due dates">
+            <t t-foreach="this.picks" t-as="p" t-key="p.key">
+                <button type="button" class="btn btn-sm o_aic_date_pick" t-att-class="{ o_active: this.isActive(p) }"
+                        t-att-aria-pressed="this.isActive(p) ? 'true' : 'false'" t-att-title="this.dateLabel(p)"
+                        t-on-click="() => this.pick(p)" t-out="p.label"/>
+            </t>
+        </div>
+    </t>
+</templates>

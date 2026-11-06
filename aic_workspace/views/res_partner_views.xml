@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Contact form: a warning while a contact with the same e-mail or phone exists (beside Odoo's own
+         "same Tax ID" warning) -->
+    <record id="view_partner_form_aic_duplicates" model="ir.ui.view">
+        <field name="name">res.partner.form.aic.duplicates</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='warning_tax']" position="after">
+                <div class="alert alert-warning o_aic_duplicates" role="alert" invisible="not aic_duplicate_ids">
+                    <span>Possible duplicate, same e-mail or phone:</span>
+                    <field name="aic_duplicate_ids" widget="many2many_tags" readonly="1" class="d-inline-flex ms-1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <!-- Contact form: the company at a glance (open quotations, unpaid invoices, open tickets, last delivery, next
+         activity) under the smart buttons, for an existing contact -->
+    <record id="view_partner_form_aic_overview" model="ir.ui.view">
+        <field name="name">res.partner.form.aic.overview</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="after">
+                <widget name="aic_customer_overview" invisible="not id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,325 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-08 09:20+0000\n"
+"PO-Revision-Date: 2026-10-08 09:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aic_theme
+#: model:ir.module.module,description:base.module_aic_theme
+msgid ""
+"\n"
+"Backend Theme Engine\n"
+"===================\n"
+"A calm, white restyling of the whole Odoo 20 backend: buttons, inputs, dropdowns, dialogs,\n"
+"notifications, navbar, home menu (Enterprise), control panel, search, form / list / kanban /\n"
+"calendar / graph / pivot views, settings, and the Enterprise gantt / grid / cohort / map /\n"
+"hierarchy views.\n"
+"\n"
+"* White panels on a white ground, separated by soft layered shadows; seated wells for inputs.\n"
+"* One action colour, one \"you are here\" highlight and one ink: the theme's tangerine, butter and\n"
+"  plum by default, or taken from the company logo, or chosen by hand, per company.\n"
+"* Every colour is adjusted until its text passes WCAG AA, in light and in dark mode.\n"
+"* Performance oriented: SCSS compiled by Odoo's own asset pipeline; a company palette is a few\n"
+"  CSS variables in the page head. No extra RPC.\n"
+"* Enable / disable at any time from *Settings → General Settings → Backend theme* without\n"
+"  uninstalling. Works with Community and Enterprise; no dependency on ``web_enterprise``.\n"
+msgstr ""
+
+#. module: aic_theme
+#: model:ir.model.fields,help:aic_theme.field_res_company__aic_color_highlight
+#: model:ir.model.fields,help:aic_theme.field_res_config_settings__aic_color_highlight
+msgid "\"You are here\" marks, as #RRGGBB."
+msgstr "„Sie sind hier“-Markierungen, als #RRGGBB."
+
+#. module: aic_theme
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid "#2A1633"
+msgstr ""
+
+#. module: aic_theme
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid "#FF6A2B"
+msgstr ""
+
+#. module: aic_theme
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid "#FFE47A"
+msgstr ""
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_config_settings.py:0
+msgid "Action"
+msgstr "Aktion"
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__aic_color_action
+#: model:ir.model.fields,field_description:aic_theme.field_res_config_settings__aic_color_action
+msgid "Action colour"
+msgstr "Aktionsfarbe"
+
+#. module: aic_theme
+#: model:ir.model.fields,help:aic_theme.field_res_config_settings__aic_theme_enabled
+msgid ""
+"Apply the Core styling to the backend. Turning it off restores the standard"
+" Odoo look without uninstalling."
+msgstr ""
+"Den Core-Stil auf das Backend anwenden. Ausschalten stellt das Standard-"
+"Odoo-Aussehen wieder her, ohne zu deinstallieren."
+
+#. module: aic_theme
+#: model:ir.model.fields,help:aic_theme.field_res_company__aic_color_action
+#: model:ir.model.fields,help:aic_theme.field_res_config_settings__aic_color_action
+msgid "Buttons and the main action, as #RRGGBB."
+msgstr "Schaltflächen und Hauptaktion, als #RRGGBB."
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__aic_logo_colors
+msgid "Colours found in the logo"
+msgstr "Im Logo gefundene Farben"
+
+#. module: aic_theme
+#: model:ir.model,name:aic_theme.model_res_company
+msgid "Company"
+msgstr "Unternehmen"
+
+#. module: aic_theme
+#: model:ir.model,name:aic_theme.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: aic_theme
+#: model:ir.model.fields.selection,name:aic_theme.selection__res_company__aic_palette_mode__custom
+msgid "Custom colours"
+msgstr "Eigene Farben"
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_config_settings.py:0
+msgid "Dark"
+msgstr "Dunkel"
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_ir_http__display_name
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__display_name
+#: model:ir.model.fields,field_description:aic_theme.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_config_settings.py:0
+msgid "Found in the logo:"
+msgstr "Im Logo gefunden:"
+
+#. module: aic_theme
+#: model:ir.model.fields.selection,name:aic_theme.selection__res_company__aic_palette_mode__logo
+msgid "From the company logo"
+msgstr "Aus dem Firmenlogo"
+
+#. module: aic_theme
+#: model:ir.model,name:aic_theme.model_ir_http
+msgid "HTTP Routing"
+msgstr "HTTP-Routing"
+
+#. module: aic_theme
+#: model:ir.model.fields,help:aic_theme.field_res_company__aic_color_ink
+#: model:ir.model.fields,help:aic_theme.field_res_config_settings__aic_color_ink
+msgid "Headings, totals and the action bar, as #RRGGBB."
+msgstr "Überschriften, Summen und Aktionsleiste, als #RRGGBB."
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_config_settings.py:0
+msgid "Highlight"
+msgstr "Hervorhebung"
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__aic_color_highlight
+#: model:ir.model.fields,field_description:aic_theme.field_res_config_settings__aic_color_highlight
+msgid "Highlight colour"
+msgstr "Hervorhebungsfarbe"
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_ir_http__id
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__id
+#: model:ir.model.fields,field_description:aic_theme.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_config_settings.py:0
+msgid "Ink"
+msgstr "Tinte"
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__aic_color_ink
+#: model:ir.model.fields,field_description:aic_theme.field_res_config_settings__aic_color_ink
+msgid "Ink colour"
+msgstr "Tintenfarbe"
+
+#. module: aic_theme
+#: model:ir.model.fields,help:aic_theme.field_res_company__aic_logo_colors
+msgid "JSON list of [hex, share] pairs, most used first."
+msgstr "JSON-Liste von [Hex, Anteil]-Paaren, die häufigste zuerst."
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__aic_keep_house_highlight
+#: model:ir.model.fields,field_description:aic_theme.field_res_config_settings__aic_keep_house_highlight
+msgid "Keep the butter highlight"
+msgstr "Butter-Gelb als Hervorhebung behalten"
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_config_settings.py:0
+msgid "Light"
+msgstr "Hell"
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_config_settings.py:0
+msgid "Link"
+msgstr "Link"
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_config_settings.py:0
+msgid "Muted text"
+msgstr "Gedämpfter Text"
+
+#. module: aic_theme
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid "Reload the page after saving to see the new colours."
+msgstr ""
+"Laden Sie die Seite nach dem Speichern neu, um die neuen Farben zu sehen."
+
+#. module: aic_theme
+#: model:ir.module.module,shortdesc:base.module_aic_theme
+msgid "Backend Theme Engine"
+msgstr "Core - Backend-Theme"
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_config_settings__aic_theme_enabled
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid "Backend Theme Engine"
+msgstr "Core-Backend-Theme"
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__aic_palette_dark
+msgid "Core Palette Dark"
+msgstr "Core-Palette dunkel"
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__aic_palette_light
+msgid "Core Palette Light"
+msgstr "Core-Palette hell"
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_config_settings__aic_palette_preview
+msgid "Core Palette Preview"
+msgstr "Vorschau der Core-Palette"
+
+#. module: aic_theme
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid "Backend theme"
+msgstr "Core-Theme"
+
+#. module: aic_theme
+#: model:ir.model.fields.selection,name:aic_theme.selection__res_company__aic_palette_mode__house
+msgid "House colours"
+msgstr "Core-Farben"
+
+#. module: aic_theme
+#: model:ir.model.fields,help:aic_theme.field_res_company__aic_palette_mode
+#: model:ir.model.fields,help:aic_theme.field_res_config_settings__aic_palette_mode
+msgid ""
+"House colours: tangerine actions, butter highlight, plum ink.\n"
+"From the company logo: the logo's main colours, adjusted until every text is readable.\n"
+"Custom colours: pick the action, highlight and ink colours yourself."
+msgstr ""
+"Core-Farben: Aktionen in Mandarine, Hervorhebung in Butter-Gelb, Tinte in Pflaume.\n"
+"Aus dem Firmenlogo: die Hauptfarben des Logos, angepasst, bis jeder Text lesbar ist.\n"
+"Eigene Farben: Aktions-, Hervorhebungs- und Tintenfarbe selbst wählen."
+
+#. module: aic_theme
+#: model:ir.model.fields,field_description:aic_theme.field_res_company__aic_palette_mode
+#: model:ir.model.fields,field_description:aic_theme.field_res_config_settings__aic_palette_mode
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid "Theme colours"
+msgstr "Theme-Farben"
+
+#. module: aic_theme
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid ""
+"Use the theme's colours, take them from the company logo, or pick your own. "
+"Every colour is adjusted until its text is readable, in light and dark mode."
+msgstr ""
+"Verwenden Sie die Core-Farben, übernehmen Sie sie aus dem Firmenlogo oder "
+"wählen Sie eigene. Jede Farbe wird angepasst, bis ihr Text lesbar ist, im "
+"hellen und dunklen Modus."
+
+#. module: aic_theme
+#: model:ir.model.fields,help:aic_theme.field_res_company__aic_keep_house_highlight
+#: model:ir.model.fields,help:aic_theme.field_res_config_settings__aic_keep_house_highlight
+msgid ""
+"Use the brand colour for actions and ink, but keep the theme's butter yellow for"
+" \"you are here\" (current stage, active app, selected row)."
+msgstr ""
+"Die Markenfarbe für Aktionen und Tinte verwenden, aber das Butter-Gelb von "
+"Core für „Sie sind hier“ behalten (aktuelle Phase, aktive App, ausgewählte "
+"Zeile)."
+
+#. module: aic_theme
+#: model:ir.module.module,summary:base.module_aic_theme
+msgid ""
+"White, layered backend theme for Odoo 20: colours from your company logo, "
+"readable in light and dark mode, Community and Enterprise, one-click on/off."
+msgstr ""
+"Weißes, geschichtetes Backend-Theme für Odoo 20: Farben aus Ihrem "
+"Firmenlogo, lesbar im hellen und dunklen Modus, Community und Enterprise, "
+"mit einem Klick an/aus."
+
+#. module: aic_theme
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid ""
+"White, layered restyling of the whole backend, with dark mode. Reload the "
+"page after changing."
+msgstr ""
+"Weißes, geschichtetes Design für das gesamte Backend, mit dunklem Modus. "
+"Laden Sie die Seite nach einer Änderung neu."
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_company.py:0
+msgid ""
+"“%(value)s” is not a colour. Use the #RRGGBB form, for example #FF6A2B."
+msgstr ""
+"„%(value)s“ ist keine Farbe. Verwenden Sie das Format #RRGGBB, zum Beispiel "
+"#FF6A2B."
+
+#. module: aic_theme
+#. odoo-python
+#: code:addons/aic_theme/models/res_config_settings.py:0
+#, python-format
+msgid "Documents and e-mails of %(company)s now use these colours."
+msgstr "Dokumente und E-Mails von %(company)s verwenden jetzt diese Farben."
+
+#. module: aic_theme
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid "Use on documents and e-mails"
+msgstr "Für Dokumente und E-Mails verwenden"
+
+#. module: aic_theme
+#: model_terms:ir.ui.view,arch_db:aic_theme.res_config_settings_view_form_aic
+msgid "Printed documents take the ink for titles and the action colour, darkened to read on paper, for labels (Document Layout); e-mail buttons take the action colour. These are Odoo's own settings: change them there any time."
+msgstr "Gedruckte Dokumente verwenden die Tinte für Titel und die Aktionsfarbe, für Papier abgedunkelt, für Beschriftungen (Dokumentlayout); Schaltflächen in E-Mails die Aktionsfarbe. Das sind Odoos eigene Einstellungen: dort jederzeit änderbar."

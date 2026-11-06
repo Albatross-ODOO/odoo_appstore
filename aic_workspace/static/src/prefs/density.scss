@@ -1,0 +1,17 @@
+// Compact density (Theme preferences → Appearance): more rows and fields on a computer screen. Phones keep their
+// touch-sized rows, so everything sits behind the desktop breakpoint.
+@media (min-width: 768px) {
+    body.o_aic_compact.o_aic_theme {
+        .o_list_renderer .o_list_table {
+            tbody td, thead th { padding-top: 4px !important; padding-bottom: 4px !important; }
+            tbody .o_data_row > td { height: 30px !important; }   // the theme pins rows at 40px
+            tbody td { font-size: 13.5px; }
+        }
+        .o_form_view .o_form_sheet_bg .o_form_sheet { padding-top: 16px; padding-bottom: 16px; }
+        .o_form_view .o_inner_group { --o-form-group-row-gap: 2px; row-gap: 2px; }
+        .o_form_view .o_inner_group .o_cell { padding-top: 1px; padding-bottom: 1px; }
+        .o_form_view .o_field_widget .o_input { min-height: 30px; padding-top: 3px; padding-bottom: 3px; }
+        .o_kanban_renderer .o_kanban_record { padding: 8px 10px; }
+        .o_kanban_renderer .o_kanban_record + .o_kanban_record { margin-top: 6px; }
+    }
+}

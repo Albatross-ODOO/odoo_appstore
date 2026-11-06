@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="mail.Chatter" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o-mail-Chatter-logNote')]" position="after">
+            <button t-if="this.aicWhatsappShare" type="button" class="o-mail-Chatter-aicWhatsapp btn btn-secondary text-nowrap"
+                    title="Share on WhatsApp" t-on-click="() => this.openAicWhatsapp()">
+                <i class="fa fa-whatsapp" aria-hidden="true"/> WhatsApp
+            </button>
+        </xpath>
+    </t>
+</templates>

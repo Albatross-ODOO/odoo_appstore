@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_aic_home" model="ir.actions.client">
+        <field name="name">Home</field>
+        <field name="tag">aic_home</field>
+        <!-- not "home": that is Odoo's own client action (back to /), which the router finds first (controllers/main.py) -->
+        <field name="path">today</field>
+    </record>
+
+    <record id="action_aic_focus" model="ir.actions.client">
+        <field name="name">Focus queue</field>
+        <field name="tag">aic_focus</field>
+        <field name="path">focus</field>
+    </record>
+
+    <!-- An app tile, so Home is one click away from the app menu too -->
+    <menuitem id="menu_aic_home_root" name="Home" action="action_aic_home" sequence="-100"
+              web_icon="aic_home,static/description/icon.png"/>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Put the theme scope class on <body>. The CSS is always in the bundle
+         (compiled once, cached); the class decides whether it applies.
+         Odoo 20 passes the body class as a formatted `body_classname.f` on the
+         `web.layout` call (19 used a `t-set`). -->
+    <template id="webclient_bootstrap_aic" inherit_id="web.webclient_bootstrap" name="Neumorphic body class">
+        <xpath expr="//t[@t-set='body_classname']" position="attributes">
+            <attribute name="t-value">'o_web_client' + ((' o_aic_theme o_aic_skin_' + aic_skin) if aic_theme_enabled and aic_skin else '') + (' o_aic_community' if aic_community else '')</attribute>
+        </xpath>
+    </template>
+
+    <!-- The company's colours (models/palette.py): a few CSS custom properties, after the bundles
+         so they win over tokens.scss. Nothing is rendered for the house palette. -->
+    <template id="webclient_bootstrap_aic_palette" inherit_id="web.webclient_bootstrap" name="Core company colours">
+        <xpath expr="//t[@t-call='web.conditional_assets_tests']" position="after">
+            <style t-if="aic_palette_css" id="o_aic_palette" t-out="aic_palette_css"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aic_backlog_cleanup_user,aic.backlog.cleanup user,model_aic_backlog_cleanup,base.group_user,1,1,1,1
