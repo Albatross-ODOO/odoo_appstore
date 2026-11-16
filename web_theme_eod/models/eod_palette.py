@@ -6,7 +6,7 @@ On glass the panes are translucent, so the roles a company may change are the co
 "you are here", ink, links, muted text) plus the three soft blobs of the colour field behind the panes.
 Surfaces, wells, edges and shadows stay glass. Values match the EOD Suite design canvas.
 """
-from odoo.addons.aic_theme.models import palette
+from odoo.addons.web_theme_eod.engine.models import palette
 
 # the effective colour of a light pane over the field (links and muted text are tuned against it)
 GROUND_LIGHT = "#F2F5FA"

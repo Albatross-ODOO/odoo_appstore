@@ -2,7 +2,7 @@
 from odoo.tests import HttpCase, TransactionCase, tagged
 
 from ..models import eod_palette
-from odoo.addons.aic_theme.models import palette
+from odoo.addons.web_theme_eod.engine.models import palette
 
 
 @tagged("post_install", "-at_install")
