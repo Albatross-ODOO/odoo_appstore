@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="gate_management.GateEntries">
+        <div class="gd-app o_action">
+            <div class="gd-main">
+                <div class="gd-appbar">
+                    <button type="button" class="gd-ico" title="Gate Desk" aria-label="Gate Desk" t-on-click="goHome"><i class="fa fa-home"/></button>
+                    <div class="gd-titlebox">
+                        <h2 class="gd-title">Entries</h2>
+                        <div class="gd-sub">Today · <t t-esc="state.gate"/></div>
+                    </div>
+                    <div class="gd-acts">
+                        <button type="button" class="gd-ico" title="Search" aria-label="Search" t-on-click="toggleSearch"><i t-attf-class="fa #{state.showSearch ? 'fa-times' : 'fa-search'}"/></button>
+                    </div>
+                </div>
+                <div class="gd-rule"/>
+
+                <div t-if="state.showSearch" class="gd-search">
+                    <i class="fa fa-search"/>
+                    <input t-ref="search" type="search" placeholder="Name, plate, reference, slip or scanned code…" t-att-value="state.term" t-on-input="onSearch"/>
+                </div>
+
+                <div class="gd-tabs">
+                    <button t-foreach="filters" t-as="f" t-key="f.key" type="button" class="gd-ftab" t-att-aria-pressed="state.filter === f.key ? 'true' : 'false'" t-on-click="() => this.setFilter(f.key)">
+                        <t t-esc="f.label"/>
+                        <span t-if="state.counts[f.key] !== undefined" class="gd-n"><t t-esc="state.counts[f.key]"/></span>
+                    </button>
+                </div>
+
+                <div class="gd-rows">
+                    <div t-if="state.loading" class="gd-empty">Loading…</div>
+                    <div t-elif="!state.rows.length" class="gd-empty"><t t-if="state.term">No entry matches "<t t-esc="state.term"/>"</t><t t-else="">No entries here yet</t></div>
+                    <div t-foreach="state.rows" t-as="row" t-key="row.id" t-attf-class="gd-row gd-row-compact #{rowClass(row)}" t-on-click="() => this.openEntry(row)" role="button">
+                        <div t-attf-class="gd-av #{avClass(row)}">
+                            <img t-if="row.has_photo" t-attf-src="/web/image?model=gate.entry&amp;id=#{row.id}&amp;field=entry_photo" alt=""/>
+                            <i t-elif="row.type === 'vehicle'" class="fa fa-truck"/>
+                            <i t-elif="row.type === 'material'" class="fa fa-cube"/>
+                            <t t-else="" t-esc="initials(row)"/>
+                        </div>
+                        <div class="gd-who">
+                            <b t-att-class="row.type === 'vehicle' ? 'gd-mono' : ''"><t t-esc="row.title"/></b>
+                            <small><em><t t-esc="row.name"/></em> · <t t-esc="row.subtitle"/><t t-if="row.when"> · <t t-esc="row.when"/></t></small>
+                        </div>
+                        <div class="gd-acts">
+                            <span t-attf-class="gd-pill #{pillClass(row)}"><t t-esc="row.overdue ? 'Overdue' : row.state_label"/></span>
+                        </div>
+                    </div>
+                </div>
+                <p class="gd-hint">Open a row for the full record with chatter, audit times and exit remarks</p>
+            </div>
+        </div>
+    </t>
+</templates>

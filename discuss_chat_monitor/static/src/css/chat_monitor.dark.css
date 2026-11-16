@@ -1,0 +1,86 @@
+/* Dark colour scheme (web.assets_web_dark, Enterprise): keep the console in line with the rest of Odoo */
+.o_chat_monitor_container,
+.o_chat_monitor_main,
+.o_chat_monitor_thread,
+.cm-empty-state {
+    background-color: #1f1f23 !important;
+    color: #e4e4e7 !important;
+}
+.o_chat_monitor_sidebar,
+.cm-sidebar-header,
+.cm-main-header {
+    background-color: #26262b !important;
+    border-color: #3a3a40 !important;
+}
+.cm-session-card,
+.cm-bubble-body,
+.cm-search-icon,
+.cm-search-input,
+.cm-pill-btn,
+.cm-date-btn,
+.cm-btn-icon,
+.cm-partner-tag,
+.cm-attachment-pill,
+.cm-refresh-btn {
+    background-color: #2d2d33 !important;
+    border-color: #45454d !important;
+    color: #d4d4d8 !important;
+}
+.cm-session-card:hover,
+.cm-pill-btn:hover,
+.cm-date-btn:hover,
+.cm-attachment-pill:hover {
+    background-color: #36363d !important;
+}
+.cm-session-card.active {
+    background-color: #1e2a44 !important;
+    border-color: #3b82f6 !important;
+}
+.cm-pill-btn.active,
+.cm-date-btn.active,
+.cm-refresh-btn:hover {
+    background-color: #2563eb !important;
+    border-color: #2563eb !important;
+    color: #ffffff !important;
+}
+.cm-title-text,
+.cm-card-title,
+.cm-header-title,
+.cm-author-name,
+.cm-message-content,
+.cm-message-content p,
+.cm-empty-state h4 {
+    color: #f4f4f5 !important;
+}
+.cm-card-time,
+.cm-card-preview,
+.cm-header-meta,
+.cm-msg-date,
+.cm-label-text,
+.cm-muted-text {
+    color: #a1a1aa !important;
+}
+.cm-search-input::placeholder {
+    color: #71717a !important;
+}
+.cm-badge-archived {
+    background-color: #3a3a40 !important;
+    color: #d4d4d8 !important;
+}
+.badge-direct {
+    background-color: #1e3a5f !important;
+    color: #bfdbfe !important;
+}
+.badge-group {
+    background-color: #3b2a55 !important;
+    color: #e9d5ff !important;
+}
+.cm-header-icon,
+.cm-empty-icon {
+    background-color: #1e2a44 !important;
+    color: #93c5fd !important;
+}
+.cm-avatar-placeholder {
+    background-color: #3a3a40 !important;
+    color: #d4d4d8 !important;
+}

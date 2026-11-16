@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- noupdate: once installed, the path and settings are yours to change
+         in Odoo; an upgrade of this module will not put them back. -->
+    <data noupdate="1">
+        <!-- The app runs as this user until a request is authenticated. It
+             only needs the runner group: read its own user and endpoint. -->
+        <record id="user_starter_api" model="res.users" context="{'no_reset_password': True}">
+            <field name="name">Starter API</field>
+            <field name="login">starter_api</field>
+            <field name="group_ids" eval="[Command.set([])]" />
+        </record>
+
+        <record id="group_starter_api_runner" model="res.groups">
+            <field name="name">Starter API Runner</field>
+            <field name="user_ids" eval="[Command.link(ref('user_starter_api'))]" />
+            <field name="implied_ids" eval="[Command.link(ref('fast_api.group_fastapi_endpoint_runner'))]" />
+        </record>
+
+        <record id="endpoint_starter_api" model="fastapi.endpoint">
+            <field name="name">Starter API</field>
+            <field name="description"><![CDATA[
+Template API shipped with **fast_api**.
+
+Send an Odoo API key as `Authorization: Bearer <key>` (or `X-API-Key: <key>`).
+Create one in Odoo: *Preferences > Security > Add API Key*.
+]]></field>
+            <field name="app">starter</field>
+            <field name="root_path">/starter_api</field>
+            <field name="user_id" ref="user_starter_api" />
+            <!-- Stateless API: no session file per request. -->
+            <field name="save_http_session" eval="False" />
+        </record>
+
+        <!-- Publish the routes at install time. -->
+        <function model="fastapi.endpoint" name="action_sync_registry" eval="[[ref('endpoint_starter_api')]]" />
+    </data>
+</odoo>

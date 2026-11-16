@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="gate_management.GateHomeButton">
+        <button type="button" class="gd-ico" t-on-click.prevent="goHome" title="Gate Desk" aria-label="Gate Desk">
+            <i class="fa fa-home"/>
+        </button>
+    </t>
+</templates>

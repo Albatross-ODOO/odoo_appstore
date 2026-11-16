@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- List View: Chat Sessions (Odoo 19 list tag) -->
+        <record id="view_discuss_chat_session_tree" model="ir.ui.view">
+            <field name="name">discuss.chat.session.list</field>
+            <field name="model">discuss.chat.session</field>
+            <field name="arch" type="xml">
+                <list string="Chat Sessions">
+                    <field name="name"/>
+                    <field name="channel_id"/>
+                    <field name="channel_type" widget="badge"/>
+                    <field name="participant_ids" widget="many2many_tags"/>
+                    <field name="message_count"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Action: Chat Sessions Fallback -->
+        <record id="action_discuss_chat_session_all" model="ir.actions.act_window">
+            <field name="name">Chat Sessions</field>
+            <field name="res_model">discuss.chat.session</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>
