@@ -29,7 +29,7 @@ Workspace (``aic_workspace``), Home and Focus (``aic_home``), Share on WhatsApp 
     "website": "https://albatross.work/",
     "support": "connect@albatross.work",
     "license": "OPL-1",
-    "price": 100.0,
+    "price": 130.0,
     "currency": "USD",
     "depends": ["aic_theme", "aic_workspace", "aic_home", "aic_send"],
     "data": [
