@@ -1,0 +1,7 @@
+id,name,model_id,group_id/id,operation,domain
+field_sales_session_salesperson_rule,Salesperson: Own Sessions Only,field.sales.session,field_sales.group_salesperson,cru,"[('user_id', '=', user.id)]"
+field_sales_session_manager_rule,Manager: All Sessions,field.sales.session,field_sales.group_manager,crud,
+field_sales_visit_salesperson_rule,Salesperson: Own Visits Only,field.sales.visit,field_sales.group_salesperson,cru,"[('session_id.user_id', '=', user.id)]"
+field_sales_visit_manager_rule,Manager: All Visits,field.sales.visit,field_sales.group_manager,crud,
+field_sales_location_log_salesperson_rule,Salesperson: Own Location Logs Only,field.sales.location.log,field_sales.group_salesperson,cr,"[('session_id.user_id', '=', user.id)]"
+field_sales_location_log_manager_rule,Manager: All Location Logs,field.sales.location.log,field_sales.group_manager,crud,

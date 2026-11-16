@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_company_form_gate_settings" model="ir.ui.view">
+        <field name="name">res.company.form.gate.settings</field>
+        <field name="model">res.company</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Gate Settings" create="false" delete="false" duplicate="false">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Gate Settings"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Gate Pass &amp; Directions">
+                            <field name="gate_address"
+                                   placeholder="Address printed on gate passes and visitor invitations"/>
+                            <field name="gate_maps_url" widget="url"
+                                   placeholder="https://maps.app.goo.gl/... (optional)"/>
+                        </group>
+                        <group string="Automatic Check-Out">
+                            <field name="gate_auto_exit_hour" widget="float_time"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        <p>The address above is printed on every gate pass and visitor invitation, and
+                           drives the <b>Get Directions</b> button. Leave it empty to fall back to the
+                           company address.</p>
+                        <p>Any material entry still inside the premises at the automatic check-out time
+                           is checked out by the scheduler, and the entry records that it was automatic.</p>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gate_settings" model="ir.actions.server">
+        <field name="name">Gate Settings</field>
+        <field name="model_id" ref="base.model_res_company"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_open_gate_settings()</field>
+    </record>
+
+    <menuitem id="menu_gate_config" name="Configuration"
+              parent="menu_gate_management_root" sequence="90"
+              groups="base.group_system"/>
+    <menuitem id="menu_gate_settings" name="Gate Settings"
+              parent="menu_gate_config" action="action_gate_settings"
+              sequence="10" groups="base.group_system"/>
+
+</odoo>

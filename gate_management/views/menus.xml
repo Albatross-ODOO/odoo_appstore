@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ================= Gate Desk pages (guard app) ================= -->
+    <record id="action_gate_desk_home" model="ir.actions.client">
+        <field name="name">Gate Desk</field>
+        <field name="tag">gate_management.gate_desk_home</field>
+    </record>
+
+    <record id="action_gate_worker_kiosk" model="ir.actions.client">
+        <field name="name">Worker Attendance</field>
+        <field name="tag">gate_management.worker_kiosk</field>
+    </record>
+
+    <record id="action_gate_entries" model="ir.actions.client">
+        <field name="name">Entries</field>
+        <field name="tag">gate_management.entries</field>
+    </record>
+
+    <record id="action_gate_verify_kiosk" model="ir.actions.server">
+        <field name="name">Verify Invitation</field>
+        <field name="model_id" ref="model_gate_verify_otp_wizard"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_open_kiosk()</field>
+    </record>
+
+    <!-- ================= Back office (manager) ================= -->
+    <record id="action_gate_entry" model="ir.actions.act_window">
+        <field name="name">Gate Entries</field>
+        <field name="res_model">gate.entry</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('entry_type', '!=', 'worker')]</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No gate entries yet</p>
+            <p>Walk-in entries, scheduled invitations and material movements recorded at the gate appear here.</p>
+        </field>
+    </record>
+
+    <record id="action_gate_entry_inside" model="ir.actions.act_window">
+        <field name="name">Inside Now</field>
+        <field name="res_model">gate.entry</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('state', '=', 'entered')]</field>
+        <field name="context">{'group_by': []}</field>
+    </record>
+
+    <record id="action_gate_worker_attendance" model="ir.actions.act_window">
+        <field name="name">Worker Attendance</field>
+        <field name="res_model">gate.entry</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('entry_type', '=', 'worker'), ('state', 'in', ['entered', 'exited'])]</field>
+        <field name="context">{'default_entry_type': 'worker', 'search_default_today': 1}</field>
+        <field name="help" type="html"><p class="o_view_nocontent_smiling_face">No worker attendance recorded yet</p></field>
+    </record>
+    <record id="action_gate_worker_attendance_kanban_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_gate_entry_worker_kanban"/>
+        <field name="act_window_id" ref="action_gate_worker_attendance"/>
+    </record>
+
+    <record id="action_gate_worker" model="ir.actions.act_window">
+        <field name="name">Workforce Profiles</field>
+        <field name="res_model">gate.worker</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add your first worker</p>
+            <p>Workers can be imported from a spreadsheet; the columns SrNo, Employee Name and Employee Phone Number map automatically.</p>
+        </field>
+    </record>
+
+    <record id="action_gate_worker_log" model="ir.actions.act_window">
+        <field name="name">Shift Logs</field>
+        <field name="res_model">gate.worker.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_today': 1}</field>
+    </record>
+
+    <record id="action_gate_worker_break" model="ir.actions.act_window">
+        <field name="name">Break Logs</field>
+        <field name="res_model">gate.worker.break</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- ================= Menus ================= -->
+    <menuitem id="menu_gate_management_root" name="Gate Management" sequence="10"
+              web_icon="gate_management,static/description/icon.png"
+              groups="gate_management.group_gate_guard"/>
+
+    <!-- Guard app: one entry point, every page has a Home button -->
+    <menuitem id="menu_gate_desk" name="Gate Desk" parent="menu_gate_management_root" action="action_gate_desk_home" sequence="1"
+              groups="gate_management.group_gate_guard"/>
+
+    <!-- Manager back office -->
+    <menuitem id="menu_gate_operations" name="Operations" parent="menu_gate_management_root" sequence="10" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_entry_action" name="Entries" parent="menu_gate_operations" action="action_gate_entry" sequence="10" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_entry_inside" name="Inside Now" parent="menu_gate_operations" action="action_gate_entry_inside" sequence="15" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_worker_attendance_entry" name="Worker Attendance" parent="menu_gate_operations" action="action_gate_worker_attendance" sequence="20" groups="gate_management.group_gate_manager"/>
+
+    <menuitem id="menu_gate_pages" name="Gate Pages" parent="menu_gate_management_root" sequence="20" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_visitor_kiosk" name="Walk-In Entry" parent="menu_gate_pages" action="action_gate_entry_kiosk_visitor" sequence="10" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_verify_scheduled_invite" name="Verify Invitation" parent="menu_gate_pages" action="action_gate_verify_kiosk" sequence="20" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_worker_kiosk" name="Worker Attendance" parent="menu_gate_pages" action="action_gate_worker_kiosk" sequence="30" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_kiosk_schedule_visit" name="Schedule Visit" parent="menu_gate_pages" action="action_gate_entry_schedule" sequence="40" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_kiosk_entries" name="Entries" parent="menu_gate_pages" action="action_gate_entries" sequence="50" groups="gate_management.group_gate_manager"/>
+
+    <menuitem id="menu_gate_workforce" name="Workforce" parent="menu_gate_management_root" sequence="30" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_worker" name="Profiles" parent="menu_gate_workforce" action="action_gate_worker" sequence="10" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_worker_log" name="Shift Logs" parent="menu_gate_workforce" action="action_gate_worker_log" sequence="20" groups="gate_management.group_gate_manager"/>
+    <menuitem id="menu_gate_worker_break" name="Break Logs" parent="menu_gate_workforce" action="action_gate_worker_break" sequence="30" groups="gate_management.group_gate_manager"/>
+</odoo>

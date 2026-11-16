@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Scan & Pay card. Expects `doc` (a record inheriting upi.qr.mixin) in the rendering context.
+        Table layout on purpose: wkhtmltopdf handles tables far better than flexbox.
+    -->
+    <template id="upi_qr_card" name="UPI Scan &amp; Pay Card">
+        <t t-if="doc.upi_qr_image">
+            <t t-set="upi_inr" t-value="doc._upi_qr_get_inr()"/>
+            <div class="upi_qr_card" name="upi_qr_card">
+                <table class="upi_qr_table o_ignore_layout_styling">
+                    <tr>
+                        <td class="upi_qr_cell_qr">
+                            <div class="upi_qr_tile">
+                                <img class="upi_qr_img" t-att-src="image_data_uri(doc.upi_qr_image)" alt="UPI QR code"/>
+                            </div>
+                        </td>
+                        <td class="upi_qr_cell_body">
+                            <div class="upi_qr_eyebrow">Scan &amp; Pay · UPI</div>
+                            <div class="upi_qr_amount">
+                                <span t-out="doc.upi_qr_amount" t-options='{"widget": "monetary", "display_currency": upi_inr}'/>
+                                <small t-out="doc._upi_qr_get_amount_label()"/>
+                            </div>
+                            <div t-if="doc.upi_qr_fx_note" class="upi_qr_fx" t-out="doc.upi_qr_fx_note"/>
+                            <div class="upi_qr_rows">
+                                <div class="upi_qr_row">
+                                    <span class="upi_qr_k">UPI ID</span>
+                                    <span class="upi_qr_v upi_qr_mono" t-out="doc.company_id.upi_qr_id"/>
+                                </div>
+                                <div class="upi_qr_row">
+                                    <span class="upi_qr_k">Payee</span>
+                                    <span class="upi_qr_v" t-out="doc.company_id.upi_qr_payee_name or doc.company_id.name"/>
+                                </div>
+                                <div class="upi_qr_row" t-if="doc._upi_qr_get_reference()">
+                                    <span class="upi_qr_k">Reference</span>
+                                    <span class="upi_qr_v upi_qr_mono" t-out="doc._upi_qr_get_reference()"/>
+                                </div>
+                            </div>
+                            <div t-if="doc.company_id.upi_qr_caption" class="upi_qr_caption" t-out="doc.company_id.upi_qr_caption"/>
+                            <div class="upi_qr_apps">
+                                <span>PhonePe</span><span>Google Pay</span><span>Paytm</span><span>BHIM</span><span>any UPI app</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>
