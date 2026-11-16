@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
+from . import engine
+from . import home
+from . import workspace
+from . import send
 from . import models
+from .upgrade import adopt_package
 
 SKIN = "eod"
-OLD = {"web_theme_glass": "web_theme_eod", "glass_suite": "eod_suite"}   # the look's earlier name
+OLD = {"web_theme_glass": "web_theme_eod", "glass_suite": "web_theme_eod"}   # the look's earlier name
 
 
-def pre_init_hook(env):
+def _adopt_glass(env):
     """Upgrading from the earlier Glass look: EOD adopts its data instead of starting over.
 
     Glass and EOD are the same look under a new name. When web_theme_glass is installed, its records
@@ -51,3 +56,14 @@ def uninstall_hook(env):
     """Leave nothing behind: the default look points elsewhere once this one is gone."""
     params = env["ir.config_parameter"].sudo()
     params.search([("key", "=", "aic_theme.default_skin"), ("value", "=", SKIN)]).unlink()
+    # what the parts leave: the asset records their init() makes (Community dark mode, Enterprise gantt) and their
+    # switches (aic_theme.*, aic_home.*, aic_send.*)
+    env["ir.asset"].sudo().search([("path", "=like", "web_theme_eod/%")]).unlink()
+    params.search(["|", "|", ("key", "=like", "aic_theme.%"), ("key", "=like", "aic_home.%"),
+                   ("key", "=like", "aic_send.%")]).unlink()
+
+
+def pre_init_hook(env):
+    """Installing over the earlier Glass look or over the earlier six-module EOD package: adopt their data."""
+    _adopt_glass(env)
+    adopt_package(env.cr)
