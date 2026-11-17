@@ -1,0 +1,3873 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: EOD - Backend Theme\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-08 09:20+0000\n"
+"PO-Revision-Date: 2026-10-08 09:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_company__aic_color_highlight
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_config_settings__aic_color_highlight
+msgid "\"You are here\" marks, as #RRGGBB."
+msgstr "„Sie sind hier“-Markierungen, als #RRGGBB."
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid "#2A1633"
+msgstr ""
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid "#FF6A2B"
+msgstr ""
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid "#FFE47A"
+msgstr ""
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/engine/models/res_config_settings.py:0
+msgid "Action"
+msgstr "Aktion"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__aic_color_action
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__aic_color_action
+msgid "Action colour"
+msgstr "Aktionsfarbe"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_config_settings__aic_theme_enabled
+msgid ""
+"Apply the Core styling to the backend. Turning it off restores the standard "
+"Odoo look without uninstalling."
+msgstr ""
+"Den Core-Stil auf das Backend anwenden. Ausschalten stellt das Standard-"
+"Odoo-Aussehen wieder her, ohne zu deinstallieren."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_company__aic_color_action
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_config_settings__aic_color_action
+msgid "Buttons and the main action, as #RRGGBB."
+msgstr "Schaltflächen und Hauptaktion, als #RRGGBB."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__aic_logo_colors
+msgid "Colours found in the logo"
+msgstr "Im Logo gefundene Farben"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_res_company
+msgid "Company"
+msgstr "Unternehmen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_company__aic_palette_mode__custom
+msgid "Custom colours"
+msgstr "Eigene Farben"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/engine/models/res_config_settings.py:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Dark"
+msgstr "Dunkel"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_ir_http__display_name
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__display_name
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__display_name
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__display_name
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_focus__display_name
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_home__display_name
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_swipe__display_name
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/engine/models/res_config_settings.py:0
+msgid "Found in the logo:"
+msgstr "Im Logo gefunden:"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_company__aic_palette_mode__logo
+msgid "From the company logo"
+msgstr "Aus dem Firmenlogo"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_ir_http
+msgid "HTTP Routing"
+msgstr "HTTP-Routing"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_company__aic_color_ink
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_config_settings__aic_color_ink
+msgid "Headings, totals and the action bar, as #RRGGBB."
+msgstr "Überschriften, Summen und Aktionsleiste, als #RRGGBB."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/engine/models/res_config_settings.py:0
+msgid "Highlight"
+msgstr "Hervorhebung"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__aic_color_highlight
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__aic_color_highlight
+msgid "Highlight colour"
+msgstr "Hervorhebungsfarbe"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_ir_http__id
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__id
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__id
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__id
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__id
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_focus__id
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_home__id
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_swipe__id
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__id
+msgid "ID"
+msgstr "ID"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/engine/models/res_config_settings.py:0
+msgid "Ink"
+msgstr "Tinte"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__aic_color_ink
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__aic_color_ink
+msgid "Ink colour"
+msgstr "Tintenfarbe"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_company__aic_logo_colors
+msgid "JSON list of [hex, share] pairs, most used first."
+msgstr "JSON-Liste von [Hex, Anteil]-Paaren, die häufigste zuerst."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__aic_keep_house_highlight
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__aic_keep_house_highlight
+msgid "Keep the butter highlight"
+msgstr "Butter-Gelb als Hervorhebung behalten"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/engine/models/res_config_settings.py:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Light"
+msgstr "Hell"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/engine/models/res_config_settings.py:0
+msgid "Link"
+msgstr "Link"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/engine/models/res_config_settings.py:0
+msgid "Muted text"
+msgstr "Gedämpfter Text"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid "Reload the page after saving to see the new colours."
+msgstr ""
+"Laden Sie die Seite nach dem Speichern neu, um die neuen Farben zu sehen."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__aic_theme_enabled
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid "Backend Theme Engine"
+msgstr "Core-Backend-Theme"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__aic_palette_dark
+msgid "Core Palette Dark"
+msgstr "Core-Palette dunkel"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__aic_palette_light
+msgid "Core Palette Light"
+msgstr "Core-Palette hell"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__aic_palette_preview
+msgid "Core Palette Preview"
+msgstr "Vorschau der Core-Palette"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid "Backend theme"
+msgstr "Core-Theme"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_company__aic_palette_mode__house
+msgid "House colours"
+msgstr "Core-Farben"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_company__aic_palette_mode
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_config_settings__aic_palette_mode
+msgid ""
+"House colours: tangerine actions, butter highlight, plum ink.\n"
+"From the company logo: the logo's main colours, adjusted until every text is readable.\n"
+"Custom colours: pick the action, highlight and ink colours yourself."
+msgstr ""
+"Core-Farben: Aktionen in Mandarine, Hervorhebung in Butter-Gelb, Tinte in Pflaume.\n"
+"Aus dem Firmenlogo: die Hauptfarben des Logos, angepasst, bis jeder Text lesbar ist.\n"
+"Eigene Farben: Aktions-, Hervorhebungs- und Tintenfarbe selbst wählen."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_company__aic_palette_mode
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__aic_palette_mode
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid "Theme colours"
+msgstr "Theme-Farben"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid ""
+"Use the theme's colours, take them from the company logo, or pick your own. "
+"Every colour is adjusted until its text is readable, in light and dark mode."
+msgstr ""
+"Verwenden Sie die Core-Farben, übernehmen Sie sie aus dem Firmenlogo oder "
+"wählen Sie eigene. Jede Farbe wird angepasst, bis ihr Text lesbar ist, im "
+"hellen und dunklen Modus."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_company__aic_keep_house_highlight
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_config_settings__aic_keep_house_highlight
+msgid ""
+"Use the brand colour for actions and ink, but keep the theme's butter yellow"
+" for \"you are here\" (current stage, active app, selected row)."
+msgstr ""
+"Die Markenfarbe für Aktionen und Tinte verwenden, aber das Butter-Gelb von "
+"Core für „Sie sind hier“ behalten (aktuelle Phase, aktive App, ausgewählte "
+"Zeile)."
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid ""
+"White, layered restyling of the whole backend, with dark mode. Reload the "
+"page after changing."
+msgstr ""
+"Weißes, geschichtetes Design für das gesamte Backend, mit dunklem Modus. "
+"Laden Sie die Seite nach einer Änderung neu."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/engine/models/res_company.py:0
+msgid ""
+"“%(value)s” is not a colour. Use the #RRGGBB form, for example #FF6A2B."
+msgstr ""
+"„%(value)s“ ist keine Farbe. Verwenden Sie das Format #RRGGBB, zum Beispiel "
+"#FF6A2B."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/engine/models/res_config_settings.py:0
+#, python-format
+msgid "Documents and e-mails of %(company)s now use these colours."
+msgstr "Dokumente und E-Mails von %(company)s verwenden jetzt diese Farben."
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid "Use on documents and e-mails"
+msgstr "Für Dokumente und E-Mails verwenden"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic
+msgid ""
+"Printed documents take the ink for titles and the action colour, darkened to"
+" read on paper, for labels (Document Layout); e-mail buttons take the action"
+" colour. These are Odoo's own settings: change them there any time."
+msgstr ""
+"Gedruckte Dokumente verwenden die Tinte für Titel und die Aktionsfarbe, für "
+"Papier abgedunkelt, für Beschriftungen (Dokumentlayout); Schaltflächen in "
+"E-Mails die Aktionsfarbe. Das sind Odoos eigene Einstellungen: dort "
+"jederzeit änderbar."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(amount)s open"
+msgstr "%(amount)s offen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(count)s orders"
+msgstr "%(count)s Aufträge"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(days)s days late"
+msgstr "%(days)s Tage zu spät"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.js:0
+msgid "%(done)s done today · %(due)s still due"
+msgstr "%(done)s heute erledigt · %(due)s noch fällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "%(greeting)s, %(name)s"
+msgstr "%(greeting)s, %(name)s"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s invoices"
+msgstr "%(n)s Rechnungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s near their deadline"
+msgstr "%(n)s kurz vor der Frist"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s of your hot deals need attention."
+msgstr "%(n)s Ihrer heißen Deals brauchen Aufmerksamkeit."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s of your tasks are due or overdue."
+msgstr "%(n)s Ihrer Aufgaben sind fällig oder überfällig."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s opportunities"
+msgstr "%(n)s Verkaufschancen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s opportunities have no next step."
+msgstr "%(n)s Verkaufschancen haben keinen nächsten Schritt."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s orders"
+msgstr "%(n)s Aufträge"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid ""
+"%(n)s quotations older than 60 days are still open. Clearing them keeps "
+"these numbers meaningful."
+msgstr ""
+"%(n)s Angebote, älter als 60 Tage, sind noch offen. Wenn Sie sie bereinigen,"
+" bleiben diese Zahlen aussagekräftig."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s ready"
+msgstr "%(n)s bereit"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s receipts are late from vendors."
+msgstr "%(n)s Wareneingänge von Lieferanten sind verspätet."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "%(n)s records cancelled."
+msgstr "%(n)s Datensätze storniert."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "%(n)s records match."
+msgstr "%(n)s Datensätze passen."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid ""
+"%(n)s transfers are more than 30 days past their date. They are left out of "
+"the counts above."
+msgstr ""
+"%(n)s Transfers sind mehr als 30 Tage über ihrem Datum. Sie sind in den "
+"Zahlen oben nicht enthalten."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "%(n)s transfers moved to %(date)s."
+msgstr "%(n)s Transfers auf den %(date)s verschoben."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(r)s receipts and %(d)s dispatches are planned today."
+msgstr "%(r)s Wareneingänge und %(d)s Lieferungen sind heute geplant."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(today)s things are on your list today."
+msgstr "%(today)s Dinge stehen heute auf Ihrer Liste."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "%s activities moved to today"
+msgstr "%s Aktivitäten auf heute verschoben"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "(logged on the record when you mark it done)"
+msgstr "(wird beim Erledigen am Datensatz protokolliert)"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "(suggested)"
+msgstr "(vorgeschlagen)"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.js:0
+msgid "+%s other activities"
+msgstr "+%s weitere Aktivitäten"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role__accounts
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role_suggested__accounts
+msgid "Accounts"
+msgstr "Buchhaltung"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Across the team"
+msgstr "Im ganzen Team"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Activity"
+msgstr "Aktivität"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Activity actions"
+msgstr "Aktivitätsaktionen"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic_home
+msgid ""
+"After login, people see what they missed, what is due today and the work "
+"that needs them. Each person's Home role is set on their user form "
+"(Preferences). Someone with their own home action keeps it."
+msgstr ""
+"Nach der Anmeldung sieht jede Person, was sie verpasst hat, was heute fällig"
+" ist und welche Arbeit auf sie wartet. Die Start-Rolle wird im "
+"Benutzerformular (Einstellungen) festgelegt. Wer eine eigene Startaktion "
+"hat, behält sie."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/calendar_agenda.js:0
+msgid "All day"
+msgstr "Ganztägig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "All dispatches"
+msgstr "Alle Lieferungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "All receipts"
+msgstr "Alle Wareneingänge"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "All ·"
+msgstr "Alle ·"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Amount due"
+msgstr "Fälliger Betrag"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_backlog_cleanup_view_form
+msgid "Apply"
+msgstr "Anwenden"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "Backlog cleaned up"
+msgstr "Rückstand bereinigt"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Bank lines to reconcile"
+msgstr "Abzustimmende Bankzeilen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Below minimum"
+msgstr "Unter Mindestbestand"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Bills due"
+msgstr "Fällige Eingangsrechnungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Bills due this week"
+msgstr "Diese Woche fällige Eingangsrechnungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Bills to post"
+msgstr "Zu buchende Eingangsrechnungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_whatsapp_share_view_form
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__aic_backlog_cleanup__operation__cancel
+msgid "Cancel them"
+msgstr "Stornieren"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Chase"
+msgstr "Nachfassen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "Choose the new date."
+msgstr "Wählen Sie das neue Datum."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__kind
+msgid "Clean up"
+msgstr "Bereinigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Clean up late transfers"
+msgstr "Verspätete Transfers bereinigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Clean up old quotations"
+msgstr "Alte Angebote bereinigen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.actions.act_window,name:eod_glass_backend_theme.action_aic_backlog_cleanup
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_backlog_cleanup_view_form
+msgid "Clean up the backlog"
+msgstr "Rückstand bereinigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_backlog_cleanup_view_form
+#: code:addons/eod_glass_backend_theme/static/src/workspace/chatter/chatter_window.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid "Close"
+msgstr "Schließen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Confirmed this month"
+msgstr "Diesen Monat bestätigt"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__create_uid
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__create_date
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Customise"
+msgstr "Anpassen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Customise home"
+msgstr "Startseite anpassen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "D"
+msgstr ""
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Deadline"
+msgstr "Frist"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Deadline %(time)s"
+msgstr "Frist %(time)s"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_home_role
+msgid ""
+"Decides which panels the Home shows first. \"Suggest from activity\" picks "
+"the role from what the person worked on in the last 90 days. This never "
+"changes access rights."
+msgstr ""
+"Legt fest, welche Bereiche Home zuerst zeigt. „Aus Aktivität vorschlagen“ "
+"wählt die Rolle danach, woran die Person in den letzten 90 Tagen gearbeitet "
+"hat. Zugriffsrechte ändern sich dadurch nie."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Delayed receipts"
+msgstr "Verspätete Wareneingänge"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Deliveries"
+msgstr "Lieferungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Dispatches today"
+msgstr "Lieferungen heute"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Done"
+msgstr "Erledigt"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Done today"
+msgstr "Heute erledigt"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Done, follow up in 2 days"
+msgstr "Erledigt, in 2 Tagen nachfassen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Done, plan next…"
+msgstr "Erledigt, Nächstes planen…"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.js:0
+msgid "Done."
+msgstr "Erledigt."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.js:0
+msgid "Done. Follow-up planned in %s days."
+msgstr "Erledigt. Nachfassen in %s Tagen geplant."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Drafts"
+msgstr "Entwürfe"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Due"
+msgstr "Fällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Due or overdue"
+msgstr "Fällig oder überfällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Due today"
+msgstr "Heute fällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Every panel is hidden. Use Customise to bring them back."
+msgstr "Alle Bereiche sind ausgeblendet. Mit Anpassen holen Sie sie zurück."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Expected"
+msgstr "Erwartet"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Expected date has passed"
+msgstr "Erwartetes Datum überschritten"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Expires"
+msgstr "Läuft ab"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Expires %(date)s"
+msgstr "Läuft am %(date)s ab"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "F"
+msgstr ""
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Filter by type"
+msgstr "Nach Typ filtern"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+#: model:ir.actions.client,name:eod_glass_backend_theme.action_aic_focus
+#: code:addons/eod_glass_backend_theme/workspace/controllers/webmanifest.py:0
+msgid "Focus queue"
+msgstr "Fokus-Warteschlange"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Follow up or extend before they lapse"
+msgstr "Nachfassen oder verlängern, bevor sie ablaufen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "For your %s home. Only you see this."
+msgstr "Für Ihre Startseite %s. Nur Sie sehen das."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Good afternoon"
+msgstr "Guten Tag"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Good evening"
+msgstr "Guten Abend"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Good morning"
+msgstr "Guten Morgen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "High priority, still open"
+msgstr "Hohe Priorität, noch offen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#. odoo-python
+#: model:ir.actions.client,name:eod_glass_backend_theme.action_aic_home
+#: model:ir.ui.menu,name:eod_glass_backend_theme.menu_aic_home_root
+#: code:addons/eod_glass_backend_theme/workspace/controllers/webmanifest.py:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/mobile_shell.xml:0
+msgid "Home"
+msgstr "Start"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "Home is back to the %s layout."
+msgstr "Die Startseite hat wieder das Layout %s."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_home_layout
+msgid "Home layout"
+msgstr "Layout der Startseite"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_home_role
+msgid "Home role"
+msgstr "Start-Rolle"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Hot deals"
+msgstr "Heiße Deals"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Hot opportunities"
+msgstr "Heiße Verkaufschancen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Hot opportunities (all)"
+msgstr "Heiße Verkaufschancen (alle)"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__confirm
+msgid "I have checked the list and want to go ahead"
+msgstr "Ich habe die Liste geprüft und möchte fortfahren"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "In the next 7 days"
+msgstr "In den nächsten 7 Tagen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+msgid "Incoming"
+msgstr "Eingehend"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid ""
+"Keys: D done · F follow up in 2 days · P plan next · S tomorrow · W next "
+"week · → skip · ← back · O open record · Ctrl+Enter in the note = done"
+msgstr ""
+"Tasten: D erledigt · F in 2 Tagen nachfassen · P Nächstes planen · S morgen "
+"· W nächste Woche · → überspringen · ← zurück · O Datensatz öffnen · "
+"Strg+Eingabe in der Notiz = erledigt"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Largest first"
+msgstr "Größte zuerst"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Last 30 days"
+msgstr "Letzte 30 Tage"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__write_uid
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__write_date
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__aic_backlog_cleanup__kind__deliveries
+msgid "Late deliveries"
+msgstr "Verspätete Lieferungen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__aic_backlog_cleanup__kind__receipts
+msgid "Late receipts"
+msgstr "Verspätete Wareneingänge"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Late transfers"
+msgstr "Verspätete Transfers"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Latest"
+msgstr "Neueste"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Loading your day…"
+msgstr "Ihr Tag wird geladen…"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Loading your queue…"
+msgstr "Ihre Warteschlange wird geladen…"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Mark as done"
+msgstr "Als erledigt markieren"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "Marked as done"
+msgstr "Als erledigt markiert"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__match_count
+msgid "Match Count"
+msgstr "Anzahl Treffer"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Missed"
+msgstr "Verpasst"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "Move %s down"
+msgstr "%s nach unten"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "Move %s up"
+msgstr "%s nach oben"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Move all to today"
+msgstr "Alles auf heute verschieben"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__aic_backlog_cleanup__operation__reschedule
+msgid "Move them to a new date"
+msgstr "Auf ein neues Datum verschieben"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.js:0
+msgid "Moved %s days ahead."
+msgstr "Um %s Tage verschoben."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.js:0
+msgid "Moved to tomorrow."
+msgstr "Auf morgen verschoben."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "My open tasks"
+msgstr "Meine offenen Aufgaben"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "My open tickets"
+msgstr "Meine offenen Tickets"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "My overdue activities"
+msgstr "Meine überfälligen Aktivitäten"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "My pipeline"
+msgstr "Meine Pipeline"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "My tasks: due and overdue"
+msgstr "Meine Aufgaben: fällig und überfällig"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__new_date
+msgid "New date"
+msgstr "Neues Datum"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/activity/date_picks.js:0
+msgid "Next week"
+msgstr "Nächste Woche"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Next: %(date)s"
+msgstr "Nächster Schritt: %(date)s"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "No next step"
+msgstr "Kein nächster Schritt"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid ""
+"No panels for this role yet: the apps it uses are not installed, or there is nothing to show.\n"
+"                    An administrator can change the Home role on the user form."
+msgstr ""
+"Noch keine Bereiche für diese Rolle: Die verwendeten Apps sind nicht installiert oder es gibt nichts anzuzeigen.\n"
+"                    Ein Administrator kann die Start-Rolle im Benutzerformular ändern."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.js:0
+msgid "Nothing is due or overdue for this type. %s done today."
+msgstr "Für diesen Typ ist nichts fällig oder überfällig. %s heute erledigt."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.js:0
+msgid "Nothing is due or overdue. %s done today."
+msgstr "Nichts ist fällig oder überfällig. %s heute erledigt."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Nothing is overdue and nothing is due today."
+msgstr "Nichts ist überfällig und nichts ist heute fällig."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "Nothing matches any more; there is nothing to clean up."
+msgstr "Es passt nichts mehr; es gibt nichts zu bereinigen."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Nothing scheduled for today."
+msgstr "Für heute ist nichts geplant."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__aic_backlog_cleanup__kind__quotations
+msgid "Old quotations"
+msgstr "Alte Angebote"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_backlog_cleanup_view_form
+msgid ""
+"Old records that will never be finished make every count on Home look worse than it is.\n"
+"                    Pick what to clean up, check the list, then confirm."
+msgstr ""
+"Alte Datensätze, die nie abgeschlossen werden, lassen jede Zahl auf der Startseite schlechter aussehen, als sie ist.\n"
+"                    Wählen Sie aus, was bereinigt werden soll, prüfen Sie die Liste und bestätigen Sie."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Older backlog"
+msgstr "Älterer Rückstand"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__older_than_days
+msgid "Older than (days)"
+msgstr "Älter als (Tage)"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "Only managers of this area can run this clean-up."
+msgstr "Nur Manager dieses Bereichs können diese Bereinigung ausführen."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__aic_home_start_screen
+msgid "Open Home after login"
+msgstr "Home nach der Anmeldung öffnen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Open opportunities with nothing scheduled"
+msgstr "Offene Verkaufschancen ohne geplante Aktivität"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Open pipeline"
+msgstr "Offene Pipeline"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Open the pipeline"
+msgstr "Pipeline öffnen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Open the record (O)"
+msgstr "Datensatz öffnen (O)"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Order %(qty)s"
+msgstr "%(qty)s bestellen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Ordered for your role. Badges count what needs you."
+msgstr "Nach Ihrer Rolle sortiert. Die Abzeichen zählen, was auf Sie wartet."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Outgoing"
+msgstr "Ausgehend"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Overdue activities"
+msgstr "Überfällige Aktivitäten"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Overdue receivables"
+msgstr "Überfällige Forderungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Overdue receivables stand at %(amount)s."
+msgstr "Die überfälligen Forderungen belaufen sich auf %(amount)s."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role__owner
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role_suggested__owner
+msgid "Owner / manager"
+msgstr "Inhaber / Leitung"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "P"
+msgstr ""
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "Panels"
+msgstr "Bereiche"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Past the expected date"
+msgstr "Erwartetes Datum überschritten"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Past their scheduled date in the last 30 days"
+msgstr "In den letzten 30 Tagen über dem geplanten Datum"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Plan an activity"
+msgstr "Aktivität planen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__preview_html
+msgid "Preview Html"
+msgstr "HTML-Vorschau"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Probability"
+msgstr "Wahrscheinlichkeit"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Project"
+msgstr "Projekt"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role__purchase
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role_suggested__purchase
+msgid "Purchase"
+msgstr "Einkauf"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Queue clear"
+msgstr "Warteschlange leer"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Quiet %(days)s days"
+msgstr "Seit %(days)s Tagen ruhig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "Quotations can only be cancelled here."
+msgstr "Angebote können hier nur storniert werden."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Quotations expiring"
+msgstr "Ablaufende Angebote"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Quotations expiring this week"
+msgstr "Diese Woche ablaufende Angebote"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "RFQs awaiting reply"
+msgstr "Anfragen ohne Antwort"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "RFQs sent, no answer yet"
+msgstr "Anfragen gesendet, noch keine Antwort"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Ready"
+msgstr "Bereit"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Receipts today"
+msgstr "Wareneingänge heute"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Reorder alerts"
+msgstr "Nachbestellwarnungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Reorder suggestions"
+msgstr "Nachbestellvorschläge"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Replenishment"
+msgstr "Wiederbeschaffung"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_backlog_cleanup_view_form
+msgid "Review the list first"
+msgstr "Prüfen Sie zuerst die Liste"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "S"
+msgstr ""
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role__sales
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role_suggested__sales
+msgid "Sales"
+msgstr "Verkauf"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Sales this month"
+msgstr "Umsatz diesen Monat"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "Sections"
+msgstr "Abschnitte"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "See all"
+msgstr "Alle ansehen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Sent %(days)s days ago"
+msgstr "Vor %(days)s Tagen gesendet"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Sent over 3 days ago"
+msgstr "Vor mehr als 3 Tagen gesendet"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role__service
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role_suggested__service
+msgid "Service"
+msgstr "Service"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Show everything"
+msgstr "Alles anzeigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "Skip"
+msgstr "Überspringen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_aic_home
+msgid "Home"
+msgstr "Home"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_aic_backlog_cleanup
+msgid "Core backlog clean-up"
+msgstr "Core-Rückstandsbereinigung"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_aic_focus
+msgid "Core focus queue"
+msgstr "Core-Fokus-Warteschlange"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Stage"
+msgstr "Phase"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "Start my queue · %s"
+msgstr "Meine Warteschlange starten · %s"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic_home
+msgid "Start on Home"
+msgstr "Mit Home starten"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Status"
+msgstr "Status"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Stock below its minimum rule"
+msgstr "Bestand unter seiner Mindestregel"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role__auto
+msgid "Suggest from activity"
+msgstr "Aus Aktivität vorschlagen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_home_role_suggested
+msgid "Suggested role"
+msgstr "Vorgeschlagene Rolle"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Tags"
+msgstr "Stichwörter"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Tasks"
+msgstr "Aufgaben"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Tasks due"
+msgstr "Fällige Aufgaben"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Team"
+msgstr "Team"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_home_role_suggested
+msgid "The role \"Suggest from activity\" would pick today."
+msgstr "Die Rolle, die „Aus Aktivität vorschlagen“ heute wählen würde."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "This activity is no longer in your queue."
+msgstr "Diese Aktivität ist nicht mehr in Ihrer Warteschlange."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "This clean-up needs an app that is not installed."
+msgstr "Diese Bereinigung benötigt eine App, die nicht installiert ist."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "This week or overdue"
+msgstr "Diese Woche oder überfällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "Tick the box to confirm you have checked the list."
+msgstr ""
+"Setzen Sie das Häkchen, um zu bestätigen, dass Sie die Liste geprüft haben."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Tickets waiting on me"
+msgstr "Tickets, die auf mich warten"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "Tiles"
+msgstr "Kacheln"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "To approve"
+msgstr "Zu genehmigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "To do"
+msgstr "Zu erledigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "To-do"
+msgstr "To-do"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "To-dos"
+msgstr "To-dos"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/activity/date_picks.js:0
+msgid "Today"
+msgstr "Heute"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/activity/date_picks.js:0
+msgid "Tomorrow"
+msgstr "Morgen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Total"
+msgstr "Gesamt"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Unpaid vendor bills"
+msgstr "Unbezahlte Eingangsrechnungen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_res_users
+msgid "User"
+msgstr "Benutzer"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_config_settings__aic_home_start_screen
+msgid ""
+"Users without their own home action land on Home instead of the app menu."
+msgstr "Benutzer ohne eigene Startaktion landen auf Home statt im App-Menü."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+msgid "Vendor"
+msgstr "Lieferant"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "W"
+msgstr ""
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Waiting"
+msgstr "Wartend"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Waiting for stock"
+msgstr "Wartet auf Bestand"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Waiting on vendors"
+msgstr "Wartet auf Lieferanten"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role__warehouse
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_home_role_suggested__warehouse
+msgid "Warehouse"
+msgstr "Lager"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_home_layout
+msgid ""
+"What each person chose in Customise home, per role: {role: {hidden: [keys], "
+"order: [keys]}}. Written only through aic.home.save_layout / reset_layout, "
+"for the current user."
+msgstr ""
+"Was jede Person unter Startseite anpassen gewählt hat, pro Rolle: {role: "
+"{hidden: [keys], order: [keys]}}. Wird nur über aic.home.save_layout / "
+"reset_layout für den aktuellen Benutzer geschrieben."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "What happened?"
+msgstr "Was ist passiert?"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_backlog_cleanup__operation
+msgid "What to do"
+msgstr "Was tun"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/swipe_actions.js:0
+#: code:addons/eod_glass_backend_theme/static/src/send/chatter/chatter_patch.xml:0
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_focus.py:0
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Yesterday"
+msgstr "Gestern"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "You have %(missed)s missed and %(today)s due today."
+msgstr "Sie haben %(missed)s verpasst und %(today)s heute fällig."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "You have %(missed)s missed to catch up on."
+msgstr "Sie haben %(missed)s Verpasstes nachzuholen."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Your apps"
+msgstr "Ihre Apps"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Yours"
+msgstr "Ihre"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "apps"
+msgstr "Apps"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "e.g. Called, they want the revised quote by Friday"
+msgstr "z. B.: Angerufen, sie möchten das überarbeitete Angebot bis Freitag"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "today"
+msgstr "heute"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "user_id"
+msgstr ""
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/focus/focus.xml:0
+msgid "· note"
+msgstr "· Notiz"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/wizard/backlog_cleanup.py:0
+msgid "…and %(n)s more"
+msgstr "…und %(n)s weitere"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "%(channel)s to %(who)s"
+msgstr "%(channel)s an %(who)s"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "%(n)s min ago"
+msgstr "vor %(n)s Min."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "%(n)s of your sends did not go out."
+msgstr "%(n)s Ihrer Sendungen sind nicht rausgegangen."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "%(n)s sends"
+msgstr "%(n)s Sendungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "%(n)s sends queued again."
+msgstr "%(n)s Sendungen erneut eingereiht."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "%(n)sd ago"
+msgstr "vor %(n)s T."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "%(n)sh ago"
+msgstr "vor %(n)s Std."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "Dismiss"
+msgstr "Verwerfen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "Dismissed."
+msgstr "Verworfen."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_home_failed_seen
+msgid "Failed sends dismissed until"
+msgstr "Fehlgeschlagene Sendungen verworfen bis"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "Failed to send"
+msgstr "Nicht gesendet"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_home_failed_seen
+msgid ""
+"Home's \"Failed to send\" panel shows no WhatsApp failure older than this "
+"(Dismiss). E-mail and text-message failures are dismissed the Odoo way "
+"instead. Written only by aic.home."
+msgstr ""
+"Das Panel „Nicht gesendet“ der Startseite zeigt keine WhatsApp-Fehler, die "
+"älter sind (Verwerfen). Fehler bei E-Mails und SMS werden auf Odoo-Art "
+"verworfen. Wird nur von aic.home geschrieben."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid ""
+"Nothing to retry: these failed for a reason a retry cannot fix (a bounce or "
+"a missing address). Open the document and correct the contact."
+msgstr ""
+"Nichts erneut zu senden: Diese Sendungen sind aus einem Grund "
+"fehlgeschlagen, den ein neuer Versuch nicht behebt (Unzustellbarkeit oder "
+"fehlende Adresse). Öffnen Sie das Dokument und korrigieren Sie den Kontakt."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "Retry"
+msgstr "Erneut senden"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "Your own sends, last %(days)s days"
+msgstr "Ihre eigenen Sendungen, letzte %(days)s Tage"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "%(day)s %(date)s: %(done)s done, %(due)s still due"
+msgstr "%(day)s %(date)s: %(done)s erledigt, %(due)s noch offen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "%(n)s are overdue."
+msgstr "%(n)s sind überfällig."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "%(n)s are still due before the week ends."
+msgstr "%(n)s sind noch vor Wochenende fällig."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "%(start)s – %(end)s"
+msgstr "%(start)s – %(end)s"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "%s last week"
+msgstr "%s letzte Woche"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+msgid "And %s more."
+msgstr "Und %s weitere."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Due that day, still open"
+msgstr "An dem Tag fällig, noch offen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Home view"
+msgstr "Ansicht der Startseite"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Invoices posted"
+msgstr "Rechnungen gebucht"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Loading your week…"
+msgstr "Ihre Woche wird geladen…"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "My week"
+msgstr "Meine Woche"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "New opportunities"
+msgstr "Neue Verkaufschancen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Opportunities won"
+msgstr "Gewonnene Verkaufschancen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Orders confirmed"
+msgstr "Bestätigte Aufträge"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Overdue"
+msgstr "Überfällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Person"
+msgstr "Person"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Purchase orders confirmed"
+msgstr "Bestätigte Bestellungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Quotations created"
+msgstr "Erstellte Angebote"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Still due"
+msgstr "Noch fällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Still due this week"
+msgstr "Diese Woche noch fällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Tasks closed"
+msgstr "Abgeschlossene Aufgaben"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "This week · last week"
+msgstr "Diese Woche · letzte Woche"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Tickets closed"
+msgstr "Geschlossene Tickets"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "Transfers done"
+msgstr "Erledigte Transfers"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Who may need a hand. Alphabetical, not a ranking."
+msgstr "Wer Unterstützung brauchen könnte. Alphabetisch, keine Rangliste."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Work moved"
+msgstr "Vorangebrachte Arbeit"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "You completed %(n)s activities this week (%(prev)s last week)."
+msgstr ""
+"Sie haben diese Woche %(n)s Aktivitäten erledigt (letzte Woche %(prev)s)."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Your team"
+msgstr "Ihr Team"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "done this week"
+msgstr "diese Woche erledigt"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "last week"
+msgstr "letzte Woche"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "overdue"
+msgstr "überfällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "still due this week"
+msgstr "diese Woche noch fällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "You completed 1 activity this week (%(prev)s last week)."
+msgstr "Sie haben diese Woche 1 Aktivität erledigt (letzte Woche %(prev)s)."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "1 is still due before the week ends."
+msgstr "1 ist noch vor Wochenende fällig."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_week.py:0
+msgid "1 is overdue."
+msgstr "1 ist überfällig."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "Waiting for you"
+msgstr "Warten auf Sie"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "Waiting for your approval"
+msgstr "Warten auf Ihre Genehmigung"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "%(n)s waiting for your approval."
+msgstr "%(n)s warten auf Ihre Genehmigung."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "%(name)s approved"
+msgstr "%(name)s genehmigt"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "This record no longer waits for your approval."
+msgstr "Dieser Datensatz wartet nicht mehr auf Ihre Genehmigung."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "%(days)s days"
+msgstr "%(days)s Tage"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Approve"
+msgstr "Genehmigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Refuse"
+msgstr "Ablehnen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Reason"
+msgstr "Grund"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Why is it refused?"
+msgstr "Warum wird abgelehnt?"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "Refused: %(reason)s"
+msgstr "Abgelehnt: %(reason)s"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "%(name)s refused"
+msgstr "%(name)s abgelehnt"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "Give a reason to refuse."
+msgstr "Geben Sie einen Ablehnungsgrund an."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_approvals.py:0
+msgid "This record cannot be refused from Home."
+msgstr "Dieser Datensatz kann nicht von der Startseite aus abgelehnt werden."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+#, python-format
+msgid "See all %(count)s"
+msgstr "Alle anzeigen (%(count)s)"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+#, python-format
+msgid "Team: %(count)s overdue"
+msgstr "Team: %(count)s überfällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.xml:0
+msgid "Nothing missed on your side."
+msgstr "Bei Ihnen ist nichts liegen geblieben."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "My team's overdue activities"
+msgstr "Überfällige Aktivitäten meines Teams"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+#, python-format
+msgid "More apps (%s)"
+msgstr "Weitere Apps (%s)"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/home/home/home.js:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/mobile_shell.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/pane/left_pane.xml:0
+msgid "Apps"
+msgstr "Apps"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+#, python-format
+msgid "Everyone's failed sends (%(n)s)"
+msgstr "Fehlgeschlagene Sendungen aller (%(n)s)"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+msgid "Failed sends"
+msgstr "Fehlgeschlagene Sendungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_failed.py:0
+#, python-format
+msgid "None of yours. Across the company, last %(days)s days:"
+msgstr "Keine von Ihnen. Im ganzen Unternehmen, letzte %(days)s Tage:"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_for_you.py:0
+msgid "For you"
+msgstr "Für Sie"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_for_you.py:0
+msgid "Mentions, your inbox and unread chats"
+msgstr "Erwähnungen, Ihr Posteingang und ungelesene Chats"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_for_you.py:0
+msgid "Open Discuss"
+msgstr "Dialog öffnen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_for_you.py:0
+msgid "Chat"
+msgstr "Chat"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_for_you.py:0
+#, python-format
+msgid "%(n)s unread"
+msgstr "%(n)s ungelesen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_for_you.py:0
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__message
+msgid "Message"
+msgstr "Nachricht"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_for_you.py:0
+#, python-format
+msgid "%(n)s messages are waiting for you."
+msgstr "%(n)s Nachrichten warten auf Sie."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Late manufacturing"
+msgstr "Verspätete Fertigung"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Should have started"
+msgstr "Hätte beginnen sollen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Late manufacturing orders"
+msgstr "Verspätete Fertigungsaufträge"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Should have started by now"
+msgstr "Hätten schon beginnen sollen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Waiting for components"
+msgstr "Warten auf Komponenten"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Confirmed orders short of components"
+msgstr "Bestätigte Aufträge mit fehlenden Komponenten"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Today's visits"
+msgstr "Heutige Besuche"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "In visit order"
+msgstr "In Besuchsreihenfolge"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "Cash and bank"
+msgstr "Kasse und Bank"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+#, python-format
+msgid "%(n)s accounts"
+msgstr "%(n)s Konten"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "1 account"
+msgstr "1 Konto"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "1 opportunity has no next step."
+msgstr "1 Verkaufschance hat keinen nächsten Schritt."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "1 receipt is late from its vendor."
+msgstr "1 Wareneingang ist vom Lieferanten verspätet."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "1 message is waiting for you."
+msgstr "1 Nachricht wartet auf Sie."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/home/models/aic_home.py:0
+msgid "1 thing is on your list today."
+msgstr "1 Aufgabe steht heute auf Ihrer Liste."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/nav/crumbs.js:0
+msgid "%s of %s"
+msgstr "%s von %s"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/mobile_shell.xml:0
+msgid "Activities"
+msgstr "Aktivitäten"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/gantt_phone.js:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/kanban_stage_chips.xml:0
+msgid "All"
+msgstr "Alle"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/mobile_shell.xml:0
+msgid "All stages"
+msgstr "Alle Phasen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Always there"
+msgstr "Immer da"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Appearance"
+msgstr "Erscheinungsbild"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Apps · Menu · Activity · Account while a record's form is open."
+msgstr "Apps · Menü · Aktivität · Konto, während ein Formular geöffnet ist."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Below form"
+msgstr "Unter dem Formular"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_chatter__bottom
+msgid "Below the form"
+msgstr "Unter dem Formular"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_split_side__bottom
+msgid "Below the list"
+msgstr "Unter der Liste"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/swipe_actions.js:0
+msgid "Call"
+msgstr "Anrufen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/swipe_actions.xml:0
+msgid "Card actions"
+msgstr "Kartenaktionen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/chatter/chatter_window.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Chatter"
+msgstr "Chatter"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_split_chatter
+msgid "Chatter in the split view"
+msgstr "Chatter in der geteilten Ansicht"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid "Chatter is floating"
+msgstr "Chatter ist schwebend"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_chatter
+msgid "Chatter position"
+msgstr "Position des Chatters"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.webclient_offline_aic
+msgid ""
+"Check your network connection and come back here. Odoo will load as soon as "
+"you're back online."
+msgstr ""
+"Prüfen Sie Ihre Netzwerkverbindung und kommen Sie hierher zurück. Odoo lädt,"
+" sobald Sie wieder online sind."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/controllers/webmanifest.py:0
+msgid ""
+"Check your network connection. %(app)s opens again as soon as you are back "
+"online."
+msgstr ""
+"Prüfen Sie Ihre Netzwerkverbindung. %(app)s öffnet sich wieder, sobald Sie "
+"online sind."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_swipe.py:0
+msgid "Confirm"
+msgstr "Bestätigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/mobile_shell.xml:0
+msgid "Create"
+msgstr "Erstellen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/user_menu_items.js:0
+msgid "Dark mode"
+msgstr "Dunkler Modus"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/user_menu_items.js:0
+msgid "Developer mode"
+msgstr "Entwicklermodus"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/chatter/chatter_window.xml:0
+msgid "Dock back into the form"
+msgstr "Wieder ins Formular andocken"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid "Dock here"
+msgstr "Hier andocken"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_split_chatter__docked
+msgid "Docked below the form"
+msgstr "Unter dem Formular angedockt"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid ""
+"Floating: the chatter pops out into a movable, resizable window that follows"
+" the selected record. Docked: it stays below the form in the panel."
+msgstr ""
+"Schwebend: Der Chatter öffnet sich in einem verschiebbaren, "
+"größenveränderbaren Fenster, das dem ausgewählten Datensatz folgt. "
+"Angedockt: Er bleibt im Bereich unter dem Formular."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_split_chatter
+msgid ""
+"Floating: when a record opens in the split panel its chatter pops out into a"
+" movable, resizable window that follows the selected record. Docked: the "
+"chatter stays below the form inside the panel (it can still be floated with "
+"a click)."
+msgstr ""
+"Schwebend: Öffnet sich ein Datensatz im geteilten Bereich, erscheint sein "
+"Chatter in einem verschiebbaren, größenveränderbaren Fenster, das dem "
+"ausgewählten Datensatz folgt. Angedockt: Der Chatter bleibt unter dem "
+"Formular im Bereich (er kann weiterhin per Klick schwebend gemacht werden)."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_split_chatter__float
+msgid "Floats automatically"
+msgstr "Schwebt automatisch"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/chatter/chatter_window.xml:0
+msgid "Follows the record selected in the list"
+msgstr "Folgt dem in der Liste ausgewählten Datensatz"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Form below"
+msgstr "Formular darunter"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Form on the right"
+msgstr "Formular rechts"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/calendar_nav.xml:0
+msgid "Go to month"
+msgstr "Zum Monat"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Hidden"
+msgstr "Ausgeblendet"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_m_tabbar__hide
+msgid "Hidden while a record is open"
+msgstr "Ausgeblendet, solange ein Datensatz geöffnet ist"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid ""
+"It follows the record selected in the list · drag it anywhere, resize from "
+"any edge"
+msgstr ""
+"Folgt dem in der Liste ausgewählten Datensatz · überallhin ziehen, an jeder "
+"Kante in der Größe ändern"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Keep pane expanded"
+msgstr "Bereich ausgeklappt lassen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_m_tabbar__keep
+msgid "Kept under the record's actions"
+msgstr "Unter den Aktionen des Datensatzes behalten"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Left pane (add-on)"
+msgstr "Linker Bereich (Zusatz)"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_nav__side
+msgid "Left pane, expanded"
+msgstr "Linker Bereich, ausgeklappt"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_nav__mini
+msgid "Left pane, icons"
+msgstr "Linker Bereich, Symbole"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/mobile_shell.xml:0
+msgid "Me"
+msgstr "Ich"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/chatter/chatter_window.xml:0
+msgid "Minimise to a bubble"
+msgstr "Zu einer Blase minimieren"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Mode"
+msgstr "Modus"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_nav
+msgid "Navigation"
+msgstr "Navigation"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/nav/crumbs.xml:0
+msgid "Navigation path"
+msgstr "Navigationspfad"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/calendar_nav.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid "Next"
+msgstr "Weiter"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_nav__top
+msgid "Odoo top bar only"
+msgstr "Nur die obere Odoo-Leiste"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Off: pane shrinks to icons and expands on hover"
+msgstr "Aus: Der Bereich schrumpft auf Symbole und klappt beim Überfahren aus"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_m_tabbar
+msgid ""
+"On a phone, a record's form has its own bar of actions at the bottom. Keep "
+"the app tab bar under it (two bars), or hide the tab bar while a record is "
+"open — the Back key returns to the list, like a mail app."
+msgstr ""
+"Auf einem Telefon hat das Formular eines Datensatzes unten eine eigene "
+"Aktionsleiste. Behalten Sie die Tab-Leiste darunter (zwei Leisten) oder "
+"blenden Sie sie aus, solange ein Datensatz geöffnet ist – die Zurück-Taste "
+"führt zur Liste zurück, wie in einer Mail-App."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid ""
+"On: clicking a record in a list or kanban opens its form beside the list. "
+"Off: stock Odoo behaviour."
+msgstr ""
+"An: Ein Klick auf einen Datensatz in einer Liste oder einem Kanban öffnet "
+"sein Formular neben der Liste. Aus: Standardverhalten von Odoo."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/pane/left_pane.xml:0
+msgid "Open"
+msgstr "Öffnen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/mobile_shell.xml:0
+msgid "Open a stage"
+msgstr "Phase öffnen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid "Open full form"
+msgstr "Vollständiges Formular öffnen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_split
+msgid ""
+"Open records from a list or kanban in a panel beside the list instead of "
+"navigating to the form."
+msgstr ""
+"Datensätze aus einer Liste oder einem Kanban in einem Bereich neben der "
+"Liste öffnen, statt zum Formular zu wechseln."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/chatter/chatter_window.xml:0
+msgid "Open the chatter"
+msgstr "Chatter öffnen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Open, full"
+msgstr "Offen, vollständig"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Open, icons"
+msgstr "Offen, Symbole"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Phone"
+msgstr "Telefon"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_m_tabbar
+msgid "Phone: tab bar on a record"
+msgstr "Telefon: Tab-Leiste in einem Datensatz"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid "Pinned to"
+msgstr "Angeheftet an"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/swipe_actions.js:0
+msgid "Plan"
+msgstr "Planen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/calendar_nav.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid "Previous"
+msgstr "Zurück"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Right of form"
+msgstr "Rechts vom Formular"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_chatter__right
+msgid "Right of the form"
+msgstr "Rechts vom Formular"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_split_side__right
+msgid "Right of the list"
+msgstr "Rechts von der Liste"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/swipe_actions.xml:0
+msgid "Row actions"
+msgstr "Zeilenaktionen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/favorites/favorite_chips.xml:0
+msgid "Saved searches"
+msgstr "Gespeicherte Suchen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/kanban_more.xml:0
+msgid "Show more"
+msgstr "Mehr anzeigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/search_sheet.xml:0
+msgid "Show results"
+msgstr "Ergebnisse anzeigen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/pane/navbar_toggle.xml:0
+msgid "Show/hide the left pane"
+msgstr "Linken Bereich ein-/ausblenden"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_aic_swipe
+msgid "Core phone swipe actions"
+msgstr "Core-Wischaktionen auf dem Telefon"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_split
+msgid "Split Form View"
+msgstr "Geteilte Formularansicht"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid "Split form view"
+msgstr "Geteilte Formularansicht"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_split_side
+msgid "Split panel position"
+msgstr "Position des geteilten Bereichs"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/kanban_stage_chips.xml:0
+msgid "Stages"
+msgstr "Phasen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Switch apps from any record"
+msgstr "Von jedem Datensatz aus die App wechseln"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "System"
+msgstr "System"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Tab bar on a record"
+msgstr "Tab-Leiste in einem Datensatz"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_nav
+msgid ""
+"The Odoo top bar is always there. A left pane can be shown next to it, "
+"expanded or collapsed to icons; the ☰ button in the top bar toggles it at "
+"any time."
+msgstr ""
+"Die obere Odoo-Leiste ist immer da. Daneben kann ein linker Bereich "
+"angezeigt werden, ausgeklappt oder auf Symbole reduziert; die ☰-Schaltfläche"
+" in der oberen Leiste schaltet ihn jederzeit um."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "The form gets the whole screen; Back returns to the list"
+msgstr "Das Formular bekommt den ganzen Bildschirm; Zurück führt zur Liste"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid ""
+"The stock Odoo top bar always stays. The ☰ button at its left shows or hides"
+" the pane; choose what happens by default."
+msgstr ""
+"Die Standard-Leiste von Odoo bleibt immer. Die ☰-Schaltfläche links davon "
+"blendet den Bereich ein oder aus; wählen Sie das Standardverhalten."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/user_menu_items.js:0
+msgid "Theme preferences"
+msgstr "Theme-Einstellungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/controllers/webmanifest.py:0
+msgid "Today's agenda and your apps"
+msgstr "Die heutige Agenda und Ihre Apps"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/nav/crumbs.js:0
+msgid "Unnamed"
+msgstr "Unbenannt"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/nav/crumbs.xml:0
+msgid "Where you are"
+msgstr "Wo Sie sind"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_swipe.py:0
+msgid "Won"
+msgstr "Gewonnen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/controllers/webmanifest.py:0
+msgid "Work through your due activities"
+msgstr "Fällige Aktivitäten abarbeiten"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/chatter/chatter_window.xml:0
+msgid "pinned"
+msgstr "angeheftet"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/split/split_panel.xml:0
+msgid "· the list can move on"
+msgstr "· die Liste kann weitergehen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Credit note"
+msgstr "Gutschrift"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Invoice"
+msgstr "Rechnung"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Lead"
+msgstr "Lead"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Opportunity"
+msgstr "Verkaufschance"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Product"
+msgstr "Produkt"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Purchase order"
+msgstr "Bestellung"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Quotation"
+msgstr "Angebot"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/search/record_commands.js:0
+msgid "Records"
+msgstr "Datensätze"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Request for quotation"
+msgstr "Angebotsanfrage"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Sales order"
+msgstr "Verkaufsauftrag"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_aic_search
+msgid "Core record search (command palette)"
+msgstr "Core-Datensatzsuche (Befehlspalette)"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Task"
+msgstr "Aufgabe"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Ticket"
+msgstr "Ticket"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Transfer"
+msgstr "Transfer"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Vendor bill"
+msgstr "Lieferantenrechnung"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/aic_search.py:0
+msgid "Vendor refund"
+msgstr "Lieferantengutschrift"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/activity/date_picks.js:0
+msgid "In 2 weeks"
+msgstr "In 2 Wochen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/activity/date_picks.xml:0
+msgid "Quick due dates"
+msgstr "Schnelle Fälligkeiten"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_header_compact
+msgid "Compact record header"
+msgstr "Kompakte Datensatz-Kopfzeile"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_header_compact
+msgid ""
+"When a record has more than four buttons in its header, show the main ones "
+"and put the rest under ⋯. Off: every button stays in the header, as in stock"
+" Odoo."
+msgstr ""
+"Hat die Kopfzeile eines Datensatzes mehr als vier Schaltflächen, werden die "
+"wichtigsten angezeigt und die übrigen unter ⋯ gelegt. Aus: alle "
+"Schaltflächen bleiben in der Kopfzeile, wie im Standard-Odoo."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid ""
+"On: past four buttons, the main ones stay and the rest go under ⋯. Off: "
+"every button stays in the header."
+msgstr ""
+"An: ab vier Schaltflächen bleiben die wichtigsten, der Rest liegt unter ⋯. "
+"Aus: alle Schaltflächen bleiben in der Kopfzeile."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/form/header_overflow.xml:0
+msgid "More actions"
+msgstr "Weitere Aktionen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/no_match.xml:0
+msgid "Check the spelling, or clear the search to see the other records."
+msgstr ""
+"Prüfen Sie die Schreibweise oder leeren Sie die Suche, um die übrigen "
+"Datensätze zu sehen."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/no_match.xml:0
+msgid "Clear search"
+msgstr "Suche leeren"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/no_match.xml:0
+msgid "Nothing matches your search"
+msgstr "Nichts passt zu Ihrer Suche"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_partner__aic_duplicate_ids
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_duplicate_ids
+msgid "Possible duplicates"
+msgstr "Mögliche Duplikate"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_partner__aic_duplicate_ids
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_duplicate_ids
+msgid "Other contacts with the same e-mail address or phone number."
+msgstr "Andere Kontakte mit derselben E-Mail-Adresse oder Telefonnummer."
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.view_partner_form_aic_duplicates
+msgid "Possible duplicate, same e-mail or phone:"
+msgstr "Mögliches Duplikat, gleiche E-Mail oder Telefonnummer:"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/user_menu_items.js:0
+msgid "My profile"
+msgstr "Mein Profil"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/res_partner.py:0
+msgid "Open quotations"
+msgstr "Offene Angebote"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/res_partner.py:0
+msgid "Unpaid invoices"
+msgstr "Unbezahlte Rechnungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/res_partner.py:0
+msgid "Open tickets"
+msgstr "Offene Tickets"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/res_partner.py:0
+msgid "Last delivery"
+msgstr "Letzte Lieferung"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/res_partner.py:0
+msgid "Next activity"
+msgstr "Nächste Aktivität"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/res_partner.py:0
+msgid "%(amount)s · %(late)s overdue"
+msgstr "%(amount)s · %(late)s überfällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/res_partner.py:0
+msgid "%(late)s overdue"
+msgstr "%(late)s überfällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/customer_overview.xml:0
+msgid "At a glance"
+msgstr "Auf einen Blick"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/pivot_chart.xml:0
+msgid "Chart"
+msgstr "Diagramm"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/calendar_agenda.xml:0
+msgid "Grid"
+msgstr "Raster"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/calendar_agenda.xml:0
+msgid "Agenda"
+msgstr "Agenda"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/mobile/calendar_agenda.xml:0
+msgid "Nothing planned in this period."
+msgstr "In diesem Zeitraum ist nichts geplant."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/lost_one_tap.js:0
+#, python-format
+msgid "Marked as lost: %(reason)s"
+msgstr "Als verloren markiert: %(reason)s"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/lost_one_tap.js:0
+msgid "Marked as lost"
+msgstr "Als verloren markiert"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/gantt_legend.js:0
+#, python-format
+msgid "Not %(label)s"
+msgstr "Nicht: %(label)s"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/gantt_legend.js:0
+#, python-format
+msgid "%(field)s passed"
+msgstr "%(field)s überschritten"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/gantt_legend.xml:0
+msgid "Legend"
+msgstr "Legende"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/last_message.xml:0
+msgid "Last from the customer"
+msgstr "Letzte Nachricht des Kunden"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/last_message.xml:0
+msgid "Answered"
+msgstr "Beantwortet"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/last_message.xml:0
+msgid "Waiting for a reply"
+msgstr "Wartet auf Antwort"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/last_message.xml:0
+msgid "Reply"
+msgstr "Antworten"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/last_message.xml:0
+msgid "Customer's last message"
+msgstr "Letzte Nachricht des Kunden"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Keyboard shortcuts"
+msgstr "Tastenkürzel"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Anywhere"
+msgstr "Überall"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Search apps, menus and records"
+msgstr "Apps, Menüs und Datensätze suchen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "This list of shortcuts"
+msgstr "Diese Liste der Tastenkürzel"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Hold to see the letter of every button"
+msgstr "Halten, um den Buchstaben jeder Schaltfläche zu sehen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Close a dialog or a panel"
+msgstr "Dialog oder Bereich schließen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Lists and kanbans"
+msgstr "Listen und Kanbans"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Next row or card"
+msgstr "Nächste Zeile oder Karte"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Previous row or card"
+msgstr "Vorherige Zeile oder Karte"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Open it"
+msgstr "Öffnen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "New record"
+msgstr "Neuer Datensatz"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "A record"
+msgstr "Ein Datensatz"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Next record"
+msgstr "Nächster Datensatz"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Previous record"
+msgstr "Vorheriger Datensatz"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Save"
+msgstr "Speichern"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/keys/aic_keys.js:0
+msgid "Discard changes"
+msgstr "Änderungen verwerfen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Messages on records you follow"
+msgstr "Nachrichten zu Datensätzen, denen Sie folgen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "Where Odoo tells you about new messages and mentions."
+msgstr "Wo Odoo Sie über neue Nachrichten und Erwähnungen informiert."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "In Odoo"
+msgstr "In Odoo"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "The messaging menu and Discuss inbox"
+msgstr "Das Nachrichtenmenü und der Dialog-Posteingang"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "By email"
+msgstr "Per E-Mail"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid "A copy in your mailbox"
+msgstr "Eine Kopie in Ihrem Postfach"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_users__aic_density
+msgid "Density"
+msgstr "Dichte"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+msgid ""
+"Compact fits more rows and fields on a computer screen; phones keep touch-"
+"sized rows."
+msgstr ""
+"Kompakt zeigt mehr Zeilen und Felder auf einem Computerbildschirm; Telefone "
+"behalten berührungsgerechte Zeilen."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_density__comfortable
+msgid "Comfortable"
+msgstr "Komfortabel"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/prefs/prefs_panel.xml:0
+#: model:ir.model.fields.selection,name:eod_glass_backend_theme.selection__res_users__aic_density__compact
+msgid "Compact"
+msgstr "Kompakt"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_users__aic_density
+msgid ""
+"Compact fits more rows and fields on a desktop screen. Phones keep their "
+"touch-sized rows."
+msgstr ""
+"Kompakt zeigt mehr Zeilen und Felder auf einem Desktop-Bildschirm. Telefone "
+"behalten berührungsgerechte Zeilen."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/archive_undo.js:0
+msgid "Archived."
+msgstr "Archiviert."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/archive_undo.js:0
+#, python-format
+msgid "%(n)s records archived."
+msgstr "%(n)s Datensätze archiviert."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/archive_undo.js:0
+msgid "Undo"
+msgstr "Rückgängig"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/stock_summary.js:0
+msgid "Still missing"
+msgstr "Fehlt noch"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/stock_summary.js:0
+#, python-format
+msgid "%(missing)s of %(demand)s %(uom)s not available yet"
+msgstr "%(missing)s von %(demand)s %(uom)s noch nicht verfügbar"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/stock_summary.js:0
+#, python-format
+msgid "expected %(date)s"
+msgstr "erwartet am %(date)s"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/stock_summary.js:0
+#, python-format
+msgid " and %(n)s more"
+msgstr " und %(n)s weitere"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/stock_summary.js:0
+#, python-format
+msgid "Still missing: %(items)s%(more)s."
+msgstr "Fehlt noch: %(items)s%(more)s."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/stock_summary.js:0
+msgid ""
+"Create a backorder to send them later, or close the delivery without them?"
+msgstr ""
+"Einen Rückstand anlegen, um sie später zu senden, oder die Lieferung ohne "
+"sie abschließen?"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/stock_summary.js:0
+msgid ""
+"Create a backorder to process them later, or close the transfer without "
+"them?"
+msgstr ""
+"Einen Rückstand anlegen, um sie später zu bearbeiten, oder den Transfer ohne"
+" sie abschließen?"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+msgid "On hand"
+msgstr "Vorrätig"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+msgid "To deliver"
+msgstr "Zu liefern"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+msgid "Forecast"
+msgstr "Prognose"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+msgid "Minimum"
+msgstr "Minimum"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+msgid "Stock"
+msgstr "Bestand"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/purchase_summary.js:0
+msgid "Late from the vendor"
+msgstr "Beim Lieferanten verspätet"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/purchase_summary.js:0
+msgid "Chase vendor"
+msgstr "Lieferanten erinnern"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/purchase_summary.js:0
+#, python-format
+msgid "%(left)s of %(ordered)s %(uom)s still to receive"
+msgstr "%(left)s von %(ordered)s %(uom)s noch zu empfangen"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/purchase_summary.js:0
+#, python-format
+msgid "%(n)s days late"
+msgstr "%(n)s Tage verspätet"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/purchase_summary.js:0
+msgid "due today"
+msgstr "heute fällig"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/purchase_summary.js:0
+msgid "Holds up"
+msgstr "Hält auf"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/purchase_summary.js:0
+msgid "1 day late"
+msgstr "1 Tag verspätet"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+msgid "Steps"
+msgstr "Schritte"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+#, python-format
+msgid "%(done)s of %(total)s steps done"
+msgstr "%(done)s von %(total)s Schritten erledigt"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+msgid "Can make"
+msgstr "Herstellbar"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/workspace/models/stock_summary.py:0
+msgid "with the components in stock"
+msgstr "mit den Komponenten auf Lager"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/task_visit.js:0
+#, python-format
+msgid "Due %(date)s"
+msgstr "Fällig %(date)s"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/task_visit.js:0
+#, python-format
+msgid "%(done)s of %(total)s sub-tasks done"
+msgstr "%(done)s von %(total)s Unteraufgaben erledigt"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/task_visit.js:0
+msgid "Visit"
+msgstr "Besuch"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/task_visit.js:0
+msgid "Directions"
+msgstr "Route"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/workspace/views/task_visit.js:0
+#, python-format
+msgid "Overdue since %(date)s"
+msgstr "Überfällig seit %(date)s"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic_send
+msgid ""
+"A WhatsApp button in the chatter of every record: the contact's number, a "
+"ready message and, for quotations, invoices and purchase orders, a secure "
+"link to the document. Reload the page after changing."
+msgstr ""
+"Eine WhatsApp-Schaltfläche im Chatter jedes Datensatzes: die Nummer des "
+"Kontakts, eine fertige Nachricht und für Angebote, Rechnungen und "
+"Bestellungen ein sicherer Link zum Dokument. Laden Sie die Seite nach einer "
+"Änderung neu."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_aic_whatsapp_share__link
+msgid "A secure link the customer can open without logging in."
+msgstr "Ein sicherer Link, den der Kunde ohne Anmeldung öffnen kann."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__link
+msgid "Document link"
+msgstr "Dokumentlink"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid ""
+"Enter the WhatsApp number in international form, for example +91 98250 "
+"12345."
+msgstr ""
+"Geben Sie die WhatsApp-Nummer im internationalen Format ein, zum Beispiel "
+"+91 98250 12345."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "Hello %(name)s,"
+msgstr "Hallo %(name)s,"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "Hello,"
+msgstr "Hallo,"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "It is due on %(date)s."
+msgstr "Sie ist am %(date)s fällig."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "It is valid until %(date)s."
+msgstr "Es ist bis zum %(date)s gültig."
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_whatsapp_share_view_form
+msgid "Open WhatsApp"
+msgstr "WhatsApp öffnen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__record_name
+msgid "Record"
+msgstr "Datensatz"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__res_id
+msgid "Res"
+msgstr "Ref."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__res_model
+msgid "Res Model"
+msgstr "Modell"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model,name:eod_glass_backend_theme.model_aic_whatsapp_share
+msgid "Share a record on WhatsApp"
+msgstr "Einen Datensatz per WhatsApp teilen"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_res_config_settings__aic_whatsapp_share
+msgid ""
+"Share any record on WhatsApp with a ready message and, for documents with a "
+"customer portal, a secure link."
+msgstr ""
+"Teilen Sie jeden Datensatz per WhatsApp mit einer fertigen Nachricht und, "
+"bei Dokumenten mit Kundenportal, einem sicheren Link."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/send/chatter/chatter_patch.xml:0
+#: model:ir.actions.act_window,name:eod_glass_backend_theme.action_whatsapp_share
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.res_config_settings_view_form_aic_send
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_whatsapp_share_view_form
+msgid "Share on WhatsApp"
+msgstr "Per WhatsApp teilen"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "Shared on WhatsApp with %(phone)s:"
+msgstr "Per WhatsApp geteilt mit %(phone)s:"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_whatsapp_share_view_form
+msgid ""
+"The message includes a secure link: the customer can open the document "
+"without logging in."
+msgstr ""
+"Die Nachricht enthält einen sicheren Link: Der Kunde kann das Dokument ohne "
+"Anmeldung öffnen."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "This record no longer exists."
+msgstr "Dieser Datensatz existiert nicht mehr."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__partner_id
+msgid "To"
+msgstr "An"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,help:eod_glass_backend_theme.field_aic_whatsapp_share__phone
+msgid "Use the international form, for example +91 98250 12345."
+msgstr ""
+"Verwenden Sie das internationale Format, zum Beispiel +91 98250 12345."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "We expect delivery by %(date)s."
+msgstr "Wir erwarten die Lieferung bis zum %(date)s."
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_res_config_settings__aic_whatsapp_share
+msgid "WhatsApp button in the chatter"
+msgstr "WhatsApp-Schaltfläche im Chatter"
+
+#. module: eod_glass_backend_theme
+#: model:ir.model.fields,field_description:eod_glass_backend_theme.field_aic_whatsapp_share__phone
+msgid "WhatsApp number"
+msgstr "WhatsApp-Nummer"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_whatsapp_share_view_form
+msgid ""
+"WhatsApp opens in a new tab with this message ready; press Send there. The "
+"share is logged on the record."
+msgstr ""
+"WhatsApp öffnet sich in einem neuen Tab mit dieser Nachricht; drücken Sie "
+"dort auf Senden. Das Teilen wird am Datensatz protokolliert."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "You can view it here: %(link)s"
+msgstr "Sie können es hier ansehen: %(link)s"
+
+#. module: eod_glass_backend_theme
+#: model_terms:ir.ui.view,arch_db:eod_glass_backend_theme.aic_whatsapp_share_view_form
+msgid "Your message"
+msgstr "Ihre Nachricht"
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "about %(record)s."
+msgstr "zu %(record)s."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "about your bill %(ref)s for %(amount)s."
+msgstr "zu Ihrer Rechnung %(ref)s über %(amount)s."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "here is invoice %(ref)s for %(amount)s."
+msgstr "anbei die Rechnung %(ref)s über %(amount)s."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "here is our purchase order %(ref)s."
+msgstr "anbei unsere Bestellung %(ref)s."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "here is your order %(ref)s for %(amount)s."
+msgstr "anbei Ihr Auftrag %(ref)s über %(amount)s."
+
+#. module: eod_glass_backend_theme
+#. odoo-python
+#: code:addons/eod_glass_backend_theme/send/wizard/whatsapp_share.py:0
+msgid "here is your quotation %(ref)s for %(amount)s."
+msgstr "anbei Ihr Angebot %(ref)s über %(amount)s."
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/send/composer/send_sheet.xml:0
+msgid "Send by"
+msgstr "Senden per"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/send/composer/send_sheet.xml:0
+msgid "Email"
+msgstr "E-Mail"
+
+#. module: eod_glass_backend_theme
+#. odoo-javascript
+#: code:addons/eod_glass_backend_theme/static/src/send/composer/send_sheet.xml:0
+msgid "Preview"
+msgstr "Vorschau"
