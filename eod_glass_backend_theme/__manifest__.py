@@ -30,8 +30,9 @@ EOD - Backend Theme (web_theme_eod) keeps every setting.
     "author": "Albatross",
     "website": "https://albatross.work/",
     "support": "connect@albatross.work",
+    "live_test_url": "https://eod.orangeorange.co",
     "license": "OPL-1",
-    "price": 130.0,
+    "price": 109.0,
     "currency": "USD",
     "depends": [
         "web",
