@@ -202,7 +202,7 @@ EOD - Backend Theme (web_theme_eod) keeps every setting.
             "eod_glass_backend_theme/static/src/scss/eod_pos.dark.scss",
         ],
     },
-    "images": ["static/description/banner.png", "static/description/theme_screenshot.png"],
+    "images": ["static/description/banner.png", "static/description/theme_screenshot.gif"],
     "pre_init_hook": "pre_init_hook",
     "post_init_hook": "post_init_hook",
     "uninstall_hook": "uninstall_hook",
