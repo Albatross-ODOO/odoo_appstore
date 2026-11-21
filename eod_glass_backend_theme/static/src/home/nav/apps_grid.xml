@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Community, desktop (apps_grid.js): the apps button shows the current app's icon and name, and opens a
+         full-screen grid of app keys instead of a text list. Only attributes and added content: the same
+         extension applies to Odoo 19's and Odoo 20's template (their expressions differ). With the look off
+         (aicAppGrid false) the button and the list render exactly as stock Odoo. -->
+    <t t-name="aic_home.NavBarAppsGrid" t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_navbar_apps_menu')]/Dropdown" position="attributes">
+            <attribute name="menuClass">this.aicAppGrid ? 'o_aic_app_grid' : ''</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('o_navbar_apps_menu')]/Dropdown/button" position="attributes">
+            <attribute name="t-att-class">{ o_aic_apps_toggle: this.aicAppGrid, o_aic_has_app: this.aicAppGrid and this.aicGridApp }</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('o_navbar_apps_menu')]/Dropdown/button" position="inside">
+            <t t-if="this.aicAppGrid and this.aicGridApp">
+                <img t-if="this.aicGridApp.webIconData" class="o_aic_apps_toggle_icon" t-att-src="this.aicGridApp.webIconData" alt=""/>
+                <span class="o_aic_apps_toggle_name" t-out="this.aicGridApp.name"/>
+            </t>
+        </xpath>
+        <!-- the app entries: Odoo 19 prints the name with t-esc, Odoo 20 with t-out; drop both, print it here -->
+        <xpath expr="//div[hasclass('o_navbar_apps_menu')]//DropdownItem" position="attributes">
+            <attribute name="t-esc"/>
+            <attribute name="t-out"/>
+        </xpath>
+        <xpath expr="//div[hasclass('o_navbar_apps_menu')]//DropdownItem" position="inside">
+            <t t-if="this.aicAppGrid">
+                <span class="o_aic_app_tile">
+                    <img t-if="app.webIconData" t-att-src="app.webIconData" alt=""/>
+                </span>
+                <span class="o_aic_app_caption" t-out="app.name"/>
+            </t>
+            <t t-else="" t-out="app.name"/>
+        </xpath>
+    </t>
+</templates>

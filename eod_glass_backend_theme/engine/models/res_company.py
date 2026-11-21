@@ -4,6 +4,7 @@ import json
 import logging
 
 from odoo import api, fields, models
+from odoo.http import request
 from odoo.tools.image import ImageProcess
 from odoo.exceptions import ValidationError
 
@@ -167,12 +168,21 @@ class ResCompany(models.Model):
         return True
 
     def aic_login_theme(self):
-        """For the sign-in pages (web.login_layout): whether the Core look is on, and the company's
-        light palette <style> body ('' for the house palette). Read with sudo by the template."""
+        """For the sign-in pages (web.login_layout): whether the Core look is on, the colour scheme the visitor
+        chose ('light', 'dark', or '' to follow the device), and the company's palette <style> body for that
+        scheme ('' for the house palette). Read with sudo by the template.
+        Community only: Theme preferences keep the choice in the `color_scheme` cookie (the theme's own dark
+        scheme) and the sign-in page honours it; Enterprise's sign-in page keeps following the device."""
         self.ensure_one()
         enabled = self.env["res.config.settings"]._aic_theme_enabled()
+        enterprise = "web_enterprise" in self.env.registry._init_modules
+        scheme = ""
+        if enabled and not enterprise and request:
+            cookie = request.httprequest.cookies.get("color_scheme")
+            scheme = cookie if cookie in ("light", "dark") else ""
         return {"enabled": enabled, "skin": self._aic_effective_skin() or "" if enabled else "",
-                "css": self.aic_palette_for("light") if enabled else ""}
+                "scheme": scheme,
+                "css": self.aic_palette_for(scheme or "light") if enabled else ""}
 
     @api.model
     def _aic_look_installed(self):

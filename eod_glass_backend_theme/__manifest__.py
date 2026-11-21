@@ -25,7 +25,7 @@ EOD stands for End Of Day: the moment your team reaches with nothing left open. 
 Community and Enterprise. Installing it on a database that has the earlier Glass look, the earlier six-module EOD package or
 EOD - Backend Theme (web_theme_eod) keeps every setting.
 """,
-    "version": "19.0.4.0.0",
+    "version": "19.0.4.0.1",
     "category": "Themes/Backend",
     "author": "Albatross",
     "website": "https://albatross.work/",
@@ -79,6 +79,9 @@ EOD - Backend Theme (web_theme_eod) keeps every setting.
             "eod_glass_backend_theme/static/src/home/nav/home_key.scss",
             "eod_glass_backend_theme/static/src/home/nav/home_key.js",
             ("prepend", "eod_glass_backend_theme/static/src/home/nav/home_key.xml"),
+            "eod_glass_backend_theme/static/src/home/nav/apps_grid.scss",
+            "eod_glass_backend_theme/static/src/home/nav/apps_grid.js",
+            "eod_glass_backend_theme/static/src/home/nav/apps_grid.xml",
             ("prepend", "eod_glass_backend_theme/static/src/workspace/chatter/chatter_button.xml"),
             ("prepend", "eod_glass_backend_theme/static/src/workspace/mobile/kanban_more.xml"),
             ("prepend", "eod_glass_backend_theme/static/src/workspace/mobile/kanban_stage_chips.xml"),

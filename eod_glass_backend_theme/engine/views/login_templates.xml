@@ -16,7 +16,7 @@
             </t>
         </xpath>
         <xpath expr="//t[@t-call='web.frontend_layout' or @t-call='website.layout']" position="inside">
-            <t t-set="body_classname" t-value="(body_classname or '') + ((' o_aic_theme o_aic_login o_aic_skin_' + aic_login['skin']) if aic_login['enabled'] else '')"/>
+            <t t-set="body_classname" t-value="(body_classname or '') + ((' o_aic_theme o_aic_login o_aic_skin_' + aic_login['skin']) if aic_login['enabled'] else '') + ((' o_aic_scheme_' + aic_login['scheme']) if aic_login['enabled'] and aic_login['scheme'] else '')"/>
         </xpath>
     </template>
 </odoo>
