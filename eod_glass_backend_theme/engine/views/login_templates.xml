@@ -15,7 +15,7 @@
             </t>
         </xpath>
         <xpath expr="//t[@t-call='web.frontend_layout' or @t-call='website.layout']" position="attributes">
-            <attribute name="body_classname.f">{{ aic_login['base'] }}{{ (' o_aic_theme o_aic_login o_aic_skin_' + aic_login['skin']) if aic_login['enabled'] else '' }}</attribute>
+            <attribute name="body_classname.f">{{ aic_login['base'] }}{{ (' o_aic_theme o_aic_login o_aic_skin_' + aic_login['skin']) if aic_login['enabled'] else '' }}{{ (' o_aic_scheme_' + aic_login['scheme']) if aic_login['enabled'] and aic_login['scheme'] else '' }}</attribute>
         </xpath>
     </template>
 </odoo>
